@@ -11,6 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/*route admin katalogram
+======================================================================*/
+
+Route::group([
+    'domain' => 'admin.' . env('APP_DOMAIN')
+], function() {
+
+	Route::get('/', [
+        'as'    => 'dashboard',
+        'uses'  => 'admin\DashboardController@index'
+    ]);
+
+});
+
+
+/*route server katalogram
+======================================================================*/
+
+Route::group([
+    'domain' => 'server.' . env('APP_DOMAIN')
+], function() {
+
+	Route::get('/', [
+        'as'    => 'dashboard',
+        'uses'  => 'server\CatalogController@index'
+    ]);
+
 });
