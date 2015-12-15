@@ -18,8 +18,8 @@ class CreateUserTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 255);
             $table->integer('level_id')->unsigned();
-            $table->integer('user_join')->unsigned();
-            $table->string('user_pict', 128);
+            $table->integer('user_join')->unsigned()->nullable();
+            $table->string('user_pict', 128)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -22,4 +22,12 @@ class Product extends Model
     	'product_view',
     	'product_embed'
     ];
+
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function user() {
+        return $this->belongsTo('App\Entity\User');
+    }
+
 }

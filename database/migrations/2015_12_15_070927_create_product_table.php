@@ -16,16 +16,16 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('product_code', 10);
+            $table->string('product_code', 10)->nullable();
             $table->string('product_name', 64);
-            $table->string('product_logo', 128);
-            $table->string('product_quote', 128);
-            $table->text('product_desc');
-            $table->text('product_data');
+            $table->string('product_logo', 128)->nullable();
+            $table->string('product_quote', 128)->nullable();
+            $table->text('product_desc')->nullable();
+            $table->text('product_data')->nullable();
             $table->string('product_website', 64);
-            $table->integer('product_release')->unsigned();
-            $table->integer('product_view')->unsigned();
-            $table->string('product_embed', 128);
+            $table->integer('product_release')->unsigned()->nullable();
+            $table->integer('product_view')->unsigned()->nullable();
+            $table->string('product_embed', 128)->nullable();
             $table->softDeletes();
             $table->timestamps();
 
