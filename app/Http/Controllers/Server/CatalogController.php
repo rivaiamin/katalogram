@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Entity\Product;
 
 class CatalogController extends Controller
 {
@@ -16,9 +17,9 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $test = 'test';
+        $test['catalogList'] = Product::all();
 
-        return $test;
+        return json_encode($test);
     }
 
     /**
