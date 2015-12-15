@@ -18,9 +18,11 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $test['catalogList'] = Product::with(['user'])->get();
+        $data['catalogList'] = Product::with(['user'])
+                                // ->where('user_id', 2)
+                                ->get();
 
-        return json_encode($test);
+        return json_encode($data);
     }
 
     /**
