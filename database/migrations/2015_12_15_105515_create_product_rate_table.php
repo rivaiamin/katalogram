@@ -16,6 +16,7 @@ class CreateProductRateTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('criteria_id')->unsigned();
+            $table->integer('rate_value')->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')

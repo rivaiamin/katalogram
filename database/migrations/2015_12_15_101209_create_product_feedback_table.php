@@ -18,6 +18,7 @@ class CreateProductFeedbackTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->integer('feedback_time')->unsigned();
             $table->string('feedback_comment', 128);
+            $table->boolean('feedback_endorse');
             $table->enum('feedback_type', array('P', 'N'));
             $table->softDeletes();
             $table->timestamps();

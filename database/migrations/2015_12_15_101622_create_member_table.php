@@ -16,9 +16,7 @@ class CreateMemberTable extends Migration
             $table->increments('id');
             $table->string('member_name', 64);
             $table->integer('member_born')->unsigned();
-            $table->string('member_address', 128);
-            $table->string('member_phone', 16);
-            $table->string('member_city', 32);
+            $table->enum('member_gender', array('L', 'P'));
             $table->string('member_summary', 128);
             $table->text('member_profile');
             $table->string('member_website', 128);
