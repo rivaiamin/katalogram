@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
-    protected $table = 'product';
+    protected $table = 'product_feedback';
 
     protected $fillable = [
     	'user_id',
