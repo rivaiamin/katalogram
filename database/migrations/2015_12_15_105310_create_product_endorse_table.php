@@ -14,7 +14,22 @@ class CreateProductEndorseTable extends Migration
     {
         Schema::create('product_endorse', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->integer('endorse_value')->unsigned();
+            $table->integer('endorse_time')->unsigned();
+            $table->string('endorse_quote', 128);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('user')
+                ->onDelete('cascade');
+
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('product')
+                ->onDelete('cascade');
         });
     }
 

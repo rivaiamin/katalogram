@@ -30,4 +30,12 @@ class Product extends Model
         return $this->belongsTo('App\Entity\User');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function category() {
+        return $this->belongsTo('App\Entity\Category');
+    }
+
+
 }

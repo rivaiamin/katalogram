@@ -23,6 +23,46 @@ Route::group([
         'uses'  => 'admin\DashboardController@index'
     ]);
 
+    /*user
+    =================================================================*/
+
+    Route::get('user', [
+        'as'    => 'user',
+        'uses'  => 'admin\UserController@index'
+    ]);
+
+    Route::get('user/{id}', [
+        'as'    => 'user.id',
+        'uses'  => 'admin\UserController@show'
+    ]);
+
+    Route::get('user/create', [
+        'as'    => 'user.create',
+        'uses'  => 'admin\UserController@create'
+    ]);
+
+    Route::post('user', [
+        'as'    => 'user.store',
+        'uses'  => 'admin\UserController@store'
+    ]);
+
+    Route::get('user/{id}/edit', [
+        'as'    => 'user.id.edit',
+        'uses'  => 'admin\UserController@edit'
+    ]);   
+
+    Route::patch('user/{id}', 'Admin\UserController@update');
+
+    Route::get('user/{id}/delete', [
+        'as'    => 'user.id.delete',
+        'uses'  => 'admin\UserController@destroy'
+    ]); 
+    /*Route::patch('user/{id}', [
+        'as'    => 'user.id',
+        'uses'  => 'admin\UserController@update'
+    ]); */
+
+
 });
 
 

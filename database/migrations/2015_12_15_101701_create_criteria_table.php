@@ -14,7 +14,14 @@ class CreateCriteriaTable extends Migration
     {
         Schema::create('criteria', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->string('criteria_name', 32);
             $table->timestamps();
+
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('product')
+                ->onDelete('cascade');
         });
     }
 

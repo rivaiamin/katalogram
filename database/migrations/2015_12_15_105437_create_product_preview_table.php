@@ -14,7 +14,15 @@ class CreateProductPreviewTable extends Migration
     {
         Schema::create('product_preview', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->string('preview_pict', 128);
+            $table->string('preview_caption', 128);
             $table->timestamps();
+
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('product')
+                ->onDelete('cascade');
         });
     }
 

@@ -14,7 +14,19 @@ class CreateProductRateTable extends Migration
     {
         Schema::create('product_rate', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('criteria_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('user')
+                ->onDelete('cascade');
+
+            $table->foreign('criteria_id')
+                ->references('id')
+                ->on('criteria')
+                ->onDelete('cascade');
         });
     }
 

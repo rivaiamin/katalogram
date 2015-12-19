@@ -14,6 +14,16 @@ class CreateMemberTable extends Migration
     {
         Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('member_name', 64);
+            $table->integer('member_born')->unsigned();
+            $table->string('member_address', 128);
+            $table->string('member_phone', 16);
+            $table->string('member_city', 32);
+            $table->string('member_summary', 128);
+            $table->text('member_profile');
+            $table->string('member_website', 128);
+            $table->enum('member_type', array('P', 'G'));
+            $table->integer('member_category')->unsigned();
             $table->timestamps();
         });
     }

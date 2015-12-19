@@ -26,7 +26,7 @@ elixir(function(mix) {
 
     mix.scripts([
         'admin/jQuery/jQuery-2.1.4.min.js',
-        'admin/bootstrap.min.js',
+        'admin/bootstrap.min.js'/*,
         'admin/iCheck/icheck.min.js',
         'admin/fastclick/fastclick.min.js',
         'admin/app.min.js',
@@ -36,7 +36,7 @@ elixir(function(mix) {
         'admin/slimScroll/jquery.slimscroll.min.js',
         'admin/chartjs/Chart.min.js',
         'admin/pages/dashboard2.js',
-        'admin/demo.js'
+        'admin/demo.js'*/
     ], 'public/js/admin-js.js', 'public/js');
 
     mix.version(["public/css/admin-css.css", "public/js/admin-js.js"]);
