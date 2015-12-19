@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Server;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Entity\Product;
+use Carbon\Carbon;
 use App\Entity\User;
+use App\Http\Requests;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
+use Redirect;
 
-class CatalogController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +20,10 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $data['catalogList'] = Product::with(['user'])
-                                // ->where('user_id', 2)
-                                ->get();
+        $users = User::latest('created_at')->get();
 
-        // $data['catalogList'] .= 'amm';
 
-        return json_encode($data);
+        return view('admin.user.index')->with('users', $users);
     }
 
     /**
@@ -34,18 +33,27 @@ class CatalogController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.createUser');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateUserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        // User::create($request::all());
+        $input = $request->all();
+
+        $input['level_id'] = 2;
+
+        // return $input;
+
+        User::create($input);
+
+        return Redirect::back();
     }
 
     /**
@@ -56,7 +64,11 @@ class CatalogController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        // dd($user->created_at->addDays(9)->diffForHumans());
+
+        return view('admin.user.user')->with('user', $user);
     }
 
     /**
@@ -67,7 +79,8 @@ class CatalogController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.user.editUser')->with('user', $user);
     }
 
     /**
@@ -77,9 +90,17 @@ class CatalogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $input = $request->all();
+
+        // return $input;
+
+        $user->update($input);
+
+        return Redirect::back();
     }
 
     /**
@@ -90,6 +111,8 @@ class CatalogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return Redirect::back();
     }
 }

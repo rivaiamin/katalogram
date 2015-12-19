@@ -14,7 +14,21 @@ class CreateFeedbackRespondTable extends Migration
     {
         Schema::create('feedback_respond', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('feedback_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('respond_date')->unsigned();
+            $table->integer('respond_type')->unsigned();
             $table->timestamps();
+
+            $table->foreign('feedback_id')
+                ->references('id')
+                ->on('product_feedback')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('user')
+                ->onDelete('cascade');
         });
     }
 

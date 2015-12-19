@@ -14,7 +14,19 @@ class CreateMemberContactTable extends Migration
     {
         Schema::create('member_contact', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('member_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('user')
+                ->onDelete('cascade');
+
+            $table->foreign('member_id')
+                ->references('id')
+                ->on('member')
+                ->onDelete('cascade');
         });
     }
 

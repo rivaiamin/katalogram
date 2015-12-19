@@ -5,8 +5,8 @@
 <div  class="heading-bar">
         
     <div class="clearfix">
-        <h1 class="float-left"><i class="fa fa-book"></i> User</h1>
-        <a href="#" class="btn btn-primary float-right"><i icon class='fa fa-fw fa-plus'></i> Create User</a>
+        <h1 class="float-left"><i class="fa fa-users"></i> User</h1>
+        <a href="{{ route('user.create')}}" class="btn btn-primary float-right"><i icon class='fa fa-fw fa-plus'></i> Create User</a>
     </div>
 </div>
 
@@ -18,16 +18,21 @@
           <tr>
             <th>Nama User</th>
             <th>Email</th>
+            <th>Action</th>
           </tr>
         </thead>
 
         <tbody>
 
-		@foreach ($user as $users)
+		@foreach ($users as $user)
 
           <tr>
-            <th>{{$users->user_name}}</th>
-            <th>{{$users->email}}</th>
+            <th><a href="{{ route('user.id', $user->id) }}">{{$user->user_name}}</a></th>
+            <th>{{$user->email}}</th>
+            <th>
+              <a href="{{ route('user.id.edit', $user->id) }}" class="btn btn-primary">edit</a>
+              <a href="{{ route('user.id.delete', $user->id) }}" class="btn btn-danger">delete</a>
+            </th>
           </tr>
 
 		@endforeach
@@ -38,6 +43,7 @@
           <tr>
             <th>Nama User</th>
             <th>Email</th>
+            <th>Action</th>
           </tr>
         </tfoot>
       </table>
