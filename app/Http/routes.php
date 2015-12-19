@@ -70,7 +70,7 @@ Route::group([
 ======================================================================*/
 
 Route::group([
-    'domain' => 'server.' . env('APP_DOMAIN')
+    'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
 	Route::get('/', [
