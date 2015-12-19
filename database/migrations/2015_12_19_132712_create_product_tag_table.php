@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductEmbedTable extends Migration
+class CreateProductTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,20 @@ class CreateProductEmbedTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_embed', function (Blueprint $table) {
+        Schema::create('product_tag', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->integer('embed_type')->unsigned();
-            $table->string('embed_link');
+            $table->integer('tag_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('product_id')
                 ->references('id')
                 ->on('product')
+                ->onDelete('cascade');
+
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tag')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +37,6 @@ class CreateProductEmbedTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_embed');
+        Schema::drop('product_tag');
     }
 }
