@@ -37,5 +37,12 @@ class Product extends Model
         return $this->belongsTo('App\Entity\Category');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function feedback() {
+        return $this->hasMany('App\Entity\Feeback');
+    }
+
 
 }

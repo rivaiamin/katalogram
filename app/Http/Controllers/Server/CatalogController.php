@@ -18,7 +18,7 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $data['catalogList'] = Product::with(['user'])
+        $data['catalogList'] = Product::with(['user','category'])
                                 // ->where('user_id', 2)
                                 ->get();
 
