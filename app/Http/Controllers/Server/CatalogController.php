@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Entity\Product;
-use App\Entity\User;
+use App\Product;
+use App\User;
 
 class CatalogController extends Controller
 {
@@ -18,8 +18,19 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $data['catalogList'] = Product::with(['user','category'])
+        $data['catalogList'] = Product::with(['owner','category'])
                                 // ->where('user_id', 2)
+                                ->get();
+
+        // $data['catalogList'] .= 'amm';
+
+        return json_encode($data);
+    }
+
+    public function category($id)
+    {
+        $data['catalogList'] = Product::with(['owner','category'])
+                                ->where('category_id', $id)
                                 ->get();
 
         // $data['catalogList'] .= 'amm';

@@ -23,7 +23,19 @@ Route::group([
         'uses'  => 'Admin\DashboardController@index'
     ]);
 
-    /*user
+    /*user auth
+    =================================================================*/
+
+/*    // Authentication Routes...
+    Route::get('auth/login', 'Auth\AuthController@getLogin');
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+    // Registration Routes...
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+*/    /*user
     =================================================================*/
 
     Route::get('user', [
@@ -31,14 +43,14 @@ Route::group([
         'uses'  => 'Admin\UserController@index'
     ]);
 
-    Route::get('user/{id}', [
-        'as'    => 'user.id',
-        'uses'  => 'Admin\UserController@show'
-    ]);
-
     Route::get('user/create', [
         'as'    => 'user.create',
         'uses'  => 'Admin\UserController@create'
+    ]);
+
+    Route::get('user/{id}', [
+        'as'    => 'user.id',
+        'uses'  => 'Admin\UserController@show'
     ]);
 
     Route::post('user', [
@@ -73,9 +85,37 @@ Route::group([
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
-	Route::get('/', [
-        'as'    => 'dashboard',
+	Route::get('catalog', [
+        'as'    => 'catalog',
         'uses'  => 'Server\CatalogController@index'
     ]);
 
+    Route::get('catalog/{id}/category', [
+        'as'    => 'catalog.category.id',
+        'uses'  => 'Server\CatalogController@category'
+    ]);
+
+    Route::post('catalog', [
+        'as'    => 'catalog.store',
+        'uses'  => 'Server\CatalogController@store'
+    ]);
+
+    Route::get('catalog/{id}/edit', [
+        'as'    => 'catalog.id.edit',
+        'uses'  => 'Server\CatalogController@edit'
+    ]);   
+
+    Route::patch('catalog/{id}', 'Server\CatalogController@update');
+
+    Route::get('catalog/{id}/delete', [
+        'as'    => 'catalog.id.delete',
+        'uses'  => 'Server\CatalogController@destroy'
+    ]); 
+
 });
+
+Route::controllers([
+    'auth'  => 'Auth\AuthController',
+    'password'  => 'Auth\PasswordController',
+]);
+

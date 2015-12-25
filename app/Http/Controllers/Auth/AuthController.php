@@ -10,6 +10,11 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+
+    protected $redirectPath = '/user';
+
+    // protected $loginPath = '/login';
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -22,6 +27,7 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+
 
     /**
      * Create a new authentication controller instance.
@@ -57,6 +63,7 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'level_id' => $data['level_id'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
