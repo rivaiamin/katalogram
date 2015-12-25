@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Server;
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
 use App\Http\Requests;
+use App\Http\Requests\CatalogRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\User;
@@ -19,7 +21,7 @@ class CatalogController extends Controller
     public function index()
     {
         $data['catalogList'] = Product::with(['owner','category'])
-                                // ->where('user_id', 2)
+                                ->where('deleted_at', NULL)
                                 ->get();
 
         // $data['catalogList'] .= 'amm';
@@ -27,9 +29,10 @@ class CatalogController extends Controller
         return json_encode($data);
     }
 
-    public function category($id)
+    public function categoryProduct($id)
     {
         $data['catalogList'] = Product::with(['owner','category'])
+                                ->where('deleted_at', NULL)
                                 ->where('category_id', $id)
                                 ->get();
 
@@ -39,24 +42,20 @@ class CatalogController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CatalogRequest $request)
     {
-        //
+        $input = $request->all();
+
+        // return $input;
+
+        Product::create($input);
+
+        return Redirect::back();
     }
 
     /**
@@ -71,26 +70,23 @@ class CatalogController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CatalogRequest $request, $id)
     {
-        //
+        $catalog = Product::findOrFail($id);
+
+        $input = $request->all();
+
+        // return $input;
+
+        $catalog->update($input);
+
+        return Redirect::back();
     }
 
     /**
@@ -101,6 +97,14 @@ class CatalogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $catalog = Product::findOrFail($id);
+
+        $input['deleted_at'] = Carbon::now();
+
+        // return $input;
+
+        $catalog->update($input);
+
+        return redirect('/catalog');
     }
 }

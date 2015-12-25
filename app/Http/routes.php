@@ -85,14 +85,18 @@ Route::group([
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
+
+    /*route catalog list
+    =================================================================*/
+
 	Route::get('catalog', [
         'as'    => 'catalog',
         'uses'  => 'Server\CatalogController@index'
     ]);
 
     Route::get('catalog/{id}/category', [
-        'as'    => 'catalog.category.id',
-        'uses'  => 'Server\CatalogController@category'
+        'as'    => 'catalog.id.category',
+        'uses'  => 'Server\CatalogController@categoryProduct'
     ]);
 
     Route::post('catalog', [
@@ -100,12 +104,10 @@ Route::group([
         'uses'  => 'Server\CatalogController@store'
     ]);
 
-    Route::get('catalog/{id}/edit', [
-        'as'    => 'catalog.id.edit',
-        'uses'  => 'Server\CatalogController@edit'
-    ]);   
-
-    Route::patch('catalog/{id}', 'Server\CatalogController@update');
+    Route::post('catalog/{id}', [
+        'as'    => 'catalog.id',
+        'uses'  => 'Server\CatalogController@update'
+    ]);  
 
     Route::get('catalog/{id}/delete', [
         'as'    => 'catalog.id.delete',
@@ -113,6 +115,10 @@ Route::group([
     ]); 
 
 });
+
+
+/*route authenticate katalogram
+======================================================================*/
 
 Route::controllers([
     'auth'  => 'Auth\AuthController',
