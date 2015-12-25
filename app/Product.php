@@ -20,7 +20,8 @@ class Product extends Model
     	'product_website',
     	'product_release',
     	'product_view',
-    	'product_embed'
+    	'product_embed',
+        'deleted_at'
     ];
 
      /**
