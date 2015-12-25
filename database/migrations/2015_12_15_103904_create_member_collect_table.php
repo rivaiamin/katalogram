@@ -20,7 +20,7 @@ class CreateMemberCollectTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('user')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->foreign('product_id')

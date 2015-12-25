@@ -24,7 +24,7 @@ class UserRequest extends Request
     public function rules()
     {
         return [
-            'user_name' => 'required|min:3',
+            'name' => 'required|min:3',
             'email' => 'required|email'
         ];
     }

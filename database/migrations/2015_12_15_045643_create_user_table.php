@@ -12,10 +12,10 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('level_id')->unsigned();
-            $table->string('user_name');
+            $table->integer('level_id')->unsigned()->nullable();;
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 255);
             $table->integer('user_join')->unsigned()->nullable();
@@ -39,6 +39,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user');
+        Schema::drop('users');
     }
 }

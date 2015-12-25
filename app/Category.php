@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +23,7 @@ class Category extends Model
      */
     public function subCategory()
     {
-        return $this->hasMany('App\Entity\Category', 'category_parent');
+        return $this->hasMany('App\Category', 'category_parent');
     }
 
     /**
@@ -32,13 +32,13 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('App\Entity\Category', 'category_parent');
+        return $this->belongsTo('App\Category', 'category_parent');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function product() {
-        return $this->hasMany('App\Entity\Product');
+        return $this->hasMany('App\Product');
     }
 }

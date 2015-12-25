@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,22 +26,22 @@ class Product extends Model
      /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function user() {
-        return $this->belongsTo('App\Entity\User');
+    public function owner() {
+        return $this->belongsTo('App\User');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function category() {
-        return $this->belongsTo('App\Entity\Category');
+        return $this->belongsTo('App\Category');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function feedback() {
-        return $this->hasMany('App\Entity\Feeback');
+        return $this->hasMany('App\Feeback');
     }
 
 

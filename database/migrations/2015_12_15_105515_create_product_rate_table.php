@@ -21,7 +21,7 @@ class CreateProductRateTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('user')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->foreign('criteria_id')

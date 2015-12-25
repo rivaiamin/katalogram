@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
-use App\Entity\User;
+use App\User;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
@@ -13,6 +13,17 @@ use Redirect;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        if($this->middleware('auth')){
+            
+            return Redirect('/auth/login');
+        }
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *

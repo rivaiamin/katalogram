@@ -18,6 +18,7 @@
           <tr>
             <th>Nama User</th>
             <th>Email</th>
+            <th>User Level</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -27,8 +28,9 @@
 		@foreach ($users as $user)
 
           <tr>
-            <th><a href="{{ route('user.id', $user->id) }}">{{$user->user_name}}</a></th>
+            <th><a href="{{ route('user.id', $user->id) }}">{{$user->name}}</a></th>
             <th>{{$user->email}}</th>
+            <th>{{$user->level->level_name}}</th>
             <th>
               <a href="{{ route('user.id.edit', $user->id) }}" class="btn btn-primary">edit</a>
               <a href="{{ route('user.id.delete', $user->id) }}" class="btn btn-danger">delete</a>
@@ -43,6 +45,7 @@
           <tr>
             <th>Nama User</th>
             <th>Email</th>
+            <th>User Level</th>
             <th>Action</th>
           </tr>
         </tfoot>
