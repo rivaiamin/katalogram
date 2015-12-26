@@ -119,6 +119,13 @@ Route::group([
         'uses'  => 'Server\CatalogController@destroy'
     ]); 
 
+    /*route product by id
+    =================================================================*/
+
+    Route::get('product/{id}', [
+        'as'    => 'product.id',
+        'uses'  => 'Server\ProductController@index'
+    ]);
 });
 
 
