@@ -18,6 +18,11 @@ Route::group([
     'domain' => 'admin.' . env('APP_DOMAIN')
 ], function() {
 
+    Route::get('foo', ['middleware' => 'role', function()
+    {
+        return "hanya untuk manager";
+    }]);
+
 	Route::get('/', [
         'as'    => 'dashboard',
         'uses'  => 'Admin\DashboardController@index'

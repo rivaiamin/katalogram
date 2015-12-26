@@ -25,3 +25,8 @@
 
 	            </div><!-- /.box-body -->
 	          </div><!-- /.box -->
+
+	          <div class="form-group">
+				        <a href="#" class="btn btn-default pull-left">Cancel</a>
+				        {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary pull-right']) !!}
+				    </div>
