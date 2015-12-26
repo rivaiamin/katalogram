@@ -4,4 +4,8 @@
             <li>{{ $error }}</li>
         @endforeach
     </ul>
+@elseif(session('flash_message'))
+	<diV class="alert alert-success">
+		{{ session('flash_message') }}
+	</div>
 @endif

@@ -16,10 +16,20 @@ class UserController extends Controller
 
     public function __construct()
     {
-        if($this->middleware('auth')){
+        /*if($this->middleware('auth')){
             
             return Redirect('/auth/login');
-        }
+        }*/
+
+
+        /*only spesific
+        ===============================*/
+        // $this->middleware('auth', ['only' => 'create']);
+        // ===============================
+
+        $this->middleware('auth');
+
+        // $this->middleware('role:admin');
 
     }
 
@@ -64,7 +74,7 @@ class UserController extends Controller
 
         User::create($input);
 
-        return Redirect::back();
+        return Redirect::back()->with('flash_message', 'User has been created');
     }
 
     /**
@@ -111,7 +121,7 @@ class UserController extends Controller
 
         $user->update($input);
 
-        return Redirect::back();
+        return Redirect::back()->with('flash_message', 'User has been updated');
     }
 
     /**
@@ -122,8 +132,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::findOrFail($id);
+        // dd($user->name);
         User::findOrFail($id)->delete();
 
-        return Redirect::back();
+        return Redirect::back()->with('flash_message', 'User "'.$user->name.'" has been deleted');
     }
 }

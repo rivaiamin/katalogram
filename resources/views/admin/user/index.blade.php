@@ -10,6 +10,8 @@
     </div>
 </div>
 
+@include('errors.list')
+
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -33,7 +35,7 @@
             <th>{{$user->level->level_name}}</th>
             <th>
               <a href="{{ route('user.id.edit', $user->id) }}" class="btn btn-primary">edit</a>
-              <a href="{{ route('user.id.delete', $user->id) }}" class="btn btn-danger">delete</a>
+              <a onclick="return confirm('Are you sure you want to delete?')" href="{{ route('user.id.delete', $user->id) }}" class="btn btn-danger">delete</a>
             </th>
           </tr>
 

@@ -19,12 +19,8 @@
 	    <div class="col-md-12">
    		{!! Form::open(['route' => 'user.store']) !!}
 
-			@include('admin.user.inputForm')
+			@include('admin.user.inputForm', ['submitButtonText' => 'Add User'])
 		    
-		    <div class="form-group">
-		        <a href="#" class="btn btn-default pull-left">Cancel</a>
-		        {!! Form::submit('Add User', ['class' => 'btn btn-primary pull-right']) !!}
-		    </div>
 	    
 		{!! Form::close() !!}
 	    </div>

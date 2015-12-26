@@ -44,4 +44,41 @@ class User extends Model implements AuthenticatableContract,
     public function level() {
         return $this->belongsTo('App\UserLevel');
     }
+
+    public function assignRole($role)
+    {
+        if (is_string($role)) {
+            $role = UserLevel::where('level_name', $role)->first();
+        }
+ 
+        return $this->level()->attach($role);
+    }
+     
+    public function revokeRole($role)
+    {
+        if (is_string($role)) {
+            $role = UserLevel::where('level_name', $role)->first();
+        }
+ 
+        return $this->level()->detach($role);
+    }
+
+    public function hasRole($name)
+    {
+        foreach($this->level as $role)
+        {
+            if ($role->level_name === $name) return true;
+        }
+         
+        return false;
+    }
+
+    public function adminRole($name)
+    {
+
+        if ($name == 2) return true;
+        
+         
+        return false;
+    }
 }

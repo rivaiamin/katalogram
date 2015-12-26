@@ -19,12 +19,7 @@
 	    <div class="col-md-12">
 		{!! Form::model($user, ['method' => 'PATCH', 'action' => ['Admin\UserController@update', $user->id]]) !!}
 
-			@include('admin.user.inputForm')
-		    
-		    <div class="form-group">
-		        <a href="#" class="btn btn-default pull-left">Cancel</a>
-		        {!! Form::submit('Update User', ['class' => 'btn btn-primary pull-right']) !!}
-		    </div>
+			@include('admin.user.inputForm', ['submitButtonText' => 'Update User'])
 	    
 		{!! Form::close() !!}
 	    </div>
