@@ -1,0 +1,70 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'setellizer' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.40
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'setellizer', null ]
+6 verbose cache add name=undefined spec="setellizer" args=["setellizer",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'setellizer',
+7 verbose parsed url   path: 'setellizer',
+7 verbose parsed url   href: 'setellizer' }
+8 silly lockFile f38e0ea6-setellizer setellizer
+9 verbose lock setellizer C:\Users\BG-69\AppData\Roaming\npm-cache\f38e0ea6-setellizer.lock
+10 silly lockFile f38e0ea6-setellizer setellizer
+11 silly lockFile f38e0ea6-setellizer setellizer
+12 verbose addNamed [ 'setellizer', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 5a21b48a-setellizer setellizer@
+15 verbose lock setellizer@ C:\Users\BG-69\AppData\Roaming\npm-cache\5a21b48a-setellizer.lock
+16 silly addNameRange { name: 'setellizer', range: '*', hasData: false }
+17 verbose request where is /setellizer
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id 1bb71b685ac9a85f
+20 verbose url raw /setellizer
+21 verbose url resolving [ 'https://registry.npmjs.org/', './setellizer' ]
+22 verbose url resolved https://registry.npmjs.org/setellizer
+23 verbose request where is https://registry.npmjs.org/setellizer
+24 info trying registry request attempt 1 at 16:55:33
+25 http GET https://registry.npmjs.org/setellizer
+26 http 404 https://registry.npmjs.org/setellizer
+27 silly registry.get cb [ 404,
+27 silly registry.get   { 'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=0',
+27 silly registry.get     'content-length': '2',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     date: 'Sat, 16 Jan 2016 09:55:47 GMT',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     connection: 'keep-alive',
+27 silly registry.get     'x-served-by': 'cache-lax1432-LAX',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1452938146.764551,VS0,VE318' } ]
+28 silly lockFile 5a21b48a-setellizer setellizer@
+29 silly lockFile 5a21b48a-setellizer setellizer@
+30 error 404 Not Found
+30 error 404
+30 error 404 'setellizer' is not in the npm registry.
+30 error 404 You should bug the author to publish it
+30 error 404
+30 error 404 Note that you can also install from a
+30 error 404 tarball, folder, or http url, or git url.
+31 error System Windows_NT 6.1.7600
+32 error command "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "setellizer"
+33 error cwd D:\xampp\htdocs\katalogram
+34 error node -v v0.10.40
+35 error npm -v 1.4.28
+36 error code E404
+37 verbose exit [ 1, true ]
