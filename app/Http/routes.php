@@ -90,42 +90,29 @@ Route::group([
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
+    /*route authencticate with jwt-auth
+    =================================================================*/
 
+    Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
+    Route::post('member/login', 'Auth\AuthenticateController@authenticate');
+    
     /*route catalog list
     =================================================================*/
 
-	Route::get('catalog', [
-        'as'    => 'catalog',
-        'uses'  => 'Server\CatalogController@index'
-    ]);
+    Route::get('catalog', 'Server\CatalogController@index');
 
-    Route::get('catalog/{id}/category', [
-        'as'    => 'catalog.id.category',
-        'uses'  => 'Server\CatalogController@categoryProduct'
-    ]);
+    Route::get('catalog/{id}/category', 'Server\CatalogController@categoryProduct');
 
-    Route::post('catalog', [
-        'as'    => 'catalog.store',
-        'uses'  => 'Server\CatalogController@store'
-    ]);
+    Route::post('catalog', 'Server\CatalogController@store');
 
-    Route::post('catalog/{id}', [
-        'as'    => 'catalog.id',
-        'uses'  => 'Server\CatalogController@update'
-    ]);  
+    Route::post('catalog/{id}', 'Server\CatalogController@update');  
 
-    Route::get('catalog/{id}/delete', [
-        'as'    => 'catalog.id.delete',
-        'uses'  => 'Server\CatalogController@destroy'
-    ]); 
+    Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
 
     /*route product by id
     =================================================================*/
 
-    Route::get('product/{id}', [
-        'as'    => 'product.id',
-        'uses'  => 'Server\ProductController@index'
-    ]);
+    Route::get('product/{id}', 'Server\ProductController@index');
 });
 
 
