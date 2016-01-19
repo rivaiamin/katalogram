@@ -24,8 +24,9 @@ class CatalogRequest extends Request
     public function rules()
     {
         return [
-            'product_code' => 'required',
             'product_name' => 'required',
+            'category_id' => 'required',
+            /*'product_code' => 'required',
             'product_logo' => 'required',
             'product_quote' => 'required',
             'product_desc' => 'required|min:3',
@@ -33,7 +34,7 @@ class CatalogRequest extends Request
             'product_website' => 'required',
             'product_release' => 'required',
             'product_view' => 'required',
-            'product_embed' => 'required'
+            'product_embed' => 'required'*/
         ];
     }
 }

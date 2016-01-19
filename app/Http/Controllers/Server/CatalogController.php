@@ -51,11 +51,20 @@ class CatalogController extends Controller
     {
         $input = $request->all();
 
-        // return $input;
+        //return $input;
 
-        Product::create($input);
+        $create = Product::create($input);
 
-        return Redirect::back();
+        if ($create) {
+            $data['status'] = "success";
+            $data['message'] = "Katalog telah berhasil dibuat";
+        } else {
+            $data['status'] = "error";
+            $data['message'] = "Katalog gagal dibuat";
+        }
+
+        return json_encode($data);
+        //return Redirect::back();
     }
 
     /**
