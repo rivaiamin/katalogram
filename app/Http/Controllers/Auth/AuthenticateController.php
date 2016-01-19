@@ -27,6 +27,20 @@ class AuthenticateController extends Controller
         $users = User::all();
         return $users;
     }
+
+    public function store(UserRequest $request)
+    {
+        // User::create($request::all());
+        $input = $request->all();
+
+        $input['level_id'] = 3;
+
+        // return $input;
+
+        User::create($input);
+
+        return Redirect::back()->with('flash_message', 'User has been created');
+    }
     
     public function authenticate(Request $request)
     {
