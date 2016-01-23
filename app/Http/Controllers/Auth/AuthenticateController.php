@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
+use Redirect;
+use Hash;
 
 class AuthenticateController extends Controller
 {
@@ -28,18 +30,26 @@ class AuthenticateController extends Controller
         return $users;
     }
 
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
         // User::create($request::all());
-        $input = $request->all();
+        $input = $request->only('name', 'email','password','password_confirmation' );
 
         $input['level_id'] = 3;
 
-        // return $input;
+        if($input['password'] == $input['password_confirmation']){
+            // return $input;
+            $input['password'] = Hash::make($input['password']);
+            
+            User::create($input);
 
-        User::create($input);
+            return Redirect::back()->with('flash_message', 'User has been created');
+        }
+        else {
+            return Redirect::back()->with('flash_message', 'User failed');
+        }
 
-        return Redirect::back()->with('flash_message', 'User has been created');
+
     }
     
     public function authenticate(Request $request)

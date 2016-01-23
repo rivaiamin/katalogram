@@ -95,6 +95,7 @@ Route::group([
 
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
     Route::post('member/login', 'Auth\AuthenticateController@authenticate');
+    Route::post('member/register', 'Auth\AuthenticateController@store');
     
     /*route catalog list
     =================================================================*/
