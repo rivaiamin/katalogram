@@ -94,8 +94,12 @@ Route::group([['middleware' => 'cors'],
     =================================================================*/
 
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
-    Route::post('member/login', 'Auth\AuthenticateController@authenticate');
+    Route::post('member/login', 'Auth\AuthenticateController@login');
+    Route::post('member/register', 'Auth\AuthenticateController@register');
+    Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
+    Route::post('auth/google', 'Auth\AuthenticateController@google');
     
+
     /*route catalog list
     =================================================================*/
 
