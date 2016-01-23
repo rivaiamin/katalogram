@@ -86,7 +86,7 @@ Route::group([
 /*route server katalogram
 ======================================================================*/
 
-Route::group([
+Route::group([['middleware' => 'cors'],
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
