@@ -10,12 +10,12 @@ class Preview extends Model
 
     protected $fillable = [
     	'product_id',
-    	'preview_id',
     	'preview_pict',
     	'preview_caption'
     ];
 
     public function product() {
-    	return $this->belongsTo('App\Entity\product');
+        return $this->belongsTo('App\Product');
     }
+
 }

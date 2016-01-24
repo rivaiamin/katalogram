@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use GuzzleHttp;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use App\User;
+use Redirect;
+use Hash;
 
 class AuthenticateController extends Controller
 {
@@ -21,7 +23,7 @@ class AuthenticateController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth', ['except' => ['login']]);
+         $this->middleware('jwt.auth', ['except' => ['login', 'register']]);
      }
 
     public function index()
@@ -31,19 +33,6 @@ class AuthenticateController extends Controller
         return $users;
     }
 
-    public function store(UserRequest $request)
-    {
-        // User::create($request::all());
-        $input = $request->all();
-        $input['level_id'] = 3;
-
-        // return $input;
-
-        User::create($input);
-
-        return Redirect::back()->with('flash_message', 'User has been created');
-    }
-    
     public function login(Request $request)
     {
         // grab credentials from the request
@@ -63,12 +52,17 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function register(UserRequest $request)
+    public function register(Request $request)
     {
-        $input = $request->all();
+        $input = $request->only('name', 'email','password');
+
         $input['level_id'] = 3;
-        // return $input;
+
+        $input['password'] = Hash::make($input['password']);
+            
         User::create($input);
+
+        $credentials = $request->only('name', 'password');
 
         try {
             // attempt to verify the credentials and create a token for the user

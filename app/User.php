@@ -81,4 +81,9 @@ class User extends Model implements AuthenticatableContract,
          
         return false;
     }
+
+    public function memberContact()
+    {
+        
+    }
 }

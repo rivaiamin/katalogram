@@ -42,7 +42,15 @@ class Product extends Model
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function feedback() {
-        return $this->hasMany('App\Feeback');
+        return $this->hasMany('App\Feedback');
+    }
+
+    public function tags() {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    public function preview() {
+        return $this->hasMany('App\Preview');
     }
 
 

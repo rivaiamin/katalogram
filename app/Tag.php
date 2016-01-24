@@ -12,7 +12,7 @@ class Tag extends Model
     	'tag_name'
     ];
 
-    public function productTag() {
-    	return $this->hasMany('App\Entity\ProductTag');
+    public function product() {
+    	return $this->belongsToMany('App\Product');
     }
 }
