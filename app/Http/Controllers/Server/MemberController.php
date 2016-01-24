@@ -59,7 +59,7 @@ class MemberController extends Controller
         }
         else {
             $params = [
-                'status' => "failed",
+                'status' => "error",
                 'message' => "gambar gagal diperbarui",
             ];
         }

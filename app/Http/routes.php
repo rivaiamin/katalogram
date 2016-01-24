@@ -98,21 +98,36 @@ Route::group([['middleware' => 'cors'],
     Route::post('member/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
-    
 
-    /*route catalog list
+    /*route member
     =================================================================*/
 
     Route::get('{username}', 'Server\MemberController@memberProfile');
     Route::put('{username}', 'Server\MemberController@updateMember');
     Route::put('{username}/pict', 'Server\MemberController@changePict');
 
+    /*route tag
+    =================================================================*/
+
+    Route::post('catalog/{productId}/tag', 'Server\TagController@addTag');
+    Route::delete('catalog/{productId}/tag/{tagId}', 'Server\TagController@deleteTag');
+
+    /*route preview
+    =================================================================*/
+
+    Route::post('catalog/{productId}/preview', 'Server\PreviewController@previewUpload');
+
+    /*route feedback
+    =================================================================*/
+
+    Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
+
     /*route catalog list
     =================================================================*/
 
     Route::get('catalog', 'Server\CatalogController@index');
 
-    Route::get('catalog/{id}/category', 'Server\CatalogController@categoryProduct');
+    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@catalogCategory');
 
     Route::post('catalog', 'Server\CatalogController@store');
 
@@ -120,10 +135,10 @@ Route::group([['middleware' => 'cors'],
 
     Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
 
-    /*route product by id
-    =================================================================*/
+    Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
 
-    Route::get('product/{id}', 'Server\ProductController@index');
+    Route::get('catalog/{id}', 'Server\CatalogController@catalogDetail');
+
 });
 
 

@@ -56,7 +56,6 @@ class AuthenticateController extends Controller
     {
         $input = $request->only('name', 'email','password');
 
-        $input = $request->all();
         $input['level_id'] = 3;
 
         $input['password'] = Hash::make($input['password']);

@@ -29,7 +29,13 @@ class CatalogController extends Controller
         return json_encode($data);
     }
 
-    public function categoryProduct($id)
+    public function catalogDetail($id){
+        $data['product'] = Product::with(['owner','category'])->where('id', $id)->get();
+
+        return json_encode($data);
+    }
+
+    public function catalogCategory($id)
     {
         $data['catalogList'] = Product::with(['owner','category'])
                                 ->where('deleted_at', NULL)
@@ -115,5 +121,32 @@ class CatalogController extends Controller
         $catalog->update($input);
 
         return redirect('/catalog');
+    }
+
+    public function logoUpload(Request $request, $productId)
+    {
+        $product = Product::where('id', $productId);
+
+        $input = $request->only('product_logo');
+
+        // dd($input);
+
+        $product->update($input);
+
+        if ($product->first()){
+
+            $params = [
+                'status' => "success",
+                'message' => "Logo ikon telah berhasil diperbarui",
+            ];
+        }
+        else {
+            $params = [
+                'status' => "error",
+                'message' => "Logo ikon gagal diperbarui",
+            ];
+        }
+        
+        return json_encode($params);
     }
 }
