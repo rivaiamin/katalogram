@@ -23,7 +23,7 @@ class AuthenticateController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth', ['except' => ['login']]);
+         $this->middleware('jwt.auth', ['except' => ['login', 'register']]);
      }
 
     public function index()
@@ -33,32 +33,6 @@ class AuthenticateController extends Controller
         return $users;
     }
 
-    public function store(Request $request)
-    {
-        // User::create($request::all());
-<<<<<<< HEAD
-        $input = $request->only('name', 'email','password','password_confirmation' );
-
-=======
-        $input = $request->all();
->>>>>>> e35617a5ca44484488ff7338d576bc8b79c1124a
-        $input['level_id'] = 3;
-
-        if($input['password'] == $input['password_confirmation']){
-            // return $input;
-            $input['password'] = Hash::make($input['password']);
-            
-            User::create($input);
-
-            return Redirect::back()->with('flash_message', 'User has been created');
-        }
-        else {
-            return Redirect::back()->with('flash_message', 'User failed');
-        }
-
-
-    }
-    
     public function login(Request $request)
     {
         // grab credentials from the request
@@ -78,12 +52,18 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function register(UserRequest $request)
+    public function register(Request $request)
     {
+        $input = $request->only('name', 'email','password');
+
         $input = $request->all();
         $input['level_id'] = 3;
-        // return $input;
+
+        $input['password'] = Hash::make($input['password']);
+            
         User::create($input);
+
+        $credentials = $request->only('name', 'password');
 
         try {
             // attempt to verify the credentials and create a token for the user

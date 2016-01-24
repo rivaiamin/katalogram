@@ -94,16 +94,18 @@ Route::group([['middleware' => 'cors'],
     =================================================================*/
 
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
-<<<<<<< HEAD
-    Route::post('member/login', 'Auth\AuthenticateController@authenticate');
-    Route::post('member/register', 'Auth\AuthenticateController@store');
-=======
     Route::post('member/login', 'Auth\AuthenticateController@login');
     Route::post('member/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
->>>>>>> e35617a5ca44484488ff7338d576bc8b79c1124a
     
+
+    /*route catalog list
+    =================================================================*/
+
+    Route::get('{username}', 'Server\MemberController@memberProfile');
+    Route::put('{username}', 'Server\MemberController@updateMember');
+    Route::put('{username}/pict', 'Server\MemberController@changePict');
 
     /*route catalog list
     =================================================================*/
