@@ -144,6 +144,7 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
+        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
@@ -151,11 +152,11 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
+                return response()->json(['message' => 'Akun facebook tersebut sudah terdaftar'], 409);
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWTAuth::decode($token, Config::get('app.token_secret'), array('HS256'));
+            $payload = JWTAuth::decode($token, $customClaims);
 
             $user = User::find($payload['sub']);
             $user->facebook = $profile['id'];
@@ -163,7 +164,7 @@ class AuthenticateController extends Controller
             $user->name = $user->name ?: $profile['name'];
             $user->save();
 
-            $token = JWTAuth::fromUser($user);
+            $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
         }
         // Step 3b. Create a new user account or return an existing one.
@@ -173,7 +174,7 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['token' => JWTAuth::fromUser($user)]);
+                return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
             }
 
             $user = new User;
@@ -183,7 +184,7 @@ class AuthenticateController extends Controller
             $user->name = $profile['name'];
             $user->save();
 
-            $token = JWTAuth::fromUser($user);
+            $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
         }
     }
@@ -215,6 +216,7 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
+        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
@@ -222,18 +224,18 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['message' => 'There is already a Google account that belongs to you'], 409);
+                return response()->json(['message' => 'Akun google tersebut sudah terdaftar'], 409);
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWTAuth::decode($token, Config::get('app.token_secret'), array('HS256'));
-
+            $payload = JWTAuth::decode($token, $customClaims);
+            
             $user = User::find($payload['sub']);
             $user->google = $profile['sub'];
             $user->name = $user->name ?: $profile['name'];
             $user->save();
 
-            return response()->json(['token' => JWTAuth::fromUser($user)]);
+            return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
@@ -242,7 +244,7 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['token' => JWTAuth::fromUser($user)]);
+                return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
             }
 
             $user = new User;
@@ -251,7 +253,7 @@ class AuthenticateController extends Controller
             $user->name= $profile['name'];
             $user->save();
 
-            return response()->json(['token' => JWTAuth::fromUser($user)]);
+            return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
         }
     }
     
