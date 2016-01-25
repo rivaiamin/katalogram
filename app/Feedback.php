@@ -11,8 +11,8 @@ class Feedback extends Model
     protected $fillable = [
     	'user_id',
     	'product_id',
-    	'feeback_comment',
-    	'feeback_type'
+    	'feedback_comment',
+    	'feedback_type'
     ];
 
     public function product() {
