@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
+use Config;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use JWTAuth;
+use JWTFactory;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use GuzzleHttp;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
@@ -21,7 +23,7 @@ class AuthenticateController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth', ['except' => ['login']]);
+         $this->middleware('jwt.auth', ['except' => ['login', 'register','facebook', 'google']]);
      }
 
     public function index()
@@ -29,6 +31,33 @@ class AuthenticateController extends Controller
         // Retrieve all the users in the database and return them
         $users = User::all();
         return $users;
+    }
+
+    public function getAuthenticatedUser()
+    {
+        /*try {
+
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }*/
+
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
+        
+        // the token is valid and we have found the user via the sub claim
+        return response()->json(compact('user'));
     }
 
     public function store(UserRequest $request)
@@ -126,15 +155,16 @@ class AuthenticateController extends Controller
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
+            $payload = (array) JWTAuth::decode($token, Config::get('app.token_secret'), array('HS256'));
 
             $user = User::find($payload['sub']);
             $user->facebook = $profile['id'];
             $user->email = $user->email ?: $profile['email'];
-            $user->displayName = $user->displayName ?: $profile['name'];
+            $user->name = $user->name ?: $profile['name'];
             $user->save();
 
-            return response()->json(['token' => $this->createToken($user)]);
+            $token = JWTAuth::fromUser($user);
+            return response()->json(['token' => $token]);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
@@ -143,16 +173,18 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['token' => $this->createToken($user->first())]);
+                return response()->json(['token' => JWTAuth::fromUser($user)]);
             }
 
             $user = new User;
+            $user->level_id = '3';
             $user->facebook = $profile['id'];
             $user->email = $profile['email'];
-            $user->displayName = $profile['name'];
+            $user->name = $profile['name'];
             $user->save();
 
-            return response()->json(['token' => $this->createToken($user)]);
+            $token = JWTAuth::fromUser($user);
+            return response()->json(['token' => $token]);
         }
     }
 
@@ -194,14 +226,14 @@ class AuthenticateController extends Controller
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
+            $payload = (array) JWTAuth::decode($token, Config::get('app.token_secret'), array('HS256'));
 
             $user = User::find($payload['sub']);
             $user->google = $profile['sub'];
-            $user->displayName = $user->displayName ?: $profile['name'];
+            $user->name = $user->name ?: $profile['name'];
             $user->save();
 
-            return response()->json(['token' => $this->createToken($user)]);
+            return response()->json(['token' => JWTAuth::fromUser($user)]);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
@@ -210,15 +242,16 @@ class AuthenticateController extends Controller
 
             if ($user->first())
             {
-                return response()->json(['token' => $this->createToken($user->first())]);
+                return response()->json(['token' => JWTAuth::fromUser($user)]);
             }
 
             $user = new User;
+            $user->level_id = '3';
             $user->google = $profile['sub'];
             $user->displayName = $profile['name'];
             $user->save();
 
-            return response()->json(['token' => $this->createToken($user)]);
+            return response()->json(['token' => JWTAuth::fromUser($user)]);
         }
     }
     
