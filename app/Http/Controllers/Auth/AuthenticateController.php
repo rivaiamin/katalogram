@@ -248,7 +248,7 @@ class AuthenticateController extends Controller
             $user = new User;
             $user->level_id = '3';
             $user->google = $profile['sub'];
-            $user->displayName = $profile['name'];
+            $user->name= $profile['name'];
             $user->save();
 
             return response()->json(['token' => JWTAuth::fromUser($user)]);
