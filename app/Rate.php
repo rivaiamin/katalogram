@@ -15,10 +15,10 @@ class Rate extends Model
     ];
 
     public function user() {
-    	return $this->belongsTo('App\Entity\User');
+    	return $this->belongsTo('App\User');
     }
 
     public function criteria() {
-    	return $this->belongsTo('App\Entity\Criteria');
+    	return $this->belongsTo('App\Criteria');
     }
 }

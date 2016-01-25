@@ -14,6 +14,6 @@ class RateCriteria extends Model
     ];
 
     public function product() {
-    	$return $this->belongsTo('App\Entity\Product');
+    	$return $this->belongsTo('App\Product');
     }
 }
