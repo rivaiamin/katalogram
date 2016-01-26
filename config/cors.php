@@ -11,12 +11,12 @@ return [
      | to accept any value, the allowed methods however have to be explicitly listed.
      |
      */
-    'supportsCredentials' => true,
+    /*'supportsCredentials' => true,
     'allowedOrigins' => ['http://katalogram.dev'],
     'allowedHeaders' => ['*'],
-    'allowedMethods' => ['GET', 'POST', 'PUT',  'DELETE'],
+    'allowedMethods' => ['GET', 'POST', 'PUT',  'DELETE', 'OPTIONS'],
     'exposedHeaders' => [],
     'maxAge' => 0,
-    'hosts' => [],
+    'hosts' => [],*/
 ];
 

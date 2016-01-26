@@ -1,7 +1,19 @@
 <?php
 
 return [
-
+    
+    'token_secret' => 'KarsaKalana',
+    'facebook_secret' => '772269879a0a31489f6d6ee8aac1b6ae',
+    'foursquare_secret' => '',
+    'google_secret' => 'LDXrtX3Jiq9dXxw6lTdL4zqJ',
+    'github_secret' => '',
+    'instagram_secret' => '',
+    'linkedin_secret' => '',
+    'live_secret' => '',
+    'yahoo_secret' => '',
+    'twitter_key' => '',
+    'twitter_secret' => '',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -145,7 +157,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
+        //Barryvdh\Cors\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
     ],

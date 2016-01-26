@@ -20,6 +20,8 @@ class CreateUserTable extends Migration
             $table->string('password', 255);
             $table->integer('user_join')->unsigned()->nullable();
             $table->string('user_pict', 128)->nullable();
+            $table->string('facebook', 128)->nullable();
+            $table->string('google', 128)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
