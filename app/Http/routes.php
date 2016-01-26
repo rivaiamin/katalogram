@@ -86,7 +86,7 @@ Route::group([
 /*route server katalogram
 ======================================================================*/
 
-Route::group([['middleware' => 'cors'],
+Route::group([//['middleware' => 'cors'],
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
@@ -94,6 +94,7 @@ Route::group([['middleware' => 'cors'],
     =================================================================*/
 
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
+    Route::get('auth/user', 'Auth\AuthenticateController@getAuthenticatedUser');
     Route::post('member/login', 'Auth\AuthenticateController@login');
     Route::post('member/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
