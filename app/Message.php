@@ -11,7 +11,6 @@ class Message extends Model
     protected $table = 'message';
     
     protected $fillable =[
-        'id',
         'message_parent',
         'message_sender',
         'message_recipient',

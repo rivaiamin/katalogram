@@ -11,6 +11,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Requests\MemberRequest;
 
 class MemberController extends Controller
 {
@@ -35,7 +36,32 @@ class MemberController extends Controller
 
     public function updateMember(Request $request, $username)
     {
+        // masih error untuk menggunakan MemberRequest, karena token jadi terkirim dan dianggap tidak cocok denga field di member
+        // $input = $request->all();
 
+        $input = $request->only('member_name','member_born','member_gender','member_summary','member_profile','member_website','member_type','member_category');
+
+        $user = User::where('name', $username)->first();
+
+        // dd($input);
+
+        $user->member()->update($input);
+
+        if ($user->first()){
+
+            $params = [
+                'status' => "success",
+                'message' => "Data profil member telah diperbarui",
+            ];
+        }
+        else {
+            $params = [
+                'status' => "error",
+                'message' => "Data profil gagal diperbarui",
+            ];
+        }
+        
+        return json_encode($params);
     }
 
     public function changePict(Request $request, $username)

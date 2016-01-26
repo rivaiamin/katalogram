@@ -11,7 +11,7 @@ class Member extends Model
     protected $table = 'member';
     
     protected $fillable = [
-        'id',
+        'user_id',
         'member_name',
         'member_born',
         'member_gender',
@@ -21,4 +21,8 @@ class Member extends Model
         'member_type',
         'member_category'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

@@ -60,7 +60,12 @@ class AuthenticateController extends Controller
 
         $input['password'] = Hash::make($input['password']);
             
-        User::create($input);
+        $user = User::create($input);
+
+        if($user){
+            $inputMember['user_id'] = $user->id;
+            $user->member()->create($inputMember);
+        }
 
         $credentials = $request->only('name', 'password');
 

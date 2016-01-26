@@ -14,6 +14,7 @@ class CreateMemberTable extends Migration
     {
         Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->string('member_name', 64);
             $table->integer('member_born')->unsigned();
             $table->enum('member_gender', array('L', 'P'));
@@ -23,6 +24,12 @@ class CreateMemberTable extends Migration
             $table->enum('member_type', array('P', 'G'));
             $table->integer('member_category')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        
         });
     }
 

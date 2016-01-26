@@ -11,7 +11,6 @@ class FeedbackRespond extends Model
     protected $table = 'feedback_respond';
     
     protected $fillable = [
-        'id',
         'feedback_id',
         'user_id',
         'respond_date',
