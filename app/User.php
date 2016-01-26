@@ -82,6 +82,10 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 
+    public function member() {
+        return $this->hasOne('App\Member');
+    }
+
     public function memberContact()
     {
         

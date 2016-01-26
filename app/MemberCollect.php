@@ -11,7 +11,6 @@ class MemberCollect extends Model
     protected $table = 'member_collect';
     
     protected $fillable = [
-        'id',
         'product_id',
         'user_id'
     ];

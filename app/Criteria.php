@@ -11,7 +11,6 @@ class Criteria extends Model
     protected $table = 'criteria';
     
     protected $fillable = [
-        'id',
         'product_id',
         'criteria_name'
     ];
