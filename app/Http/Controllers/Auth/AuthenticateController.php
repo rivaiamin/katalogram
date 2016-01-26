@@ -85,9 +85,7 @@ class AuthenticateController extends Controller
     public function register(Request $request)
     {
         $input = $request->only('name', 'email','password');
-
         $input['level_id'] = 3;
-
         $input['password'] = Hash::make($input['password']);
             
         $user = User::create($input);
