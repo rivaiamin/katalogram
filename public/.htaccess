@@ -15,7 +15,11 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+# Fix authentication headers
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
 # Cors
 Header always set Access-Control-Allow-Origin "http://katalogram.dev"
-Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin"
+Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin, Authorization"
 Header always set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
