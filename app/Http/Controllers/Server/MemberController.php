@@ -26,9 +26,13 @@ class MemberController extends Controller
 
     public function memberProfile($username)
     {
-        $user = User::where('name', $username)->first();
-        $user['catalog'] = Product::where('user_id', $user->id)->get();
-        $user['contact'] = MemberContact::where('user_id', $user->id)->first();
+        $user['member'] = User::with(['member'])->where('name', $username)->get();
+        $user_id = $user['member']->first()->id;
+
+        // dd($user_id);
+        $user['catalog'] = Product::where('user_id', $user_id)->get();
+        $user['collect'] = $user['catalog']->category()->first();
+        $user['contact'] = MemberContact::where('user_id', $user_id)->first();
 
         // dd($userM);
         return json_encode($user);
