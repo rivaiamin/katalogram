@@ -25,4 +25,8 @@ class Member extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+    public function memberContact(){
+        return $this->hasMany('App\MemberContact');
+    }
 }
