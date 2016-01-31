@@ -88,6 +88,6 @@ class User extends Model implements AuthenticatableContract,
 
     public function memberContact()
     {
-        
+        return $this->hasMany('App\MemberContact');
     }
 }

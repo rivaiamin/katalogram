@@ -27,20 +27,26 @@ class MemberController extends Controller
     public function memberProfile($username)
     {
         $user = User::where('name', $username)->first();
-        $user['catalog'] = Product::where('user_id', $user->id)->get();
-        $user['contact'] = MemberContact::where('user_id', $user->id)->first();
 
-        // dd($userM);
+        $product = Product::where('user_id', $user->id)->get();
+
+        $prod = $product->toArray();
+
+        // $test = $product->criteria()->get();
+        dd($prod);
+
+        // dd($user->id);
+        $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
+        $user['contact'] = MemberContact::where('user_id', $user->id)->get();
+        // $user['collect'] = User::memberContact()->get();
         return json_encode($user);
     }
 
     public function updateMember(Request $request, $username)
     {
         // masih error untuk menggunakan MemberRequest, karena token jadi terkirim dan dianggap tidak cocok denga field di member
-        // $input = $request->all();
 
-        $input = $request->only('member_name','member_born','member_gender','member_summary','member_profile','member_website','member_type','member_category');
-
+        $input = $request->except('token');
         $user = User::where('name', $username)->first();
 
         // dd($input);
