@@ -16,10 +16,10 @@ class MemberContact extends Model
     ];
     
     public function user(){
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User');
     }
     
     public function member(){
-        return $this->hasMany('App\Member');
+        return $this->belongsTo('App\Member');
     }
 }

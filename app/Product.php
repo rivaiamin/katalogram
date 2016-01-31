@@ -53,5 +53,15 @@ class Product extends Model
         return $this->hasMany('App\Preview');
     }
 
+    public function criteria() {
+        return $this->hasMany('App\Criteria');
+    }
+
+    // public function criteriaCount() {
+    //     return $this->criteria()
+    //     ->selectRaw('criteria_id, count(*) AS aggregate')
+    //     ->groupBy('criteria_id');
+    // }
+
 
 }

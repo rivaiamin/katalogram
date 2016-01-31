@@ -123,6 +123,23 @@ Route::group([//['middleware' => 'cors'],
 
     Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
 
+    /*route criteria
+    =================================================================*/
+
+    Route::post('catalog/{productId}/criteria', 'Server\CriteriaController@addCriteria');
+    Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\CriteriaController@deleteCriteria');
+    
+    /*route Rate
+    =================================================================*/
+
+    Route::post('catalog/{productId}/rate/{criteriaId}/{rateValue}', 'Server\RateController@giveRate');
+    
+    /*route connection
+    =================================================================*/
+
+    Route::post('connect/{username}', 'Server\ConnectionController@addConnection');
+    Route::delete('connect/{username}', 'Server\ConnectionController@removeConnection');
+
     /*route catalog list
     =================================================================*/
 
