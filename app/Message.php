@@ -24,6 +24,6 @@ class Message extends Model
     }
     
     public function parent(){
-        return $this->belosTo('App\Message','message_parent');
+        return $this->belongsTo('App\Message','message_parent');
     }
 }

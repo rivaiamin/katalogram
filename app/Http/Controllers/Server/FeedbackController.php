@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Server;
 use Illuminate\Http\Request;
 
 use App\Product;
+use App\FeedbackRespond;
+use App\MemberCollect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use Carbon\Carbon;
 
 class FeedbackController extends Controller
 {
@@ -40,5 +43,62 @@ class FeedbackController extends Controller
         }
 
         return json_encode($data);
+    }
+
+    public function respondFeedback($feedbackId, $respondType)
+    {
+        $input = [
+            'user_id'       => Auth::user()->id,
+            'feedback_id'   => $feedbackId,
+            'respond_date'  => Carbon::now(),
+            'respond_type'  => $respondType,
+        ];
+
+        // dd($input);
+
+        $rate = FeedbackRespond::create($input);
+
+        if($rate->first()){
+            $params = [
+                'status' => "success",
+                'message' => "terima kasih telah memberikan respon feedback",
+            ];
+        }
+        else {
+            $params = [
+                'status' => "error",
+                'message' => "maaf anda gagal memberikan respond feedback",
+            ];
+        }
+
+        return json_encode($params);
+    }
+
+    public function giveCollection($productId)
+    {
+        $input = [
+            'user_id'       => Auth::user()->id,
+            'product_id'   => $productId,
+        ];
+
+        $cekMember = MemberCollect::where('product_id', $input['product_id'])
+                                    ->where('user_id', $input['user_id'])
+                                    ->get();
+        // dd($cekMember);
+        if($cekMember->count() < 1){
+            $rate = MemberCollect::create($input);
+            $params = [
+                'status' => "success",
+                'message' => "katalog telah ditambahkan sebagai favorit",
+            ];
+        }
+        else{
+            $params = [
+                'status' => "error",
+                'message' => "maaf anda gagal menambahkan katalog sebagai favorit",
+            ];
+        }
+
+        return json_encode($params);
     }
 }

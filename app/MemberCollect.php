@@ -16,11 +16,11 @@ class MemberCollect extends Model
     ];
     
     public function product(){
-        return $this->hasMany('App\Product');
+        return $this->belongsTo('App\Product', 'product_id');
     }
     
     public function user(){
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User');
     }
     
     
