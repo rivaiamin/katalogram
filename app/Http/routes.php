@@ -100,6 +100,17 @@ Route::group([//['middleware' => 'cors'],
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
 
+    /*route catalog list
+    =================================================================*/
+
+    Route::get('catalog', 'Server\CatalogController@index');
+    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@catalogCategory');
+    Route::post('catalog', 'Server\CatalogController@store');
+    Route::post('catalog/{id}', 'Server\CatalogController@update');  
+    Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
+    Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
+    Route::get('catalog/{id}', 'Server\CatalogController@catalogDetail');
+
     /*route member
     =================================================================*/
 
@@ -122,6 +133,8 @@ Route::group([//['middleware' => 'cors'],
     =================================================================*/
 
     Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
+    Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
+    Route::post('catalog/{productId}/collect', 'Server\FeedbackController@giveCollection');
 
     /*route criteria
     =================================================================*/
@@ -140,22 +153,7 @@ Route::group([//['middleware' => 'cors'],
     Route::post('connect/{username}', 'Server\ConnectionController@addConnection');
     Route::delete('connect/{username}', 'Server\ConnectionController@removeConnection');
 
-    /*route catalog list
-    =================================================================*/
 
-    Route::get('catalog', 'Server\CatalogController@index');
-
-    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@catalogCategory');
-
-    Route::post('catalog', 'Server\CatalogController@store');
-
-    Route::post('catalog/{id}', 'Server\CatalogController@update');  
-
-    Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
-
-    Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
-
-    Route::get('catalog/{id}', 'Server\CatalogController@catalogDetail');
 
 });
 

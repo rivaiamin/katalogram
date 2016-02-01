@@ -13,6 +13,15 @@ use App\User;
 
 class CatalogController extends Controller
 {
+
+    public function __construct()
+     {
+         // Apply the jwt.auth middleware to all methods in this controller
+         // except for the authenticate method. We don't want to prevent
+         // the user from retrieving their token if they don't already have it
+
+         $this->middleware('jwt.auth');
+     }
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +29,20 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $data['catalogList'] = Product::with(['owner','category'])
+        $data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
                                 ->where('deleted_at', NULL)
+                                ->get();
+
+        // $data['catalogList'] .= 'amm';
+
+        return json_encode($data);
+    }
+
+    public function catalogCategory($id)
+    {
+        $data['catalogList'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+                                ->where('deleted_at', NULL)
+                                ->where('category_id', $id)
                                 ->get();
 
         // $data['catalogList'] .= 'amm';
@@ -30,19 +51,9 @@ class CatalogController extends Controller
     }
 
     public function catalogDetail($id){
-        $data['product'] = Product::with(['owner','category'])->where('id', $id)->get();
-
-        return json_encode($data);
-    }
-
-    public function catalogCategory($id)
-    {
-        $data['catalogList'] = Product::with(['owner','category'])
-                                ->where('deleted_at', NULL)
-                                ->where('category_id', $id)
+        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tags','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
+                                ->where('id', $id)
                                 ->get();
-
-        // $data['catalogList'] .= 'amm';
 
         return json_encode($data);
     }

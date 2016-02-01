@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\MemberContact;
+use App\MemberCollect;
 use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -26,20 +27,33 @@ class MemberController extends Controller
 
     public function memberProfile($username)
     {
-        $user = User::where('name', $username)->first();
+        $data['member'] = User::with('member')
+                                ->where('name', $username)
+                                ->get();
 
-        $product = Product::where('user_id', $user->id)->get();
+        $userId = $data['member']->first()->id;
+
+        $data['catalog'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+                                ->where('deleted_at', NULL)
+                                ->where('user_id', $userId)
+                                ->get();
+
+        $data['collect'] = "";
+        $data['contact'] = "";
+        $data['connect'] = "";
+
+        /*$product = Product::where('user_id', $user->id)->get();
 
         $prod = $product->toArray();
-
+*/
         // $test = $product->criteria()->get();
-        dd($prod);
+        // dd($prod);
 
         // dd($user->id);
-        $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
-        $user['contact'] = MemberContact::where('user_id', $user->id)->get();
+        // $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
+        // $user['contact'] = MemberContact::where('user_id', $user->id)->get();
         // $user['collect'] = User::memberContact()->get();
-        return json_encode($user);
+        return json_encode($data);
     }
 
     public function updateMember(Request $request, $username)
