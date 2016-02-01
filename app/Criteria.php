@@ -19,10 +19,10 @@ class Criteria extends Model
         return $this->belongsTo('App\Product');
     }
 
-    public function rateCount(){
+    /*public function rateCount(){
     	return $this->hasMany('App\Rate')
         ->selectRaw('criteria_id, count(*) AS aggregate')
         ->groupBy('criteria_id');
-    }
+    }*/
     
 }
