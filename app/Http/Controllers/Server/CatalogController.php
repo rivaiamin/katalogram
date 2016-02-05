@@ -10,6 +10,7 @@ use App\Http\Requests\CatalogRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\User;
+use mikehaertl\wkhtmlto\Image;
 
 class CatalogController extends Controller
 {
@@ -20,7 +21,7 @@ class CatalogController extends Controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
 
-         $this->middleware('jwt.auth');
+         $this->middleware('jwt.auth', ['except' => ['exportCatalog', 'viewCatalog']]);
      }
     /**
      * Display a listing of the resource.
@@ -159,5 +160,44 @@ class CatalogController extends Controller
         }
         
         return json_encode($params);
+    }
+
+    public function exportCatalog($id) {
+        // You can pass a filename, a HTML string or an URL to the constructor
+        $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
+        $image = new Image(array(
+            // Explicitly tell wkhtmltopdf that we're using an X environment
+            //'use-xserver',
+            'binary'   => $binary,
+            'format'   => 'jpg',
+            'quality'   => '90',
+            'width'    => '600'
+            // Enable built in Xvfb support in the command
+            /*'commandOptions' => array(
+                'enableXvfb' => true,
+
+                // Optional: Set your path to xvfb-run. Default is just 'xvfb-run'.
+                // 'xvfbRunBinary' => '/usr/bin/xvfb-run',
+
+                // Optional: Set options for xfvb-run. The following defaults are used.
+                'xvfbRunOptions' => false
+            )*/
+        ));
+        //$image->setPage("http://katalogram.dev");
+        $image->setPage("http://api.".getenv('APP_DOMAIN')."/catalog/$id/view");
+        //$image->saveAs('/path/to/page.png');
+
+        // ... or send to client for inline display
+        if (! $image->send()) return $image->getError();
+        // ... or send to client as file download
+        //if (! $image->send('catalog.jpg')) return $image->getError();
+    }
+
+    public function viewCatalog($id) {
+        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tags','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
+                                ->where('id', $id)
+                                ->get();
+
+        return view('catalog/view', $data);
     }
 }

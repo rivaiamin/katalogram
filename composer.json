@@ -11,7 +11,9 @@
         "tymon/jwt-auth": "0.5.*",
         "barryvdh/laravel-cors": "0.7.x",
         "guzzlehttp/guzzle": "^6.1",
-        "guzzlehttp/oauth-subscriber": "^0.3.0"
+        "guzzlehttp/oauth-subscriber": "^0.3.0",
+        "mikehaertl/phpwkhtmltopdf": "^2.1",
+        "h4cc/wkhtmltoimage-amd64": "0.12.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

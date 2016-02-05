@@ -110,6 +110,8 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
     Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
     Route::get('catalog/{id}', 'Server\CatalogController@catalogDetail');
+    Route::get('catalog/{id}/export', 'Server\CatalogController@exportCatalog');
+    Route::get('catalog/{id}/view', 'Server\CatalogController@viewCatalog');
 
     /*route member
     =================================================================*/
