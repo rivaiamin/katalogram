@@ -105,13 +105,15 @@ Route::group([//['middleware' => 'cors'],
 
     Route::get('catalog', 'Server\CatalogController@index');
     Route::get('catalog/category/{categoryId}', 'Server\CatalogController@catalogCategory');
-    Route::post('catalog', 'Server\CatalogController@store');
-    Route::post('catalog/{id}', 'Server\CatalogController@update');  
-    Route::get('catalog/{id}/delete', 'Server\CatalogController@destroy'); 
+    Route::post('catalog', 'Server\CatalogController@createCatalog');
+    Route::get('catalog/{productId}/edit', 'Server\CatalogController@editCatalog');
+    Route::put('catalog/{productId}', 'Server\CatalogController@updateCatalog');  
+    Route::delete('catalog/{productId}/delete', 'Server\CatalogController@destroy'); 
     Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
-    Route::get('catalog/{id}', 'Server\CatalogController@catalogDetail');
-    Route::get('catalog/{id}/export', 'Server\CatalogController@exportCatalog');
-    Route::get('catalog/{id}/view', 'Server\CatalogController@viewCatalog');
+    Route::get('catalog/{productId}', 'Server\CatalogController@catalogDetail');
+    Route::get('catalog/{productId}/export', 'Server\CatalogController@exportCatalog');
+    Route::get('catalog/{productId}/view', 'Server\CatalogController@viewCatalog');
+    Route::get('catalog/{tag}/search', 'Server\CatalogController@searchCatalog');
 
     /*route member
     =================================================================*/
@@ -137,6 +139,7 @@ Route::group([//['middleware' => 'cors'],
     Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
     Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
     Route::post('catalog/{productId}/collect', 'Server\FeedbackController@giveCollection');
+    Route::put('catalog/{feedbackId}/endorse', 'Server\FeedbackController@setEndorse');
 
     /*route criteria
     =================================================================*/

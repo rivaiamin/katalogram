@@ -83,6 +83,13 @@ class Product extends Model
         return $this->hasMany('App\Criteria');
     }
 
+    public function avgScore(){
+        return $this->criteria('criteria_name');
+            // ->hasMany('App\Rate')
+            // ->selectRaw('avg(product_id) AS avgScore')
+            // ->groupBy('product_id');
+    }
+
     public function criteriaCount() {
         return $this->criteria()
             ->selectRaw('product_id, count(*) AS criteriaTotal')
