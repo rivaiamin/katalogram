@@ -10,7 +10,9 @@ use App\Http\Requests\CatalogRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\User;
+use App\Tag;
 use mikehaertl\wkhtmlto\Image;
+use Auth;
 
 class CatalogController extends Controller
 {
@@ -52,6 +54,9 @@ class CatalogController extends Controller
     }
 
     public function catalogDetail($id){
+        /*$data = Product::with(['avgScore'])
+                                ->where('id', $id)
+                                ->get();*/
         $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tags','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
                                 ->where('id', $id)
                                 ->get();
@@ -65,20 +70,21 @@ class CatalogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CatalogRequest $request)
+    public function createCatalog(CatalogRequest $request)
     {
         $input = $request->all();
-
+        $input['user_id'] = Auth::user()->id;
         //return $input;
 
         $create = Product::create($input);
 
         if ($create) {
             $data['status'] = "success";
-            $data['message'] = "Katalog telah berhasil dibuat";
+            $data['message'] = "katalog produk telah ditambahkan";
+            $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
-            $data['message'] = "Katalog gagal dibuat";
+            $data['message'] = "katalog produk gagal ditambahkan";
         }
 
         return json_encode($data);
@@ -91,9 +97,14 @@ class CatalogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function editCatalog($id)
     {
-        //
+        $data['product'] = Product::with(['owner','criteria','tags','preview'])
+                                ->where('id', $id)
+                                ->where('user_id', Auth::user()->id)
+                                ->get();
+
+        return json_encode($data);
     }
 
     /**
@@ -103,7 +114,7 @@ class CatalogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CatalogRequest $request, $id)
+    public function updateCatalog(Request $request, $id)
     {
         $catalog = Product::findOrFail($id);
 
@@ -113,7 +124,15 @@ class CatalogController extends Controller
 
         $catalog->update($input);
 
-        return Redirect::back();
+        if ($catalog) {
+            $data['status'] = "success";
+            $data['message'] = "Data katalog produk telah diperbarui";
+        } else {
+            $data['status'] = "error";
+            $data['message'] = "Data katalog gagal diperbarui";
+        }
+
+        return json_encode($data);
     }
 
     /**
@@ -124,7 +143,10 @@ class CatalogController extends Controller
      */
     public function destroy($id)
     {
-        $catalog = Product::findOrFail($id);
+        $userId = Auth::user()->id;
+        // dd($userId);
+        $catalog = Product::where('id', $id)
+                            ->where('user_id', $userId);
 
         $input['deleted_at'] = Carbon::now();
 
@@ -132,7 +154,15 @@ class CatalogController extends Controller
 
         $catalog->update($input);
 
-        return redirect('/catalog');
+        if ($catalog->first()) {
+            $data['status'] = "success";
+            $data['message'] = "Data katalog produk telah dihapus";
+        } else {
+            $data['status'] = "error";
+            $data['message'] = "Data katalog gagal dihapus";
+        }
+
+        return json_encode($data);
     }
 
     public function logoUpload(Request $request, $productId)
@@ -199,5 +229,11 @@ class CatalogController extends Controller
                                 ->get();
 
         return view('catalog/view', $data);
+    }
+
+    public function searchCatalog($tag){
+        $data['lists'] = Tag::where('tag_name', $tag)->first()->product()->get();
+
+        return json_encode($data);
     }
 }

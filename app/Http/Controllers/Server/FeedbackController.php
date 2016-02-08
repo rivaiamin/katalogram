@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Product;
 use App\FeedbackRespond;
+use App\Feedback;
 use App\MemberCollect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -99,6 +100,35 @@ class FeedbackController extends Controller
             ];
         }
 
+        return json_encode($params);
+    }
+
+    public function setEndorse($feedbackId)
+    {
+        $feedback = Feedback::where('id', $feedbackId);
+
+        $input = [
+            'feedback_endorse'       => 1,
+        ];
+
+        // dd($input);
+
+        $feedback->update($input);
+
+        if ($feedback->first()){
+
+            $params = [
+                'status' => "success",
+                'message' => "Feedback telah dijadikan sebagai endorse",
+            ];
+        }
+        else {
+            $params = [
+                'status' => "error",
+                'message' => "Feedback gagal dijadikan sebagai endorse",
+            ];
+        }
+        
         return json_encode($params);
     }
 }

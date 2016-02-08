@@ -19,6 +19,16 @@ class Criteria extends Model
         return $this->belongsTo('App\Product');
     }
 
+    public function productRate() {
+        return $this->hasMany('App\Rate', 'product_id');
+    }
+
+    /*public function avgScore() {
+        return $this->productRate()
+            ->selectRaw('avg(rate_value) AS avgScore')
+            ->groupBy('criteria_id');
+    }*/
+
     /*public function rateCount(){
     	return $this->hasMany('App\Rate')
         ->selectRaw('criteria_id, count(*) AS aggregate')
