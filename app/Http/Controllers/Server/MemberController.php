@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Server;
 
 use Illuminate\Http\Request;
 
+use DB;
 use App\User;
+use App\Member;
 use App\MemberContact;
 use App\MemberCollect;
 use App\Product;
@@ -22,25 +24,32 @@ class MemberController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth');
+         $this->middleware('jwt.auth', ['except'=>['memberProfile']]);
      }
 
-    public function memberProfile($username)
+    public function memberProfile($userId)
     {
-        $data['member'] = User::with('member')
+        /*$data['member'] = User::with('member')
                                 ->where('name', $username)
-                                ->get();
-
-        $userId = $data['member']->first()->id;
+                                ->first()->member;*/
+        /*$userId = $data['member']->first()->id;
 
         $data['catalog'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
                                 ->where('deleted_at', NULL)
                                 ->where('user_id', $userId)
-                                ->get();
-
-        $data['collect'] = "";
-        $data['contact'] = "";
-        $data['connect'] = "";
+                                ->get();*/
+        $data['member'] = DB::table('member')
+                            ->join('users', 'member.user_id', '=', 'users.id')
+                            ->select('member.*','users.id','users.name','users.user_pict', 'users.email')
+                            ->where('users.name' , '=', $userId)
+                            ->orWhere('users.id', '=', $userId)
+                            ->take(1)
+                            ->get();                       
+        $data['catalog'] = [];
+        $data['collect'] = [];
+        $data['contact'] = [];
+        $data['connect'] = [];
+        $data['preview'] = [];
 
         /*$product = Product::where('user_id', $user->id)->get();
 
@@ -59,29 +68,36 @@ class MemberController extends Controller
     public function updateMember(Request $request, $username)
     {
         // masih error untuk menggunakan MemberRequest, karena token jadi terkirim dan dianggap tidak cocok denga field di member
+        $auth = JWTAuth::parseToken()->authenticate();
 
-        $input = $request->except('token');
-        $user = User::where('name', $username)->first();
+        if ($auth->name == $username) {
+            $input = $request->input();
+            //$user = User::find(25);
+            $member = User::find(25)->hasOne('App\Member');
 
-        // dd($input);
-
-        $user->member()->update($input);
-
-        if ($user->first()){
-
+            var_dump($member);
+            //$member = User::where('name', $username)->get()->member;
+            /*if ($user->update($input)){
+                $params = [
+                    'status' => "success",
+                    'message' => "Data profil member telah diperbarui",
+                ];
+            }
+            else {
+                $params = [
+                    'status' => "error",
+                    'message' => "Data profil gagal diperbarui"
+                ];
+            }*/
+            
+        } else {
             $params = [
-                'status' => "success",
-                'message' => "Data profil member telah diperbarui",
-            ];
+                    'status' => "error",
+                    'message' => "Tidak diperbolehkan"
+                ];
         }
-        else {
-            $params = [
-                'status' => "error",
-                'message' => "Data profil gagal diperbarui",
-            ];
-        }
-        
-        return json_encode($params);
+
+        //return json_encode($params);
     }
 
     public function changePict(Request $request, $username)

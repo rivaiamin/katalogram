@@ -95,11 +95,15 @@ Route::group([//['middleware' => 'cors'],
 
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
     Route::get('auth/user', 'Auth\AuthenticateController@getAuthenticatedUser');
+    Route::get('auth/refresh', 'Auth\AuthenticateController@refresh');
     Route::post('member/login', 'Auth\AuthenticateController@login');
     Route::post('member/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
 
+    // categories
+    Route::get('category', 'Server\CategoryController@index');
+    
     /*route catalog list
     =================================================================*/
 
@@ -158,8 +162,6 @@ Route::group([//['middleware' => 'cors'],
     Route::post('connect/{username}', 'Server\ConnectionController@addConnection');
     Route::delete('connect/{username}', 'Server\ConnectionController@removeConnection');
 
-
-
 });
 
 
@@ -170,4 +172,3 @@ Route::controllers([
     'auth'  => 'Auth\AuthController',
     'password'  => 'Auth\PasswordController',
 ]);
-

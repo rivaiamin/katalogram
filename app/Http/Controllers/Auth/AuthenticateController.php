@@ -14,6 +14,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use GuzzleHttp;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use App\User;
+use App\Member;
 use Redirect;
 use Hash;
 
@@ -84,15 +85,20 @@ class AuthenticateController extends Controller
 
     public function register(Request $request)
     {
-        $input = $request->only('name', 'email','password');
-        $input['level_id'] = 3;
-        $input['password'] = Hash::make($input['password']);
-            
-        $user = User::create($input);
-
-        if($user){
+        /*$input['level_id'] = '3';
+        $input['name'] = $request->input('name');
+        $input['email'] = $request->input('email');
+        $input['password'] = ;*/
+        
+        $user = new User;
+        $user->level_id = '3';
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        
+        if($user->save()) {
             $inputMember['user_id'] = $user->id;
-            $user->member()->create($inputMember);
+            Member::create($inputMember);
         }
 
         $credentials = $request->only('name', 'password');
@@ -179,9 +185,17 @@ class AuthenticateController extends Controller
             $user->level_id = '3';
             $user->facebook = $profile['id'];
             $user->email = $profile['email'];
-            $user->name = $profile['name'];
+            $username = explode('@', $profile['email']);
+            $user->name = $username[0];
+            //$user->name = $profile['name'];
             $user->save();
 
+            $member = new Member;
+            $member->user_id = $user->id;
+            $member->member_name = $profile['name'];
+            $member->member_website = $profile['link'];
+            $member->save();
+            
             $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
         }
@@ -244,15 +258,36 @@ class AuthenticateController extends Controller
             {
                 return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
             }
-
+            //return response()->json(['profile' =>$profile]);
+            
             $user = new User;
             $user->level_id = '3';
             $user->google = $profile['sub'];
-            $user->name= $profile['name'];
+            $username = explode('@', $profile['email']);
+            $user->name = $username[0];
+            $user->email= $profile['email'];
             $user->save();
+
+            $member = new Member;
+            $member->user_id = $user->id;
+            $member->member_name = $profile['name'];
+            $member->member_website = $profile['profile'];
+            $member->save();
 
             return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
         }
     }
     
+    public function refresh() {
+        $token = JWTAuth::getToken();
+        if(!$token){
+            throw new BadRequestHtttpException('Token not provided');
+        }
+        try{
+            $token = JWTAuth::refresh($token);
+        }catch(TokenInvalidException $e){
+            throw new AccessDeniedHttpException('The token is invalid');
+        }
+        return response()->json(['token'=>$token]);
+    }
 }
