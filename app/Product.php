@@ -62,7 +62,6 @@ class Product extends Model
     public function feedbackMinus(){
         return $this->feedback()
             ->where('feedback_type', 'N');
-
     }
 
     public function numPlus(){
@@ -85,9 +84,9 @@ class Product extends Model
 
     public function avgScore(){
         return $this->criteria('criteria_name');
-            // ->hasMany('App\Rate')
-            // ->selectRaw('avg(product_id) AS avgScore')
-            // ->groupBy('product_id');
+            /*->hasMany('App\Rate')
+            ->selectRaw('avg(product_id) AS avgScore')
+            ->groupBy('product_id');*/
     }
 
     public function criteriaCount() {

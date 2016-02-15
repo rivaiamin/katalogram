@@ -23,7 +23,7 @@ class CatalogController extends Controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
 
-         $this->middleware('jwt.auth', ['except' => ['exportCatalog', 'viewCatalog']]);
+         $this->middleware('jwt.auth', ['except' => ['exportCatalog', 'viewCatalog', 'index', 'catalogCategory', 'catalogDetail']]);
      }
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+        $data['lists'] = Product::with(['owner','category','avgScore','numPlus','numMinus','numCollect'])
                                 ->where('deleted_at', NULL)
                                 ->get();
 
