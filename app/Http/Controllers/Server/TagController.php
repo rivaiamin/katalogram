@@ -9,6 +9,7 @@ use App\Product;
 use App\ProductTag;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Server\CatalogController as CatalogCtrl;
 
 class TagController extends Controller
 {
@@ -20,49 +21,63 @@ class TagController extends Controller
          $this->middleware('jwt.auth');
     }
 
-    public function addTag(Request $request, $productId)
+    public function addTag(CatalogCtrl $catalog, Request $request, $productId)
     {
-        $input = $request->only('tag_name');
-        
-        $product = Product::where('id', $productId)->first();
-        $tagCount = Tag::where('tag_name', $input);
-
-        if($tagCount->count() > 0) {
-            $inputTag['tag_id'] = $tagCount->first()->id;
-            $inputTag['product_id'] = $product->id;
-
-            // dd($inputTag);
-            $tag = ProductTag::create($inputTag);
+        if ($catalog->isOwner($productId)) {
+            $input = $request->only('tag_name');
             
-        }
-        else {
-            $tag = $product->tags()->create($input);  
-        }
+            $product = Product::where('id', $productId)->first();
+            $tagCount = Tag::where('tag_name', $input);
 
-        if ($tag){
+            if($tagCount->count() > 0) {
+                $inputTag['tag_id'] = $tagCount->first()->id;
+                $inputTag['product_id'] = $product->id;
 
-            $params = [
-                'status' => "success",
-                'message' => "tag telah ditambahkan",
-            ];
-        }
-        else {
+                // dd($inputTag);
+                $tag = ProductTag::create($inputTag);
+                
+            }
+            else {
+                $tag = $product->tag()->create($input);  
+            }
+
+            if ($tag){
+
+                $params = [
+                    'status' => "success",
+                    'message' => "tag telah ditambahkan",
+                ];
+            }
+            else {
+                $params = [
+                    'status' => "error",
+                    'message' => "tag gagal ditambahkan",
+                ];
+            }
+            
+        } else {
             $params = [
                 'status' => "error",
-                'message' => "tag gagal ditambahkan",
+                'message' => "akses invalid",
             ];
         }
-        
         return json_encode($params);
     }
 
-    public function deleteTag($productId, $tagId)
+    public function deleteTag(CatalogCtrl $catalog, $productId, $tagId)
     {
-        $productTag = ProductTag::where('product_id', $productId)->where('tag_id', $tagId)->delete();
-        $params = [
-            'status' => "success",
-            'message' => "tag telah dihapus",
-        ];
+        if ($catalog->isOwner($productId)) {
+            $productTag = ProductTag::where('product_id', $productId)->where('tag_id', $tagId)->delete();
+            $params = [
+                'status' => "success",
+                'message' => "tag telah dihapus",
+            ];
+        } else {
+            $params = [
+                'status' => "error",
+                'message' => "akses invalid",
+            ];
+        }
         
         return json_encode($params);
     }

@@ -56,7 +56,7 @@ class MemberController extends Controller
         $data['collect'] = [];
         $data['contact'] = [];
         $data['connect'] = [];
-        $data['preview'] = [];
+        $data['preview'] = Product::where('user_id', $userId)->first()->preview;
 
         /*$product = Product::where('user_id', $user->id)->get();
 

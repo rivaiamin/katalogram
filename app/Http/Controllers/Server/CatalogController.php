@@ -10,9 +10,11 @@ use App\Http\Requests\CatalogRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\User;
+use App\Preview;
 use App\Tag;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
+//use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class CatalogController extends Controller
 {
@@ -44,7 +46,7 @@ class CatalogController extends Controller
 
     public function catalogCategory($id)
     {
-        $data['catalogList'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+        $data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
                                 ->where('product_release', '1')
                                 ->where('deleted_at', NULL)
                                 ->where('category_id', $id)
@@ -54,12 +56,19 @@ class CatalogController extends Controller
 
         return json_encode($data);
     }
+    
+    public function isOwner($productId) {
+        $product = Product::where('id',$productId)->first();
+        if ($product->user_id == Auth::user()->id) return true;
+        else return false;
+    }
+
 
     public function catalogDetail($id){
         /*$data = Product::with(['avgScore'])
                                 ->where('id', $id)
                                 ->get();*/
-        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tags','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
+        $data['product'] = Product::with(['owner','category','preview','criteria','tag','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
                                 ->where('id', $id)
                                 ->get();
 
@@ -101,7 +110,7 @@ class CatalogController extends Controller
      */
     public function editCatalog($id)
     {
-        $data['product'] = Product::with(['owner','criteria','tags','preview'])
+        $data['product'] = Product::with(['owner','criteria','tag','preview'])
                                 ->where('id', $id)
                                 ->where('user_id', Auth::user()->id)
                                 ->get();
@@ -118,20 +127,23 @@ class CatalogController extends Controller
      */
     public function updateCatalog(Request $request, $id)
     {
-        $catalog = Product::findOrFail($id);
+        if ($this->isOwner($id)) {
+            $catalog = Product::findOrFail($id);
 
-        $input = $request->all();
+            $input = $request->all();
 
-        // return $input;
+            $catalog->update($input);
 
-        $catalog->update($input);
-
-        if ($catalog) {
-            $data['status'] = "success";
-            $data['message'] = "Data katalog produk telah diperbarui";
+            if ($catalog) {
+                $data['status'] = "success";
+                $data['message'] = "Data katalog produk telah diperbarui";
+            } else {
+                $data['status'] = "error";
+                $data['message'] = "Data katalog gagal diperbarui";
+            }
         } else {
             $data['status'] = "error";
-            $data['message'] = "Data katalog gagal diperbarui";
+            $data['message'] = "akses invalid";
         }
 
         return json_encode($data);
@@ -169,25 +181,65 @@ class CatalogController extends Controller
 
     public function logoUpload(Request $request, $productId)
     {
-        $product = Product::where('id', $productId);
+        if ($this->isOwner($productId)) {
+            $product = Product::where('id', $productId);
 
-        $input = $request->only('product_logo');
+            $input = $request->only('product_logo');
 
-        // dd($input);
+            // dd($input);
 
-        $product->update($input);
+            $product->update($input);
 
-        if ($product->first()){
+            if ($product->first()){
 
-            $params = [
-                'status' => "success",
-                'message' => "Logo ikon telah berhasil diperbarui",
-            ];
-        }
-        else {
+                $params = [
+                    'status' => "success",
+                    'message' => "Logo ikon telah berhasil diperbarui",
+                ];
+            }
+            else {
+                $params = [
+                    'status' => "error",
+                    'message' => "Logo ikon gagal diperbarui",
+                ];
+            }
+        } else {
             $params = [
                 'status' => "error",
-                'message' => "Logo ikon gagal diperbarui",
+                'message' => "akses invalid",
+            ];
+        }
+        
+        return json_encode($params);
+    }
+
+    public function previewUpload(Request $request, $productId)
+    {
+        if ($this->isOwner($productId)) {
+            $product = Product::where('id', $productId);
+
+            $input = $request->only('preview_pict', 'preview_caption');
+            $input['product_id'] = $productId;
+            // dd($input);
+
+            $preview = Preview::create($input);
+
+            if ($preview){
+                $params = [
+                    'status' => "success",
+                    'message' => "gambar tampilan telah ditambahkan",
+                ];
+            }
+            else {
+                $params = [
+                    'status' => "error",
+                    'message' => "gambar gagal ditambahkan",
+                ];
+            }
+        } else {
+            $params = [
+                'status' => "error",
+                'message' => "akses invalid",
             ];
         }
         
@@ -226,7 +278,7 @@ class CatalogController extends Controller
     }
 
     public function viewCatalog($id) {
-        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tags','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
+        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tag','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
                                 ->where('id', $id)
                                 ->get();
 

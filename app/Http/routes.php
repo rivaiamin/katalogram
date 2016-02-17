@@ -114,6 +114,7 @@ Route::group([//['middleware' => 'cors'],
     Route::put('catalog/{productId}', 'Server\CatalogController@updateCatalog');  
     Route::delete('catalog/{productId}/delete', 'Server\CatalogController@destroy'); 
     Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
+    Route::post('catalog/{productId}/preview', 'Server\CatalogController@previewUpload');
     Route::get('catalog/{productId}', 'Server\CatalogController@catalogDetail');
     Route::get('catalog/{productId}/export', 'Server\CatalogController@exportCatalog');
     Route::get('catalog/{productId}/view', 'Server\CatalogController@viewCatalog');
