@@ -35,7 +35,7 @@ class Product extends Model
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
 
-    public function tags() {
+    public function tag() {
         return $this->belongsToMany('App\Tag')->withTimestamps();
     }
 

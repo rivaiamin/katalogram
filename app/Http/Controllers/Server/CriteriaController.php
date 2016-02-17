@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Criteria;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Server\CatalogController as CatalogCtrl;
 
 class CriteriaController extends Controller
 {
@@ -24,37 +25,51 @@ class CriteriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addCriteria(Request $request, $productId)
+    public function addCriteria(CatalogCtrl $catalog, Request $request, $productId)
     {
-        $input = $request->all();
-        $input['product_id'] = $productId;
+        if ($catalog->isOwner($productId)) {
+            $input = $request->all();
+            $input['product_id'] = $productId;
 
-        $criteria = Criteria::create($input);
+            $criteria = Criteria::create($input);
 
-        if($criteria){
+            if($criteria){
+                $params = [
+                    'status' => "success",
+                    'message' => "kriteria telah ditambahkan",
+                ];
+            }
+            else {
+                $params = [
+                    'status' => "error",
+                    'message' => "kriteria gagal ditambahkan",
+                ];
+            }
+
+        } else {
             $params = [
-                'status' => "success",
-                'message' => "kriteria telah ditambahkan",
-            ];
+                    'status' => "error",
+                    'message' => "akses invalid",
+                ];
         }
-        else {
-            $params = [
-                'status' => "success",
-                'message' => "kriteria gagal ditambahkan",
-            ];
-        }
-
         return json_encode($params);   
 
     }
 
-    public function deleteCriteria($productId, $criteriaId)
+    public function deleteCriteria(CatalogCtrl $catalog, $productId, $criteriaId)
     {
-        $productTag = Criteria::where('product_id', $productId)->where('id', $criteriaId)->delete();
-        $params = [
-            'status' => "success",
-            'message' => "kriteria telah dihapus",
-        ];
+        if ($catalog->isOwner($productId)) {
+            $productTag = Criteria::where('product_id', $productId)->where('id', $criteriaId)->delete();
+            $params = [
+                'status' => "success",
+                'message' => "kriteria telah dihapus",
+            ];
+        } else{
+            $params = [
+                'status' => "error",
+                'message' => "akses invalid",
+            ];
+        }
         
         return json_encode($params);
     }
