@@ -37,6 +37,10 @@ class User extends Model implements AuthenticatableContract,
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function member() {
+        return $this->hasOne('App\Member');
+    }
+    
     public function product() {
         return $this->hasMany('App\Product');
     }
@@ -82,9 +86,7 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 
-    public function member() {
-        return $this->hasOne('App\Member');
-    }
+    
 
     public function memberContact()
     {

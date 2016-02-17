@@ -123,6 +123,7 @@ Route::group([//['middleware' => 'cors'],
     =================================================================*/
 
     Route::get('{username}', 'Server\MemberController@memberProfile');
+    Route::get('{username}/edit', 'Server\MemberController@editMember');
     Route::put('{username}', 'Server\MemberController@updateMember');
     Route::put('{username}/pict', 'Server\MemberController@changePict');
 

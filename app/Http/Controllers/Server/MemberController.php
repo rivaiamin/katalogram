@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\MemberRequest;
+use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class MemberController extends Controller
 {
@@ -27,25 +28,31 @@ class MemberController extends Controller
          $this->middleware('jwt.auth', ['except'=>['memberProfile']]);
      }
 
-    public function memberProfile($userId)
+    public function memberProfile(AuthCtrl $auth, $username)
     {
-        /*$data['member'] = User::with('member')
-                                ->where('name', $username)
-                                ->first()->member;*/
-        /*$userId = $data['member']->first()->id;
-
+        
+        $data['user'] = User::with('member')->where('name', $username)->first();
+        $userId = $data['user']->id;
         $data['catalog'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
                                 ->where('deleted_at', NULL)
+                                ->where('product_release', '1')
                                 ->where('user_id', $userId)
-                                ->get();*/
-        $data['member'] = DB::table('member')
+                                ->get();
+        /*$data['member'] = DB::table('member')
                             ->join('users', 'member.user_id', '=', 'users.id')
                             ->select('member.*','users.id','users.name','users.user_pict', 'users.email')
                             ->where('users.name' , '=', $userId)
                             ->orWhere('users.id', '=', $userId)
                             ->take(1)
-                            ->get();                       
-        $data['catalog'] = [];
+                            ->get();*/                       
+        if ($auth->isOwner($username)) {
+            $data['draft'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+                                ->where('deleted_at', NULL)
+                                ->where('product_release', '0')
+                                ->where('user_id', $userId)
+                                ->get();;
+        }
+
         $data['collect'] = [];
         $data['contact'] = [];
         $data['connect'] = [];
@@ -65,19 +72,22 @@ class MemberController extends Controller
         return json_encode($data);
     }
 
-    public function updateMember(Request $request, $username)
+    public function editMember(AuthCtrl $auth, $username) {
+        if ($auth->isOwner($username)) {
+            $data['user'] = User::with('member')->where('name', $username)->first();
+            return json_encode($data);
+        } else return response()->json(['error' => 'invalid_access'], 500);
+    }
+
+    public function updateMember(AuthCtrl $auth, Request $request, $username)
     {
         // masih error untuk menggunakan MemberRequest, karena token jadi terkirim dan dianggap tidak cocok denga field di member
-        $auth = JWTAuth::parseToken()->authenticate();
+        
+        if ($auth->isOwner($username)) {
+            $input = $request->only('member_name','member_born','member_gender','member_summary','member_profile','member_website');
+            $member = User::where('name','=',$username)->first()->member;
 
-        if ($auth->name == $username) {
-            $input = $request->input();
-            //$user = User::find(25);
-            $member = User::find(25)->hasOne('App\Member');
-
-            var_dump($member);
-            //$member = User::where('name', $username)->get()->member;
-            /*if ($user->update($input)){
+            if ($member->update($input)){
                 $params = [
                     'status' => "success",
                     'message' => "Data profil member telah diperbarui",
@@ -88,7 +98,7 @@ class MemberController extends Controller
                     'status' => "error",
                     'message' => "Data profil gagal diperbarui"
                 ];
-            }*/
+            }
             
         } else {
             $params = [
