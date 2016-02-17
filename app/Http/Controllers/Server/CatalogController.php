@@ -33,6 +33,7 @@ class CatalogController extends Controller
     public function index()
     {
         $data['lists'] = Product::with(['owner','category','avgScore','numPlus','numMinus','numCollect'])
+                                ->where('product_release', '1')
                                 ->where('deleted_at', NULL)
                                 ->get();
 
@@ -44,6 +45,7 @@ class CatalogController extends Controller
     public function catalogCategory($id)
     {
         $data['catalogList'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+                                ->where('product_release', '1')
                                 ->where('deleted_at', NULL)
                                 ->where('category_id', $id)
                                 ->get();
@@ -72,7 +74,7 @@ class CatalogController extends Controller
      */
     public function createCatalog(CatalogRequest $request)
     {
-        $input = $request->all();
+        $input = $request->only('category_id','product_name');
         $input['user_id'] = Auth::user()->id;
         //return $input;
 

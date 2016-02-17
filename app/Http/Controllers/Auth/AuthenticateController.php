@@ -37,6 +37,13 @@ class AuthenticateController extends Controller
         return $users;
     }
 
+    public function isOwner($userId) {
+        $auth = JWTAuth::parseToken()->authenticate();
+
+        if (($auth->name == $userId) or ($auth->id == $userId)) return true;
+        else return false;
+    }
+
     public function getAuthenticatedUser()
     {
         /*try {

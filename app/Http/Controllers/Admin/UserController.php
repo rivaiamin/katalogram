@@ -27,8 +27,8 @@ class UserController extends Controller
         // $this->middleware('auth', ['only' => 'create']);
         // ===============================
 
-        $this->middleware('auth');
-
+        //$this->middleware('auth');
+        $this->middleware('jwt.auth');
         // $this->middleware('role:admin');
 
     }
@@ -138,4 +138,5 @@ class UserController extends Controller
 
         return Redirect::back()->with('flash_message', 'User "'.$user->name.'" has been deleted');
     }
+
 }
