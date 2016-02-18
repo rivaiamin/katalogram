@@ -56,7 +56,10 @@ class MemberController extends Controller
         $data['collect'] = [];
         $data['contact'] = [];
         $data['connect'] = [];
-        $data['preview'] = Product::where('user_id', $userId)->first()->preview;
+        $data['preview'] = Product::where('user_id', $userId)
+                            ->join('product_preview','product.id','=','product_preview.product_id')
+                            ->select('product_preview.preview_pict')
+                            ->get();
 
         /*$product = Product::where('user_id', $user->id)->get();
 

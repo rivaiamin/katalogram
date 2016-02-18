@@ -42,7 +42,8 @@ class FeedbackController extends Controller
             $data['status'] = "error";
             $data['message'] = "maaf feedback gagal dikirim";
         }
-
+        $data['data'] = $input;
+        
         return json_encode($data);
     }
 

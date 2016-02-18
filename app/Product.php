@@ -65,15 +65,14 @@ class Product extends Model
     }
 
     public function numPlus(){
-        return $this->feedback()
-            ->where('feedback_type', 'P')
+        return $this->feedbackPlus()
             ->selectRaw('product_id, count(*) AS numPlus')
             ->groupBy('product_id');
+        //return $this->feedbackPlus()->count();
     }
 
     public function numMinus(){
-        return $this->feedback()
-            ->where('feedback_type', 'N')
+        return $this->feedbackMinus()
             ->selectRaw('product_id, count(*) AS numMinus')
             ->groupBy('product_id');
     }
@@ -83,10 +82,8 @@ class Product extends Model
     }
 
     public function avgScore(){
-        return $this->criteria('criteria_name');
-            /*->hasMany('App\Rate')
-            ->selectRaw('avg(product_id) AS avgScore')
-            ->groupBy('product_id');*/
+        //return $this->criteria('criteria_name');
+            
     }
 
     public function criteriaCount() {
