@@ -108,7 +108,7 @@ Route::group([//['middleware' => 'cors'],
     =================================================================*/
 
     Route::get('catalog', 'Server\CatalogController@index');
-    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@catalogCategory');
+    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@index');
     Route::post('catalog', 'Server\CatalogController@createCatalog');
     Route::get('catalog/{productId}/edit', 'Server\CatalogController@editCatalog');
     Route::put('catalog/{productId}', 'Server\CatalogController@updateCatalog');  
