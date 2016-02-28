@@ -14,6 +14,7 @@ use App\User;
 use App\Preview;
 use App\Criteria;
 use App\Tag;
+use App\ProductTag;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
 //use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
@@ -290,8 +291,17 @@ class CatalogController extends Controller
         return view('catalog/view', $data);
     }
 
-    public function searchCatalog($tag){
-        $data['lists'] = Tag::where('tag_name', $tag)->first()->product()->get();
+    public function searchCatalog(Request $request, $tag){
+
+        $input = $request->except('token');
+
+        $tagId = Tag::whereIn('tag_name', $input)->get(array('id'));
+        $productId = ProductTag::whereIn('tag_id', $tagId)->groupBy('product_id')->get(array('product_id'));
+        $data['lists'] = Product::whereIn('id', $productId)->get();
+
+        // dd($product);
+
+        // $data['lists'] = Tag::where('tag_name', $tag)->first()->product()->get();
 
         return json_encode($data);
     }
