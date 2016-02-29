@@ -81,15 +81,28 @@ class Product extends Model
         return $this->hasMany('App\Criteria');
     }
 
-    public function avgScore(){
+    public function productRate() {
+        return "select product_id, ifnull(avg(avg_crit),0) as rate from (SELECT b.product_id, ifnull(avg(a.rate_value), 0) as avg_crit 
+                FROM criteria b  LEFT JOIN product_rate a ON a.criteria_id = b.id GROUP BY b.id) criteria_rate";
+    }
+
+    public function criteriaRate(){
         //return $this->criteria('criteria_name');
-            
+        return $this->criteria();
+            //->selectRaw('criteria.id, product_rate.rate_value')
+            //->selectRaw('criteria.id, avg(product_rate.rate_value) AS criteria_rate')
+            //->join('product_rate','criteria.id','=','product_rate.criteria_id');
+            //->groupBy('criteria.id'); 
     }
 
     public function criteriaCount() {
         return $this->criteria()
             ->selectRaw('product_id, count(*) AS criteriaTotal')
             ->groupBy('product_id');
+    }
+
+    public function rateCriteria() {
+        return $this->criteria();
     }
 
     public function memberCollect(){

@@ -21,7 +21,13 @@ class Criteria extends Model
     }
 
     public function productRate() {
-        return $this->hasMany('App\Rate', 'product_id');
+        return $this->hasMany('App\Rate');
+    }
+
+    public function avgCriteria() {
+        return $this->productRate()
+            ->selectRaw('criteria_id, avg(rate_value) AS criteria_rate')
+            ->groupBy('criteria_id');
     }
 
     public function rateCriteria() {
@@ -29,7 +35,7 @@ class Criteria extends Model
         return DB::raw("(SELECT b.product_id, b.criteria_name, ifnull(avg(a.rate_value), 0) as avg 
                   FROM criteria b  
                   LEFT JOIN product_rate a ON a.criteria_id = b.id
-                  GROUP BY b.product_id) rate_criteria");
+                  GROUP BY b.id) rate_criteria");
     }
 
     /*public function avgScore() {
