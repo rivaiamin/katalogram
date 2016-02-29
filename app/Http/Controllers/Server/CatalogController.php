@@ -34,7 +34,7 @@ class CatalogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Criteria $criteria, $categoryId = null)
+    public function index(Product $product, $categoryId = null)
     {
         /*$data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
             ->where('product_release', '1')
@@ -46,12 +46,12 @@ class CatalogController extends Controller
                 count(distinct(member_collect.id)) as num_collect,            
                 count(case product_feedback.feedback_type when 'P' then 1 else null end) as num_plus,
                 count(case product_feedback.feedback_type when 'N' then 1 else null end) as num_minus,
-                avg(distinct(rate_criteria.avg)) as avg_rate"
+                avg_rate.rate"
             ))
             ->join('users','product.user_id','=','users.id')
             ->join('category','product.category_id','=','category.id')
             ->leftJoin('product_feedback','product.id','=','product_feedback.product_id')
-            ->leftJoin($criteria->rateCriteria(),'rate_criteria.product_id','=','product.id')
+            ->leftJoin(DB::raw("(".$product->productRate().") avg_rate") ,'avg_rate.product_id','=','product.id')
             ->leftJoin('member_collect','product.id','=','member_collect.product_id')
             ->where('product.product_release', '1')
             ->where('product.deleted_at', NULL)
@@ -73,7 +73,7 @@ class CatalogController extends Controller
 
 
     public function catalogDetail($id){
-        $data['product'] = Product::with(['owner','category','preview','criteria','tag','feedbackPlus','feedbackMinus','numCollect'])
+        $data['product'] = Product::with(['owner','category','preview','tag','criteria.avgCriteria','feedbackPlus','feedbackMinus','numCollect'])
                                 ->where('id', $id)
                                 ->get();
 
