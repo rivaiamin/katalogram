@@ -101,7 +101,7 @@ Route::group([//['middleware' => 'cors'],
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
 
-    // categories
+     // categories
     Route::get('category', 'Server\CategoryController@index');
     
     /*route catalog list
@@ -120,13 +120,15 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/{productId}/view', 'Server\CatalogController@viewCatalog');
     Route::get('catalog/{tag}/search', 'Server\CatalogController@searchCatalog');
 
-    /*route member
+       /*route member
     =================================================================*/
 
     Route::get('{username}', 'Server\MemberController@memberProfile');
     Route::get('{username}/edit', 'Server\MemberController@editMember');
-    Route::put('{username}', 'Server\MemberController@updateMember');
+    Route::put('{username}/profile', 'Server\MemberController@updateProfile');
     Route::put('{username}/pict', 'Server\MemberController@changePict');
+    Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
+
 
     /*route tag
     =================================================================*/
