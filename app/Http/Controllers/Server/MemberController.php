@@ -12,8 +12,7 @@ use App\MemberCollect;
 use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Auth;
 use App\Http\Requests\MemberRequest;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
@@ -28,47 +27,35 @@ class MemberController extends Controller
          $this->middleware('jwt.auth', ['except'=>['memberProfile']]);
      }
 
-    public function memberProfile(AuthCtrl $auth, $username)
+    public function memberProfile(AuthCtrl $auth, Product $product, Member $member, $username)
     {
         
         $data['user'] = User::with('member')->where('name', $username)->first();
         $userId = $data['user']->id;
-        $data['catalog'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
-                                ->where('deleted_at', NULL)
-                                ->where('product_release', '1')
-                                ->where('user_id', $userId)
+        $data['catalog'] = $product->productList()
+                                ->where('product.user_id', $userId)
                                 ->get();
-        /*$data['member'] = DB::table('member')
-                            ->join('users', 'member.user_id', '=', 'users.id')
-                            ->select('member.*','users.id','users.name','users.user_pict', 'users.email')
-                            ->where('users.name' , '=', $userId)
-                            ->orWhere('users.id', '=', $userId)
-                            ->take(1)
-                            ->get();*/                       
         if ($auth->isOwner($username)) {
-            $data['draft'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
+            $data['draft'] = Product::with(['owner','category'])
                                 ->where('deleted_at', NULL)
                                 ->where('product_release', '0')
                                 ->where('user_id', $userId)
                                 ->get();;
         }
 
-        $data['collect'] = [];
-        $data['contact'] = [];
-        $data['connect'] = [];
+        $data['collect'] = $product->memberCollect()
+                            ->where('user_id', $userId);
+        $data['contact'] = $member->memberContact()
+                            ->where('member_id',$userId);
+        $data['connect'] = $member->memberContact()
+                            ->where('user_id', $userId);
         $data['preview'] = Product::where('user_id', $userId)
                             ->join('product_preview','product.id','=','product_preview.product_id')
                             ->select('product_preview.preview_pict')
                             ->get();
+        $data['is_contact'] = $member->isConnect(Auth::user()->id, $userId);
 
-        /*$product = Product::where('user_id', $user->id)->get();
 
-        $prod = $product->toArray();
-*/
-        // $test = $product->criteria()->get();
-        // dd($prod);
-
-        // dd($user->id);
         // $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
         // $user['contact'] = MemberContact::where('user_id', $user->id)->get();
         // $user['collect'] = User::memberContact()->get();
@@ -82,7 +69,7 @@ class MemberController extends Controller
         } else return response()->json(['error' => 'invalid_access'], 500);
     }
 
-    public function updateMember(AuthCtrl $auth, Request $request, $username)
+    public function updateProfile(AuthCtrl $auth, Request $request, $username)
     {
         // masih error untuk menggunakan MemberRequest, karena token jadi terkirim dan dianggap tidak cocok denga field di member
         
@@ -110,7 +97,7 @@ class MemberController extends Controller
                 ];
         }
 
-        //return json_encode($params);
+        echo json_encode($params);
     }
 
     public function changePict(Request $request, $username)

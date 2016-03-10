@@ -125,6 +125,40 @@ class AuthenticateController extends Controller
         
     }
 
+    public function change(Request $request, $username, $field) {
+        if (($field == 'name') or ($field == 'email')) {
+            $input = $request->only($field);
+            $user = User::where($field, '=', $input['name']);
+            if ($user->first()) {
+                return response()->json(['error' => 'sudah ada akun dengan username atau email tersebut'], 409);
+                //return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
+            } else {
+                $user = User::where('name', '=', $username)->first();
+                if ($user->update($input)) {
+                    return response()->json(['success' => 'Akun berhasil diperbarui, harap login ulang'], 200);
+                }
+            }
+        } elseif ($field == 'password') {
+            $input = $request->only('old','new','confirm');
+            $user = User::where('name','=', $username)
+                    ->where('password','=',Hash::make($input['old']));
+            if (!$user->first()) {
+                //return response()->json(['error' => 'password lama tidak cocok dengan data pengguna'], 403);
+                return Hash::make($input['old']);
+            } elseif ($input['new'] != $input['confirm']) {
+                return response()->json(['error' => 'password baru dan konfirmasi password tidak sama'], 403);
+            } else {
+                if ($user->update(['password'=>Hash::make($input['new'])]))
+                    return response()->json(['success' => 'password berhasil diubah'], 200);
+            }
+        }
+
+    }
+
+    public function changePass(Request $request, $username) {
+        //if ($request->input(''))
+    }
+
     /**
      * Login with Facebook.
      */

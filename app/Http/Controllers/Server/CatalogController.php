@@ -41,23 +41,7 @@ class CatalogController extends Controller
             ->where('product_release', '1')
             ->where('deleted_at', NULL)
             ->get();*/  
-        $lists = Product::select(DB::raw("product.id, product.product_name, product.product_logo, product.product_quote, product.category_id,
-                users.name, users.user_pict, 
-                category.category_icon,
-                count(distinct(member_collect.id)) as num_collect,            
-                count(case product_feedback.feedback_type when 'P' then 1 else null end) as num_plus,
-                count(case product_feedback.feedback_type when 'N' then 1 else null end) as num_minus,
-                avg_rate.rate"
-            ))
-            ->join('users','product.user_id','=','users.id')
-            ->join('category','product.category_id','=','category.id')
-            ->leftJoin('product_feedback','product.id','=','product_feedback.product_id')
-            ->leftJoin(DB::raw("(".$product->productRate().") avg_rate") ,'avg_rate.product_id','=','product.id')
-            ->leftJoin('member_collect','product.id','=','member_collect.product_id')
-            ->where('product.product_release', '1')
-            ->where('product.deleted_at', NULL)
-            ->groupBy('product.id')
-            ->orderBy('product.id', 'desc');
+        $lists = $product->productList();
             
 
         if ($categoryId != null) $lists->where('category_id', $categoryId);
@@ -260,8 +244,8 @@ class CatalogController extends Controller
             //'use-xserver',
             'binary'   => $binary,
             'format'   => 'jpg',
-            'quality'   => '90',
-            'width'    => '600'
+            'quality'   => '100',
+            'width'    => '300'
             // Enable built in Xvfb support in the command
             /*'commandOptions' => array(
                 'enableXvfb' => true,
@@ -274,13 +258,13 @@ class CatalogController extends Controller
             )*/
         ));
         //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://api.".getenv('APP_DOMAIN')."/catalog/$id/view");
+        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$id");
         //$image->saveAs('/path/to/page.png');
 
         // ... or send to client for inline display
-        if (! $image->send()) return $image->getError();
+        //if (! $image->send()) return $image->getError();
         // ... or send to client as file download
-        //if (! $image->send('catalog.jpg')) return $image->getError();
+        if (! $image->send("catalog_$id.jpg")) return $image->getError();
     }
 
     public function viewCatalog($id) {

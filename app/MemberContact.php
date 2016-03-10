@@ -15,11 +15,11 @@ class MemberContact extends Model
         'member_id'
     ];
     
-    public function user(){
-        return $this->belongsTo('App\User');
+    public function contact(){
+        return $this->belongsTo('App\User', 'user_id');
     }
     
-    public function member(){
-        return $this->belongsTo('App\Member');
+    public function connect(){
+        return $this->belongsTo('App\User','member_id');
     }
 }

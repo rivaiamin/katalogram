@@ -14,6 +14,7 @@ class UserTableSeeder extends Seeder
          DB::table('users')->insert([
             ['level_id' => 1, 'name' => 'admin', 'email' => 'admin@gmail.com', 'password' => Hash::make('secret')],
             ['level_id' => 3, 'name' => 'agung', 'email' => 'agung69@gmail.com', 'password' => Hash::make('agung69')],
+            ['level_id' => 3, 'name' => 'karsakalana', 'email' => 'karsa.kalana@gmail.com', 'password' => Hash::make('karsakalana01!')],
         ]);
     }
 }

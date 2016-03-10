@@ -20,26 +20,22 @@ class RateController extends Controller
          $this->middleware('jwt.auth');
     }
 
-    public function giveRate($productId, $criteriaId, $rateValue)
+    public function giveRate(Request $request, $productId)
     {
         $input = [
             'user_id'       => Auth::user()->id,
-            'product_id'    => $productId,
-            'criteria_id'   => $criteriaId,
-            'rate_value'    => $rateValue,
+            'criteria_id'   => $request->input('criteria_id'),
+            'rate_value'    => $request->input('rate_value')
         ];
-
-        // dd($input);
 
         $rate = Rate::create($input);
 
-        if($rate->first()){
+        if($rate){
             $params = [
                 'status' => "success",
                 'message' => "terima kasih telah memberikan rating",
             ];
-        }
-        else {
+        } else {
             $params = [
                 'status' => "error",
                 'message' => "maaf anda gagal memberikan rating",

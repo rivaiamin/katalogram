@@ -16,7 +16,6 @@ class CreateFeedbackRespondTable extends Migration
             $table->increments('id');
             $table->integer('feedback_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->timestamp('respond_date')->unsigned();
             $table->integer('respond_type')->unsigned();
             $table->timestamps();
 
