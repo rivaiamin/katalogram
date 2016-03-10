@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class Member extends Model
 {
     //
@@ -26,7 +26,19 @@ class Member extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function memberContact(){
+    public function memberContact() {
         return $this->hasMany('App\MemberContact');
+    }
+
+    public function isConnect($userId, $memberId) {
+        if ($userId == $memberId) return true; 
+        else {
+            $connect = DB::table('member_contact')
+                ->where('user_id', $userId)
+                ->where('member_id', $memberId);
+
+            if ($connect->first()) return true;
+            else return false;
+        }
     }
 }

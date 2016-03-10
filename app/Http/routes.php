@@ -129,6 +129,8 @@ Route::group([//['middleware' => 'cors'],
     Route::put('{username}/pict', 'Server\MemberController@changePict');
     Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
 
+    // route collect
+    Route::post('catalog/{productId}/collect', 'Server\CollectionController@add');
 
     /*route tag
     =================================================================*/
@@ -146,7 +148,6 @@ Route::group([//['middleware' => 'cors'],
 
     Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
     Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
-    Route::post('catalog/{productId}/collect', 'Server\FeedbackController@giveCollection');
     Route::put('catalog/{feedbackId}/endorse', 'Server\FeedbackController@setEndorse');
 
     /*route criteria
@@ -158,13 +159,13 @@ Route::group([//['middleware' => 'cors'],
     /*route Rate
     =================================================================*/
 
-    Route::post('catalog/{productId}/rate/{criteriaId}/{rateValue}', 'Server\RateController@giveRate');
+    Route::post('catalog/{productId}/rate', 'Server\RateController@giveRate');
     
     /*route connection
     =================================================================*/
 
-    Route::post('connect/{username}', 'Server\ConnectionController@addConnection');
-    Route::delete('connect/{username}', 'Server\ConnectionController@removeConnection');
+    Route::post('connect/{memberId}', 'Server\ContactController@addContact');
+    Route::delete('connect/{memberId}', 'Server\ContactController@removeContact');
 
 });
 

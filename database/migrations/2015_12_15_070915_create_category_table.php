@@ -16,7 +16,7 @@ class CreateCategoryTable extends Migration
             $table->increments('id');
             $table->integer('category_parent')->unsigned()->nullable();
             $table->string('category_name', 32);
-            $table->string('category_desc', 128)->nullable();
+            $table->text('category_desc')->nullable();
             $table->string('category_icon', 128)->nullable();
             $table->enum('category_type', array('B','P'));
             $table->string('category_color', 16)->nullable();

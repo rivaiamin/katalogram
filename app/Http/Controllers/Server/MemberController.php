@@ -12,8 +12,7 @@ use App\MemberCollect;
 use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Auth;
 use App\Http\Requests\MemberRequest;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
@@ -54,6 +53,8 @@ class MemberController extends Controller
                             ->join('product_preview','product.id','=','product_preview.product_id')
                             ->select('product_preview.preview_pict')
                             ->get();
+        $data['is_contact'] = $member->isConnect(Auth::user()->id, $userId);
+
 
         // $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
         // $user['contact'] = MemberContact::where('user_id', $user->id)->get();

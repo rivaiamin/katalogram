@@ -244,8 +244,8 @@ class CatalogController extends Controller
             //'use-xserver',
             'binary'   => $binary,
             'format'   => 'jpg',
-            'quality'   => '90',
-            'width'    => '600'
+            'quality'   => '100',
+            'width'    => '300'
             // Enable built in Xvfb support in the command
             /*'commandOptions' => array(
                 'enableXvfb' => true,
@@ -258,13 +258,13 @@ class CatalogController extends Controller
             )*/
         ));
         //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://api.".getenv('APP_DOMAIN')."/catalog/$id/view");
+        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$id");
         //$image->saveAs('/path/to/page.png');
 
         // ... or send to client for inline display
-        if (! $image->send()) return $image->getError();
+        //if (! $image->send()) return $image->getError();
         // ... or send to client as file download
-        //if (! $image->send('catalog.jpg')) return $image->getError();
+        if (! $image->send("catalog_$id.jpg")) return $image->getError();
     }
 
     public function viewCatalog($id) {

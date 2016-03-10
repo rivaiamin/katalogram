@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Server;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\MemberContact;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 
-class ConnectionController extends Controller
+class ContactController extends Controller
 {
 
     public function __construct()
@@ -25,29 +26,30 @@ class ConnectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addConnection($username)
+    //TODO: fixing addContact
+    public function addContact($memberId)
     {
 
-        $userName = Auth::user()->name;
-        $memberId = User::where('name', $username)->first()->member;
-        // dd($input);
-        $input['member_id'] = $memberId->id;
+        $input['user_id'] = Auth::user()->id;
+        
+        $input['member_id'] = $memberId;
         // dd(Auth::user()->name);
 
-        $connect = User::where('name', $userName)->first()->memberContact()->create($input);
+        /*$contact = MemberContact::create($input);
 
-        if($connect){
+        if($contact){
             $params = [
                 'status' => "success",
                 'message' => "telah dihubungkan",
             ];
-        }
+        }*/
 
-        return json_encode($params);
+        return json_encode($input);
 
     }
 
-    public function removeConnection($username)
+    //TODO: fixing removeContact
+    public function removeContact($username)
     {
         $userName = Auth::user()->name;
         $memberId = User::where('name', $username)->first()->member;

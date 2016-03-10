@@ -76,34 +76,6 @@ class FeedbackController extends Controller
         return json_encode($params);
     }
 
-    public function giveCollection($productId)
-    {
-        $input = [
-            'user_id'       => Auth::user()->id,
-            'product_id'   => $productId,
-        ];
-
-        $cekMember = MemberCollect::where('product_id', $input['product_id'])
-                                    ->where('user_id', $input['user_id'])
-                                    ->get();
-        // dd($cekMember);
-        if($cekMember->count() < 1){
-            $rate = MemberCollect::create($input);
-            $params = [
-                'status' => "success",
-                'message' => "katalog telah ditambahkan sebagai favorit",
-            ];
-        }
-        else{
-            $params = [
-                'status' => "error",
-                'message' => "maaf anda gagal menambahkan katalog sebagai favorit",
-            ];
-        }
-
-        return json_encode($params);
-    }
-
     public function setEndorse($feedbackId)
     {
         $feedback = Feedback::where('id', $feedbackId);
