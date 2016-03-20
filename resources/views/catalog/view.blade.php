@@ -17,7 +17,7 @@
       <div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom"><img class="uk-thumbnail uk-border-circle kg-logo-big" ng-src="http://files.katalogram.dev/logo/2ac88c89fe333.jpg" width="100" src="http://files.katalogram.dev/logo/2ac88c89fe333.jpg"></div>
    </div>
    <div class="uk-container uk-container-center ui image">
-      <a class="ui teal ribbon label uk-text-large ng-binding"><img ng-src="img/category/percetakan.png" width="30" src="img/category/percetakan.png"> Penerbitan</a>
+      <a class="ui teal ribbon label uk-text-large ng-binding"><img ng-src="public/img/category/percetakan.png" width="30" src="public/img/category/percetakan.png"> Penerbitan</a>
       <div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
          <div class="uk-width-1-1 uk-margin-bottom">
             <div class="uk-grid uk-grid-small uk-text-center uk-text-large">

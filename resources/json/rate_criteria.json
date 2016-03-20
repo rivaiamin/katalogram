@@ -1,0 +1,21 @@
+{
+  "rate_criteria": [
+    {
+      "id": "1",
+      "criteria_name": "Cerita"
+    },
+    {
+      "id": "2",
+      "criteria_name": "Art"
+    },
+    {
+      "id": "3",
+      "criteria_name": "Karakter"
+    },
+    {
+      "id": "4",
+      "criteria_name": "Impact"
+    }
+    
+  ]
+}

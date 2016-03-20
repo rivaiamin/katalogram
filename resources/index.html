@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="kgApp" class="kg-bg-paper">
+<head>
+<!--=include ../public/views/partials/metadata.html -->
+	
+</head>
+<body class="kg-style" ng-controller="kgController">
+
+<!--=include ../public/views/partials/nav.html -->
+
+	<div data-uk-observe="" ng-class="{'kg-blur': blur==true}">
+        <div ui-view>
+        </div>
+    </div>
+
+    <div id="kg-modal" class="uk-modal" stop-event="touchend" data-uk-observe>
+        <span ng-include="modalTemplate"></span>
+    </div>
+
+<!--=include ../public/views/partials/sidebar.html -->
+    <script src="public/js/lib.min.js"></script>
+    <script src="public/js/katalogram.min.js"></script>
+
+    <script type="text/ng-template" id="catalogList.html">
+        //=include ../public/views/catalog/list.html
+    </script>
+    <script type="text/ng-template" id="catalogDetail.html">
+        //=include ../public/views/catalog/detail.html
+    </script>
+    <script type="text/ng-template" id="editCatalog.html">
+        //=include ../public/views/catalog/edit.html
+    </script>
+    <script type="text/ng-template" id="createCatalog.html">
+        //=include ../public/views/catalog/create.html
+    </script>
+    <script type="text/ng-template" id="loginMember.html">
+        //=include ../public/views/member/login.html
+    </script>
+    <script type="text/ng-template" id="registerMember.html">
+        //=include ../public/views/member/register.html
+    </script>
+    <script type="text/ng-template" id="editMember.html">
+        //=include ../public/views/member/edit.html
+    </script>
+    <script type="text/ng-template" id="memberProfile.html">
+        //=include ../public/views/member/profile.html
+    </script>
+    <!--script src="js/defer.min.js" type="text/javascript"></script-->
+</body>
+</html>

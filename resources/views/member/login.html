@@ -1,0 +1,43 @@
+<div class="uk-grid uk-text-center">
+    <div class="uk-modal-dialog-lightbox uk-margin-large-top uk-width-medium-1-5 uk-width-2-3">
+        <!-- <a class="uk-modal-close uk-close uk-close-alt"></a> -->
+        <form name="kgForm" class="ui fluid form" novalidate>
+            <img src="public/img/katalogram_white.png" width="100">
+            <h1 class="kg-font-kg kg-font-large uk-contrast uk-margin"> katalogram</h1>
+            <div class="field">
+                <div class="ui left icon input">
+                    <input type="text" ng-model="login.name" name="name" placeholder="username" required>
+                    <i class="user icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="key icon"></i>
+                    <input type="password" ng-model="login.password" name="password" placeholder="password" required>
+                </div>
+            </div>
+            <div class="field">
+                <button ng-disabled="!kgForm.$valid" type="submit" ng-click="loginMember(login)" class="primary fluid ui button">
+                <i class="lock icon"></i> Log In</button>
+            </div>
+            <div class="field uk-contrast">
+                <p>Belum Punya akun? <a ng-click="registerPage()">Daftar Sekarang</a></p>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse kg-separator uk-width-1-1 uk-contrast">
+                <hr class="uk-width-2-5" />
+                <p class="uk-width-1-5">atau</p>
+                <hr class="uk-width-2-5" />
+            </div>
+
+             <div class="field">
+                <a class="uk-button uk-button-large uk-width-1-1 uk-button-primary kg-bg-fb" ng-click="authenticate('facebook')"><i class="uk-icon-facebook"></i> Masuk dengan Facebook</a>
+            </div>
+             <div class="field">
+                <a class="uk-button uk-button-large uk-width-1-1 uk-button-primary kg-bg-google" ng-click="authenticate('google')"><i class="uk-icon-google"></i> Masuk dengan Google</a>
+            </div>
+        </form>
+    <!--    <div class="uk-modal-footer uk-text-right">
+            <a ng-click="saveCatalog(create)" class="uk-button uk-button-primary uk-button-large kg-bg-base uk-contrast">Ciptakan</a>
+        </div> -->
+    </div>
+</div>

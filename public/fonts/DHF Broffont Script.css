@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "DHF Broffont Script";
+    src: url("../fonts/DHF Broffont Script.eot"); /* IE9 */
+    src: url("../fonts/DHF Broffont Script.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/DHF Broffont Script.woff") format("woff"), /* chrome, firefox */
+    url("../fonts/DHF Broffont Script.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("../fonts/DHF Broffont Script.svg#DHF Broffont Script") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+

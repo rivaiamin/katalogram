@@ -236,7 +236,7 @@ class CatalogController extends Controller
         return json_encode($params);
     }
 
-    public function exportCatalog($id) {
+    public function exportCatalog($productId) {
         // You can pass a filename, a HTML string or an URL to the constructor
         $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
         $image = new Image(array(
@@ -245,7 +245,8 @@ class CatalogController extends Controller
             'binary'   => $binary,
             'format'   => 'jpg',
             'quality'   => '100',
-            'width'    => '300'
+            'width'    => '300',
+            'debug-javascript' => true
             // Enable built in Xvfb support in the command
             /*'commandOptions' => array(
                 'enableXvfb' => true,
@@ -258,13 +259,13 @@ class CatalogController extends Controller
             )*/
         ));
         //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$id");
+        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$productId");
         //$image->saveAs('/path/to/page.png');
 
         // ... or send to client for inline display
         //if (! $image->send()) return $image->getError();
         // ... or send to client as file download
-        if (! $image->send("catalog_$id.jpg")) return $image->getError();
+        if (! $image->send("catalog_$productId.jpg")) return $image->getError();
     }
 
     public function viewCatalog($id) {

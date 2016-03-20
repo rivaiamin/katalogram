@@ -1,0 +1,58 @@
+{
+  "name": "katalogram-client",
+  "description": "Katalogram Client-side Application",
+  "main": "dist/js/katalogram.js",
+  "authors": [
+    "KarsaKalana"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "social",
+    "cataloging",
+    "ekonomi",
+    "kreatif",
+    "produk",
+    "kreator",
+    "industri",
+    "mea"
+  ],
+  "moduleType": [],
+  "homepage": "http://katalogram.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-input-stars-directive": "angular-input-stars#*",
+    "angular-resource": "~1.4.9",
+    "angular": "~1.4.9",
+    "angular-route": "~1.4.9",
+    "angular-sanitize": "~1.4.9",
+    "angular-superswipe": "~0.0.2",
+    "angular-touch": "~1.5.0",
+    "angular-ui-grid": "~3.1.0",
+    "angular-ui-router": "~0.2.15",
+    "cropme": "~0.4.1",
+    "satellizer": "~0.13.4",
+    "codemirror": "~5.11.0",
+    "holderjs": "~2.9.1",
+    "jquery": "~2.2.0",
+    "jquery-knob": "~1.2.13",
+    "marked": "~0.3.5",
+    "ng-img-crop": "~0.3.2",
+    "ng-tags-input": "~3.0.0",
+    "uikit": "~2.24.3",
+    "angular-knob": "~0.0.2",
+    "jquery-embedly": "embedly-jquery#~3.1.2",
+    "semantic": "semantic-ui#~2.1.8",
+    "ng-knob": "^0.1.2",
+    "angular-validation-match": "^1.7.1"
+  },
+  "resolutions": {
+    "angular": "1.5.0"
+  }
+}
