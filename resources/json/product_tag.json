@@ -1,0 +1,21 @@
+{
+  "product_tag": [
+    {
+      "id": "1",
+      "tag_name": "komik"
+    },
+    {
+      "id": "2",
+      "tag_name": "cergam"
+    },
+    {
+      "id": "3",
+      "tag_name": "aksi"
+    },
+    {
+      "id": "4",
+      "tag_name": "sains"
+    }
+    
+  ]
+}

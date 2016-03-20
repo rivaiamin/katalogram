@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "CaviarDreams";
+    src: url("../fonts/CaviarDreams.eot"); /* IE9 */
+    src: url("../fonts/CaviarDreams.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/CaviarDreams.woff") format("woff"), /* chrome, firefox */
+    url("../fonts/CaviarDreams.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("../fonts/CaviarDreams.svg#CaviarDreams") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+
