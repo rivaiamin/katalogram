@@ -13,6 +13,7 @@ use JWTFactory;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use GuzzleHttp;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
+use App\Role;
 use App\User;
 use App\Member;
 use Redirect;
@@ -98,7 +99,6 @@ class AuthenticateController extends Controller
         $input['password'] = ;*/
         
         $user = new User;
-        $user->level_id = '3';
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
@@ -106,6 +106,7 @@ class AuthenticateController extends Controller
         if($user->save()) {
             $inputMember['user_id'] = $user->id;
             Member::create($inputMember);
+            $user->roles()->attach(3);
         }
 
         $credentials = $request->only('name', 'password');
@@ -223,13 +224,14 @@ class AuthenticateController extends Controller
             }
 
             $user = new User;
-            $user->level_id = '3';
             $user->facebook = $profile['id'];
             $user->email = $profile['email'];
             $username = explode('@', $profile['email']);
             $user->name = $username[0];
             //$user->name = $profile['name'];
             $user->save();
+
+            $user->roles()->attach('3');
 
             $member = new Member;
             $member->user_id = $user->id;

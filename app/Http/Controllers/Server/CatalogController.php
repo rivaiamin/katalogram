@@ -42,7 +42,6 @@ class CatalogController extends Controller
             ->where('deleted_at', NULL)
             ->get();*/  
         $lists = $product->productList();
-            
 
         if ($categoryId != null) $lists->where('category_id', $categoryId);
         $data['lists'] = $lists->get();

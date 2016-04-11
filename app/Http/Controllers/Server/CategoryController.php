@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Server;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,76 +17,73 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        $data['categories'] = Category::all();
-        return json_encode($data);
+    public function __construct() {
+        $this->middleware('jwt.auth', ['except' => ['index','detail']]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function index() {
+    	$data['category'] = Category::all();
+        
+        return response()->json($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function detail($id) {
+        $data['category'] = Category::find($id);
+        return response()->json($data);        
+    }    
+    
+    public function add(Request $request) {
+    	$input = $request->all();
+        
+		$save = Category::create($input);
+
+    	if ($save) {
+    		$data['status'] = 'success';
+    		$data['message'] = 'category added';
+    		$data['category'] = $save;
+    	} else {
+    		$data['status'] = 'error';
+    		$data['message'] = 'category failed to add';
+    	}
+	
+    	return response()->json($data);
+    }
+    
+    public function uploadIcon(Request $r) {
+        $video = Input::file('image');
+    	
+    	//var_dump($video);
+    	if (Input::hasFile('image')) {
+	        $destinationPath = base_path() . '/storage/files/category';
+	        if(!$video->move($destinationPath, $video->getClientOriginalName())) {
+	            return response()->json(['status' => 'error', 'message' => 'cant_upload'], 400);
+	        } else {
+	        	return response()->json(['status' => 'success', 'message' => 'upload'], 200);
+	        }
+		} else {
+	        return response()->json(['status' => 'error', 'message' => 'empty'], 400);
+		}
+    }
+    
+    public function update(Request $request, $id) {
+    	$input = $request->all();
+        
+    	$category = Category::where('id', $id)->first();
+    	if ($category->update($input)) return response()->json(['success' => 'data_dapat_diperbarui'], 200);
+    	else return response()->json(['error' => 'cant_update_data'], 500);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function delete($id) {
+    	$delete = Category::where('id', $id)->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    	if ($delete) {
+    		$data['status'] = 'success';
+    		$data['message'] = 'category deleted';
+    	} else {
+    		$data['status'] = 'error';
+    		$data['message'] = 'category failed to delete';
+    	}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    	return response()->json($data);
     }
 }

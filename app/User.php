@@ -9,20 +9,19 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-
+use Zizaco\Entrust\Traits\EntrustUserTrait;
+ 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
-
+    use Authenticatable, CanResetPassword, EntrustUserTrait;
     protected $table = 'users';
 
     protected $fillable = [
     	'name',
     	'email',
     	'password',
-    	'level_id',
     	'user_join',
     	'user_pict'
     ];
@@ -45,10 +44,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Product');
     }
 
-    public function level() {
+    /*public function level() {
         return $this->belongsTo('App\UserLevel');
     }
-
+*/
     public function assignRole($role)
     {
         if (is_string($role)) {
@@ -58,16 +57,16 @@ class User extends Model implements AuthenticatableContract,
         return $this->level()->attach($role);
     }
      
-    public function revokeRole($role)
+  /*  public function revokeRole($role)
     {
         if (is_string($role)) {
             $role = UserLevel::where('level_name', $role)->first();
         }
  
         return $this->level()->detach($role);
-    }
+    }*/
 
-    public function hasRole($name)
+    /*public function hasRole($name)
     {
         foreach($this->level as $role)
         {
@@ -76,8 +75,8 @@ class User extends Model implements AuthenticatableContract,
          
         return false;
     }
-
-    public function adminRole($name)
+*/
+    /*public function adminRole($name)
     {
 
         if ($name == 2) return true;
@@ -85,7 +84,7 @@ class User extends Model implements AuthenticatableContract,
          
         return false;
     }
-
+*/
     
 
     public function memberContact()

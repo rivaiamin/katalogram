@@ -50,7 +50,7 @@ kgApp
 	$authProvider.facebook({
 	  //for development
       //clientId: '1496399374007633', // for live
-      clientId: '1506049499709287',
+      clientId: '1496399374007633',
       url: kgConfig.api+'auth/facebook'
     });
  

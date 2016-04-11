@@ -8,7 +8,7 @@
 - Running gulp script `gulp`
 
 ##Running Application Locally
-- Add virtual host for katalogram-client/dist http://katalogram.dev
+- Add virtual host for `katalogram-client/dist http://katalogram.dev`
 - Add virtual host for katalogram-client/files http://files.katalogram.dev
 
 ##Developer Notes
