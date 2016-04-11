@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://www.katalogram.com'),
+    'url' => env('APP_URL', 'https://katalogram.com'),
+    'domain' => env('APP_DOMAIN', 'katalogram.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +91,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY', 'VCBul92Hkh1HdCkyP48hLuWN2xtreeaT'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -159,6 +160,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Barryvdh\Cors\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -212,6 +214,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Entrust' => Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
 ];

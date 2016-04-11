@@ -15,17 +15,26 @@
 ======================================================================*/
 
 Route::group([
-    'domain' => 'admin.' . env('APP_DOMAIN')
+    'domain' => 'admin.' . env('APP_DOMAIN'), 
 ], function() {
 
-    Route::get('foo', ['middleware' => 'role', function()
+   /* Route::get('foo', ['middleware' => 'role', function()
     {
         return "hanya untuk manager";
-    }]);
+    }]);*/
 
+    Route::get('/kalana', 'Admin\DashboardController@template');
+    Route::post('/kalana/auth', 'Auth\AuthenticateController@login');
 	Route::get('/', [
         'as'    => 'dashboard',
-        'uses'  => 'Admin\DashboardController@index'
+        //'middleware' => ['ability:admin|manager'],
+        'uses'  => 'Admin\DashboardController@template'
+    ]);
+
+    Route::get('/{state}', [
+        'as'    => 'module',
+        'middleware' => ['role:admin|manager'],
+        'uses'  => 'Admin\DashboardController@template'
     ]);
 
     /*user auth
@@ -103,6 +112,23 @@ Route::group([//['middleware' => 'cors'],
 
      // categories
     Route::get('category', 'Server\CategoryController@index');
+    Route::get('category/{id}', 'Server\CategoryController@detail');
+    Route::post('category', [
+        'middleware' => ['ability:admin|manager'],
+        'uses' => 'Server\CategoryController@add'
+    ]);
+    Route::post('category/icon', [
+        'middleware' => ['ability:admin|manager'],
+        'uses' => 'Server\CategoryController@uploadIcon'
+    ]);
+    Route::put('category/{id}', [
+        'middleware' => ['ability:admin|manager'],
+        'uses' => 'Server\CategoryController@update'
+    ]);
+    Route::delete('category/{id}', [
+        'middleware' => ['ability:admin|manager'],
+        'uses' => 'Server\CategoryController@delete'
+    ]);
     
     /*route catalog list
     =================================================================*/
