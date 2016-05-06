@@ -24,6 +24,7 @@ class CreateMemberTable extends Migration
             $table->enum('member_type', array('P', 'G'));
             $table->integer('member_category')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')
                 ->references('id')

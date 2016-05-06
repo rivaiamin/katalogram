@@ -22,6 +22,7 @@ app
 .controller('kgCtrl', kgCtrl)
 .controller('homeCtrl', homeCtrl)
 .controller('authCtrl', authCtrl)
+.controller('memberCtrl', memberCtrl)
 .controller('categoryCtrl', categoryCtrl)
 //.controller('adminMappingCtrl', adminMappingCtrl)
 
