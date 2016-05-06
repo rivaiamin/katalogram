@@ -48,7 +48,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsTo('App\UserLevel');
     }
 */
-    public function assignRole($role)
+    /*public function assignRole($role)
     {
         if (is_string($role)) {
             $role = UserLevel::where('level_name', $role)->first();
@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract,
  
         return $this->level()->attach($role);
     }
-     
+     */
   /*  public function revokeRole($role)
     {
         if (is_string($role)) {
