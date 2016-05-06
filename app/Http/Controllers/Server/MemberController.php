@@ -27,6 +27,11 @@ class MemberController extends Controller
          $this->middleware('jwt.auth', ['except'=>['memberProfile']]);
      }
 
+    public function index() {
+        $data['member'] = Member::all()->where('deleted_at', NULL);
+        return response()->json($data);
+    }
+
     public function memberProfile(AuthCtrl $auth, Product $product, Member $member, $username)
     {
         
@@ -128,6 +133,31 @@ class MemberController extends Controller
         
         return json_encode($params);
 
+
+    }
+
+    public function deleteMember($id)
+    {
+        $member = Member::withTrashed()
+                ->where('id', $id)
+                ->get();
+
+        // $member->user()->withTrashed()->get();
+        // dd($member);
+
+        if ($member){
+            $params = [
+                'status' => "success",
+                'message' => "data berhasil dihapus",
+            ];
+        }
+        else {
+            $params = [
+                'status' => "error",
+                'message' => "data gagal dihapus",
+            ];
+        }
+        return json_encode($params);
 
     }
 }

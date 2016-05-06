@@ -101,7 +101,12 @@ Route::group([//['middleware' => 'cors'],
 
     /*route authencticate with jwt-auth
     =================================================================*/
+    
+    // backend crud member
+    Route::get('member', 'Server\MemberController@index');
+    Route::delete('member/{memberId}/delete', 'Server\MemberController@deleteMember');
 
+    // member
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
     Route::get('auth/user', 'Auth\AuthenticateController@getAuthenticatedUser');
     Route::get('auth/refresh', 'Auth\AuthenticateController@refresh');

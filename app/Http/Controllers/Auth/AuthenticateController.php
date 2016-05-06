@@ -102,9 +102,11 @@ class AuthenticateController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
+        $user->save();
+        $inputMember['user_id'] = $user->id;
+        $inputMember['member_name'] = $request->input('name');
         
-        if($user->save()) {
-            $inputMember['user_id'] = $user->id;
+        if($inputMember != NULL) {
             Member::create($inputMember);
             $user->roles()->attach(3);
         }
