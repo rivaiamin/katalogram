@@ -27,6 +27,13 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
 		resolve: {
 			loginRequired: loginRequired
 		}
+	}).state('member', {
+		url:'/member', 
+		templateUrl: 'views/admin/member.html',
+		controller: 'memberCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
 	}).state('category', {
 		url:'/category', 
 		templateUrl: 'views/admin/category.html',
