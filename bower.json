@@ -34,7 +34,6 @@
     "angular-sanitize": "~1.4.9",
     "angular-superswipe": "~0.0.2",
     "angular-touch": "~1.5.0",
-    "angular-ui-grid": "~3.1.0",
     "angular-ui-router": "~0.2.15",
     "cropme": "~0.4.1",
     "satellizer": "~0.13.4",
@@ -60,7 +59,9 @@
     "angular-environment": "^1.0.3",
     "jquery-ui": "^1.11.4",
     "ng-file-upload": "^12.0.4",
-    "angular-ui-notification": "^0.2.0"
+    "angular-ui-notification": "^0.2.0",
+    "textAngular": "^1.5.1",
+    "ngInfiniteScroll": "^1.2.2"
   },
   "resolutions": {
     "angular": "1.5.0"
