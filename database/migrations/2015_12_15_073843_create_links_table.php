@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeProductRelease extends Migration
+class CreateLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class ChangeProductRelease extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('product', function ($table) {
-            $table->boolean('product_release')->default('0')->change();
+        Schema::create('links', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 128);
+            $table->timestamps();
         });
     }
 
@@ -25,6 +26,6 @@ class ChangeProductRelease extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('links');
     }
 }

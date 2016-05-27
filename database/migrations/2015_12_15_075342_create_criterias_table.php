@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeForeignMemberContact extends Migration
+class CreateCriteriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class ChangeForeignMemberContact extends Migration
      */
     public function up()
     {
-        Schema::table('member_contact', function ($table) {
-            $table->dropForeign('member_contact_member_id_foreign');
-
-            $table->renameColumn('member_id', 'contact_id');
-
-            $table->foreign('contact_id')->references('id')->on('users');
+        Schema::create('criterias', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 128);
+            $table->timestamps();
         });
     }
 
@@ -28,6 +26,6 @@ class ChangeForeignMemberContact extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('criterias');
     }
 }

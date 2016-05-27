@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserLevelTable extends Migration
+class CreateUserMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,14 @@ class CreateUserLevelTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_level', function (Blueprint $table) {
+        Schema::create('user_messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('level_name', 16);
+            $table->integer('sender_id')->unsigned();
+            $table->integer('recipient_id')->unsigned();
+            $table->text('content');
+            $table->boolean('is_read')->default(0)->change();
             $table->timestamps();
+
         });
     }
 
@@ -26,6 +30,6 @@ class CreateUserLevelTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_level');
+        Schema::drop('user_messages');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductPreviewTable extends Migration
+class CreateProductPreviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,18 @@ class CreateProductPreviewTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_preview', function (Blueprint $table) {
+        Schema::create('product_previews', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->string('preview_pict', 128);
-            $table->string('preview_caption', 128);
+            $table->string('image', 128);
+            $table->string('caption', 128);
             $table->timestamps();
+        });
 
+        Schema::table('product_previews', function (Blueprint $table) {
             $table->foreign('product_id')
                 ->references('id')
-                ->on('product')
+                ->on('products')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +35,6 @@ class CreateProductPreviewTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_preview');
+        Schema::drop('product_previews');
     }
 }

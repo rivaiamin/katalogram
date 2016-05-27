@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeedbackRespondTable extends Migration
+class CreateCriteriaRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,21 +12,23 @@ class CreateFeedbackRespondTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedback_respond', function (Blueprint $table) {
+        Schema::create('criteria_rates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('feedback_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('respond_type')->unsigned();
+            $table->integer('criteria_id')->unsigned();
+            $table->integer('value')->unsigned();
             $table->timestamps();
+        });
 
-            $table->foreign('feedback_id')
-                ->references('id')
-                ->on('product_feedback')
-                ->onDelete('cascade');
-
+        Schema::table('criteria_rates', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('criteria_id')
+                ->references('id')
+                ->on('product_criterias')
                 ->onDelete('cascade');
         });
     }
@@ -38,6 +40,6 @@ class CreateFeedbackRespondTable extends Migration
      */
     public function down()
     {
-        Schema::drop('feedback_respond');
+        Schema::drop('criteria_rates');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeUsersEntrust extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class ChangeUsersEntrust extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->dropForeign('users_level_id_foreign');
-
-            $table->dropColumn('level_id');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 128);
+            $table->timestamps();
         });
 
-        Schema::drop('user_level');
     }
 
     /**
@@ -28,6 +27,6 @@ class ChangeUsersEntrust extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('tags');
     }
 }

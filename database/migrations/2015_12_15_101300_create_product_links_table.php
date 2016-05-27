@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCriteriaTable extends Migration
+class CreateProductLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,24 @@ class CreateCriteriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('criteria', function (Blueprint $table) {
+        Schema::create('product_links', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->string('criteria_name', 32);
-            $table->timestamps();
+            $table->integer('link_id')->unsigned();
+            $table->string('url', 128);
+			$table->timestamps();
+
+        });
+
+		Schema::table('product_links', function (Blueprint $table) {
+			$table->foreign('link_id')
+                ->references('id')
+                ->on('links')
+                ->onDelete('cascade');
 
             $table->foreign('product_id')
                 ->references('id')
-                ->on('product')
+                ->on('products')
                 ->onDelete('cascade');
         });
     }
@@ -32,6 +41,6 @@ class CreateCriteriaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('criteria');
+        Schema::drop('product_links');
     }
 }

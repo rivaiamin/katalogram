@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductRateTable extends Migration
+class CreateUserNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,21 +12,19 @@ class CreateProductRateTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_rate', function (Blueprint $table) {
+        Schema::create('user_notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('criteria_id')->unsigned();
-            $table->integer('rate_value')->unsigned();
+            $table->string('content', 128);
+            $table->string('link', 128);
+            $table->boolean('is_read')->unsigned();
             $table->timestamps();
+        });
 
+        Schema::table('user_notifications', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('criteria_id')
-                ->references('id')
-                ->on('criteria')
                 ->onDelete('cascade');
         });
     }
@@ -38,6 +36,6 @@ class CreateProductRateTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_rate');
+        Schema::drop('user_notifications');
     }
 }

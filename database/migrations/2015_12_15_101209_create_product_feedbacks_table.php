@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductFeedbackTable extends Migration
+class CreateProductFeedbacksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,19 @@ class CreateProductFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_feedback', function (Blueprint $table) {
+        Schema::create('product_feedbacks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->integer('feedback_time')->unsigned();
-            $table->string('feedback_comment', 128);
-            $table->boolean('feedback_endorse');
-            $table->enum('feedback_type', array('P', 'N'));
+            $table->integer('time')->unsigned();
+            $table->string('comment', 128);
+            $table->boolean('endorse');
+            $table->enum('feedback_type', ['P', 'M']);
             $table->softDeletes();
             $table->timestamps();
+        });
 
+        Schema::table('product_feedbacks', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -30,7 +32,7 @@ class CreateProductFeedbackTable extends Migration
 
             $table->foreign('product_id')
                 ->references('id')
-                ->on('product')
+                ->on('products')
                 ->onDelete('cascade');
         });
     }
@@ -42,6 +44,6 @@ class CreateProductFeedbackTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_feedback');
+        Schema::drop('product_feedbacks');
     }
 }

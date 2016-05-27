@@ -507,7 +507,7 @@ kgApp
 		$scope.profile.num_preview = Object.keys(response.preview).length;
 		//console.log($scope.profile);
 	}).catch(function(error) {
-		$state.go('home');
+		//$state.go('home');
 	});
 	$scope.savePict = function(filename) {
 		$http.put(kgConfig.api+$rootScope.user.name+'/pict', {

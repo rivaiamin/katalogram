@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificationTable extends Migration
+class CreateFeedbackRespondsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,19 @@ class CreateNotificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification', function (Blueprint $table) {
+        Schema::create('feedback_responds', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('feedback_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('notif_time')->unsigned();
-            $table->integer('notif_type')->unsigned();
-            $table->string('notif_link', 128);
-            $table->integer('notif_status')->unsigned();
+            $table->enum('type', ['P','N']);
             $table->timestamps();
+        });
+
+        Schema::table('feedback_responds', function (Blueprint $table) {
+            $table->foreign('feedback_id')
+                ->references('id')
+                ->on('product_feedbacks')
+                ->onDelete('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -35,6 +40,6 @@ class CreateNotificationTable extends Migration
      */
     public function down()
     {
-        Schema::drop('notification');
+        Schema::drop('feedback_responds');
     }
 }

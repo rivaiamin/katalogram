@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMemberContactTable extends Migration
+class CreateUserLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,24 @@ class CreateMemberContactTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_contact', function (Blueprint $table) {
+        Schema::create('user_links', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('member_id')->unsigned();
-            $table->timestamps();
+            $table->integer('link_id')->unsigned();
+            $table->string('url', 128);
+			$table->timestamps();
+
+        });
+
+		Schema::table('user_links', function (Blueprint $table) {
+			$table->foreign('link_id')
+                ->references('id')
+                ->on('links')
+                ->onDelete('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('member_id')
-                ->references('id')
-                ->on('member')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +41,6 @@ class CreateMemberContactTable extends Migration
      */
     public function down()
     {
-        Schema::drop('member_contact');
+        Schema::drop('user_links');
     }
 }

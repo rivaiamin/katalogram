@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	<div class="uk-visible-large uk-container uk-container-center">
-		<div class="ui labeled icon secondary menu">
+		<div class="ui icon secondary menu">
 			<a href="/" class="item head active">
 				<img class="ui icon" src="public/img/katalogram_white.png"> katalogram
 			</a>
@@ -54,7 +54,7 @@
 				<i class="uk-icon-th icon"></i>
 				Katalog
 			</a> -->
-			<a class="browse item" data-position="bottom left">
+			<!--<a class="browse item" data-position="bottom left">
 				<i class="uk-icon-list icon"></i>
 				Kategori
 			</a>
@@ -67,7 +67,7 @@
 						</div>
 					</a>
 				</div>
-			</div>
+			</div>-->
 			<div class="item">
 				<!-- <div class="ui icon input">
 					<tags-input class="ui fluid" ng-model="catalog.search"
@@ -76,18 +76,25 @@
 				    </tags-input>
 					<i class="search link icon"></i>
 			    </div> -->
-				<div class="ui input">
-					<input type="text" placeholder="cari...">
+				<div class="ui icon input">
+					<input type="text" placeholder="Search...">
+					<i class="search link icon"></i>
 				</div>
 			</div>
 			<div class="right menu" ng-if="isLogin()" >
 				<a class="active item" data-uk-modal="{target:'#kg-modal'}" ng-click="createCatalog()">
-					<i class="pencil icon"></i> Buat
+					<i class="pencil icon"></i>
+				</a>
+				<a href="" class="item">
+					<i class="mail icon"></i>
+				</a>
+				<a href="" class="item">
+					<i class="announcement icon"></i>
 				</a>
 				<a class="browse item" data-position="bottom right">
 					<img ng-if="user.user_pict" class="uk-border-circle icon" ng-src="{{ files + 'user_pict/'+ user.user_pict }}" style="width:30px" >
 					<i ng-if="! user.user_pict" class="user icon"></i>
-					{{ user.name }}
+					<span> {{ user.name }}</span>
 				</a>
 				<div class="ui popup bottom right transition hidden">
 					<div class="uk-grid uk-grid-small">
