@@ -22,6 +22,7 @@ class CreateCategoriesTable extends Migration
             $table->enum('type', array('B','P'));
             $table->string('color', 16)->nullable();
             $table->timestamps();
+			$table->softDeletes();
         });
 
         Schema::table('categories', function (Blueprint $table) {

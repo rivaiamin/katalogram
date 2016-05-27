@@ -16,7 +16,9 @@ class CreateProductCriteriasTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->integer('criteria_id')->unsigned();
+			$table->decimal('rate_avg',5,2)->default(0);
             $table->timestamps();
+			$table->softDeletes();
         });
 
 		Schema::table('product_criterias', function (Blueprint $table) {

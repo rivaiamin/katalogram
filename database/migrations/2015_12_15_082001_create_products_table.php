@@ -25,13 +25,13 @@ class CreateProductsTable extends Migration
             $table->text('data')->nullable();
             $table->string('website', 64);
             $table->string('embed', 128)->nullable();
-			$table->boolean('is_release')->default('0')->change();
+			$table->boolean('is_release')->default(0);
 
-			$table->integer('view_count')->unsigned()->nullable();
-            $table->integer('rating_avg')->unsigned()->nullable();
-            $table->integer('plus_count')->unsigned()->nullable();
-            $table->integer('minus_count')->unsigned()->nullable();
-            $table->integer('collect_count')->unsigned()->nullable();
+			$table->integer('view_count')->default(0);
+            $table->decimal('rating_avg',5,2)->default(0);
+            $table->integer('plus_count')->default(0);
+            $table->integer('minus_count')->default(0);
+            $table->integer('collect_count')->default(0);
 
 			$table->softDeletes();
             $table->timestamps();

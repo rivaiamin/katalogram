@@ -17,7 +17,7 @@ class CreateUserMessagesTable extends Migration
             $table->integer('sender_id')->unsigned();
             $table->integer('recipient_id')->unsigned();
             $table->text('content');
-            $table->boolean('is_read')->default(0)->change();
+            $table->boolean('is_read')->default(0);
             $table->timestamps();
 
         });

@@ -16,14 +16,17 @@ class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword, EntrustUserTrait;
+	use SoftDeletes;
+
     protected $table = 'users';
 
     protected $fillable = [
     	'name',
     	'email',
     	'password',
-    	'user_join',
-    	'user_pict'
+    	'join',
+    	'facebook',
+		'google'
     ];
 
     /**
@@ -36,13 +39,37 @@ class User extends Model implements AuthenticatableContract,
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function member() {
-        return $this->hasOne('App\Member');
+    public function userProfile() {
+        return $this->hasOne('App\UserProfile');
     }
     
     public function product() {
         return $this->hasMany('App\Product');
     }
+
+	public function userContact() {
+        return $this->hasMany('App\UserContact');
+    }
+
+	public function userCollect() {
+        return $this->hasMany('App\UserCollect');
+    }
+
+	public function userLink() {
+        return $this->hasMany('App\UserLink');
+    }
+
+	public function userMessage() {
+        return $this->hasMany('App\UserMessage');
+    }
+
+	public function userNotification() {
+        return $this->hasMany('App\UserNotification');
+    }
+
+	public function productFeedback() {
+		return $this->hasMany('App\ProductFeedback');
+	}
 
     /*public function level() {
         return $this->belongsTo('App\UserLevel');
@@ -85,10 +112,5 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 */
-    
 
-    public function memberContact()
-    {
-        return $this->hasMany('App\MemberContact');
-    }
 }

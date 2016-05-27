@@ -8,8 +8,7 @@ use DB;
 class Member extends Model
 {
     //
-    use SoftDeletes;
-    
+
     protected $table = 'member';
     protected $dates = ['deleted_at'];
 
@@ -34,7 +33,7 @@ class Member extends Model
     }
 
     public function isConnect($userId, $memberId) {
-        if ($userId == $memberId) return true; 
+        if ($userId == $memberId) return true;
         else {
             $connect = DB::table('member_contact')
                 ->where('user_id', $userId)

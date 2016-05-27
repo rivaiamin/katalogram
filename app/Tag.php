@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $table = 'tag';
+
+	use SoftDeletes;
+    protected $table = 'tags';
 
     protected $fillable = [
-    	'tag_name'
+    	'name'
     ];
 
-    public function product() {
-    	return $this->belongsToMany('App\Product');
+    public function product_tag() {
+    	return $this->hasMany('App\ProductTag');
     }
 }

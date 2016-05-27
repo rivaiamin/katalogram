@@ -8,17 +8,16 @@ class FeedbackRespond extends Model
 {
     //
     
-    protected $table = 'feedback_respond';
+    protected $table = 'feedback_responds';
     
     protected $fillable = [
         'feedback_id',
         'user_id',
-        'respond_date',
-        'respond_type'
+        'type'
     ];
     
     public function feedback(){
-        return $this->belongsTo('App\Feedback');
+        return $this->belongsTo('App\ProductFeedback');
     }
     
     public function user(){

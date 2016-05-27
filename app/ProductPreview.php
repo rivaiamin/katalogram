@@ -4,17 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model
+class ProductPreview extends Model
 {
-    protected $table = 'product_feedback';
+    protected $table = 'product_previews';
 
     protected $fillable = [
-    	'user_id',
     	'product_id',
-        'feedback_time',
-    	'feedback_comment',
-        'feedback_endorse',
-    	'feedback_type'
+    	'image',
+    	'caption'
     ];
 
     public function product() {

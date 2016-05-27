@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    protected $table = 'page';
+    protected $table = 'pages';
 
     protected $fillable = [
-    	'page_slug',
-    	'page_title',
-    	'page_content'
+    	'slug',
+    	'title',
+    	'content'
     ];
 }

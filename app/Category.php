@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = 'category';
+	use SoftDeletes;
+
+    protected $table = 'categories';
 
     protected $fillable = [
-    	'category_parent',
-    	'category_name',
-    	'category_desc',
-    	'category_icon',
-    	'category_type',
-    	'category_color'
+    	'parent_id',
+    	'name',
+    	'desc',
+    	'icon',
+    	'image',
+    	'type',
+    	'color',
     	
     ];
 
@@ -23,7 +26,7 @@ class Category extends Model
      */
     public function subCategory()
     {
-        return $this->hasMany('App\Category', 'category_parent');
+        return $this->hasMany('App\Category', 'parent');
     }
 
     /**
@@ -32,12 +35,13 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('App\Category', 'category_parent');
+        return $this->belongsTo('App\Category', 'parent');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+
     public function product() {
         return $this->hasMany('App\Product');
     }

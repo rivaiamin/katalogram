@@ -24,8 +24,6 @@ class CreateUserProfilesTable extends Migration
             $table->string('summary', 128);
             $table->text('profile');
             $table->timestamps();
-            $table->softDeletes();
-
         });
 
 		Schema::table('user_profiles', function (Blueprint $table) {

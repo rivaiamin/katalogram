@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rate extends Model
+class CriteriaRate extends Model
 {
-    protected $table = 'product_rate';
+    protected $table = 'criteria_rates';
 
     protected $fillable = [
     	'user_id',
     	'criteria_id',
-    	'rate_value'
+    	'value'
     ];
 
     public function user() {
@@ -19,6 +19,6 @@ class Rate extends Model
     }
 
     public function criteria() {
-    	return $this->belongsTo('App\Criteria');
+    	return $this->belongsTo('App\ProductCriteria');
     }
 }
