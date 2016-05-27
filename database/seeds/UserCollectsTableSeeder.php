@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CriteriasTableSeeder extends Seeder
+class UserCollectsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,11 +13,12 @@ class CriteriasTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $limit = 50;
+        $limit = 500;
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('criterias')->insert([
-                'name' => $faker->word,
+            DB::table('user_collects')->insert([
+                'product_id' => $faker->numberBetween(1,50),
+                'user_id' => $faker->numberBetween(4,53),
                 'created_at' => time(),
 				'updated_at' => time()
             ]);

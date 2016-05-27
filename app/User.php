@@ -16,7 +16,6 @@ class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword, EntrustUserTrait;
-	use SoftDeletes;
 
     protected $table = 'users';
 
