@@ -12,24 +12,18 @@ use App\Category;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct() {
         $this->middleware('jwt.auth', ['except' => ['index','detail']]);
     }
 
     public function index() {
-    	$data['category'] = Category::all();
-        
-        return response()->json($data);
-    }
+    	$data['categories'] = Category::all();
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+	}
 
     public function detail($id) {
         $data['category'] = Category::find($id);
-        return response()->json($data);        
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }    
     
     public function add(Request $request) {
@@ -46,13 +40,12 @@ class CategoryController extends Controller
     		$data['message'] = 'category failed to add';
     	}
 	
-    	return response()->json($data);
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
     
     public function uploadIcon(Request $r) {
         $video = Input::file('image');
-    	
-    	//var_dump($video);
+
     	if (Input::hasFile('image')) {
 	        $destinationPath = base_path() . '/storage/files/category';
 	        if(!$video->move($destinationPath, $video->getClientOriginalName())) {

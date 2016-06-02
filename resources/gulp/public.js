@@ -20,7 +20,7 @@ var paths = {
         'resources/fonts/*',
         'bower_components/semantic/dist/themes/default/assets/fonts/*'
     ],
-    scripts: [
+    libjs: [
         //jquery
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
@@ -70,9 +70,15 @@ var paths = {
         'bower_components/angular-validation-match/dist/angular-validation-match.min.js',
         //'bower_components/angular-knob/resources/angular-knob.js',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.js',
+        'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+		'bower_components/angular-environment/dist/angular-environment.min.js',
 
-        'bower_components/holderjs/holder.min.js'
+        //'bower_components/holderjs/holder.min.js'
     ],
+	js:[
+		'resources/js/client/kg.*.js',
+		'resources/js/client/app.js',
+	],
     css: [
 
         //semantic-ui
@@ -119,18 +125,18 @@ var paths = {
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
 
         'public/fonts/Glametrix.css',
-        'public/fonts/DHF Broffont Script.css',
+        /*'public/fonts/DHF Broffont Script.css',*/
         'public/fonts/CaviarDreams.css',
         'public/fonts/icons.css',
 
         'resources/css/katalogram.styl'
     ],
     html: [
-        'resources/***/**/*.html'
+        'resources/views/**/*.html',
     ],
     htmlpublic: [
         'public/*.html',
-        'public/***/**/*.html'
+        'public/views/**/*.html',
     ],
     json: [
         'resources/json/*.json'
@@ -194,14 +200,14 @@ gulp.task('fontmin', function() {
 });
 
 gulp.task('libjsmin', function() {
-  return gulp.src(paths.scripts)
+  return gulp.src(paths.libjs)
     .pipe(uglify())
     .pipe(concat('lib.min.js'))
     .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('jsmin', function() {
-  return gulp.src('resources/js/app.js')
+  return gulp.src(paths.js)
     .pipe(uglify())
     .pipe(concat('katalogram.min.js'))
     .pipe(gulp.dest('public/js'));
@@ -225,7 +231,7 @@ gulp.task('cssmin', function () {
 gulp.task('htmlmin', function(cb) {
     return gulp.src(paths.html)
         .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
-        .pipe(gulp.dest('public'))
+        .pipe(gulp.dest('public/views'))
 });
 
 gulp.task('exportmin', function(cb) {

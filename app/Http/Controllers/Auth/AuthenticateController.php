@@ -15,7 +15,7 @@ use GuzzleHttp;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use App\Role;
 use App\User;
-use App\Member;
+use App\UserProfile;
 use Redirect;
 use Hash;
 
@@ -103,11 +103,11 @@ class AuthenticateController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
-        $inputMember['user_id'] = $user->id;
-        $inputMember['member_name'] = $request->input('name');
+        $inputProfile['user_id'] = $user->id;
+        $inputProfile['fullname'] = $request->input('name');
         
-        if($inputMember != NULL) {
-            Member::create($inputMember);
+        if($inputProfile != NULL) {
+            UserProfile::create($inputProfile);
             $user->roles()->attach(3);
         }
 
@@ -235,11 +235,11 @@ class AuthenticateController extends Controller
 
             $user->roles()->attach('3');
 
-            $member = new Member;
-            $member->user_id = $user->id;
-            $member->member_name = $profile['name'];
-            $member->member_website = $profile['link'];
-            $member->save();
+            $profile = new UserProfile;
+            $profile->user_id = $user->id;
+            $profile->fullname = $profile['name'];
+            $profile->summary = $profile['link'];
+            $profile->save();
             
             $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
@@ -313,11 +313,11 @@ class AuthenticateController extends Controller
             $user->email= $profile['email'];
             $user->save();
 
-            $member = new Member;
-            $member->user_id = $user->id;
-            $member->member_name = $profile['name'];
-            $member->member_website = $profile['profile'];
-            $member->save();
+            $profile = new UserProfile;
+            $profile->user_id = $user->id;
+            $profile->fullname = $profile['name'];
+            $profile->summary = $profile['profile'];
+            $profile->save();
 
             return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
         }
@@ -327,10 +327,9 @@ class AuthenticateController extends Controller
         $token = JWTAuth::getToken();
         if(!$token){
             throw new BadRequestHtttpException('Token not provided');
-        }
-        try{
+        } try {
             $token = JWTAuth::refresh($token);
-        }catch(TokenInvalidException $e){
+        } catch (TokenInvalidException $e) {
             throw new AccessDeniedHttpException('The token is invalid');
         }
         return response()->json(['token'=>$token]);

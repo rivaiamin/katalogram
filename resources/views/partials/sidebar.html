@@ -10,8 +10,8 @@
             </li> -->
             <li ng-repeat="cats in categories">
                 <a href="/catalog/category/{{ cats.id }}">
-                <img ng-src="public/img/category/{{ cats.category_icon }}" width="20">
-                {{ cats.category_name }}
+                <img ng-src="{{ files }}category/icon/{{ cats.icon }}" width="20">
+                {{ cats.name }}
                 </a>
             </li>
             <!-- 

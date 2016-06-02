@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserCollect extends Model
 {
-    //
-
     protected $table = 'user_collects';
 
     protected $fillable = [
@@ -22,5 +20,9 @@ class UserCollect extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+	public function getUser() {
+		return $this->user()->select(['id','name','picture']);
+	}
 
 }

@@ -24,7 +24,7 @@ class CatalogRequest extends Request
     public function rules()
     {
         return [
-            'product_name' => 'required',
+            'name' => 'required',
             'category_id' => 'required',
             /*'product_code' => 'required',
             'product_logo' => 'required',

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 use App\Http\Requests;
-use App\Http\Requests\CatalogRequest;
+use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\User;
@@ -19,64 +19,82 @@ use mikehaertl\wkhtmlto\Image;
 use Auth;
 //use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
-class CatalogController extends Controller
+class ProductController extends Controller
 {
 
     public function __construct()
      {
          // Apply the jwt.auth middleware to all methods in this controller
-         // except for the authenticate method. We don't want to prevent
-         // the user from retrieving their token if they don't already have it
-
-         $this->middleware('jwt.auth', ['except' => ['exportCatalog', 'viewCatalog', 'index', 'catalogCategory', 'catalogDetail']]);
+         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'catalog']]);
      }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Product $product, $categoryId = null)
+
+	public function index(Product $product, $categoryId = null)
     {
         /*$data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
             ->where('product_release', '1')
             ->where('deleted_at', NULL)
-            ->get();*/  
+            ->get();*/
         $lists = $product->productList();
 
         if ($categoryId != null) $lists->where('category_id', $categoryId);
         $data['lists'] = $lists->get();
 
-        return json_encode($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
-    
-    public function isOwner($productId) {
-        $product = Product::where('id',$productId)->first();
+
+	public function get(Product $product, Request $request, $after = 0, $limit = 10) {
+		$category_id = $request->input('category_id');
+		$tags = $request->input('tags');
+
+    	$lists = $product->productList()
+			->orderBy($product->table.'.id', 'desc')
+			->take($limit);
+
+		if (!empty($category_id)) $lists->where('category_id', $category_id);
+		if ($after != 0) $lists->where($product->table.'.id','<', $after);
+
+        $data['catalogs'] = $lists->get();
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function isOwner($id) {
+        $product = Product::where('id',$id)->first();
         if ($product->user_id == Auth::user()->id) return true;
         else return false;
     }
 
+    public function detail($id){
+        $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])->find($id);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+    }
 
-    public function catalogDetail($id){
-        $data['product'] = Product::with(['owner','category','preview','tag','criteria.avgCriteria','feedbackPlus','feedbackMinus','numCollect'])
+	public function view($id) {
+        $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])
                                 ->where('id', $id)
                                 ->get();
+
+        return view('catalog/view', $data);
+    }
+
+    public function search(Request $request, $tag){
+
+        $input = $request->except('token');
+
+        $tagId = Tag::whereIn('tag_name', $input)->get(array('id'));
+        $productId = ProductTag::whereIn('tag_id', $tagId)->groupBy('product_id')->get(array('product_id'));
+        $data['lists'] = Product::whereIn('id', $productId)->get();
+
+        // $data['lists'] = Tag::where('tag_name', $tag)->first()->product()->get();
 
         return json_encode($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function createCatalog(CatalogRequest $request)
+    public function create(CatalogRequest $request)
     {
-        $input = $request->only('category_id','product_name');
+        $input = $request->only('category_id','name');
         $input['user_id'] = Auth::user()->id;
-        //return $input;
 
-        $create = Product::create($input);
+		$create = Product::create($input);
 
         if ($create) {
             $data['status'] = "success";
@@ -87,34 +105,20 @@ class CatalogController extends Controller
             $data['message'] = "katalog produk gagal ditambahkan";
         }
 
-        return json_encode($data);
-        //return Redirect::back();
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editCatalog($id)
+    public function edit($id)
     {
         $data['product'] = Product::with(['owner','criteria','tag','preview'])
                                 ->where('id', $id)
                                 ->where('user_id', Auth::user()->id)
                                 ->get();
 
-        return json_encode($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateCatalog(Request $request, $id)
+    public function update(Request $request, $id)
     {
         if ($this->isOwner($id)) {
             $catalog = Product::findOrFail($id);
@@ -135,84 +139,92 @@ class CatalogController extends Controller
             $data['message'] = "akses invalid";
         }
 
-        return json_encode($data);
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $userId = Auth::user()->id;
-        // dd($userId);
-        $catalog = Product::where('id', $id)
-                            ->where('user_id', $userId);
+    public function delete($id) {
+        if ($this->isOwner($id)) {
+			$catalog = Product::where('id', $id)
+					   ->where('user_id', $userId);
 
-        $input['deleted_at'] = Carbon::now();
-
-        // return $input;
-
-        $catalog->update($input);
-
-        if ($catalog->first()) {
-            $data['status'] = "success";
-            $data['message'] = "Data katalog produk telah dihapus";
-        } else {
-            $data['status'] = "error";
-            $data['message'] = "Data katalog gagal dihapus";
-        }
-
-        return json_encode($data);
-    }
+			if ($catalog->delete()) {
+				$data['status'] = "success";
+				$data['message'] = "Data katalog produk telah dihapus";
+        		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+			} else {
+				$data['status'] = "error";
+				$data['message'] = "Data katalog gagal dihapus";
+        		return response()->json($data, 500, [], JSON_NUMERIC_CHECK);
+			}
+		} else {
+			return response()->json($data, 400, [], JSON_NUMERIC_CHECK);
+		}
+	}
 
     public function logoUpload(Request $request, $productId)
     {
         if ($this->isOwner($productId)) {
-            $product = Product::where('id', $productId);
 
+			$logo = Input::file('image');
+
+			if (Input::hasFile('image')) {
+				$destinationPath = base_path() . '/storage/files/product/logo/';
+				$filename = time() . '.' . $logo->getClientOriginalExtension();
+				if(!$icon->move($destinationPath, $filename)) {
+					return response()->json(['status' => 'error', 'message' => 'cant_upload'], 400);
+				} else {
+					return response()->json(['status' => 'success', 'message' => 'upload', 'image' => $filename ], 200, [], JSON_NUMERIC_CHECK);
+				}
+			} else {
+				return response()->json(['status' => 'error', 'message' => 'empty'], 400);
+			}
+		    /*$product = Product::where('id', $productId);
             $input = $request->only('product_logo');
-
-            // dd($input);
-
             $product->update($input);
-
             if ($product->first()){
-
-                $params = [
+                $data = [
                     'status' => "success",
                     'message' => "Logo ikon telah berhasil diperbarui",
                 ];
             }
             else {
-                $params = [
+                $data = [
                     'status' => "error",
                     'message' => "Logo ikon gagal diperbarui",
                 ];
-            }
-        } else {
-            $params = [
+            }*/
+		} else {
+            $data = [
                 'status' => "error",
                 'message' => "akses invalid",
             ];
+			return response()->json($data, 400, [], JSON_NUMERIC_CHECK);
         }
-        
-        return json_encode($params);
+
+
     }
 
-    public function previewUpload(Request $request, $productId)
+    public function pictureUpload(Request $request, $productId)
     {
         if ($this->isOwner($productId)) {
-            $product = Product::where('id', $productId);
+			$logo = Input::file('image');
 
+			if (Input::hasFile('image')) {
+				$destinationPath = base_path() . '/storage/files/product/picture/';
+				$filename = time() . '.' . $picture->getClientOriginalExtension();
+				if(!$icon->move($destinationPath, $filename)) {
+					return response()->json(['status' => 'error', 'message' => 'cant_upload'], 400);
+				} else {
+					return response()->json(['status' => 'success', 'message' => 'upload', 'image' => $filename ], 200, [], JSON_NUMERIC_CHECK);
+				}
+			} else {
+				return response()->json(['status' => 'error', 'message' => 'empty'], 400);
+			}
+
+            /*$product = Product::where('id', $productId);
             $input = $request->only('preview_pict', 'preview_caption');
             $input['product_id'] = $productId;
-            // dd($input);
-
             $preview = Preview::create($input);
-
             if ($preview){
                 $params = [
                     'status' => "success",
@@ -224,18 +236,18 @@ class CatalogController extends Controller
                     'status' => "error",
                     'message' => "gambar gagal ditambahkan",
                 ];
-            }
+            }*/
         } else {
             $params = [
                 'status' => "error",
                 'message' => "akses invalid",
             ];
         }
-        
-        return json_encode($params);
+
+        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function exportCatalog($productId) {
+    public function export($productId) {
         // You can pass a filename, a HTML string or an URL to the constructor
         $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
         $image = new Image(array(
@@ -265,28 +277,5 @@ class CatalogController extends Controller
         //if (! $image->send()) return $image->getError();
         // ... or send to client as file download
         if (! $image->send("catalog_$productId.jpg")) return $image->getError();
-    }
-
-    public function viewCatalog($id) {
-        $data['product'] = Product::with(['owner','category','criteria','criteriaCount','tag','feedbackPlus','feedbackMinus','numPlus','numMinus','numCollect'])
-                                ->where('id', $id)
-                                ->get();
-
-        return view('catalog/view', $data);
-    }
-
-    public function searchCatalog(Request $request, $tag){
-
-        $input = $request->except('token');
-
-        $tagId = Tag::whereIn('tag_name', $input)->get(array('id'));
-        $productId = ProductTag::whereIn('tag_id', $tagId)->groupBy('product_id')->get(array('product_id'));
-        $data['lists'] = Product::whereIn('id', $productId)->get();
-
-        // dd($product);
-
-        // $data['lists'] = Tag::where('tag_name', $tag)->first()->product()->get();
-
-        return json_encode($data);
     }
 }

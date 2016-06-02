@@ -4,6 +4,7 @@ namespace App;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductCriteria extends Model
 {
@@ -20,7 +21,7 @@ class ProductCriteria extends Model
     }
 
 	public function criteria() {
-		retrun $this->belongsTo('App\Criteria');
+		return $this->belongsTo('App\Criteria');
 	}
 
     public function criteriaRate() {

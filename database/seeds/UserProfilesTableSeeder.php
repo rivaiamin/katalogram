@@ -22,11 +22,10 @@ class UserProfilesTableSeeder extends Seeder
 				'category_id' => $faker->numberBetween(1,15),
 				'fullname' => $faker->name,
 				'born' => $faker->dateTimeBetween('-30 years','-20 years')->getTimestamp(),
-				'picture' => $faker->numberBetween(1,10).".jpg",
-				'cover' => $faker->numberBetween(1,4).".jpg",
+				'cover' => $faker->numberBetween(1,10).".jpg",
 				'location' => $faker->city,
 				'summary' => ucwords($faker->sentence(6)),
-				'profile' => $faker->paragraph(12),
+				'profile' => $faker->paragraph(3),
 				'created_at' => time(),
 				'updated_at' => time(),
 			]);

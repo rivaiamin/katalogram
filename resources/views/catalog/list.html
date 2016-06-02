@@ -1,70 +1,84 @@
+<div id="kgHero" class="uk-cover uk-margin-bottom" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
+	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle content">
+		<h2 class="ui inverted icon header">
+		  <div class="content">
+		  	<img src="public/img/kg_white.png" alt="" width="70">
+		  	<img src="public/img/katalogram.png" alt="" width="300">
+			<div class="sub header kg-heading">Induknya Produk Kreatif Indonesia</div>
+		  </div>
+		</h2>
+	</div>
+	<img src="public/img/header.jpg" alt="" class="uk-cover-object">
+</div>
 <div class="uk-container uk-container-center">
-	<div class="kg-grid uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-6 uk-margin-top" data-uk-grid="{gutter: 10}">
-	    
-		<!-- list start
-		===========================================================================-->
-		<div ng-repeat="list in catalog.list">
-			<div class="ui card uk-container-center">
-				<div class="image">
-					<a href="#kg-modal" data-uk-modal ng-click="catalogDetail(list.id)">
-						<img ng-if="list.product_logo != null" ng-src="{{ files }}/logo/{{ list.product_logo }}">
-						<img class="kg-bg-base2 kg-padding" ng-if="list.product_logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
-					</a>
-				</div>
-				<div class="content">
-					<h5 class="kg-heading">
-						<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.owner.user_pict}}">
-						{{ list.product_name }}
-					</h5>
-					<!--<div class="meta">
-						<span class="date">Joined in 2013</span>
-					</div>-->
-					<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="list.rate" readonly></div>
-					<div><q class="description">
-						{{ list.product_quote }}
-					</q></div>
-				</div>
-				<div class="extra content ui secondary three item menu">
-					<a class="item kg-font-base">
-						<i class="heart icon"></i> {{ list.num_collect }}
-					</a>
-					<a class="item">
-						<i class="thumbs up icon"></i> {{ list.num_plus }}
-					</a>
-					<a class="item">
-						<i class="thumbs down icon"></i> {{ list.num_minus }}
-					</a>
-				</div>
+	<!--<div class="kg-grid uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-6 uk-margin-top" data-uk-grid="{gutter: 10}">
+	-->
+	<div class="uk-grid uk-grid-small">
+		<div class="uk-width-large-3-4 uk-width-small-1-1" infinite-scroll='catalogList()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy'>
 
-				<!--<figure class="uk-thumbnail">
-                    <a href="#kg-modal" data-uk-modal ng-click="catalogDetail(list.product_id)">
-                       <div class="uk-cover-background uk-position-relative uk-contrast">
-                           <img ng-if="list.product_logo != null" class="uk-invincible" ng-src="{{ files }}/logo/{{list.product_logo}}" />
-                           <img ng-if="list.product_logo == null" class="uk-invincible" ng-src="/img/category/{{list.category_icon}}" />
-                           <div class="uk-position-cover uk-flex uk-flex-left uk-flex-bottom">
-                                <div class="uk-width-1-1 uk-overlay-background"><img class="uk-border-circle" ng-src="http://files.katalogram.dev/user_pict/{{list.user_pict}}" width="24"> {{list.user_name}}</div>
-                           </div>
-                       </div>
-                   </a>
-                   <div class="kg-margin uk-margin-bottom-remove">
-                       <h2 class="kg-heading">{{list.product_name}}</h2>
-                       <div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="list.avg_rate"></div>
+			<div class="ui four doubling link stackable cards" data-uk-grid>
+				<!-- list start -->
+				<div class="card" ng-repeat="list in catalogs" ng-click="catalogDetail(list.id)">
+					<div class="image">
+						<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+						<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+					</div>
+					<div class="content">
+						<h5 class="ui header">
+							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+							{{ list.name }}
+						</h5>
+						<!--<div class="meta">
+							<span class="date">Joined in 2013</span>
+						</div>-->
+						<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="list.rating_avg" readonly></div>
+						<div><q class="description">
+							{{ list.quote }}
+						</q></div>
+					</div>
+					<div class="extra content">
+						<span class="left floated like">
+						  <i class="like icon"></i>
+						  {{ list.collect_count }}
+						</span>
+						<a href="">
+					    	<span class="right floated">
+							  <i class="thumbs up link icon"></i>
+							  {{ list.plus_count }}
+							</span>
+					    </a>
+					    <a href="">
+							<span class="right floated uk-margin-right">
+							  <i class="thumbs down link icon"></i>
+							  {{ list.minus_count }}
+							</span>
+						</a>
+						<!--<a class="item kg-font-base">
+							<i class="heart icon"></i> {{ list.collect_count }}
+						</a>
+						<a class="item">
+							<i class="thumbs up icon"></i> {{ list.plus_count }}
+						</a>
+						<a class="item">
+							<i class="thumbs down icon"></i> {{ list.minus_count }}
+						</a>-->
+					</div>
+				</div>
+			</div>
 
-                       <p><q>"The story is telling about a boy who dreamed of having his own bird which bring him to realize the meaning of mother and child"</q></p>
-
-                       &lt;!&ndash; <ul class="uk-subnav uk-subnav-line uk-navbar-flip">
-                           <li></li>
-                           <li></li>
-                           <li></li>
-                       </ul> &ndash;&gt;
-                       <hr class="uk-grid-divider uk-margin-bottom uk-margin-top" />
-                       <div class="uk-grid uk-text-center">
-                           <div class="uk-width-1-3 uk-text-center"><i class="uk-icon-thumbs-o-up uk-icon-hover"></i> <br /> {{list.num_plus}}</div>
-                           <div class="uk-width-1-3 uk-text-center"><i class="uk-icon-heart uk-icon-hover uk-icon-small kg-color-crimson"></i> <br />{{list.num_collect}}</div>
-                           <div class="uk-width-1-3 uk-text-center"><i class="uk-icon-thumbs-o-down uk-icon-hover"></i> <br /> {{list.num_minus}}</div>
-                       </div>
-                   </div>
-               </figure>-->
+		</div>
+		<div class="uk-width-1-4 uk-hidden-small">
+			<div class="ui right floated large vertical menu">
+		  	  <a class="item" ng-repeat="cats in categories" href="/catalog/category/{{ cats.id }}">
+		  	  	  <div class="ui teal label"><!--<img ng-src="{{ files }}/category/icon/{{ cats.icon }}" width="20">--> {{cats.id}} </div>
+		  	  	  {{ cats.name }}
+		  	  </a>
+			  <div class="item">
+				<div class="ui icon input">
+				  <input type="text" placeholder="Search mail...">
+				  <i class="search icon"></i>
+				</div>
+			  </div>
 			</div>
 		</div>
 	</div>

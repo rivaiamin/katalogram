@@ -19,7 +19,7 @@ class UserLink extends Model
     }
 
 	public function link() {
-		retrun $this->belongsTo('App\Link');
+		return $this->belongsTo('App\Link');
 	}
 
 }

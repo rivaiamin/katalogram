@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class MemberRequest extends Request
+class UserProfileRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,15 @@ class MemberRequest extends Request
     public function rules()
     {
         return [
-            'member_name' => 'required',
-            'member_born' => 'required',
-            'member_gender' => 'required',
-            'member_summary' => 'required',
-            'member_profile' => 'required',
-            'member_website' => 'required',
-            'member_type' => 'required',
-            'member_category' => 'required'
+            'user_id' => 'required',
+            'cetagory_id' => 'required',
+            'fullname' => 'required',
+            'born' => 'required',
+            'picture' => 'required',
+            'summary' => 'required',
+            'profile' => 'required',
+            'website' => 'required',
+            'type' => 'required',
         ];
     }
 }

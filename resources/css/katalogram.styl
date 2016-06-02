@@ -1,4 +1,4 @@
-font-kg="DHF Broffont Script"
+//font-kg="DHF Broffont Script"
 font-base="Glametrix"
 font-nav="Titillium Web"
 font-heading="CaviarDreams"
@@ -16,11 +16,13 @@ bg-base2=#FBBD08*/
 bg-paper=url('../img/paper_web.jpg')
 /*customize Lib Style*/
 
-.uk-navbar-nav>li {  }
+body, html { background: bg-paper; height: auto; }
+
+/*.uk-navbar-nav>li {  }
 .uk-navbar-nav>li>a { text-shadow: none; font-family: font-nav }
 .uk-navbar-nav>li:hover>a { background: bg-base2; text-decoration: none !important; cursor: pointer ; }
 .uk-navbar-brand { color: #FFF; }
-.uk-navbar-brand:hover { color: #FFF; }
+.uk-navbar-brand:hover { color: #FFF; }*/
 .uk-thumbnav>*>* {  background: none;}
 .uk-tab-content-right { background: #fff; border: solid thin #ddd; border-left: transparent; }
 .uk-icon-large-x { font-size: 52px; }
@@ -39,16 +41,21 @@ bg-paper=url('../img/paper_web.jpg')
 .ui.labeled.icon.menu .item { min-width: auto; }
 .ui.card.uk-container-center { margin: 0.5em auto; }
 .a-inverted * { color:#333 !important; }
+.ui.four.cards>.card { width: calc(25% - 1em); margin-left:0.5em; margin-right:0.5em; }
+.item.search { width:650px; }
+.item.search tags-input { width:100%; }
+
 /*cropme>div { width: 100% !important; }*/
 
 .kg-style, .kg-style a { font-family: font-base; font-size: 18px; /*text-shadow: 1px 1px 0px rgba(0,0,0,0.2);*/ }
 .kg-style p>a { font-weight: bold; }
 .kg-style input, .kg-style a.button { font-family: font-base !important; }
 
-.kg-navbar  { background: bg-base; z-index:10; }
+.kg-navbar  { background: none; z-index:10; }
 .kg-navbar a { color: #fff !important; }
 .kg-navbar a:hover, .kg-navbar a.active { background: bg-base2 !important; }
-.kg-navbar>div>div>.head { color: #fff; font-family: font-kg; }
+/*.kg-navbar>div>div>.head { color: #fff; font-family: font-kg; }*/
+.kg-navbar .head { width:70px; }
 .kg-navbar a.head>img { width: 1em; margin-right: 0.5em; }
 
 
@@ -58,7 +65,7 @@ bg-paper=url('../img/paper_web.jpg')
 .kg-img-grid li:hover img {  }
 .kg-navbar>div>a { min-height: 60px; padding: 10px 20px 10px 20px !important; line-height: 5px !important; }
 .kg-border-dashed { border-style: dashed; border-width: 2.0px; }
-.kg-heading { font-family: font-heading; color: color-base; font-size: 1.5em; }
+.kg-heading { font-family: font-heading; color: color-base; font-size: 1.2em; }
 .kg-heading-separator {  border-bottom: 1px solid color-base; line-height: 0.1em; margin: 10px 0 20px;  }
 .kg-heading-separator span { background:#fff; padding:0 10px; }
 .kg-separator hr { margin-top:0.5em; }
@@ -95,12 +102,13 @@ bg-paper=url('../img/paper_web.jpg')
 .kg-color-crimson { color: #e06b41; }
 .kg-border-base2 { border-color: color-base; }
 .kg-padding { padding: 20%; }
-.kg-font-kg { font-family: font-kg !important; font-size:2em !important; }
+/*.kg-font-kg { font-family: font-kg !important; font-size:2em !important; }*/
 .kg-font-base { font-family: font-base !important; }
 .kg-font-large { font-size: 4em !important; }
 
 .kg-blur { -webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px); filter: blur(5px);}
 
+/*
 .kg-member-list ul { position: absolute; height:400px; overflow: visible; }
 .kg-member-list li { position: relative; width:10%px; height:600px; background-color: #000000; overflow: hidden; margin:0; top:0; z-index:0; }
 .kg-member-list li .bg { position: relative; max-width: 500px; max-height:auto; margin-left:-200px; margin-right:-200px; }
@@ -111,6 +119,7 @@ bg-paper=url('../img/paper_web.jpg')
 .kg-member-list li:hover .profile {	display: block; }
 .kg-member-list .profile-right { margin-left:300px; }
 .kg-member-list .profile-left { margin-left:-440px; }
+*/
 
 .kg-crop-area {
     background: #E4E4E4;
@@ -121,6 +130,11 @@ bg-paper=url('../img/paper_web.jpg')
 
 .flip-clock-divider .flip-clock-label { color: #fff; }
 .tagsinput > div > input { border:none !important; width: 100%; }
+
+#kgHero { z-index:1; height:300px; }
+#kgHero .content { z-index:2; }
+#kgHero:not(.sticky) { margin-top: -60px!important; position: relative; }
+#kgHero.sticky { margin-top:-240px; }
 
 @media (max-width: 1100px) {
     .modal { width: 100%; left: 0; }
@@ -141,4 +155,4 @@ bg-paper=url('../img/paper_web.jpg')
 }
 ::-webkit-scrollbar-thumb:hover {
     background: bg-base2;
-}  
+}

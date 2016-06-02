@@ -18,7 +18,7 @@ class ProductTag extends Model
     }
 
 	public function tag() {
-		retrun $this->belongsTo('App\Tag');
+		return $this->belongsTo('App\Tag');
 	}
 
 }

@@ -25,7 +25,8 @@ class UsersTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $faker->userName,
                 'email' => $faker->email,
-                'password' => Hash::make('123'),
+				'picture' => $faker->numberBetween(1,10).".jpg",
+				'password' => Hash::make('123'),
                 'join' => time(),
                 'created_at' => time(),
                 'updated_at' => time(),

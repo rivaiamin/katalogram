@@ -18,7 +18,6 @@ class CreateUserProfilesTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('fullname', 64);
             $table->integer('born')->unsigned();
-            $table->string('picture', 128);
             $table->string('cover', 128);
             $table->string('location', 128);
             $table->string('summary', 128);

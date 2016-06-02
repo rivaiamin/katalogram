@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Criteria;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Server\CatalogController as CatalogCtrl;
+use App\Http\Controllers\Server\ProductController as ProductCtrl;
 
 class CriteriaController extends Controller
 {
@@ -25,9 +25,9 @@ class CriteriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addCriteria(CatalogCtrl $catalog, Request $request, $productId)
+    public function create(ProductCtrl $product, Request $request, $productId)
     {
-        if ($catalog->isOwner($productId)) {
+        if ($product->isOwner($productId)) {
             $input = $request->all();
             $input['product_id'] = $productId;
 
@@ -56,9 +56,9 @@ class CriteriaController extends Controller
 
     }
 
-    public function deleteCriteria(CatalogCtrl $catalog, $productId, $criteriaId)
+    public function delete(ProductCtrl $product, $productId, $criteriaId)
     {
-        if ($catalog->isOwner($productId)) {
+        if ($product->isOwner($productId)) {
             $productTag = Criteria::where('product_id', $productId)->where('id', $criteriaId)->delete();
             $params = [
                 'status' => "success",

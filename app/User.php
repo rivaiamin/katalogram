@@ -4,24 +4,27 @@ namespace App;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
- 
+use DB;
+
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, SoftDeletes;
 
     protected $table = 'users';
 
     protected $fillable = [
     	'name',
     	'email',
+		'picture',
     	'password',
     	'join',
     	'facebook',
@@ -44,6 +47,12 @@ class User extends Model implements AuthenticatableContract,
     
     public function product() {
         return $this->hasMany('App\Product');
+    }
+
+    public function userProduct() {
+        return $this->product()->select(['id','category_id','user_id','name','logo','quote','rating_avg','collect_count','plus_count','minus_count'])
+            ->where('products.is_release', '1')
+            ->orderBy('products.id', 'desc');
     }
 
 	public function userContact() {

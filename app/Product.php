@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 
-class Product extends Model
-{
+class Product extends Model {
 	use SoftDeletes;
 
-    protected $table = 'products';
+    public $table = 'products';
 
     protected $fillable = [
     	'category_id',
@@ -35,7 +35,7 @@ class Product extends Model
     }
 
     public function productTag() {
-        return $this->belongsToMany('App\ProductTag')->withTimestamps();
+        return $this->hasMany('App\ProductTag');
     }
 
 	public function productLink() {
@@ -43,7 +43,9 @@ class Product extends Model
     }
 
     public function productFeedback() {
-        return $this->hasMany('App\ProductFeedback');
+        return $this->hasMany('App\ProductFeedback')
+			->select(DB::raw("product_feedbacks.*, users.name as username, users.picture as userpict"))
+			->join('users','product_feedbacks.user_id','=', 'users.id');
     }
 
     public function feedbackPlus(){
@@ -53,7 +55,7 @@ class Product extends Model
 
     public function feedbackMinus(){
         return $this->productFeedback()
-            ->where('type', 'N');
+            ->where('type', 'M');
     }
 
 	public function productCriteria() {
@@ -62,11 +64,11 @@ class Product extends Model
 
     public function productList() {
 		return $this->select(
-				DB::raw("products.id, products.name, products.logo, products.quote, products.category_id, users.name,
+				DB::raw("products.id, products.name, products.logo, products.quote, products.category_id, users.name as username, users.picture as userpict,
 				products.rating_avg, products.plus_count, products.minus_count, products.collect_count"
             ))
             ->join('users','products.user_id','=','users.id')
-            ->where('products.release', '1')
+            ->where('products.is_release', '1')
             ->groupBy('products.id')
             ->orderBy('products.id', 'desc');
         /*return $this->select(DB::raw("products.id, products.name, products.logo, products.quote, products.category_id,
