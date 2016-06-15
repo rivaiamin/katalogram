@@ -6,21 +6,29 @@
 </head>
 <body class="kg-style" ng-controller="kgCtrl">
 
+<div id="mainSidebar" class="uk-offcanvas">
+	<!--=include ../public/views/partials/sidebar.html -->
+</div>
+
 <!--=include ../public/views/partials/nav.html -->
 
-	<div data-uk-observe="" ng-class="{'kg-blur': blur==true}">
+<div data-uk-observe="" ng-class="{'kg-blur': blur==true}">
         <div ui-view>
         </div>
     </div>
 
     <div id="kg-modal" class="uk-modal" stop-event="touchend" data-uk-observe>
     	<div class="uk-modal-dialog uk-modal-dialog-lightbox">
-			<a class="uk-modal-close uk-close uk-close-alt"></a>
+		<a class="uk-modal-close uk-close uk-close-alt"></a>
     		<ng-include src="modalTemplate"></ng-include>
-		</div>
+	</div>
     </div>
 
-<!--=include ../public/views/partials/sidebar.html -->
+    <div id="kg-modal-lightbox" class="uk-modal" stop-event="touchend" data-uk-observe>
+    	<div class="uk-modal-dialog-lightbox uk-margin-large-top uk-width-medium-1-5 uk-width-2-3">
+    		<ng-include src="modalTemplate"></ng-include>
+	</div>
+    </div>
     <script src="public/js/lib.min.js"></script>
     <script src="public/js/katalogram.min.js"></script>
 

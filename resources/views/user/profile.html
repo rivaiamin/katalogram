@@ -1,26 +1,10 @@
-<div id="cropmeModal" class="uk-modal">
-	<div class="uk-modal-dialog uk-modal-dialog-lightbox">
-		<a class="uk-modal-close uk-close uk-close-alt"></a>
-		<cropme
-				width="600"
-				height="300"
-				ratio="1"
-				icon-class=""
-				type="jpeg"
-				destination-width="300"
-				id="cropme1"
-				ok-label="Save"
-				src=""
-				cancel-label="Cancel">
-		</cropme>
-	</div>
-</div>
-
-<div class="uk-container-center">
+<div class="ui container fluid">
 	<div class="uk-margin-bottom-remove">
 		<div class="uk-panel">
-			<div id="kgHero" class="uk-cover uk-contrast" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
-				<img class="uk-cover-object" ng-src="{{ files }}user/cover/{{ user.user_profile.cover }}" alt="">
+			<div id="kgHero" class="uk-cover-background" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
+				<div ng-if="user.user_profile.cover != ''" class="uk-cover">
+					<img class="uk-invincible" ng-src="{{ files }}user/cover/{{ user.user_profile.cover }}" alt="">
+				</div>
 				<!--<div ng-if="user.num_preview > 0" class="uk-invincible uk-slidenav-position" data-uk-slider="{infinite:true}">
 					<div class="uk-slider-container">
 						<ul class="uk-slider uk-grid-width-medium-1-3 uk-grid-small-1-1">
@@ -30,10 +14,16 @@
 					<a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slider-item="previous"></a>
 					<a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
 				</div>-->
-				<div ng-if="user.user_profile.cover == 0" class="uk-cover kg-bg-base2" style="height: 300px"></div>
+				<div ng-if="user.user_profile.cover == ''" class="uk-cover uk-cover-background kg-bg-base"></div>
+				<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
+					<div class="uk-overlay uk-overlay-hover kg-logo-big ui circular image">
+						<img ng-if="user.picture != ''" class="" ng-src="{{ files }}user/picture/{{ user.picture }}">
+						<img ng-if="user.picture == ''" class="" src="/public/img/placeholder.jpg">
+					</div>
+				</div>
 				<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle kg-bg-trans">
 					<div class="uk-position-relative uk-text-center uk-margin-top uk-width-1-2">
-						<h2 class="kg-heading uk-margin-bottom-remove"><span>{{ user.user_profile.name }}</span>
+						<!--<h2 class="kg-heading uk-margin-bottom-remove"><span>{{ user.user_profile.name }}</span>
 						</h2>
 						<h5 ng-if="user.user_profile.summary != ''" class="uk-margin-top-remove"><q>{{ user.user_profile.summary }}</q></h5>
 						<p class="uk-margin-remove">{{ user.user_profile.profile }}</p>
@@ -42,221 +32,224 @@
 							<a ng-if="user.is_contact == false" class="ui button inverted" ng-click="addConnect(user.user_profile.id)"><i class="add user icon"></i> Tambahkan</a>
 							<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeConnect(user.user_profile.id)"><i class="check circle icon"></i></a>
 						</span>
+						</p>-->
+						<h2 class="ui center aligned inverted header">
+						  <div class="content">
+							{{user.user_profile.fullname}}
+							<div class="sub header">
+								{{ user.user_profile.summary }}
+							</div>
+						  </div>
+						</h2>
+						<p><a ng-if="auth.name == user.name" href="/{{ user.name }}/edit" class="ui button inverted"><i class="pencil icon"></i> Edit</a>
+						<span ng-if="auth.name != user.name">
+							<a ng-if="user.is_contact == false" class="ui button inverted" ng-click="addConnect(user.user_profile.id)"><i class="add user icon"></i> Tambahkan</a>
+							<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeConnect(user.user_profile.id)"><i class="check circle icon"></i></a>
+						</span>
 						</p>
 					</div>
 				</div>
-			</div>
-			<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-				<div class="uk-overlay uk-overlay-hover uk-border-circle kg-logo-big">
-					<img ng-if="user.picture != null" class="" ng-src="{{ files }}/user/picture/{{ user.picture }}">
-					<img ng-if="user.picture == null" class=""src="public/img/placeholder.jpg">
-					<div ng-if="user.name == user.name" class="uk-overlay-panel uk-overlay-fade uk-overlay-background uk-text-center">
-						<a class="ui kg-bg-base black button">Ganti</a>
-					</div>
-					<a ng-if="user.name == user.name" class="uk-position-cover" href="#cropmeModal" data-uk-modal></a>
-				</div>
+
 			</div>
 		</div>
 	</div>
-	<div class="uk-margin-bottom uk-text-center">
-		<div class="ui pointing labeled icon six item menu kg-font-base uk-visible-large">
-			<a class="item disabled"></a>
-			<a class="item">
-				<i class="uk-icon-file-image-o uk-icon-hover icon"></i>
-				<p><b>{{ user.catalog_count }}</b> Katalog</p>
-			</a>
-			<a class="item">
-				<i class="uk-icon-heart uk-icon-hover icon"></i>
-				<p><b>{{ user.collect_count }}</b> Koleksi</p>
-			</a>
-			<a class="item">
-				<i class="uk-icon-user uk-icon-hover icon"></i>
-				<p><b>{{ user.connect_count }}</b> Menghubungkan</p>
-			</a>
-			<a class="item">
-				<i class="uk-icon-users uk-icon-hover icon"></i>
-				<p><b>{{ user.contact_count }}</b> Terhubung</p>
-			</a>
-			<a class="item disabled"></a>
+	<div class="uk-margin-bottom">
+		<div class="ui borderless five item menu kg-font-base uk-visible-large">
+			<div class="ui container">
+				<a class="item">
+					<i class="file image outline link icon"></i>
+					<p>Katalog <span class="ui teal label">{{ user.catalog_count }}</span></p>
+				</a>
+				<a class="item">
+					<i class="empty heart link icon"></i>
+					<p> Koleksi <span class="ui teal label">{{ user.collect_count }}</span> </p>
+				</a>
+				<a class="item disabled"></a>
+				<a class="item">
+					<i class="user outline link icon"></i>
+					<p> Kontak <span class="ui teal label">{{ user.contact_count }}</span></p>
+				</a>
+				<a class="item">
+					<i class="users outline link icon"></i>
+					<p>Terhubung <span class="ui teal label">{{ user.connect_count }}</span></p>
+				</a>
+			</div>
+
 		</div>
-		<div class="ui pointing labeled icon five item menu kg-font-base uk-visible-medium uk-margin-top-remove">
+		<div class="ui pointing five item menu kg-font-base uk-visible-medium uk-margin-top-remove">
 			<a class="item">
-				<i class="uk-icon-file-image-o uk-icon-hover icon"></i>
+				<i class="file image outline link icon"></i>
 				<p><b>{{ user.catalog_count }}</b> Katalog</p>
 			</a>
 			<a class="item">
-				<i class="uk-icon-heart uk-icon-hover icon"></i>
+				<i class="empty heart link icon"></i>
 				<p><b>{{ user.collect_count }}</b> Koleksi</p>
 			</a>
 			<a class="item">
 			</a>
 			<a class="item">
-				<i class="uk-icon-user uk-icon-hover icon"></i>
+				<i class="user outline link icon"></i>
 				<p><b>{{ user.connect_count }}</b> Menghubungkan</p>
 			</a>
 			<a class="item">
-				<i class="uk-icon-users uk-icon-hover icon"></i>
+				<i class="users outline link icon"></i>
 				<p><b>{{ user.contact_count }}</b> Terhubung</p>
 			</a>
 		</div>
 		<div class="ui large fluid vertical pointing menu kg-font-base uk-visible-small uk-margin-top-remove uk-overflow-hidden">
 			<a class="item uk-margin-large-top">
 				<div class="ui label">{{ user.catalog_count }}</div>
-				<i class="uk-icon-file-image-o uk-icon-hover icon"></i>
+				<i class="file image outline icon uk-icon-hover icon"></i>
 				Katalog
 			</a>
 			<a class="item">
 				<div class="ui label">{{ user.collect_count }}</div>
-				<i class="uk-icon-heart uk-icon-hover icon"></i>
+				<i class="empty heart link icon"></i>
 				Koleksi
 			</a>
 			<a class="item">
 				<div class="ui label">{{ user.connect_count }}</div>
-				<i class="uk-icon-user uk-icon-hover icon"></i>
+				<i class="user outline link icon"></i>
 				Menghubungkan
 			</a>
 			<a class="item">
 				<div class="ui label">{{ user.contact_count }}</div>
-				<i class="uk-icon-users uk-icon-hover icon"></i>
+				<i class="users outline link icon"></i>
 				Terhubung
 			</a>
 		</div>
-		<div class="uk-width-large-2-3 uk-width-1-1 uk-container-center">
+
+		<div class="ui container">
 			<div class="uk-grid uk-grid-small">
-				<div class="uk-width-large-2-3 uk-width-small-1-1">
-					<div class="ui segment uk-text-left">
-						<h3 class="kg-heading uk-text-center">
-							<i class="kg-color-base file image outline icon"></i>
-							Katalog
-						</h3>
-						<div class="uk-grid uk-grid-small uk-grid-width-medium-1-3 uk-grid-width-small-1-1 uk-text-center">
-							<div ng-repeat="catalog in user.user_product">
-								<div class="ui card uk-container-center uk-margin">
-									<div class="image">
-										<a href="#kg-modal" data-uk-modal ng-click="catalogDetail(catalog.id)">
-											<img ng-src="{{ files }}product/logo/{{ catalog.logo }}">
-										</a>
-									</div>
-									<div class="content">
-										<h5 class="kg-heading">
-											<img ng-if="catalog.user.profilepict != null" class="ui avatar image" ng-src="{{ files }}/user/picture/{{catalog.user.profilepict}}">
-											{{ catalog.name }}
-										</h5>
-										<!--<div class="meta">
-                                            <span class="date">Joined in 2013</span>
-                                        </div>-->
-										<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="catalog.avg_rate"></div>
-										<div><q class="description">
-											{{ catalog.quote }}
-										</q></div>
-									</div>
-									<div class="extra content ui secondary three item menu">
-										<a class="item kg-font-base">
-											<i class="heart icon"></i> {{ catalog.num_collect }}
-										</a>
-										<a class="item">
-											<i class="thumbs up icon"></i> {{ catalog.num_plus }}
-										</a>
-										<a class="item">
-											<i class="thumbs down icon"></i> {{ catalog.num_minus }}
-										</a>
-									</div>
-								</div>
+				<div class="uk-width-large-3-4 uk-width-small-1-1">
+					<div class="ui four doubling link stackable cards" data-uk-grid>
+						<!-- list start -->
+						<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
+							<div class="image">
+								<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+								<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
 							</div>
-						</div>
-					</div>
-					<div class="ui segment uk-text-left uk-margin-bottom">
-						<h3 class="kg-heading uk-text-center">
-							<i class="large icons">
-								<i class="kg-color-base file image outline icon"></i>
-								<i class="red corner heart icon"></i>
-							</i>
-							Koleksi
-						</h3>
-						<div class="uk-grid uk-grid-small uk-grid-width-medium-1-3 uk-grid-width-small-1-1">
-							<div ng-repeat="list in user.user_collect">
-								<div class="ui card uk-container-center">
-									<div class="image">
-										<a href="#kg-modal" data-uk-modal ng-click="catalogDetail(list.id)">
-											<img ng-src="{{ files }}product/logo/{{ list.logo }}">
-										</a>
-									</div>
-									<div class="content">
-										<h5 class="kg-heading">
-											<img class="ui avatar image" ng-src="{{ files }}/user/picture/{{list.userpict}}">
-											{{ list.name }}
-										</h5>
-										<!--<div class="meta">
-                                            <span class="date">Joined in 2013</span>
-                                        </div>-->
-										<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="list.rating_avg"></div>
-										<div><q class="description">
-											{{ list.quote }}
-										</q></div>
-									</div>
-									<div class="extra content ui secondary three item menu">
-										<a class="item kg-font-base">
-											<i class="heart icon"></i> {{ list.collect_count }}
-										</a>
-										<a class="item">
-											<i class="thumbs up icon"></i> {{ list.plus_count }}
-										</a>
-										<a class="item">
-											<i class="thumbs down icon"></i> {{ list.minus_count }}
-										</a>
-									</div>
-								</div>
+							<div class="content">
+								<h5 class="ui header">
+									<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+									{{ list.name }}
+								</h5>
+								<!--<div class="meta">
+									<span class="date">Joined in 2013</span>
+								</div>-->
+								<input-stars icon-full="star icon" icon-empty="empty star icon" max="5" ng-model="list.rating_avg" readonly></input-stars>
+								<div><q class="description">
+									{{ list.quote }}
+								</q></div>
+							</div>
+							<div class="extra content">
+								<span class="left floated like">
+								  <i class="like icon"></i>
+								  {{ list.collect_count }}
+								</span>
+								<a href="">
+									<span class="right floated">
+									  <i class="thumbs up link icon"></i>
+									  {{ list.plus_count }}
+									</span>
+								</a>
+								<a href="">
+									<span class="right floated uk-margin-right">
+									  <i class="thumbs down link icon"></i>
+									  {{ list.minus_count }}
+									</span>
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="uk-width-large-1-3 uk-width-1-1">
-					<div class="ui segment uk-text-left">
-						<h3 class="kg-heading uk-text-center">
-							<i class="kg-color-base file icon"></i>
-							Draft
-						</h3>
-						<div class="uk-grid uk-grid-small uk-grid-width-1-3 uk-text-center">
-							<div ng-repeat="draft in user.drafts">
-								<a href="/catalog/{{ draft.id }}/edit">
-									<img class="uk-border-circle kg-bg-base2 kg-padding" ng-src="public/img/category/{{ draft.category.icon }}">
-									<p class="uk-margin-remove">{{ draft.name }}</p>
-								</a>
+				<div class="uk-width-large-1-4 uk-width-1-1">
+					<div class="ui styled accordion" kg-ui-accordion data-uk-sticky="{ top:70 }">
+						<div class="active title"><h3 class="kg-heading"><i class="user icon"></i> Profil</h3></div>
+						<div class="active content">
+							{{ user.user_profile.profile }}
+						</div>
+						<div class="title">
+							<h3 class="kg-heading">
+								<i class="empty heart icon"></i>
+								Koleksi
+							</h3>
+						</div>
+						<div class="content">
+							<div class="ui list">
+							  <div class="item" ng-repeat="collect in user.user_collect" href="" ng-click="catalogDetail(collect.product.id)">
+								<img class="ui avatar image" src="{{files}}product/logo/{{collect.product.logo}}">
+								<div class="content">
+								  <a class="header">{{collect.product.name}}...</a>
+								  <span class="uk-text-small">
+									  <i class="empty heart icon"></i> {{collect.product.collect_count}}
+									  <i class="empty star icon"></i> {{collect.product.collect_count}}
+								  </span>
+								</div>
+							  </div>
+							</div>
+						</div>
+						<div class="title">
+							<h3 class="kg-heading">
+								<i class="kg-color-base file icon"></i> Draft
+							</h3>
+						</div>
+						<div class="content">
+							<div class="uk-grid uk-grid-small uk-grid-width-1-3 uk-text-center">
+								<div ng-repeat="draft in user.drafts">
+									<a href="/catalog/{{ draft.id }}/edit">
+										<img class="uk-border-circle kg-bg-base2 kg-padding" ng-src="public/img/category/{{ draft.category.icon }}">
+										<p class="uk-margin-remove">{{ draft.name }}</p>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="title">
+							<h3 class="kg-heading">
+								<i class="icons">
+									<i class="kg-color-base user icon"></i>
+									<i class="kg-color-base corner sign in icon"></i>
+								</i>
+								Kontak
+							</h3>
+						</div>
+						<div class="content">
+							<div class="ui relaxed list">
+							  <div class="item" ng-repeat="contact in user.user_contact">
+								<img class="ui avatar image" src="{{files}}user/picture/{{contact.contact.picture}}">
+								<div class="content">
+								  <a class="header" href="/{{contact.contact.name}}">{{contact.contact.name}}</a>
+								  <span class="uk-text-small kg-color-gray">
+								  	<i class="users small icon"></i> 10 <i class="file picture small icon"></i> 10
+								  </span>
+								</div>
+							  </div>
+							</div>
+						</div>
+						<div class="title">
+							<h3 class="kg-heading">
+								<i class="icons">
+									<i class="kg-color-base user icon"></i>
+									<i class="kg-color-base corner sign out icon"></i>
+								</i>
+								Terhubung
+							</h3>
+						</div>
+						<div class="content">
+							<div class="ui relaxed list">
+							  <div class="item" ng-repeat="connect in user.user_connect">
+								<img class="ui avatar image" src="{{files}}user/picture/{{connect.user.picture}}">
+								<div class="content">
+								  <a class="header" href="/{{connect.user.name}}">{{connect.user.name}}</a>
+								  <span class="uk-text-small kg-color-gray">
+								  	<i class="users small icon"></i> 10 <i class="file picture small icon"></i> 10
+								  </span>
+								</div>
+							  </div>
 							</div>
 						</div>
 					</div>
-					<div class="ui segment uk-text-left">
-						<h3 class="kg-heading uk-text-center">
-							<i class="large icons">
-								<i class="kg-color-base user icon"></i>
-								<i class="kg-color-base corner sign in icon"></i>
-							</i>
-							Koneksi
-						</h3>
-						<div class="uk-grid uk-grid-small uk-grid-width-1-3 uk-text-center">
-							<div ng-repeat="connect in user.user_contact">
-								<img class="uk-border-circle" ng-src="{{ files }}user/picture/{{ connect.picture }}">
-								<p class="uk-margin-remove">{{ connect.name }}</p>
-							</div>
-						</div>
-					</div>
-					<div class="ui segment uk-text-left">
-						<h3 class="kg-heading uk-text-center">
-							<i class="large icons">
-								<i class="kg-color-base user icon"></i>
-								<i class="kg-color-base corner sign out icon"></i>
-							</i>
-							Terkoneksi
-						</h3>
-						<div class="uk-grid uk-grid-small uk-grid-width-1-3 uk-text-center">
-							<div ng-repeat="contact in user.user_contacts">
-								<img class="uk-border-circle" ng-src="{{ files }}user/picture/{{ contact.userpict }}">
-								<p class="uk-margin-remove">{{ contact.name }}</p>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -305,7 +298,7 @@
 		</div>
 	    <div class="uk-width-1-1 uk-text-center uk-margin-top">
 	        <div class="uk-panel uk-panel-box">
-	        	<h3 class="uk-panel-title"><i class="uk-icon-file-image-o"></i> Katalog</h3>
+	        	<h3 class="uk-panel-title"><i class="file image outline icon"></i> Katalog</h3>
 				<div id="userCatalog" class="kg-grid uk-grid-width-medium-1-2 uk-grid-width-medium-1-5 uk-margin-top" data-uk-grid="{gutter:10}">
 				    <div>
 				    	 <figure class="uk-thumbnail">

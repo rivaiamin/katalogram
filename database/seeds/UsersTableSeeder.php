@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -27,9 +28,8 @@ class UsersTableSeeder extends Seeder
                 'email' => $faker->email,
 				'picture' => $faker->numberBetween(1,10).".jpg",
 				'password' => Hash::make('123'),
-                'join' => time(),
-                'created_at' => time(),
-                'updated_at' => time(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
         }
     }

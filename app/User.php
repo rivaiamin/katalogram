@@ -59,6 +59,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\UserContact');
     }
 
+	public function userConnect() {
+        return $this->hasMany('App\UserContact','contact_id');
+    }
+
 	public function userCollect() {
         return $this->hasMany('App\UserCollect');
     }

@@ -5,6 +5,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$rootScope.files = kgConfig.files;
 	$scope.modalTemplate = "";
 	$scope.modal = UIkit.modal("#kg-modal");
+	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
 
 	$scope.popup = function() {
@@ -34,7 +35,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.getAuthUser = function() {
 		$http.get(kgConfig.api+"auth/user")
 		.success(function(response){
-			$rootScope.user = response.user;
+			$rootScope.auth = response.user;
 			$scope.popup();
 		})
 	};
@@ -44,7 +45,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$auth.authenticate(provider)
 		  .then(function(response) {
 		  	$scope.getAuthUser();
-		    $scope.modal.hide();
+		    $scope.modal2.hide();
 		  })
 		  .catch(function(error) {
 		  	//UIkit.notify(response.message);
@@ -62,14 +63,14 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 
 	$scope.loginPage = function() {
 		$scope.modalTemplate = "user.login.html";
-    	$scope.modal.show();
+    	$scope.modal2.show();
     };
     $scope.loginMember = function(user) {
     	$auth.login(user)
 		  .then(function(response) {
 		    // Redirect user here after a successful log in.
 		    //console.log(response.token)
-		  	$scope.modal.hide();
+		  	$scope.modal2.hide();
 		  	$scope.getAuthUser();
 		  })
 		  .catch(function(response) {
@@ -88,7 +89,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		    // can be accessed.
 	  		$auth.setToken(response);
 	  		$scope.getAuthUser();
-	  		$scope.modal.hide();
+	  		$scope.modal2.hide();
 		  })
 		  .catch(function(response) {
 		    // Handle errors here.

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class UserProfilesTableSeeder extends Seeder
 {
@@ -26,8 +27,8 @@ class UserProfilesTableSeeder extends Seeder
 				'location' => $faker->city,
 				'summary' => ucwords($faker->sentence(6)),
 				'profile' => $faker->paragraph(3),
-				'created_at' => time(),
-				'updated_at' => time(),
+				'created_at' => Carbon::now(),
+				'updated_at' => Carbon::now(),
 			]);
         }
 

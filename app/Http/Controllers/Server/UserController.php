@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function profile(User $user, $username) {
 
-        $data['user'] = User::with(['userProfile','userProduct','userCollect','userLink','userContact.user'])
+        $data['user'] = User::with(['userProfile','userProduct','userCollect.product','userLink','userContact.contact','userConnect.user'])
 			->where('name',$username)->first();
         //$user_id = $data['user']->id;
         //$data['catalogs'] = User::find($user_id)->product();
@@ -45,7 +45,7 @@ class UserController extends Controller
                                 ->get();;
         }
 */
-        //$data['collects'] = $user->userCollect()->get();
+        //$data['collects'] = $user->userCollect()->product();
         //$data['contacts'] = $user->userContact()->get();
         //$data['connects'] = $user->userContact()
         //                    ->where('user_id', $user_id);
@@ -59,7 +59,7 @@ class UserController extends Controller
 
     public function edit(AuthCtrl $auth, $username) {
         if ($auth->isOwner($username)) {
-            $data['user'] = User::with('profile')->where('name', $username)->first();
+            $data['user'] = User::with('userProfile')->where('name', $username)->first();
 			return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
         } else return response()->json(['error' => 'invalid_access'], 500);
     }

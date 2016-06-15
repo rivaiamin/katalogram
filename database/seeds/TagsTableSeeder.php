@@ -17,9 +17,7 @@ class TagsTableSeeder extends Seeder
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('tags')->insert([
-                'name' => $faker->word,
-                'created_at' => time(),
-				'updated_at' => time()
+                'name' => $faker->word
             ]);
         }
     }

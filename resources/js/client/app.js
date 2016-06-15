@@ -17,7 +17,6 @@ kgApp
 .controller('userCtrl', userCtrl)
 .controller('userEditCtrl', userEditCtrl)
 
-
 // custom directives
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {
@@ -47,6 +46,11 @@ kgApp
 		element.dropdown();
     };
 })
+.directive('kgUiAccordion', function() {
+	return function (scope, element, attr) {
+		$(element).accordion();
+    };
+})
 .directive('kgPopup', function () {
     return function (scope, element) {
 		element.popup({
@@ -60,7 +64,12 @@ kgApp
 		element.tab();
     };
 });
-
+/*.directive('uiSidebar', function() {
+	return function (scope, element, attr) {
+		$(element).sidebar();
+		$(element).sidebar('attach events', attr.trigger);
+    };
+})*/
 /*.directive('kgEmbedly', ['$http', function($http) {
 	return {
 		template: '<blockquote class="embedly-card" data-card-key="{{ apikey }}" data-card-width="100%"><h4><a href="{{ embed.original_url }}"> {{ embed.title }}</a></h4><p>{{ embed.description }}</p></blockquote>',
@@ -91,4 +100,5 @@ kgApp
      var s = d.getElementsByTagName(n)[0];
      s.parentNode.insertBefore(e, s);
    }
-  })(window, document);
+})(window, document);
+

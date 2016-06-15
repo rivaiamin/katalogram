@@ -14,7 +14,8 @@ class UserCollect extends Model
     ];
 
     public function product(){
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product')
+			->select('id','name','logo', 'rating_avg', 'collect_count');
     }
 
     public function user(){

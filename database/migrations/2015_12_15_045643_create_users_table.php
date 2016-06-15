@@ -18,9 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
 			$table->string('picture', 128);
             $table->string('password', 255);
-            $table->integer('join')->unsigned()->nullable();
             $table->string('facebook', 128)->nullable();
             $table->string('google', 128)->nullable();
+            $table->integer('product_count')->default(0);
+            $table->integer('collect_count')->default(0);
+            $table->integer('contact_count')->default(0);
+            $table->integer('connect_count')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

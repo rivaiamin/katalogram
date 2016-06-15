@@ -15,12 +15,13 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->string('name', 32);
+            $table->string('slug', 32);
+            $table->string('name', 64);
             $table->text('desc')->nullable();
-            $table->string('icon', 128)->nullable();
             $table->string('image', 128)->nullable();
             $table->enum('type', array('B','P'));
             $table->string('color', 16)->nullable();
+            $table->integer('product_count')->default(0);
             $table->timestamps();
 			$table->softDeletes();
         });

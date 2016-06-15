@@ -12,46 +12,44 @@
 </div>
 <div class="ui compact five item menu kg-font-base uk-hidden-small uk-margin-remove">
 	<a class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
-		<i class="heart icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+		<i class="empty heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
 	</a>
 	<a class="item" data-content="Total score seluruh kategori" kg-popup>
-		<i class="star icon"></i>{{ catalog.rating_avg }} Rating
+		<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ catalog.rating_avg }}</span>
 	</a>
 	<a class="item disabled"></a>
 	<a class="item" href="#productFeedback" ng-click="feedback.type = 'P'"  data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
-		<i class="thumbs up icon"></i>{{ catalog.plus_count }} Plus
+		<i class="thumbs up outline link icon"></i> Plus <span class="ui teal label">{{ catalog.plus_count }}</span>
 	</a>
 	<a class="item" href="#productFeedback" ng-click="feedback.type = 'M'"  data-content="Berikan tanggapan tentang kekurangan produk" kg-popup>
-		<i class="thumbs down icon"></i>{{ catalog.minus_count }} Minus
+		<i class="thumbs down outline link icon"></i> Minus <span class="ui teal label">{{ catalog.minus_count }}</span>
 	</a>
 </div>
 <div class="uk-container uk-container-center">
 	<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
-		<div class="uk-width-1-1 uk-margin-large-bottom">
-
-		</div>
-		<div class="uk-width-1-1">
-				<h2 class="kg-heading kg-heading-separator uk-margin-bottom-remove"><span>{{ catalog.name }}</span></h2>
-		</div>
 		<div class="uk-width-1-1 uk-margin-top">
-			<q class="kg-quote">{{ catalog.quote }}</q>
+			<h3 class="ui horizontal divider header kg-heading">
+			  {{ catalog.name }}
+			  <div class="sub header">{{catalog.quote}}</div>
+			</h3>
 		</div>
 		<div class="uk-width-1-1 uk-margin-bottom kg-color-gray">
-			<img ng-if="catalog.user.picture != null" class="uk-border-circle" src="{{ files }}/user/picture/{{ catalog.user.picture }}" width="24">  &nbsp; <a href="/{{catalog.user.name}}" ng-click="closeModal()">@{{ catalog.user.name }}</a>
+			<img class="ui avatar image" ng-if="catalog.user.picture != null" src="{{ files }}/user/picture/{{ catalog.user.picture }}" width="24">
+			<label><a href="/{{catalog.user.name}}" ng-click="closeModal()">@{{ catalog.user.name }}</a></label>
 		</div>
 	</div>
 	<div class="ui labeled icon three item menu kg-font-base uk-visible-small uk-margin-remove">
 		<a class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
-			<i class="icon">{{ catalog.collect_count }}</i>
-			<p><i class="uk-icon-heart uk-icon-hover"></i> Favorit</p>
+			<div class="kg-heading">{{ catalog.collect_count }}</div>
+			<p><i class="empty heart link icon"></i> Favorit</p>
 		</a>
 		<a class="item" href="#productFeedback" ng-click="feedback.type = 'P'"  data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
-			<i class="icon">{{ catalog.plus_count }}</i>
-			<p><i class="uk-icon-thumbs-up uk-icon-hover"></i> Plus</p>
+			<div class="kg-heading">{{ catalog.plus_count }}</div>
+			<p><i class="thumbs up outline link icon"></i> Plus</p>
 		</a>
 		<a class="item" href="#productFeedback" ng-click="feedback.type = 'M'"  data-content="Berikan tanggapan tentang kekurangan produk" kg-popup>
-			<i class="icon">{{ catalog.minus_count }}</i>
-			<p><i class="uk-icon-thumbs-down uk-icon-hover"></i> Minus</p>
+			<div class="kg-heading">{{ catalog.minus_count }}</div>
+			<p><i class="thumbs down outline link icon"></i> Minus</p>
 		</a>
 	</div>
 	<div class="uk-grid uk-grid-small uk-grid-collapse">
@@ -64,7 +62,7 @@
 				<table class="uk-table uk-table-condensed" width="100%">
 					<tr ng-repeat="crit in catalog.product_criteria">
 						<th class="uk-padding-remove">{{ crit.criteria.name }}</th>
-						<td><input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="crit.rate_avg" ng-click="giveRate(crit)"></input-stars></td>
+						<td><input-stars icon-full="star icon" icon-empty="empty star icon" max="5" ng-model="crit.rate_avg" ng-click="giveRate(crit)"></input-stars></td>
 					</tr>
 				</table>
 			</div>
@@ -81,20 +79,20 @@
 			</div> -->
 			<div class="uk-width-1-1 uk-margin-bottom">
 				<div class="uk-panel uk-panel-hover">
-					<h3 class="uk-panel-title kg-heading"><i class="uk-icon-file-text-o"></i> Deskripsi</h3>
+					<h3 class="uk-panel-title kg-heading"><i class="file text icon"></i> Deskripsi</h3>
 					<p ng-bind-html="catalog.desc"></p>
 				</div>
 			</div>
 			<div class="uk-width-1-1">
 				<div class="uk-panel uk-panel-hover">
-					<h3 class="uk-panel-title kg-heading"><i class="uk-icon-table"></i> Data</h3>
+					<h3 class="uk-panel-title kg-heading"><i class="table icon"></i> Data</h3>
 					<div ng-bind-html="catalog.data">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="uk-grid uk-grid-divider uk-margin-top-remove uk-hidden-small">
+	<div class="uk-grid uk-grid-divider">
 		<div class="uk-width-1-1">
 			<!-- <kg-embedly maxwidth="100%" url="{{ catalog.embed }}" apikey="8081dea79e164014bcd7cd7e1ab2363a" style="width:90%"></kg-embedly> -->
 			<a href="{{ catalog.embed }}" apikey="8081dea79e164014bcd7cd7e1ab2363a" class="embedly-card">Embedly</a>
@@ -106,20 +104,20 @@
 			</span>
 		</div>
 		<div id="productFeedback" class="uk-width-1-1 uk-margin-bottom" ng-init="feedback.type = ''">
-			<div class="uk-grid-width-1-2 ui labeled icon two item menu">
+			<div class="uk-grid-width-1-2 ui two item menu">
 			  <a class="item green" ng-class="{active: feedback.type == 'P' }" ng-click="feedback.type = 'P'">
-				<i class="uk-icon-thumbs-o-up icon"></i>
+				<i class="thumbs up outline icon"></i>
 				<div>Plus <span class="ui label">{{ catalog.plus_count }}</span></div>
 			  </a>
 			  <a class="item red" ng-class="{active: feedback.type == 'M' }"  ng-click="feedback.type = 'M'">
-				<i class="uk-icon-thumbs-o-down icon"></i>
+				<i class="thumbs down outline icon"></i>
 				<div>Minus <span class="ui label">{{ catalog.plus_count }}</span></div>
 			  </a>
 			</div>
 			<div class="ui fluid action input" ng-if="feedback.type != ''">
 			  <input class="uk-hidden" type="text" ng-model="feedback.type">
 			  <input type="text" placeholder="Isi umpan balik atau komentar disini" ng-model="feedback.comment" ng-enter="sendFb(feedback)">
-			  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="uk-icon-send uk-icon-small"></i></div>
+			  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
 			</div>
 
 			<!-- <div class="uk-grid-width-1-2 uk-text-center ui two item menu">
@@ -172,20 +170,20 @@
 		</div>
 	</div>
 	<div class="uk-visible-small">
-		<div class="uk-grid-width-1-2 ui labeled icon two item top attached tabular menu">
+		<div class="uk-grid-width-1-2 ui two item top attached tabular menu">
 		  <a class="item active green" data-tab="first" kg-tab ng-click="feedback.type = 'P'">
-			<i class="uk-icon-thumbs-o-up icon"></i>
+			<i class="thumbs up outline icon"></i>
 			<div>Plus <span class="ui label">{{ catalog.plus_count }}</span></div>
 		  </a>
 		  <a class="item red" data-tab="second" kg-tab ng-click="feedback.type = 'M'">
-			<i class="uk-icon-thumbs-o-down icon"></i>
+			<i class="thumbs down outline icon"></i>
 			<div>Minus <span class="ui label">{{ catalog.minus_count }}</span></div>
 		  </a>
 		</div>
 		<div class="ui fluid action input" ng-if="feedback.type != ''">
 		  <input class="uk-hidden" type="text" ng-model="feedback.type">
 		  <input type="text" placeholder="Isi umpan balik atau komentar disini" ng-model="feedback.comment" ng-enter="sendFb(feedback)">
-		  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="uk-icon-send uk-icon-small"></i></div>
+		  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
 		</div>
 		<div class="ui active bottom attached tab segment" data-tab="first">
 		  <div class="ui comments">
@@ -199,8 +197,8 @@
 					{{ plus.comment }}
 				  </div>
 				  <div class="actions">
-					<a ng-click="respondFb($index, plus.id, 1)"><i class="uk-icon-thumbs-o-up"></i></a>
-					<a ng-click="respondFb($index, plus.id, 2)"><i class="uk-icon-thumbs-o-down"></i></a>
+					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
+					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -218,8 +216,8 @@
 					{{ minus.comment }}
 				  </div>
 				  <div class="actions">
-					<a ng-click="respondFb($index, plus.id, 1)"><i class="uk-icon-thumbs-o-up"></i></a>
-					<a ng-click="respondFb($index, plus.id, 2)"><i class="uk-icon-thumbs-o-down"></i></a>
+					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
+					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -261,7 +259,6 @@
 	  </a>
 	</div> -->
 	<div class="uk-width-medium-1-2 uk-width-small-1-1 uk-text-left uk-margin-bottom">
-
 		<a class="ui circular facebook icon button">
 		  <i class="facebook icon"></i>
 		</a>

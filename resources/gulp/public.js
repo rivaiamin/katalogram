@@ -4,6 +4,7 @@ var include = require('gulp-include');
 var imagemin = require('gulp-imagemin');
 var cssmin = require('gulp-cssmin');
 var stylus = require('gulp-stylus');
+var less = require('gulp-less');
 var htmlmin = require('gulp-htmlmin');
 var jsonmin = require('gulp-jsonmin');
 var fontmin = require('fontmin');
@@ -28,16 +29,21 @@ var paths = {
         /*'bower_components/jquery-embedly/jquery.embedly.min.js',*/
 
         //semantic
+        'bower_components/semantic/dist/components/accordion.min.js',
+        'bower_components/semantic/dist/components/checkbox.min.js',
+        'bower_components/semantic/dist/components/dimmer.min.js',
+        'bower_components/semantic/dist/components/dropdown.min.js',
         'bower_components/semantic/dist/components/popup.min.js',
         'bower_components/semantic/dist/components/tab.min.js',
-        'bower_components/semantic/dist/components/checkbox.min.js',
-        'bower_components/semantic/dist/components/dropdown.min.js',
-        'bower_components/semantic/dist/components/accordion.min.js',
-        'bower_components/semantic/dist/components/dimmer.min.js',
         'bower_components/semantic/dist/components/transition.min.js',
+        //'bower_components/semantic/dist/components/sidebar.min.js',
 
         //uikit
-        'bower_components/uikit/js/uikit.min.js',
+        //'bower_components/uikit/js/uikit.min.js',
+        'bower_components/uikit/js/core/core.min.js',
+        'bower_components/uikit/js/core/modal.min.js',
+        'bower_components/uikit/js/core/nav.min.js',
+        'bower_components/uikit/js/core/offcanvas.min.js',
         'bower_components/uikit/js/components/grid.min.js',
         'bower_components/uikit/js/components/slider.min.js',
         //'bower_components/uikit/js/components/upload.min.js',
@@ -79,41 +85,49 @@ var paths = {
 		'resources/js/client/kg.*.js',
 		'resources/js/client/app.js',
 	],
-    css: [
+    less: [
+		'resources/assets/uikit.less',
+	],
+	css: [
 
         //semantic-ui
         //'bower_components/semantic/dist/semantic.min.css',
-        'bower_components/semantic/dist/components/reset.min.css',
-        'bower_components/semantic/dist/components/segment.min.css',
-        'bower_components/semantic/dist/components/list.min.css',
-        'bower_components/semantic/dist/components/image.min.css',
-        'bower_components/semantic/dist/components/icon.min.css',
-        'bower_components/semantic/dist/components/header.min.css',
+        'bower_components/semantic/dist/components/accordion.min.css',
         'bower_components/semantic/dist/components/button.min.css',
-        'bower_components/semantic/dist/components/label.min.css',
         'bower_components/semantic/dist/components/card.min.css',
-        'bower_components/semantic/dist/components/dimmer.min.css',
-        'bower_components/semantic/dist/components/comment.min.css',
-        'bower_components/semantic/dist/components/form.min.css',
-        'bower_components/semantic/dist/components/input.min.css',
         'bower_components/semantic/dist/components/checkbox.min.css',
+        'bower_components/semantic/dist/components/comment.min.css',
+        'bower_components/semantic/dist/components/container.min.css',
+        'bower_components/semantic/dist/components/divider.min.css',
         'bower_components/semantic/dist/components/dropdown.min.css',
-        'bower_components/semantic/dist/components/popup.min.css',
-        'bower_components/semantic/dist/components/tab.min.css',
+        'bower_components/semantic/dist/components/form.min.css',
+        'bower_components/semantic/dist/components/header.min.css',
+        'bower_components/semantic/dist/components/image.min.css',
+        'bower_components/semantic/dist/components/list.min.css',
+        'bower_components/semantic/dist/components/icon.min.css',
+        'bower_components/semantic/dist/components/input.min.css',
+        'bower_components/semantic/dist/components/label.min.css',
+        'bower_components/semantic/dist/components/dimmer.min.css',
         'bower_components/semantic/dist/components/menu.min.css',
         'bower_components/semantic/dist/components/message.min.css',
-        'bower_components/semantic/dist/components/accordion.min.css',
+        'bower_components/semantic/dist/components/popup.min.css',
+        'bower_components/semantic/dist/components/reset.min.css',
+        'bower_components/semantic/dist/components/segment.min.css',
+        'bower_components/semantic/dist/components/site.min.css',
+        'bower_components/semantic/dist/components/tab.min.css',
         'bower_components/semantic/dist/components/transition.min.css',
 
         //uikit
-        'bower_components/uikit/css/uikit.almost-flat.min.css',
+		'resources/css/uikit.css',
+		'bower_components/uikit/css/components/sticky.min.css',
+        /*'bower_components/uikit/css/uikit.almost-flat.min.css',
         'bower_components/uikit/css/components/slider.min.css',
         'bower_components/uikit/css/components/slidenav.min.css',
-        /*'bower_components/uikit/css/components/form-file.min.css',
-         'bower_components/uikit/css/components/upload.min.css',
-         'bower_components/uikit/css/components/progress.min.css',
-         'bower_components/uikit/css/components/htmleditor.min.css',*/
-        'bower_components/uikit/css/components/notify.almost-flat.min.css',
+        'bower_components/uikit/css/components/form-file.min.css',
+        'bower_components/uikit/css/components/upload.min.css',
+        'bower_components/uikit/css/components/progress.min.css',
+        'bower_components/uikit/css/components/htmleditor.min.css',
+        'bower_components/uikit/css/components/notify.almost-flat.min.css',*/
 
         //angular
         'bower_components/angular-input-stars-directive/angular-input-stars.css',
@@ -124,10 +138,13 @@ var paths = {
         'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
 
-        'public/fonts/Glametrix.css',
+        //'public/fonts/Glametrix.css',
         /*'public/fonts/DHF Broffont Script.css',*/
-        'public/fonts/CaviarDreams.css',
+        //'public/fonts/CaviarDreams.css',
+        'public/fonts/Asap-Regular.css',
+        'public/fonts/Panefresco500wtRegular.css',
         'public/fonts/icons.css',
+        'resources/css/katalogram-icon.css',
 
         'resources/css/katalogram.styl'
     ],
@@ -220,6 +237,15 @@ gulp.task('jsmin', function() {
     .pipe(gulp.dest('public/js'));
 });
 */
+
+gulp.task('less', function () {
+  return gulp.src(paths.less)
+    .pipe(less())
+	.pipe(concat('uikit.css'))
+    .pipe(gulp.dest('resources/css'));
+});
+
+
 gulp.task('cssmin', function () {
     return gulp.src(paths.css)
         .pipe(stylus())
@@ -258,7 +284,7 @@ gulp.task('jsonmin', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['resources/js/app.js'], ['jsmin']);
+  gulp.watch(paths.js, ['jsmin']);
   gulp.watch(paths.css, ['cssmin']);
   gulp.watch(paths.html, ['htmlpub']);
 });
