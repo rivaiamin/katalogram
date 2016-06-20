@@ -9,27 +9,28 @@ use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\ImageManager;
 use App\Product;
 use App\User;
+use App\Category;
 use App\Preview;
-use App\Criteria;
-use App\Tag;
+//use App\Criteria;
+//use App\Tag;
 use App\ProductTag;
+use App\ProductCriteria;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
 //use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
 
-    public function __construct()
-     {
+    public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
          $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'catalog']]);
      }
 
-	public function index(Product $product, $categoryId = null)
-    {
+	public function index(Product $product, $categoryId = null) {
         /*$data['lists'] = Product::with(['owner','category','numPlus','numMinus','numCollect'])
             ->where('product_release', '1')
             ->where('deleted_at', NULL)
@@ -43,14 +44,17 @@ class ProductController extends Controller
     }
 
 	public function get(Product $product, Request $request, $after = 0, $limit = 10) {
-		$category_id = $request->input('category_id');
+		$category = $request->input('category');
 		$tags = $request->input('tags');
 
     	$lists = $product->productList()
 			->orderBy($product->table.'.id', 'desc')
 			->take($limit);
 
-		if (!empty($category_id)) $lists->where('category_id', $category_id);
+		if (!empty($category)) {
+			$cat = Category::where('slug', $category)->first();
+			$lists->where('category_id', $cat->id);
+		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
 
         $data['catalogs'] = $lists->get();
@@ -89,8 +93,7 @@ class ProductController extends Controller
         return json_encode($data);
     }
 
-    public function create(CatalogRequest $request)
-    {
+    public function create(ProductRequest $request) {
         $input = $request->only('category_id','name');
         $input['user_id'] = Auth::user()->id;
 
@@ -108,18 +111,17 @@ class ProductController extends Controller
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function edit($id)
-    {
-        $data['product'] = Product::with(['owner','criteria','tag','preview'])
+    public function edit(ProductCriteria $criteria, $id) {
+        $data['product'] = Product::with(['user','productCriteria.criteria','productTag.tag'])
                                 ->where('id', $id)
                                 ->where('user_id', Auth::user()->id)
-                                ->get();
-
+                                ->first();
+		//$data['productCriteria'] = $criteria->criteria();
+		//$data['productTag'] = ProductTag::where('product_id', $id)->tag()->get();
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         if ($this->isOwner($id)) {
             $catalog = Product::findOrFail($id);
 
@@ -161,90 +163,58 @@ class ProductController extends Controller
 		}
 	}
 
-    public function logoUpload(Request $request, $productId)
-    {
-        if ($this->isOwner($productId)) {
-
-			$logo = Input::file('image');
+    public function logoUpload($id) {
+        if ($this->isOwner($id)) {
+			$file = Input::file('image');
 
 			if (Input::hasFile('image')) {
 				$destinationPath = base_path() . '/storage/files/product/logo/';
-				$filename = time() . '.' . $logo->getClientOriginalExtension();
-				if(!$icon->move($destinationPath, $filename)) {
-					return response()->json(['status' => 'error', 'message' => 'cant_upload'], 400);
+				$filename = time() . '.jpg';
+				$manager = new ImageManager(array('driver' => 'imagick'));
+				$image = $manager->make($file);
+
+				if(!$image->fit(256)->encode('jpg',80)->save($destinationPath.$filename)) {
+					return response()->json(['status' => 'error', 'message' => 'gambar gagal diubah'], 400);
 				} else {
-					return response()->json(['status' => 'success', 'message' => 'upload', 'image' => $filename ], 200, [], JSON_NUMERIC_CHECK);
+					//update record in database
+					$input['logo'] = $filename;
+					$update = Product::find($id);
+					$update->update($input);
+					return response()->json(['status' => 'success', 'message' => 'gambar berhasil diubah', 'logo' => $filename], 200);
 				}
 			} else {
 				return response()->json(['status' => 'error', 'message' => 'empty'], 400);
 			}
-		    /*$product = Product::where('id', $productId);
-            $input = $request->only('product_logo');
-            $product->update($input);
-            if ($product->first()){
-                $data = [
-                    'status' => "success",
-                    'message' => "Logo ikon telah berhasil diperbarui",
-                ];
-            }
-            else {
-                $data = [
-                    'status' => "error",
-                    'message' => "Logo ikon gagal diperbarui",
-                ];
-            }*/
 		} else {
-            $data = [
-                'status' => "error",
-                'message' => "akses invalid",
-            ];
-			return response()->json($data, 400, [], JSON_NUMERIC_CHECK);
-        }
-
-
+			return response()->json(['status' => 'error', 'message' => 'unauthorized'], 400);
+		}
     }
 
-    public function pictureUpload(Request $request, $productId)
-    {
-        if ($this->isOwner($productId)) {
-			$logo = Input::file('image');
+    public function pictureUpload($id) {
+        if ($this->isOwner($id)) {
+			$file = Input::file('image');
 
 			if (Input::hasFile('image')) {
 				$destinationPath = base_path() . '/storage/files/product/picture/';
-				$filename = time() . '.' . $picture->getClientOriginalExtension();
-				if(!$icon->move($destinationPath, $filename)) {
-					return response()->json(['status' => 'error', 'message' => 'cant_upload'], 400);
+				$filename = time() . '.jpg';
+				$manager = new ImageManager(array('driver' => 'imagick'));
+				$image = $manager->make($file);
+
+				if(!$image->fit(600,250)->encode('jpg',80)->save($destinationPath.$filename)) {
+					return response()->json(['status' => 'error', 'message' => 'gambar gagal diubah'], 400);
 				} else {
-					return response()->json(['status' => 'success', 'message' => 'upload', 'image' => $filename ], 200, [], JSON_NUMERIC_CHECK);
+					//update record in database
+					$input['picture'] = $filename;
+					$update = Product::find($id);
+					$update->update($input);
+					return response()->json(['status' => 'success', 'message' => 'gambar berhasil diubah', 'picture' => $filename], 200);
 				}
 			} else {
 				return response()->json(['status' => 'error', 'message' => 'empty'], 400);
 			}
-
-            /*$product = Product::where('id', $productId);
-            $input = $request->only('preview_pict', 'preview_caption');
-            $input['product_id'] = $productId;
-            $preview = Preview::create($input);
-            if ($preview){
-                $params = [
-                    'status' => "success",
-                    'message' => "gambar tampilan telah ditambahkan",
-                ];
-            }
-            else {
-                $params = [
-                    'status' => "error",
-                    'message' => "gambar gagal ditambahkan",
-                ];
-            }*/
-        } else {
-            $params = [
-                'status' => "error",
-                'message' => "akses invalid",
-            ];
-        }
-
-        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+		} else {
+			return response()->json(['status' => 'error', 'message' => 'unauthorized'], 400);
+		}
     }
 
     public function export($productId) {

@@ -14,11 +14,13 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use DB;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, SoftDeletes;
-
+    use Authenticatable, CanResetPassword;
+    use SoftDeletes;
+	use EntrustUserTrait {
+		EntrustUserTrait::restore insteadof SoftDeletes;
+	}
     protected $table = 'users';
 
     protected $fillable = [
@@ -30,7 +32,7 @@ class User extends Model implements AuthenticatableContract,
     	'facebook',
 		'google'
     ];
-
+	//protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -52,6 +54,12 @@ class User extends Model implements AuthenticatableContract,
     public function userProduct() {
         return $this->product()->select(['id','category_id','user_id','name','logo','quote','rating_avg','collect_count','plus_count','minus_count'])
             ->where('products.is_release', '1')
+            ->orderBy('products.id', 'desc');
+    }
+
+	public function userProductDraft() {
+        return $this->product()->select(['id','category_id','user_id','name'])
+            ->where('products.is_release', '0')
             ->orderBy('products.id', 'desc');
     }
 
@@ -85,8 +93,7 @@ class User extends Model implements AuthenticatableContract,
 
     /*public function level() {
         return $this->belongsTo('App\UserLevel');
-    }
-*/
+    }*/
     /*public function assignRole($role)
     {
         if (is_string($role)) {
@@ -96,7 +103,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->level()->attach($role);
     }
      */
-  /*  public function revokeRole($role)
+    /*  public function revokeRole($role)
     {
         if (is_string($role)) {
             $role = UserLevel::where('level_name', $role)->first();
@@ -104,7 +111,6 @@ class User extends Model implements AuthenticatableContract,
  
         return $this->level()->detach($role);
     }*/
-
     /*public function hasRole($name)
     {
         foreach($this->level as $role)

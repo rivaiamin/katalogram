@@ -9,7 +9,7 @@ var config = ['$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPro
 		templateUrl: 'catalog.list.html',
 		controller: 'catalogCtrl'
 	}).state('catalogCategory', {
-		url:'/catalog/category/:categoryId',
+		url:'/category/:categoryId',
 		templateUrl: 'catalog.list.html',
 		controller: 'catalogCtrl'
 	}).state('catalogDetail', {

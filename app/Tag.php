@@ -15,6 +15,8 @@ class Tag extends Model
     	'name'
     ];
 
+	protected $hidden = ['deleted_at'];
+
     public function product_tag() {
     	return $this->hasMany('App\ProductTag');
     }

@@ -1,4 +1,4 @@
-var kgApp = angular.module('kgApp', ['ui.router', 'ngTagsInput', 'satellizer', 'cropme', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll' ]);
+var kgApp = angular.module('kgApp', ['ui.router', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll' ]);
 var host = window.location.hostname;
 kgApp
 // route angular
@@ -49,6 +49,18 @@ kgApp
 .directive('kgUiAccordion', function() {
 	return function (scope, element, attr) {
 		$(element).accordion();
+    };
+})
+.directive('kgUiCheckbox', function() {
+	return function (scope, element, attr) {
+		$(element).checkbox('toggle');
+    };
+})
+.directive('kgUiDimmer', function() {
+	return function (scope, element, attr) {
+		$(element).dimmer({
+			on: 'hover'
+		});
     };
 })
 .directive('kgPopup', function () {

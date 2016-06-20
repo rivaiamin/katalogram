@@ -14,11 +14,11 @@ class UserContact extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\User')->select('id','name','picture');
+        return $this->belongsTo('App\User')->select('id','name','picture','product_count','contact_count','connect_count');
     }
 
     public function contact(){
-        return $this->belongsTo('App\User')->select('id','name','picture');
+        return $this->belongsTo('App\User')->select('id','name','picture','product_count','contact_count','connect_count');
     }
 
 	/*public function connect() {

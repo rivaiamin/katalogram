@@ -7,6 +7,13 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.modal = UIkit.modal("#kg-modal");
 	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
+	//$scope.bgNav = '';
+
+	$scope.indexSearch = function(array, id) {
+		return array.map(function(el) {
+		  return el.id;
+		}).indexOf(id);
+    }
 
 	$scope.popup = function() {
 		$('.browse').popup({ inline: true, hoverable: true,

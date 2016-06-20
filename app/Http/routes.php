@@ -39,8 +39,7 @@ Route::group([
 
     /*user auth
     =================================================================*/
-
-/*    // Authentication Routes...
+	/*    // Authentication Routes...
     Route::get('auth/login', 'Auth\AuthController@getLogin');
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -51,8 +50,7 @@ Route::group([
 
 */    /*user
     =================================================================*/
-
-    Route::get('user', [
+	/* Route::get('user', [
         'as'    => 'user',
         'uses'  => 'Admin\UserController@index'
     ]);
@@ -77,18 +75,16 @@ Route::group([
         'uses'  => 'Admin\UserController@edit'
     ]);   
 
-    Route::patch('user/{id}', 'Admin\UserController@update');
+    Route::put('user/{id}', 'Admin\UserController@updateProfile');
 
-    Route::get('user/{id}/delete', [
+    Route::delete('user/{id}', [
         'as'    => 'user.id.delete',
         'uses'  => 'Admin\UserController@destroy'
-    ]); 
-    /*Route::patch('user/{id}', [
+    ]);
+    Route::patch('user/{id}', [
         'as'    => 'user.id',
         'uses'  => 'admin\UserController@update'
     ]); */
-
-
 });
 
 
@@ -119,12 +115,15 @@ Route::group([//['middleware' => 'cors'],
     =================================================================*/
     Route::get('catalog', 'Server\ProductController@get');
     Route::get('catalog/category/{categoryId}', 'Server\ProductController@index');
-    Route::post('catalog', 'Server\ProductController@create');
     Route::get('catalog/{productId}', 'Server\ProductController@detail');
     Route::get('catalog/{productId}/export', 'Server\ProductController@export');
     Route::get('catalog/{productId}/view', 'Server\ProductController@view');
     Route::get('catalog/{tag}/search', 'Server\ProductController@search');
-    Route::get('catalog/{after}/{limit}', 'Server\ProductController@get');
+    Route::get('catalog/{after}/{limit}', 'Server\ProductController@get')
+		->where(['after'=>'[0-9]+','limit'=>'[0-9]+']);
+
+	Route::get('tags', 'Server\TagController@index');
+	Route::get('criterias', 'Server\CriteriaController@index');
 
 	// User Profile
 	Route::get('{username}', 'Server\UserController@profile');
@@ -132,27 +131,36 @@ Route::group([//['middleware' => 'cors'],
 	Route::group(['middleware' => 'ability:admin|manager|member'], function () {
 
 		// product
+		Route::post('catalog', 'Server\ProductController@create');
 		Route::get('catalog/{productId}/edit', 'Server\ProductController@edit');
 		Route::put('catalog/{productId}', 'Server\ProductController@update');
 		Route::delete('catalog/{productId}/delete', 'Server\ProductController@delete');
-		Route::put('catalog/{productId}/logo', 'Server\ProductController@logoUpload');
-		Route::post('catalog/{productId}/preview', 'Server\ProductController@pictureUpload');
+		Route::post('catalog/{productId}/logo', 'Server\ProductController@logoUpload');
+		Route::post('catalog/{productId}/picture', 'Server\ProductController@pictureUpload');
 
 		/*route member
 		=================================================================*/
-
 		Route::get('{username}/edit', 'Server\UserController@edit');
-		Route::put('{username}/profile', 'Server\UserController@update');
-		Route::put('{username}/pict', 'Server\UserController@changePict');
+		Route::put('{username}/profile', 'Server\UserController@updateProfile');
+		Route::post('{username}/picture', 'Server\UserController@uploadPicture');
+		Route::post('{username}/cover', 'Server\UserController@uploadCover');
+		Route::post('{username}/link', 'Server\UserController@addLink');
+		Route::delete('{username}/link/{id}', 'Server\UserController@removeLink');
+		//Route::put('{username}/pict', 'Server\UserController@changePict');
 		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
 
 		// route collect
 		Route::post('catalog/{productId}/collect', 'Server\CollectionController@add');
 
-		/*route tag
+		/*route product tag
 		=================================================================*/
-		Route::post('catalog/{productId}/tag', 'Server\TagController@addTag');
-		Route::delete('catalog/{productId}/tag/{tagId}', 'Server\TagController@deleteTag');
+		Route::post('catalog/{productId}/tag', 'Server\ProductTagController@add');
+		Route::delete('catalog/{productId}/tag/{tagId}', 'Server\ProductTagController@remove');
+
+		/*route product criteria
+		=================================================================*/
+		Route::post('catalog/{productId}/criteria', 'Server\ProductCriteriaController@add');
+		Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\ProductCriteriaController@remove');
 
 		/*route preview
 		=================================================================*/
@@ -164,10 +172,6 @@ Route::group([//['middleware' => 'cors'],
 		Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
 		Route::put('catalog/{feedbackId}/endorse', 'Server\FeedbackController@setEndorse');
 
-		/*route criteria
-		=================================================================*/
-		Route::post('catalog/{productId}/criteria', 'Server\CriteriaController@addCriteria');
-		Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\CriteriaController@deleteCriteria');
 
 		/*route Rate
 		=================================================================*/

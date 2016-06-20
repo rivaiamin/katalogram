@@ -68,7 +68,9 @@ var paths = {
         'bower_components/angular-resource/angular-resource.min.js',
         'bower_components/angular-ui-router/release/angular-ui-router.min.js',
         'bower_components/angular-input-stars-directive/angular-input-stars.js',
-        'bower_components/cropme/cropme.js',
+        'bower_components/ng-file-upload/ng-file-upload.min.js',
+
+		//'bower_components/cropme/cropme.js',
         /*'bower_components/angular-ui-grid/ui-grid.min.js',*/
         'bower_components/satellizer/satellizer.min.js',
         'bower_components/ng-tags-input/ng-tags-input.min.js',
@@ -120,6 +122,7 @@ var paths = {
         //uikit
 		'resources/css/uikit.css',
 		'bower_components/uikit/css/components/sticky.min.css',
+        'bower_components/uikit/css/components/notify.almost-flat.min.css',
         /*'bower_components/uikit/css/uikit.almost-flat.min.css',
         'bower_components/uikit/css/components/slider.min.css',
         'bower_components/uikit/css/components/slidenav.min.css',

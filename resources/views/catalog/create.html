@@ -36,45 +36,44 @@
             </ul>
         </div>
     </form> -->
-<div class="uk-modal-header">
-	<h2 class="kg-heading"><i class="uk-icon-pencil"></i> Buat Katalog</h2>
-</div>
-<div class="uk-container uk-container-center">
-	<div class="uk-grid uk-grid-small">
-		<form class="ui form uk-width-medium-2-3 uk-width-small-1-1">
-		  <div class="field">
-			<input type="text" ng-model="formCreate.name" placeholder="Nama Produk">
-			<input class="uk-hidden" type="text" ng-model="formCreate.category_id">
-		  </div>
-		  <div class="field">
-			<select ng-model="catInd" ng-options="ind as cats.name for (ind, cats) in categories" ng-change="formCreate.category_id = categories[catInd].id">
-			  <option value="">Kategori</option>
-			</select>
-		  </div>
-		</form>
-		<div class="uk-width-medium-1-3 uk-width-small-1-1">
-			<div class="ui card" ng-if="catInd">
-			  <div class="image kg-bg-base">
-				<img class="kg-padding" ng-src="public/img/category/{{ categories[catInd].icon }}">
-			  </div>
-			  <div class="content">
-				<a class="kg-heading">{{ categories[catInd].name }}</a>
-				<div class="description">
-				  {{ categories[catInd].desc }}
-				</div>
-			  </div>
-			</div>
-		</div>
-		<!-- <div class="uk-width-1-3">
-			<img class="kg-bg-base kg-padding" ng-src="public/img/category/{{ categories[catInd].category_icon }}" width="80%" alt="">
-		</div>
-		<div class="uk-width-2-3">
-			<h3 class="kg-heading kg-margin">{{ categories[catInd].name }}</h3>
-			<p>{{ categories[catInd].category_desc }} </p>
-		</div> -->
+<div class="uk-modal-dialog">
+	<a class="uk-modal-close uk-close"><i class="remove gray icon"></i></a>
+	<div class="uk-modal-header">
+		<h4 class="kg-heading"><i class="file teal icon"></i> Buat Katalog</h4>
 	</div>
-</div>
+	<form class="ui form">
+	  <div class="field">
+		<input type="text" ng-model="formCreate.name" placeholder="Nama Produk">
+		<input class="uk-hidden" type="text" ng-model="formCreate.category_id">
+	  </div>
+	  <div class="field">
+		<select ng-model="catInd" ng-options="ind as cats.name for (ind, cats) in categories" ng-change="formCreate.category_id = categories[catInd].id">
+		  <option value="">Kategori</option>
+		</select>
+	  </div>
+	</form>
+	<div class="ui segment">
+		<h2 class="ui icon header">
+		  <i class="kg-icon teal icon-{{categories[catInd].slug}} icon"></i>
+		  <div class="content kg-heading">
+			{{ categories[catInd].name }}
+			<div class="sub header">{{ categories[catInd].desc }}</div>
+		  </div>
+		</h2>
+	</div>
+	<!--<div class="ui card" ng-if="catInd">
+	  <div class="image kg-bg-base">
+		<img class="kg-padding" ng-src="public/img/category/{{ categories[catInd].icon }}">
+	  </div>
+	  <div class="content">
+		<a class="kg-heading">{{ categories[catInd].name }}</a>
+		<div class="description">
+		  {{ categories[catInd].desc }}
+		</div>
+	  </div>
+	</div>-->
+	<div class="uk-modal-footer uk-text-right">
+		<a ng-click="saveCatalog(formCreate)" class="ui primary button"><i class="file icon"></i> Ciptakan</a>
+	</div>
 
-<div class="uk-modal-footer uk-text-right">
-	<a ng-click="saveCatalog(formCreate)" class="uk-button uk-button-primary uk-button-large kg-bg-base kg-bg-hover-base2 uk-contrast"><i class="uk-icon-sticky-note-o"></i> Ciptakan</a>
 </div>

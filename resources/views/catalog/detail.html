@@ -1,5 +1,5 @@
 <div class="uk-cover-background uk-position-relative uk-contrast ui image">
-	<a class="ui teal ribbon label uk-text-large"> <img ng-src="public/img/category/{{ catalog.category.icon }}" width="30"> {{ catalog.category.name }}</a>
+	<a class="ui blue ribbon label uk-text-large"> <i class="kg-icon icon-{{catalog.category.slug}} inverted"></i> {{ catalog.category.name }}</a>
 	<img class="uk-invincible" src="{{ files }}product/picture/{{ catalog.picture }}" height="300" />
 	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
 		<img class="uk-thumbnail uk-border-circle kg-logo-big" ng-src="{{ files }}product/logo/{{ catalog.logo }}" width="100">
@@ -99,8 +99,8 @@
 		</div>
 		<div class="uk-width-1-1 uk-text-center uk-margin-bottom">
 			<!-- <h4 class="kg-heading uk-margin-remove"><i class="uk-icon-tags"></i> Kata Kunci</h4> -->
-			<span class="ui tag label teal uk-text-large" ng-repeat="tag in catalog.product_tag">
-				 {{ tag.tag.name }}
+			<span class="ui tag label teal uk-text-large uk-margin-small-right" ng-repeat="tag in catalog.product_tag">
+				 {{tag.tag.name}}
 			</span>
 		</div>
 		<div id="productFeedback" class="uk-width-1-1 uk-margin-bottom" ng-init="feedback.type = ''">
@@ -277,7 +277,7 @@
 			<i class="file image outline icon"></i>
 			Export
 		</a>
-		<a ng-if="catalog.user.name == user.name" class="ui labeled icon teal button" href="/catalog/{{ catalog.id }}/edit" target="_blank">
+		<a ng-if="catalog.user.name == auth.name" class="ui labeled icon teal button" href="/catalog/{{ catalog.id }}/edit" target="_blank">
 			<i class="pencil icon"></i>
 			Edit
 		</a>

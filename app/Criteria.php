@@ -15,6 +15,8 @@ class Criteria extends Model
 		'name'
 	];
 
+	protected $hidden = ['deleted_at'];
+
 	public function product() {
 		return $this->hasMany('App\ProductCriteria');
 	}

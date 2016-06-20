@@ -1,5 +1,5 @@
-var catalogCtrl = ['$scope', '$http', '$location', '$stateParams','kgConfig',
-  function($scope, $http, $location, $stateParams, kgConfig) {
+var catalogCtrl = ['$scope', '$rootScope', '$http', '$location', '$stateParams','kgConfig',
+  function($scope, $rootScope, $http, $location, $stateParams, kgConfig) {
 
 	$scope.catalogs = [];
 	$scope.scrollBusy = false;
@@ -8,12 +8,12 @@ var catalogCtrl = ['$scope', '$http', '$location', '$stateParams','kgConfig',
 	$scope.onSearch = false;
 	$scope.filter = {};
 	$scope.url = $location.absUrl();
+	$rootScope.bgNav = '';
 
-	/*var categoryId = $stateParams.categoryId;
+	var categoryId = $stateParams.categoryId;
 
-	if (categoryId != null) var route = 'catalog/category/'+categoryId;
-	else var route = 'catalog';
-	$http.get(kgConfig.api+route)
+	if (categoryId != null) $scope.filter.category = categoryId;
+	/*$http.get(kgConfig.api+route)
 	.success(function(response) {
 		$scope.catalogs = response.catalogs;
 	});*/

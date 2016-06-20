@@ -18,16 +18,30 @@
 
 			<div class="ui four doubling link stackable cards" data-uk-grid>
 				<!-- list start -->
-				<div class="card" ng-repeat="list in catalogs" ng-click="catalogDetail(list.id)">
-					<div class="image">
-						<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
-						<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+				<div class="card uk-text-center" ng-repeat="list in catalogs" ng-click="catalogDetail(list.id)">
+
+					<div class="blurring dimmable image" kg-ui-dimmer>
+				  	  <div class="ui teal left corner label">
+						<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
+					  </div>
+					  <div class="ui dimmer">
+						<div class="content">
+						  <div class="center">
+							<img src="{{ files }}/user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
+						  </div>
+						</div>
+					  </div>
+					  <img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+					  <img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
 					</div>
 					<div class="content">
-						<h5 class="ui header">
+						<div class="kg-heading">
 							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
 							{{ list.name }}
-						</h5>
+						</div>
+						<!--<div class="meta uk-text-small">
+							<i class="kg-icon icon-{{ categories[list.category_id-1].slug }}"></i> {{ categories[list.category_id-1].slug }}
+						</div>-->
 						<!--<div class="meta">
 							<span class="date">Joined in 2013</span>
 						</div>-->
@@ -72,10 +86,10 @@
 			<div class="ui segment">
   	  	  	  <h4 class="ui header kg-color-base">Sub-sektor</h4>
 	  	  	  <div class="ui middle aligned selection divided list">
-				  <a class="item" ng-repeat="cats in categories" href="/catalog/category/{{ cats.id }}">
-					  <i class="kg-icon icon-{{cats.icon}} kg-color-base"></i>
+				  <a class="item" ng-repeat="cats in categories" href="/category/{{cats.slug}}">
+					  <i class="kg-icon icon-{{cats.slug}} kg-color-base"></i>
 					  <span class="uk-text-small">{{cats.name}}</span>
-					  <div class="ui teal right floated label"><!--<img ng-src="{{ files }}/category/icon/{{ cats.icon }}" width="20">--> {{cats.id}} </div>
+					  <div class="ui teal right floated label"> {{cats.product_count}} </div>
 				  </a>
 	  	  	  </div>
 			</div>

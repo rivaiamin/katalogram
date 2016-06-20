@@ -1,4 +1,4 @@
-<div ng-class="{'kg-blur': blur==true}" class="kg-navbar" data-uk-sticky>
+<div ng-class="{'kg-blur': blur==true}" class="kg-navbar {{bgNav}}" data-uk-sticky>
 	<div class="uk-hidden-large uk-container uk-container-center uk-text-large">
 		<div class="ui secondary icon five item menu" ng-if="isLogin()" >
 			<a href="#mainSidebar" class="item" data-uk-offcanvas>
@@ -14,16 +14,16 @@
 				<i class="pencil icon"></i>
 			</a>
 			<a class="browse item" data-position="bottom right">
-				<img ng-if="auth.picture" class="uk-border-circle" ng-src="{{ files + 'picture/'+ auth.picture }}" width="30">
+				<img ng-if="auth.picture" class="uk-border-circle" ng-src="{{ files + 'user/picture/thumb/'+ auth.picture }}" width="30">
 				<i ng-if="! auth.picture" class="user icon"></i>
 			</a>
 			<div class="ui popup bottom right transition hidden">
 				<div class="uk-grid">
-					<div class="uk-width-1-2">
-						<img ng-if="auth.picture" class="uk-border-circle" ng-src="{{ files + 'picture/'+ auth.picture }}">
-						<img ng-if="! auth.picture" class="uk-border-circle" src="public/img/placeholder.jpg" />
+					<div class="uk-width-2-5">
+						<img ng-if="auth.picture" class="ui circular image" ng-src="{{ files + 'user/picture/'+ auth.picture }}">
+						<img ng-if="! auth.picture" class="ui circular image" src="public/img/placeholder.jpg" />
 					</div>
-					<div class="uk-width-1-2">
+					<div class="uk-width-3-5">
 						<h4>{{ auth.name }}</h4>
 						<a class="ui kg-bg-base black button" href="/{{ auth.name }}"><i class="user icon"></i> Profile</a>
 					</div>
@@ -90,7 +90,7 @@
 					<i class="announcement icon"></i>
 				</a>
 				<a class="browse item" data-position="bottom right">
-					<img ng-if="auth.picture" class="ui circular image" ng-src="{{ files + 'user/picture/'+ auth.picture }}" style="width:30px" >
+					<img ng-if="auth.picture" class="ui circular image" ng-src="{{ files + 'user/picture/thumb/'+ auth.picture }}" style="width:30px" >
 					<i ng-if="! auth.picture" class="user icon"></i>
 					<span> {{ auth.name }}</span>
 				</a>
@@ -124,7 +124,7 @@
 		<i class="pencil icon"></i>
 	</a>
 </div> -->
-	<!--<nav ng-class="{'kg-blur': blur==true}" class="uk-navbar uk-navbar-attached uk-contrast kg-navbar kg-bg-base" data-uk-sticky>
+<!--<nav ng-class="{'kg-blur': blur==true}" class="uk-navbar uk-navbar-attached uk-contrast kg-navbar kg-bg-base" data-uk-sticky>
 		<div class="uk-container uk-container-center">
 			<a href="#kg-off-navbar" class="uk-navbar-toggle uk-visible-small uk-contrast" data-uk-offcanvas></a>
 			<a href="/" class="uk-navbar-brand kg-bg-base2 uk-contrast kg-font-kg"><img src="public/img/katalogram_white.png" width="24"> katalogram</a>
@@ -165,9 +165,6 @@
 			</div>
 		</div>
 	</nav>-->
-<!-- navigasi web 2 
-===========================================================================-->
-
 <!--<nav class="uk-navbar uk-navbar-attached uk-contrast kg-navbar-sub kg-bg-base2" data-uk-sticky ng-if="navbarSubShow" ng-switch on="navbarSub">
 	<ul ng-switch-when="category" class="uk-thumbnav uk-container uk-container-center">
         <li ng-repeat="cats in categories"><a href="#"><img ng-src="public/img/category/{{ cats.category_icon }}" width="40" alt=""></a></li>

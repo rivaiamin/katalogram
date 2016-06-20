@@ -7,7 +7,7 @@
 			<ul class="uk-nav-sub">
 				<li ng-repeat="cats in categories">
 					<a href="/catalog/category/{{ cats.id }}">
-						<i class="kg-icon icon-{{cats.icon}} inverted"></i>
+						<i class="kg-icon icon-{{cats.slug}} inverted"></i>
 						<!--<img ng-src="{{ files }}category/icon/{{ cats.icon }}" width="20">-->
 						{{ cats.name }}
 					</a>

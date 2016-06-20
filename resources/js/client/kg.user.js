@@ -1,6 +1,8 @@
 var userCtrl = ['$state','$stateParams', '$scope', '$rootScope','$http', 'kgConfig',
   function($state, $stateParams,$scope, $rootScope, $http, kgConfig) {
 	$scope.cropMeModal = UIkit.modal("#cropMeModal");
+	$rootScope.bgNav = '';
+
 	$http.get(
 		//"json/member_profile.json"
 		kgConfig.api+$stateParams.username
@@ -19,15 +21,6 @@ var userCtrl = ['$state','$stateParams', '$scope', '$rootScope','$http', 'kgConf
 		//$state.go('home');
 	});
 
-	$scope.savePict = function(filename) {
-		$http.put(kgConfig.api+$rootScope.user.name+'/pict', {
-			user_pict : filename
-		}).success(function(response){
-			UIkit.notify(response.message, response.status);
-			$scope.cropMeModal.hide();
-			$scope.profile.user.user_pict = filename;
-		});
-	};
 	$scope.addConnect = function(userId) {
 		$http.post(kgConfig.api+'connect/'+userId)
 		.success(function(response) {
@@ -40,22 +33,5 @@ var userCtrl = ['$state','$stateParams', '$scope', '$rootScope','$http', 'kgConf
 			UIkit.notify(response.data.message, response.status);
 		})
 	}
-	$scope.$on("cropme:done", function(ev, response, cropmeEl) {
-		var blob = response.croppedImage;
-		//$scope.image = blob;
-		$http({
-			method: "POST",
-			url: kgConfig.files+"saveavatar.php",
-			data: blob,
-			headers: {
-				'Content-Type': blob.type
-			}
-		}).success(function(response){
-			if (response.status=='success') {
-				$scope.savePict(response.filename, blob);
-
-			}
-		})
-	});
 
 }]
