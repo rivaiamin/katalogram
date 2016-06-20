@@ -39,8 +39,7 @@ Route::group([
 
     /*user auth
     =================================================================*/
-
-/*    // Authentication Routes...
+	/*    // Authentication Routes...
     Route::get('auth/login', 'Auth\AuthController@getLogin');
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -51,8 +50,7 @@ Route::group([
 
 */    /*user
     =================================================================*/
-
-    Route::get('user', [
+	/* Route::get('user', [
         'as'    => 'user',
         'uses'  => 'Admin\UserController@index'
     ]);
@@ -77,18 +75,16 @@ Route::group([
         'uses'  => 'Admin\UserController@edit'
     ]);   
 
-    Route::patch('user/{id}', 'Admin\UserController@update');
+    Route::put('user/{id}', 'Admin\UserController@updateProfile');
 
-    Route::get('user/{id}/delete', [
+    Route::delete('user/{id}', [
         'as'    => 'user.id.delete',
         'uses'  => 'Admin\UserController@destroy'
-    ]); 
-    /*Route::patch('user/{id}', [
+    ]);
+    Route::patch('user/{id}', [
         'as'    => 'user.id',
         'uses'  => 'admin\UserController@update'
     ]); */
-
-
 });
 
 
@@ -102,101 +98,103 @@ Route::group([//['middleware' => 'cors'],
     /*route authencticate with jwt-auth
     =================================================================*/
     
-    // backend crud member
-    Route::get('member', 'Server\MemberController@index');
-    Route::delete('member/{memberId}/delete', 'Server\MemberController@deleteMember');
-
-    // member
+    // user auth front-end
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
     Route::get('auth/user', 'Auth\AuthenticateController@getAuthenticatedUser');
     Route::get('auth/refresh', 'Auth\AuthenticateController@refresh');
-    Route::post('member/login', 'Auth\AuthenticateController@login');
-    Route::post('member/register', 'Auth\AuthenticateController@register');
+    Route::post('auth/login', 'Auth\AuthenticateController@login');
+    Route::post('auth/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
 
      // categories
     Route::get('category', 'Server\CategoryController@index');
     Route::get('category/{id}', 'Server\CategoryController@detail');
-    Route::post('category', [
-        'middleware' => ['ability:admin|manager'],
-        'uses' => 'Server\CategoryController@add'
-    ]);
-    Route::post('category/icon', [
-        'middleware' => ['ability:admin|manager'],
-        'uses' => 'Server\CategoryController@uploadIcon'
-    ]);
-    Route::put('category/{id}', [
-        'middleware' => ['ability:admin|manager'],
-        'uses' => 'Server\CategoryController@update'
-    ]);
-    Route::delete('category/{id}', [
-        'middleware' => ['ability:admin|manager'],
-        'uses' => 'Server\CategoryController@delete'
-    ]);
-    
-    /*route catalog list
+
+	/*route catalog list
     =================================================================*/
+    Route::get('catalog', 'Server\ProductController@get');
+    Route::get('catalog/category/{categoryId}', 'Server\ProductController@index');
+    Route::get('catalog/{productId}', 'Server\ProductController@detail');
+    Route::get('catalog/{productId}/export', 'Server\ProductController@export');
+    Route::get('catalog/{productId}/view', 'Server\ProductController@view');
+    Route::get('catalog/{tag}/search', 'Server\ProductController@search');
+    Route::get('catalog/{after}/{limit}', 'Server\ProductController@get')
+		->where(['after'=>'[0-9]+','limit'=>'[0-9]+']);
 
-    Route::get('catalog', 'Server\CatalogController@index');
-    Route::get('catalog/category/{categoryId}', 'Server\CatalogController@index');
-    Route::post('catalog', 'Server\CatalogController@createCatalog');
-    Route::get('catalog/{productId}/edit', 'Server\CatalogController@editCatalog');
-    Route::put('catalog/{productId}', 'Server\CatalogController@updateCatalog');  
-    Route::delete('catalog/{productId}/delete', 'Server\CatalogController@destroy'); 
-    Route::put('catalog/{productId}/logo', 'Server\CatalogController@logoUpload');
-    Route::post('catalog/{productId}/preview', 'Server\CatalogController@previewUpload');
-    Route::get('catalog/{productId}', 'Server\CatalogController@catalogDetail');
-    Route::get('catalog/{productId}/export', 'Server\CatalogController@exportCatalog');
-    Route::get('catalog/{productId}/view', 'Server\CatalogController@viewCatalog');
-    Route::get('catalog/{tag}/search', 'Server\CatalogController@searchCatalog');
+	Route::get('tags', 'Server\TagController@index');
+	Route::get('criterias', 'Server\CriteriaController@index');
 
-       /*route member
-    =================================================================*/
+	// User Profile
+	Route::get('{username}', 'Server\UserController@profile');
 
-    Route::get('{username}', 'Server\MemberController@memberProfile');
-    Route::get('{username}/edit', 'Server\MemberController@editMember');
-    Route::put('{username}/profile', 'Server\MemberController@updateProfile');
-    Route::put('{username}/pict', 'Server\MemberController@changePict');
-    Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
+	Route::group(['middleware' => 'ability:admin|manager|member'], function () {
 
-    // route collect
-    Route::post('catalog/{productId}/collect', 'Server\CollectionController@add');
+		// product
+		Route::post('catalog', 'Server\ProductController@create');
+		Route::get('catalog/{productId}/edit', 'Server\ProductController@edit');
+		Route::put('catalog/{productId}', 'Server\ProductController@update');
+		Route::delete('catalog/{productId}/delete', 'Server\ProductController@delete');
+		Route::post('catalog/{productId}/logo', 'Server\ProductController@logoUpload');
+		Route::post('catalog/{productId}/picture', 'Server\ProductController@pictureUpload');
 
-    /*route tag
-    =================================================================*/
+		/*route member
+		=================================================================*/
+		Route::get('{username}/edit', 'Server\UserController@edit');
+		Route::put('{username}/profile', 'Server\UserController@updateProfile');
+		Route::post('{username}/picture', 'Server\UserController@uploadPicture');
+		Route::post('{username}/cover', 'Server\UserController@uploadCover');
+		Route::post('{username}/link', 'Server\UserController@addLink');
+		Route::delete('{username}/link/{id}', 'Server\UserController@removeLink');
+		//Route::put('{username}/pict', 'Server\UserController@changePict');
+		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
 
-    Route::post('catalog/{productId}/tag', 'Server\TagController@addTag');
-    Route::delete('catalog/{productId}/tag/{tagId}', 'Server\TagController@deleteTag');
+		// route collect
+		Route::post('catalog/{productId}/collect', 'Server\CollectionController@add');
 
-    /*route preview
-    =================================================================*/
+		/*route product tag
+		=================================================================*/
+		Route::post('catalog/{productId}/tag', 'Server\ProductTagController@add');
+		Route::delete('catalog/{productId}/tag/{tagId}', 'Server\ProductTagController@remove');
 
-    Route::post('catalog/{productId}/preview', 'Server\PreviewController@previewUpload');
+		/*route product criteria
+		=================================================================*/
+		Route::post('catalog/{productId}/criteria', 'Server\ProductCriteriaController@add');
+		Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\ProductCriteriaController@remove');
 
-    /*route feedback
-    =================================================================*/
+		/*route preview
+		=================================================================*/
+		//Route::post('catalog/{productId}/preview', 'Server\PreviewController@previewUpload');
 
-    Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
-    Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
-    Route::put('catalog/{feedbackId}/endorse', 'Server\FeedbackController@setEndorse');
+		/*route feedback
+		=================================================================*/
+		Route::post('catalog/{productId}/feedback', 'Server\FeedbackController@giveFeedback');
+		Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\FeedbackController@respondFeedback');
+		Route::put('catalog/{feedbackId}/endorse', 'Server\FeedbackController@setEndorse');
 
-    /*route criteria
-    =================================================================*/
 
-    Route::post('catalog/{productId}/criteria', 'Server\CriteriaController@addCriteria');
-    Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\CriteriaController@deleteCriteria');
-    
-    /*route Rate
-    =================================================================*/
+		/*route Rate
+		=================================================================*/
+		Route::post('catalog/{productId}/rate', 'Server\RateController@giveRate');
 
-    Route::post('catalog/{productId}/rate', 'Server\RateController@giveRate');
-    
-    /*route connection
-    =================================================================*/
+		/*route connection
+		=================================================================*/
+		Route::post('connect/{memberId}', 'Server\ContactController@addContact');
+		Route::delete('connect/{memberId}', 'Server\ContactController@removeContact');
+	});
 
-    Route::post('connect/{memberId}', 'Server\ContactController@addContact');
-    Route::delete('connect/{memberId}', 'Server\ContactController@removeContact');
+	Route::group(['middleware' => 'ability:admin|manager'], function () {
+
+		// backend crud user
+		Route::get('user', 'Server\MemberController@index');
+		Route::delete('user/{memberId}/delete', 'Server\MemberController@deleteMember');
+
+		// category
+		Route::post('category','Server\CategoryController@add');
+		Route::post('category/icon', 'Server\CategoryController@uploadIcon');
+		Route::put('category/{id}', 'Server\CategoryController@update');
+		Route::delete('category/{id}', 'Server\CategoryController@delete');
+	});
 
 });
 

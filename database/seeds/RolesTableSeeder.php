@@ -27,7 +27,7 @@ class RolesTableSeeder extends Seeder
         $member = new Role();
         $member->name         = 'member';
         $member->display_name = 'Site Member'; // optional
-        $member->description  = 'Anggota, baik Kreaotor maupun Reviewer'; // optional
+        $member->description  = 'Anggota, baik Kreator maupun Reviewer'; // optional
         $member->save();
     }
 }

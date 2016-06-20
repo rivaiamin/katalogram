@@ -18,11 +18,15 @@ class TagController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth');
+         $this->middleware('jwt.auth', ['except'=>['index']] );
     }
 
-    public function addTag(CatalogCtrl $catalog, Request $request, $productId)
-    {
+	public function index() {
+		$data = Tag::select('id','name')->get();
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+	}
+
+    public function add(CatalogCtrl $catalog, Request $request, $productId) {
         if ($catalog->isOwner($productId)) {
             $input = $request->only('tag_name');
             
@@ -64,8 +68,7 @@ class TagController extends Controller
         return json_encode($params);
     }
 
-    public function deleteTag(CatalogCtrl $catalog, $productId, $tagId)
-    {
+    public function delete(CatalogCtrl $catalog, $productId, $tagId) {
         if ($catalog->isOwner($productId)) {
             $productTag = ProductTag::where('product_id', $productId)->where('tag_id', $tagId)->delete();
             $params = [
