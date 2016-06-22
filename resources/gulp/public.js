@@ -114,9 +114,11 @@ var paths = {
         'bower_components/semantic/dist/components/message.min.css',
         'bower_components/semantic/dist/components/popup.min.css',
         'bower_components/semantic/dist/components/reset.min.css',
+        'bower_components/semantic/dist/components/rating.min.css',
         'bower_components/semantic/dist/components/segment.min.css',
         'bower_components/semantic/dist/components/site.min.css',
         'bower_components/semantic/dist/components/tab.min.css',
+        'bower_components/semantic/dist/components/table.min.css',
         'bower_components/semantic/dist/components/transition.min.css',
 
         //uikit
@@ -161,12 +163,66 @@ var paths = {
     json: [
         'resources/json/*.json'
     ],
+	exportcss: [
+		//semantic-ui
+        //'bower_components/semantic/dist/semantic.min.css',
+        //'bower_components/semantic/dist/components/accordion.min.css',
+        'bower_components/semantic/dist/components/button.min.css',
+        //'bower_components/semantic/dist/components/card.min.css',
+        //'bower_components/semantic/dist/components/checkbox.min.css',
+        'bower_components/semantic/dist/components/comment.min.css',
+        'bower_components/semantic/dist/components/container.min.css',
+        'bower_components/semantic/dist/components/divider.min.css',
+        //'bower_components/semantic/dist/components/dropdown.min.css',
+        //'bower_components/semantic/dist/components/form.min.css',
+        'bower_components/semantic/dist/components/header.min.css',
+        'bower_components/semantic/dist/components/image.min.css',
+        'bower_components/semantic/dist/components/list.min.css',
+        //'bower_components/semantic/dist/components/icon.min.css',
+        //'bower_components/semantic/dist/components/input.min.css',
+        'bower_components/semantic/dist/components/label.min.css',
+        //'bower_components/semantic/dist/components/dimmer.min.css',
+        'bower_components/semantic/dist/components/menu.min.css',
+        //'bower_components/semantic/dist/components/message.min.css',
+        //'bower_components/semantic/dist/components/popup.min.css',
+        'bower_components/semantic/dist/components/reset.min.css',
+        'bower_components/semantic/dist/components/rating.min.css',
+        'bower_components/semantic/dist/components/segment.min.css',
+        'bower_components/semantic/dist/components/site.min.css',
+        //'bower_components/semantic/dist/components/tab.min.css',
+        'bower_components/semantic/dist/components/table.min.css',
+        //'bower_components/semantic/dist/components/transition.min.css',
+
+        //uikit
+		'resources/css/uikit.css',
+
+        //'public/fonts/Asap-Regular.css',
+       	//'public/fonts/Panefresco500wtRegular.css',
+        //'public/fonts/icons.css',
+        //'resources/css/katalogram-icon.css',
+
+        'resources/css/katalogram.styl'
+	],
     exportjs: [
-        'bower_components/angular/angular.min.js',
+        //jquery
+        'bower_components/jquery/dist/jquery.min.js',
+		'bower_components/AdminLTE/plugins/knob/jquery.knob.js',
+
+        //semantic
+        'bower_components/semantic/dist/components/rating.min.js',
+        'bower_components/semantic/dist/components/tab.min.js',
+        //'bower_components/semantic/dist/components/transition.min.js',
+        //'bower_components/semantic/dist/components/sidebar.min.js',
+
+        //uikit
+        'bower_components/uikit/js/core/core.min.js',
+        'bower_components/uikit/js/components/grid.min.js',
+
+		/*'bower_components/angular/angular.min.js',
         'bower_components/d3/d3.min.js',
         'bower_components/angular-input-stars-directive/angular-input-stars.js',
-        'bower_components/ng-knob/dist/ng-knob.min.js',
-        'resources/js/export.js'
+        'bower_components/ng-knob/dist/ng-knob.min.js',*/
+        'resources/js/export.js',
     ]
 };
 
@@ -264,9 +320,11 @@ gulp.task('htmlmin', function(cb) {
 });
 
 gulp.task('exportmin', function(cb) {
-    gulp.src('resources/export.html')
-        .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
-        .pipe(gulp.dest('public'));
+    gulp.src(paths.exportcss)
+        .pipe(stylus())
+        .pipe(cssmin({processImport: false}))
+        .pipe(concat('export.min.css'))
+        .pipe(gulp.dest('public/css'));
     gulp.src(paths.exportjs)
         .pipe(uglify())
         .pipe(concat('export.min.js'))

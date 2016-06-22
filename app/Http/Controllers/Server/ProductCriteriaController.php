@@ -11,6 +11,10 @@ use App\ProductCriteria;
 
 class ProductCriteriaController extends Controller
 {
+	public function __construct() {
+        $this->middleware('jwt.auth');
+    }
+
     public function index() {
         //
     }
@@ -42,6 +46,20 @@ class ProductCriteriaController extends Controller
         }
         return response()->json($params, 200);
     }
+
+	public function setRateAvg($id) {
+		$product = new ProductController;
+		$criteria = ProductCriteria::where('id', $id);
+		$rate = $criteria->first()->productCriteriaRate();
+		$row = $rate->count();
+		$total = $rate->sum('value');
+		$input['rate_avg'] = round($total / $row, 2);
+
+		if ($criteria->update($input)) {
+			$product->setRateAvg($criteria->first()->product_id);
+			return true;
+		} else return false;
+	}
 
     public function show($id) {
         //

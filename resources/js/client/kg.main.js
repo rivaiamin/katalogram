@@ -7,6 +7,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.modal = UIkit.modal("#kg-modal");
 	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
+	$scope.isSendFeedback = false;
 	//$scope.bgNav = '';
 
 	$scope.indexSearch = function(array, id) {
@@ -121,7 +122,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 			//url: "json/detail_catalog.json",
 			kgConfig.api+"catalog/"+productId
 		).success(function (response) {
-            var detail = response;
+            $scope.isCollect = response.isCollect;
             catalog = response.product;
             catalog.desc = $sce.trustAsHtml(catalog.desc);
             catalog.data = $sce.trustAsHtml(catalog.data);
@@ -185,20 +186,20 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 			$state.go('catalogEdit', { productId: response.product_id });
 		});
 	};
-
 	$scope.addCollect = function() {
-		$http.post(kgConfig.api+'catalog/'+$scope.productId+'/collect')
+		input = { product_id: $scope.productId };
+		$http.post(kgConfig.api+'collect', input)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
-				if (response.status == 'success') $scope.productDetail.num_collect++;
+				if (response.status == 'success') $scope.catalog.collect_count++;
 			})
 	};
 
 	//rating
 	$scope.giveRate = function(rating) {
 		var input = {
-			criteria_id: rating.id,
-			rate_value: rating.avg_criteria[0].criteria_rate
+			product_criteria_id: rating.id,
+			value: rating.rate_avg
 		};
 		$http.post(kgConfig.api+'catalog/'+$scope.productId+"/rate", input
 		).success(function(response) {
@@ -208,24 +209,26 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 
 	//feedback
 	$scope.sendFb = function(feedback) {
+		$scope.isSendFeedback = true;
 		$http.post(kgConfig.api+'catalog/'+$scope.productId+'/feedback',
 			feedback
 		).success(function(response) {
 			UIkit.notify(response.message, response.status);
 			if (response.status == 'success') {
-				if ($scope.feedback.feedback_type == 'P') {
+				if ($scope.feedback.type == 'P') {
 					$scope.catalog.feedback_plus.push(response.data);
-					$scope.catalog.numPlus += 1;
-				} else if ($scope.feedback.feedback_type == 'N') {
+					$scope.catalog.plus_count += 1;
+				} else if ($scope.feedback.type == 'M') {
 					$scope.catalog.feedback_minus.push(response.data);
-					$scope.catalog.numMinus += 1;
+					$scope.catalog.minus_count += 1;
 				}
-				$scope.feedback.feedback_type = '';
+				$scope.feedback.type = '';
 			}
-			$scope.feedback.feedback_comment = '';
+			$scope.feedback.comment = '';
+			$scope.isSendFeedback = false;
 		})
+		//console.log(feedback);
 	};
-
 	$scope.respondFb = function(index, feedback_id, type) {
 		$http.post(kgConfig.api+'feedback/'+feedback_id+'/respond/'+type)
 			.success(function(response){

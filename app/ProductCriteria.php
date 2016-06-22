@@ -24,8 +24,8 @@ class ProductCriteria extends Model
 		return $this->belongsTo('App\Criteria');
 	}
 
-    public function criteriaRate() {
-        return $this->hasMany('App\CriteriaRate');
+    public function ProductCriteriaRate() {
+        return $this->hasMany('App\ProductCriteriaRate','product_criteria_id','id');
     }
 
     /*public function avgCriteria() {

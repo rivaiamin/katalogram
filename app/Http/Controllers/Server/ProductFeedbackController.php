@@ -6,15 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Product;
 use App\FeedbackRespond;
-use App\Feedback;
-use App\MemberCollect;
+use App\ProductFeedback;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Carbon\Carbon;
 
-class FeedbackController extends Controller
-{
+class ProductFeedbackController extends Controller {
     public function __construct()
     {
         // Apply the jwt.auth middleware to all methods in this controller
@@ -23,28 +21,28 @@ class FeedbackController extends Controller
         $this->middleware('jwt.auth');
     }
 
-    public function giveFeedback(Request $request, $productId)
+    public function send(Request $request, $productId)
     {
-
-        $input = $request->all();
+        $input = $request->only('type','comment');
+		$input['time'] = time();
+		$input['product_id'] = $productId;
         $input['user_id'] = Auth::user()->id;
-
-        // dd($input);
-        $product = Product::where('id', $productId)->first();
-
-        $create = $product->feedback()->create($input);
-        // $create = Preview::create($input);
+        $create = ProductFeedback::create($input);
 
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "terima kasih telah memberikan feedback";
+
+			$product = Product::where('id',$productId);
+			if ($input['type'] == 'P') $product->increment('plus_count');
+			elseif ($input['type'] == 'M') $product->increment('minus_count');
         } else {
             $data['status'] = "error";
             $data['message'] = "maaf feedback gagal dikirim";
         }
         $data['data'] = $input;
-        
-        return json_encode($data);
+
+        return response()->json($data, 200);
     }
 
     public function respondFeedback($feedbackId, $respondType)
@@ -101,7 +99,7 @@ class FeedbackController extends Controller
                 'message' => "Feedback gagal dijadikan sebagai endorse",
             ];
         }
-        
+
         return json_encode($params);
     }
 }
