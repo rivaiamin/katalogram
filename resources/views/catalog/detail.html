@@ -12,10 +12,18 @@
 </div>
 <div class="ui compact five item menu kg-font-base uk-hidden-small uk-margin-remove">
 	<a ng-if="!catalog.is_collect" class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
-		<i class="empty heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+		<i class="empty heart link icon"></i> Favorit
+		<span class="ui teal label">
+			<i class="notched circle loading icon" ng-if="isCollecting"></i>
+			<b ng-if="!isCollecting"> {{ catalog.collect_count }}</b>
+		</span>
 	</a>
 	<a ng-if="catalog.is_collect" class="item" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
-		<i class="full red heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+		<i class="full red heart link icon"></i> Favorit
+		<span class="ui teal label">
+			<i class="notched circle loading icon" ng-if="isCollecting"></i>
+			<b ng-if="!isCollecting"> {{ catalog.collect_count }}</b>
+		</span>
 	</a>
 	<a class="item" data-content="Total score seluruh kategori" kg-popup>
 		<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ catalog.rating_avg }}</span>
@@ -49,11 +57,11 @@
 		</div>
 	</div>
 	<div class="ui labeled three item menu kg-font-base uk-visible-small uk-margin-remove">
-		<a ng-if="!catalog.is_collect" class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
+		<a ng-if="!catalog.is_collect" class="item" ng-class="{'disabled loading':isCollecting}" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
 			<i class="empty heart link large icon"></i>
 			<span class="ui teal label">{{ catalog.collect_count }}</span>
 		</a>
-		<a ng-if="catalog.is_collect" class="item" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
+		<a ng-if="catalog.is_collect" class="item"  ng-class="{'disabled loading':isCollecting}" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
 			<i class="full red heart link large icon"></i>
 			<span class="ui teal label">{{ catalog.collect_count }}</span>
 		</a>

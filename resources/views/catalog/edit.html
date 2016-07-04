@@ -89,10 +89,11 @@
 									ngf-resize="{width: 512, height: 512, centerCrop: true}"
 									ngf-resize-if="$width > 1600 || $height > 1200"
 									name="logo" ng-model="filelogo" ngf-pattern="'image/*'"
-									ngf-accept="'image/*'" class="ui blue inverted button" ng-class="{'disabled loading':onProgress1}"><i class="pencil icon"></i> Ganti</a>
+									ngf-accept="'image/*'" class="ui blue inverted button" ng-disabled="onProgress1"><i class="pencil icon"></i> Ganti</a>
 							  </div>
 							</div>
 						  </div>
+						  <div ng-if="onProgress1" class="ui active loader"></div>
 						  <img ng-if="product.logo == null" ng-src="public/img/placeholder.jpg" />
 						  <img ng-if="product.logo != null" ng-src="{{ files }}product/logo/{{product.logo}}" />
 						</div>

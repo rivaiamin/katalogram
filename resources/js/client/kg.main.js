@@ -9,6 +9,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
 	$scope.isSendFeedback = false;
+	$scope.isCollecting = false;
 	//$scope.bgNav = '';
 
 	$scope.indexSearch = function(array, id) {
@@ -118,13 +119,13 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	//catalog function
 	$scope.createCatalog = function() {
 		$rootScope.modalTemplate1 = "catalog.create.html";
-		$scope.modal.show();
+		$scope.modal1.show();
 	};
 	$scope.saveCatalog = function(create) {
 		$http.post(kgConfig.api+"catalog", create
 		).success(function(response){
 			UIkit.notify(response.message, response.status);
-			$scope.modal.hide();
+			$scope.modal1.hide();
 			$state.go('catalogEdit', { productId: response.product_id });
 		});
 	};
@@ -187,20 +188,28 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$scope.formCreate.category_id = $scope.categories[ind].category_id;
 	}*/
 	$scope.addCollect = function() {
-		$http.post(kgConfig.api+'collect/'+$scope.productId)
+		if ($scope.isCollecting == false) {
+			$scope.isCollecting = true;
+			$http.post(kgConfig.api+'collect/'+$scope.productId)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
 				if (response.status == 'success') $scope.catalog.collect_count++;
 				$scope.catalog.is_collect = true;
+				$scope.isCollecting = false;
 			})
+		}
 	};
 	$scope.removeCollect = function() {
-		$http.delete(kgConfig.api+'collect/'+$scope.productId)
+		if ($scope.isCollecting == false) {
+			$scope.isCollecting = true;
+			$http.delete(kgConfig.api+'collect/'+$scope.productId)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
 				if (response.status == 'success') $scope.catalog.collect_count--;
 				$scope.catalog.is_collect = false;
+				$scope.isCollecting = false;
 			})
+		}
 	};
 	//rating
 	$scope.giveRate = function(rating) {

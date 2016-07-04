@@ -16,7 +16,6 @@
 	<div class="uk-grid uk-grid-small">
 		<div class="uk-width-large-3-4 uk-width-small-1-1" infinite-scroll='catalogList()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy'>
 			<div ui-view></div>
-
 			<div id="catalogList" class="ui four doubling link stackable cards" data-uk-grid>
 				<!-- list start -->
 				<div class="card uk-text-center" ng-repeat="list in catalogs" ui-sref="catalog.view({productId: list.id})" data-ui-sref-opts="{notify: false}">
@@ -81,6 +80,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="ui centered inline loader" ng-class="{'active':scrollBusy}"></div>
 
 		</div>
 		<div class="uk-width-1-4 uk-hidden-small">

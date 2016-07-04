@@ -109,6 +109,7 @@ var paths = {
         'bower_components/semantic/dist/components/icon.min.css',
         'bower_components/semantic/dist/components/input.min.css',
         'bower_components/semantic/dist/components/label.min.css',
+        'bower_components/semantic/dist/components/loader.min.css',
         'bower_components/semantic/dist/components/dimmer.min.css',
         'bower_components/semantic/dist/components/menu.min.css',
         'bower_components/semantic/dist/components/message.min.css',

@@ -17,7 +17,6 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
 	});*/
 
 	$scope.catalogList = function() {
-		//console.log($scope.filter);
 		$scope.scrollBusy = true;
 		$http.get(kgConfig.api+'catalog/'+$scope.after+'/'+$scope.limit, {
 			params: $scope.filter
@@ -28,7 +27,7 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
             //$scope.catalogs.push(response.catalogs[0]);
 			if (response.catalogs.length > 0) {
 				$scope.after = response.catalogs[response.catalogs.length - 1].id;
-				setTimeout($scope.scrollBusy = false, 10000);
+				$scope.scrollBusy = false;
 			}
 			//$('.ui.sticky').sticky('refresh');
 			//console.log($scope.catalogs);

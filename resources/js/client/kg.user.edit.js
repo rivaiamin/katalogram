@@ -1,6 +1,11 @@
 var userEditCtrl =  ['$stateParams','$scope', '$rootScope', '$state', '$http', 'kgConfig', 'Upload',
   function($stateParams, $scope, $rootScope, $state, $http, kgConfig, Upload) {
 
+	$scope.isSaving = false;
+	$scope.isAddLink = false;
+	$scope.progress1 = false;
+	$scope.progress2 = false;
+
 	if ($scope.auth == undefined) $state.go('profile');
 	if ($scope.auth.name != $stateParams.username) $state.go('profile');
 
@@ -21,8 +26,10 @@ var userEditCtrl =  ['$stateParams','$scope', '$rootScope', '$state', '$http', '
 
 	$scope.saveProfile = function(profile) {
 		//profile.born = Date.parse(profile.born)/1000;
+		$scope.isSaving = true;
 		$http.put(kgConfig.api+$rootScope.auth.name+'/profile', profile).success(function(response) {
 			UIkit.notify(response.message, response.status);
+			$scope.isSaving = false;
 		});
 	}
 
@@ -70,7 +77,9 @@ var userEditCtrl =  ['$stateParams','$scope', '$rootScope', '$state', '$http', '
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.progress1 = progressPercentage;
             });
-	    }
+	    } else {
+			UIkit.notify("Ukuran atau format file tidak sesuai", "error");
+		}
     };
 	$scope.uploadCover = function(isValid, file) {
         if (isValid) {
@@ -95,10 +104,12 @@ var userEditCtrl =  ['$stateParams','$scope', '$rootScope', '$state', '$http', '
 		}
     };
 	$scope.addLink = function(link) {
+		$scope.isAddLink = true;
 		$http.post(kgConfig.api+$rootScope.auth.name+'/link', link)
 		.success(function(response) {
 			UIkit.notify(response.message, response.status);
 			$scope.edit.user_link.push(response.link);
+			$scope.isAddLink = false;
 		})
 	}
 	$scope.removeLink = function(id) {
