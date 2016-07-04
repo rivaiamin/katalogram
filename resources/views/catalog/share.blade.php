@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="fb:app_id" content="1496399374007633">
+		<meta property="fb:app_id" content="1496399374007633">
 		<meta property="og:title" content="{{ $product->name }}" />
 		<meta property="og:description" content="{{ $product->desc }}" />
 		<meta property="og:image" content="{{ $files }}/product/logo/{{ $product->logo }}" />
