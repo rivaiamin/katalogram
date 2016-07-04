@@ -1,18 +1,30 @@
-var kgApp = angular.module('kgApp', ['ui.router', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll' ]);
 var host = window.location.hostname;
+if (host == 'katalogram.dev') {
+	fbid = '1506049499709287';
+	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
+} else if (host == 'katalogram.com') {
+	fbid = '1496399374007633';
+	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
+}
+
+var kgApp = angular.module('kgApp', ['ui.router', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll' ]);
 kgApp
 // route angular
 .constant('kgConfig', {
 	'site': '//'+host+'/',
 	'api': '//api.'+host+'/',
 	'files': '//files.'+host+'/',
-	'embedly': '8081dea79e164014bcd7cd7e1ab2363a'
+	'embedly': '8081dea79e164014bcd7cd7e1ab2363a',
+	'fb': fbid,
+	'google': googleid
 })
 .config(config)
 
 //main controller
 .controller('kgCtrl', kgCtrl)
 .controller('catalogCtrl', catalogCtrl)
+.controller('catalogCategoryCtrl', catalogCategoryCtrl)
+//.controller('catalogDetailCtrl', catalogDetailCtrl)
 .controller('catalogEditCtrl',  catalogEditCtrl)
 .controller('userCtrl', userCtrl)
 .controller('userEditCtrl', userEditCtrl)

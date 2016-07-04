@@ -35,19 +35,25 @@ class UserController extends Controller
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function profile(User $user, $username) {
+    public function profile(User $user, AuthCtrl $auth, $username) {
 
         $data['user'] = User::with(['userProfile','userProduct','userProductDraft','userCollect.product','userLink.link','userContact.contact','userConnect.user'])
 			->where('name',$username)->first();
-        //$user_id = $data['user']->id;
-        //$data['catalogs'] = User::find($user_id)->product();
-        /*if ($auth->isOwner($username)) {
+		if ($user = $auth->getAuthUser(false)) {
+			$data['user']['is_contact'] = UserContact::where([
+				'user_id' 	=> $user->id,
+				'contact_id'=> $data['user']['id'] ])
+			->count();
+		}
+        /*$user_id = $data['user']->id;
+        $data['catalogs'] = User::find($user_id)->product();
+        if ($auth->isOwner($username)) {
             $data['draft'] = Product::with(['user','category'])
                                 ->where('is_release', '0')
                                 ->where('user_id', $user_id)
                                 ->get();;
-        }
-*/
+        }*/
+
         //$data['collects'] = $user->userCollect()->product();
         //$data['contacts'] = $user->userContact()->get();
         //$data['connects'] = $user->userContact()
@@ -57,7 +63,6 @@ class UserController extends Controller
         // $user['catalog'] = Product::with('criteriaCount')->where('user_id', $user->id)->get();
         // $user['contact'] = UserContact::where('user_id', $user->id)->get();
         // $user['collect'] = User::memberContact()->get();
-		//dd($data);
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 

@@ -14,14 +14,14 @@ use Intervention\Image\ImageManager;
 use App\Product;
 use App\User;
 use App\Category;
-use App\Preview;
+use App\Http\Controllers\Server\UserCollectController;
 //use App\Criteria;
 //use App\Tag;
 use App\ProductTag;
 use App\ProductCriteria;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
-//use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
+use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class ProductController extends Controller {
 
@@ -67,18 +67,20 @@ class ProductController extends Controller {
         else return false;
     }
 
-    public function detail($id){
+    public function detail(AuthCtrl $auth, $id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])->find($id);
-        return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+
+		if ($user = $auth->getAuthUser(false)) $data['product']['is_collect'] = User::find($user->id)->isCollect($id);
+
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
 	public function view($id) {
-        $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])
-                                ->where('id', $id)
-                                ->get();
-
-        return view('catalog/view', $data);
-    }
+        $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
+        $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('catalog/view', $data);
+    	//dd($data);
+	}
 
     public function search(Request $request, $tag){
 
@@ -144,10 +146,20 @@ class ProductController extends Controller {
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function delete($id) {
-        if ($this->isOwner($id)) {
-			$catalog = Product::where('id', $id)
-					   ->where('user_id', $userId);
+	public function setRateAvg($id) {
+		$product = Product::where('id', $id);
+		$criteria = $product->first()->productCriteria()->where('rate_avg','>','0');
+		$row = $criteria->count();
+		$total = $criteria->sum('rate_avg');
+		$input['rating_avg'] = $total / $row;
+		if ($product->update($input)) return true;
+		else return false;
+	}
+
+    public function delete($productId) {
+        if ($this->isOwner($productId)) {
+			$catalog = Product::where('id', $productId)
+					   ->where('user_id', Auth::user()->id);
 
 			if ($catalog->delete()) {
 				$data['status'] = "success";
@@ -226,8 +238,8 @@ class ProductController extends Controller {
             'binary'   => $binary,
             'format'   => 'jpg',
             'quality'   => '100',
-            'width'    => '300',
-            'debug-javascript' => true
+            'width'    => '600'
+            //'debug-javascript' => true
             // Enable built in Xvfb support in the command
             /*'commandOptions' => array(
                 'enableXvfb' => true,
@@ -240,12 +252,12 @@ class ProductController extends Controller {
             )*/
         ));
         //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$productId");
+        $image->setPage("http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view');
         //$image->saveAs('/path/to/page.png');
 
         // ... or send to client for inline display
-        //if (! $image->send()) return $image->getError();
+        if (! $image->send()) return $image->getError();
         // ... or send to client as file download
-        if (! $image->send("catalog_$productId.jpg")) return $image->getError();
+        //if (! $image->send("catalog_$productId.jpg")) return $image->getError();
     }
 }

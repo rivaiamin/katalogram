@@ -1,10 +1,10 @@
 @font-face {
     font-family: "katalogram-icon";
-    src: url("../fonts/katalogram-icon.eot"); /* IE9 */
-    src: url("../fonts/katalogram-icon.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("../fonts/katalogram-icon.woff") format("woff"), /* chrome, firefox */
-    url("../fonts/katalogram-icon.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-    url("../fonts/katalogram-icon.svg#katalogram-icon") format("svg"); /* iOS 4.1- */
+    src: url("/public/fonts/katalogram-icon.eot"); /* IE9 */
+    src: url("/public/fonts/katalogram-icon.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("/public/fonts/katalogram-icon.woff") format("woff"), /* chrome, firefox */
+    url("/public/fonts/katalogram-icon.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("/public/fonts/katalogram-icon.svg#katalogram-icon") format("svg"); /* iOS 4.1- */
     font-style: normal;
     font-weight: normal;
 }

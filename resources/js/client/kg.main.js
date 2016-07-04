@@ -3,10 +3,12 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	//init
 	$rootScope.api = kgConfig.api;
 	$rootScope.files = kgConfig.files;
-	$scope.modalTemplate = "";
-	$scope.modal = UIkit.modal("#kg-modal");
+	$rootScope.modalTemplate1 = "";
+	$scope.modalTemplate2 = "";
+	$rootScope.modal1 = UIkit.modal("#kg-modal");
 	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
+	$scope.isSendFeedback = false;
 	//$scope.bgNav = '';
 
 	$scope.indexSearch = function(array, id) {
@@ -22,6 +24,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 				hide: 800
 			} });
 	}
+
 	$http.get(kgConfig.api+'category').success(function(response) {
 		$scope.categories = response.categories;
 		$scope.popup();
@@ -38,7 +41,6 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		  	return false;
 		  });
 	}
-
 	$scope.getAuthUser = function() {
 		$http.get(kgConfig.api+"auth/user")
 		.success(function(response){
@@ -46,7 +48,6 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 			$scope.popup();
 		})
 	};
-
 	// member & authentication function
 	$scope.authenticate = function(provider) {
 		$auth.authenticate(provider)
@@ -69,7 +70,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	};
 
 	$scope.loginPage = function() {
-		$scope.modalTemplate = "user.login.html";
+		$scope.modalTemplate2 = "user.login.html";
     	$scope.modal2.show();
     };
     $scope.loginMember = function(user) {
@@ -85,8 +86,8 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		  });
     };
     $scope.registerPage = function() {
-		$scope.modalTemplate = "user.register.html";
-    	$scope.modal.show();
+		$scope.modalTemplate2 = "user.register.html";
+    	//$scope.modal.show();
     };
     $scope.registerMember = function(user) {
 		$auth.signup(user)
@@ -114,20 +115,32 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
     	//console.log("logout");
     };
 
-    // catalog function
-    $scope.catalogDetail = function(productId) {
+	//catalog function
+	$scope.createCatalog = function() {
+		$rootScope.modalTemplate1 = "catalog.create.html";
+		$scope.modal.show();
+	};
+	$scope.saveCatalog = function(create) {
+		$http.post(kgConfig.api+"catalog", create
+		).success(function(response){
+			UIkit.notify(response.message, response.status);
+			$scope.modal.hide();
+			$state.go('catalogEdit', { productId: response.product_id });
+		});
+	};
+	// catalog function
+	$rootScope.catalogDetail = function(productId) {
         $scope.loader = true;
         $http.get(
 			//url: "json/detail_catalog.json",
 			kgConfig.api+"catalog/"+productId
 		).success(function (response) {
-            var detail = response;
             catalog = response.product;
             catalog.desc = $sce.trustAsHtml(catalog.desc);
             catalog.data = $sce.trustAsHtml(catalog.data);
 
-			$scope.modalTemplate = "catalog.detail.html";
-			$scope.modal.show();
+			$rootScope.modalTemplate1 = "catalog.detail.html";
+			$rootScope.modal1.show();
             //return num_collect
             /*var num_collect = Object.keys(response.product[0].num_collect).length;
             if (num_collect ==0) catalog.num_collect = 0;
@@ -170,62 +183,78 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
     	$(".embed-preview").html(embed);
     	embedly('card', '.preview-card');
     };
-    $scope.createCatalog = function() {
-		$scope.modalTemplate = "catalog.create.html";
-		$scope.modal.show();
-	};
 	/*$scope.selectCategory = function(ind) {
 		$scope.formCreate.category_id = $scope.categories[ind].category_id;
 	}*/
-	$scope.saveCatalog = function(create) {
-		$http.post(kgConfig.api+"catalog", create
-		).success(function(response){
-			UIkit.notify(response.message, response.status);
-			$scope.modal.hide();
-			$state.go('catalogEdit', { productId: response.product_id });
-		});
-	};
-
 	$scope.addCollect = function() {
-		$http.post(kgConfig.api+'catalog/'+$scope.productId+'/collect')
+		$http.post(kgConfig.api+'collect/'+$scope.productId)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
-				if (response.status == 'success') $scope.productDetail.num_collect++;
+				if (response.status == 'success') $scope.catalog.collect_count++;
+				$scope.catalog.is_collect = true;
 			})
 	};
-
+	$scope.removeCollect = function() {
+		$http.delete(kgConfig.api+'collect/'+$scope.productId)
+			.success(function(response) {
+				UIkit.notify(response.message, response.status);
+				if (response.status == 'success') $scope.catalog.collect_count--;
+				$scope.catalog.is_collect = false;
+			})
+	};
 	//rating
 	$scope.giveRate = function(rating) {
 		var input = {
-			criteria_id: rating.id,
-			rate_value: rating.avg_criteria[0].criteria_rate
+			product_criteria_id: rating.id,
+			value: rating.rate_avg
 		};
 		$http.post(kgConfig.api+'catalog/'+$scope.productId+"/rate", input
 		).success(function(response) {
 			UIkit.notify(response.message, response.status);
 		});
 	};
-
 	//feedback
 	$scope.sendFb = function(feedback) {
+		$scope.isSendFeedback = true;
 		$http.post(kgConfig.api+'catalog/'+$scope.productId+'/feedback',
 			feedback
 		).success(function(response) {
 			UIkit.notify(response.message, response.status);
 			if (response.status == 'success') {
-				if ($scope.feedback.feedback_type == 'P') {
+				if ($scope.feedback.type == 'P') {
 					$scope.catalog.feedback_plus.push(response.data);
-					$scope.catalog.numPlus += 1;
-				} else if ($scope.feedback.feedback_type == 'N') {
+					$scope.catalog.plus_count += 1;
+				} else if ($scope.feedback.type == 'M') {
 					$scope.catalog.feedback_minus.push(response.data);
-					$scope.catalog.numMinus += 1;
+					$scope.catalog.minus_count += 1;
 				}
-				$scope.feedback.feedback_type = '';
+				$scope.feedback.type = '';
 			}
-			$scope.feedback.feedback_comment = '';
+			$scope.feedback.comment = '';
+			$scope.isSendFeedback = false;
 		})
 	};
+	$scope.rmFb = function(id, type) {
+		if (confirm('hapus tanggapan ini?')) {
+			if (type == 'P') item = $scope.catalog.feedback_plus;
+			else if (type == 'M') item = $scope.catalog.feedback_minus;
+			var index = $scope.indexSearch(item, id);
 
+			$http.delete(kgConfig.api+'catalog/'+$scope.productId+'/feedback/'+id)
+			.success(function(response) {
+				UIkit.notify(response.message, response.status);
+				if (response.status == 'success') {
+					if (type== 'P') {
+						$scope.catalog.feedback_plus.splice(index, 1);
+						$scope.catalog.plus_count -= 1;
+					} else if (type == 'M') {
+						$scope.catalog.feedback_minus.splice(index, 1);
+						$scope.catalog.minus_count -= 1;
+					}
+				}
+			})
+		}
+	}
 	$scope.respondFb = function(index, feedback_id, type) {
 		$http.post(kgConfig.api+'feedback/'+feedback_id+'/respond/'+type)
 			.success(function(response){
@@ -243,11 +272,16 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		else $scope.navbarSubShow = false;
 		$scope.navbarSub = content;
 	};
-
 	$scope.closeModal = function() {
 		$scope.modal.hide();
 	}
-    $('#kg-modal').on({
+	$('#kg-modal').on({
+	    'hide.uk.modal': function(){
+	        $rootScope.modalTemplate1 = "";
+			$state.go('^');
+	    }
+	});
+    $('#kg-modal-lightbox').on({
 	    'show.uk.modal': function(){
 	        $scope.blur = true;
 	    },
@@ -255,10 +289,9 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	        $scope.$apply(function() {
 	        	$scope.blur = false;
 	        });
-	        $scope.modalTemplate = "";
+	        $scope.modalTemplate2 = "";
 	    }
 	});
-
     if (! $scope.isLogin()) {
     	if (! $scope.refreshToken()) $scope.loginPage();
     } else {

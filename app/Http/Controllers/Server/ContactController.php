@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Server;
 use Illuminate\Http\Request;
 
 use App\User;
-use App\MemberContact;
+use App\UserContact;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -26,44 +26,38 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //TODO: fixing addContact
-    public function addContact($memberId)
-    {
+    public function addContact($contact_id) {
 
         $input['user_id'] = Auth::user()->id;
         
-        $input['member_id'] = $memberId;
-        // dd(Auth::user()->name);
+        $input['contact_id'] = $contact_id;
 
-        /*$contact = MemberContact::create($input);
-
-        if($contact){
+        $contact = UserContact::create($input);
+        if($contact) {
             $params = [
                 'status' => "success",
-                'message' => "telah dihubungkan",
+                'message' => "berhasil ditambahkan",
             ];
-        }*/
+        }
 
-        return json_encode($input);
+		return response()->json($params, 200);
 
     }
 
-    //TODO: fixing removeContact
-    public function removeContact($username)
-    {
-        $userName = Auth::user()->name;
-        $memberId = User::where('name', $username)->first()->member;
-        // dd($input);
-        $data = $memberId->id;
+    public function removeContact($contact_id) {
+        $user_id = Auth::user()->id;
 
-        $connect = User::where('name', $userName)->first()->memberContact()->where('member_id', $data)->delete();
-        $params = [
-            'status' => "success",
-            'message' => "kriteria telah dihapus",
-        ];
+        $delete = UserContact::where([
+			'user_id'	=> $user_id,
+			'contact_id'=> $contact_id])
+			->delete();
+		if ($delete) {
+			$params = [
+				'status' => "success",
+				'message' => "Kontak dihapus",
+			];
+		}
         
-        return json_encode($params);
+		return response()->json($params, 200);
     }
-
-   
 }

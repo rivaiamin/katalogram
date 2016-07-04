@@ -75,6 +75,12 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\UserCollect');
     }
 
+	public function isCollect($product_id) {
+		$num = $this->userCollect()->where('product_id', $product_id)->count();
+		if ($num>0) return true;
+		else return false;
+	}
+
 	public function userLink() {
         return $this->hasMany('App\UserLink');
     }

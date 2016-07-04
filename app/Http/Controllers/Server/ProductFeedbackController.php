@@ -6,49 +6,44 @@ use Illuminate\Http\Request;
 
 use App\Product;
 use App\FeedbackRespond;
-use App\Feedback;
-use App\MemberCollect;
+use App\ProductFeedback;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Carbon\Carbon;
 
-class FeedbackController extends Controller
-{
-    public function __construct()
-    {
+class ProductFeedbackController extends Controller {
+    public function __construct() {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth');
     }
 
-    public function giveFeedback(Request $request, $productId)
-    {
-
-        $input = $request->all();
+    public function send(Request $request, $productId) {
+        $input = $request->only('type','comment');
+		$input['time'] = time();
+		$input['product_id'] = $productId;
         $input['user_id'] = Auth::user()->id;
-
-        // dd($input);
-        $product = Product::where('id', $productId)->first();
-
-        $create = $product->feedback()->create($input);
-        // $create = Preview::create($input);
+        $create = ProductFeedback::create($input);
 
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "terima kasih telah memberikan feedback";
+
+			$product = Product::where('id',$productId);
+			if ($input['type'] == 'P') $product->increment('plus_count');
+			elseif ($input['type'] == 'M') $product->increment('minus_count');
         } else {
             $data['status'] = "error";
             $data['message'] = "maaf feedback gagal dikirim";
         }
         $data['data'] = $input;
-        
-        return json_encode($data);
+
+        return response()->json($data, 200);
     }
 
-    public function respondFeedback($feedbackId, $respondType)
-    {
+    public function respondFeedback($feedbackId, $respondType) {
         $input = [
             'user_id'       => Auth::user()->id,
             'feedback_id'   => $feedbackId,
@@ -76,8 +71,7 @@ class FeedbackController extends Controller
         return json_encode($params);
     }
 
-    public function setEndorse($feedbackId)
-    {
+    public function setEndorse($feedbackId) {
         $feedback = Feedback::where('id', $feedbackId);
 
         $input = [
@@ -101,7 +95,25 @@ class FeedbackController extends Controller
                 'message' => "Feedback gagal dijadikan sebagai endorse",
             ];
         }
-        
+
         return json_encode($params);
     }
+
+	public function remove($productId, $id) {
+		$feedback = ProductFeedback::find($id)->where('user_id', Auth::user()->id)->first();
+
+		$product = Product::where('id',$productId);
+		if ($feedback->type == 'P') $product->decrement('plus_count');
+		elseif ($feedback->type == 'M') $product->decrement('minus_count');
+
+		if ($feedback->delete()) {
+			$data['status'] = "success";
+            $data['message'] = "tanggapan telah dihapus";
+        } else {
+            $data['status'] = "error";
+            $data['message'] = "tanggapan gagal dihapus";
+        }
+
+		return response()->json($data, 200);
+	}
 }

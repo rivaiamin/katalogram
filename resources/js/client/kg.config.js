@@ -1,23 +1,28 @@
-var config = ['$stateProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', 'kgConfig',
-  function($stateProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, kgConfig) {
-	$stateProvider.state('home', {
+var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', 'kgConfig',
+  function($stateProvider, $sceProvider, $rootScopeProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, kgConfig) {
+
+	$stateProvider.state('catalog', {
 		url:'/',
 		templateUrl: 'catalog.list.html',
 		controller: 'catalogCtrl'
-	}).state('catalog', {
-		url:'/catalog',
-		templateUrl: 'catalog.list.html',
-		controller: 'catalogCtrl'
-	}).state('catalogCategory', {
-		url:'/category/:categoryId',
-		templateUrl: 'catalog.list.html',
-		controller: 'catalogCtrl'
-	}).state('catalogDetail', {
-		url:'/catalog/:productId',
-		templateUrl: 'catalog.detail.html',
-		controller: 'catalogCtrl'
+	}).state('catalog.category', {
+		url:'category/:slug/:id',
+		templateUrl: 'catalog.list.category.html',
+		controller: 'catalogCategoryCtrl'
+	}).state('catalog.view', {
+		url:'catalog/:productId/view',
+		onEnter: [ '$stateParams', '$rootScope', function($stateParams, $rootScope) {
+			$rootScope.catalogDetail($stateParams.productId);
+		}],
+		onExit: [ '$stateParams', '$rootScope', function($stateParams, $rootScope) {
+			if ($rootScope.modalTemplate1 != "") $rootScope.modal1.hide();
+			//console.log($stateParams.productId);
+		}]
+	}).state('catalog.detail', {
+		url:'catalog/:productId',
+		templateUrl: 'catalog.detail.html'
 	}).state('catalogEdit', {
-		url:'/catalog/:productId/edit',
+		url:'catalog/:productId/edit',
 		templateUrl: 'catalog.edit.html',
 		controller: 'catalogEditCtrl'
 	}).state('profile', {
@@ -30,8 +35,9 @@ var config = ['$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPro
 		controller: 'userEditCtrl'
 	});
 
-	$locationProvider.html5Mode(true);
 	$urlRouterProvider.otherwise('/catalog');
+
+	$locationProvider.html5Mode(true);
 	$httpProvider.defaults.useXDomain = true;
 
 	$authProvider.loginUrl = kgConfig.api+'auth/login';
@@ -41,12 +47,12 @@ var config = ['$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPro
 	$authProvider.facebook({
 	  //for development
       //clientId: '1496399374007633', // for live
-      clientId: '1496399374007633',
+      clientId: kgConfig.fb,
       url: kgConfig.api+'auth/facebook'
     });
 
     $authProvider.google({
-      clientId:'13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com',
+      clientId: kgConfig.google,
       url: kgConfig.api+'auth/google'
     });
 

@@ -21,16 +21,18 @@ var userCtrl = ['$state','$stateParams', '$scope', '$rootScope','$http', 'kgConf
 		//$state.go('home');
 	});
 
-	$scope.addConnect = function(userId) {
-		$http.post(kgConfig.api+'connect/'+userId)
+	$scope.addContact = function(userId) {
+		$http.post(kgConfig.api+'contact/'+userId)
 		.success(function(response) {
-			UIkit.notify(response.data.message, response.status);
+			UIkit.notify(response.message, response.status);
+			if (response.status =='success') $scope.user.is_contact = 1;
 		})
 	}
-	$scope.removeConnect = function(userId) {
-		$http.delete(kgConfig.api+'connect/'+userId)
+	$scope.removeContact = function(userId) {
+		$http.delete(kgConfig.api+'contact/'+userId)
 		.success(function(response) {
-			UIkit.notify(response.data.message, response.status);
+			UIkit.notify(response.message, response.status);
+			if (response.status =='success') $scope.user.is_contact = 0;
 		})
 	}
 

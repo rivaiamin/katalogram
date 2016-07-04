@@ -16,7 +16,7 @@ class ProductFeedback extends Model
     	'product_id',
         'time',
     	'comment',
-        'endorse',
+        'status',
     	'type'
     ];
 

@@ -18,7 +18,7 @@ class CreateProductFeedbacksTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->integer('time')->unsigned();
             $table->string('comment', 128);
-            $table->boolean('endorse');
+            $table->tinyInteger('status')->default(1);
             $table->enum('type', ['P', 'M']);
             $table->softDeletes();
             $table->timestamps();

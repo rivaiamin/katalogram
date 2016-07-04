@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Auth;
 
 class Product extends Model {
 	use SoftDeletes;
@@ -45,7 +46,8 @@ class Product extends Model {
     public function productFeedback() {
         return $this->hasMany('App\ProductFeedback')
 			->select(DB::raw("product_feedbacks.*, users.name as username, users.picture as userpict"))
-			->join('users','product_feedbacks.user_id','=', 'users.id');
+			->join('users','product_feedbacks.user_id','=', 'users.id')
+			->where('status', 1);
     }
 
     public function feedbackPlus(){
@@ -91,7 +93,9 @@ class Product extends Model {
 
     }
 
-
+	/*public function isCollect() {
+		//DB::table('user_collects')->where(['user_id'=>Auth::user()->id, 'product_id'=>]);
+	}*/
 
     /*public function productRate() {
         return "select id, ifnull(avg(avg_crit),0) as rate from (SELECT b.id, ifnull(avg(a.rate_value), 0) as avg_crit

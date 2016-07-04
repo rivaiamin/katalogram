@@ -11,8 +11,11 @@
 	</div> -->
 </div>
 <div class="ui compact five item menu kg-font-base uk-hidden-small uk-margin-remove">
-	<a class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
+	<a ng-if="!catalog.is_collect" class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
 		<i class="empty heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+	</a>
+	<a ng-if="catalog.is_collect" class="item" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
+		<i class="full red heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
 	</a>
 	<a class="item" data-content="Total score seluruh kategori" kg-popup>
 		<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ catalog.rating_avg }}</span>
@@ -27,8 +30,11 @@
 </div>
 <div class="uk-container uk-container-center">
 	<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
+		<div class="uk-width-1-1 uk-visible-small uk-margin-large-top">
+			&nbsp;
+		</div>
 		<div class="uk-width-1-1 uk-margin-top">
-			<h3 class="ui horizontal divider header kg-heading">
+			<h3 class="ui horizontal divider header uk-width-1-1 kg-heading">
 			  {{ catalog.name }}
 			  <div class="sub header">{{catalog.quote}}</div>
 			</h3>
@@ -99,11 +105,11 @@
 		</div>
 		<div class="uk-width-1-1 uk-text-center uk-margin-bottom">
 			<!-- <h4 class="kg-heading uk-margin-remove"><i class="uk-icon-tags"></i> Kata Kunci</h4> -->
-			<span class="ui tag label teal uk-text-large uk-margin-small-right" ng-repeat="tag in catalog.product_tag">
+			<span class="ui tag label teal uk-text-large uk-margin-small-right uk-margin-small-top" ng-repeat="tag in catalog.product_tag">
 				 {{tag.tag.name}}
 			</span>
 		</div>
-		<div id="productFeedback" class="uk-width-1-1 uk-margin-bottom" ng-init="feedback.type = ''">
+		<div id="productFeedback" class="uk-width-1-1 uk-hidden-small uk-margin-bottom" ng-init="feedback.type = ''">
 			<div class="uk-grid-width-1-2 ui two item menu">
 			  <a class="item green" ng-class="{active: feedback.type == 'P' }" ng-click="feedback.type = 'P'">
 				<i class="thumbs up outline icon"></i>
@@ -111,13 +117,13 @@
 			  </a>
 			  <a class="item red" ng-class="{active: feedback.type == 'M' }"  ng-click="feedback.type = 'M'">
 				<i class="thumbs down outline icon"></i>
-				<div>Minus <span class="ui label">{{ catalog.plus_count }}</span></div>
+				<div>Minus <span class="ui label">{{ catalog.minus_count }}</span></div>
 			  </a>
 			</div>
 			<div class="ui fluid action input" ng-if="feedback.type != ''">
 			  <input class="uk-hidden" type="text" ng-model="feedback.type">
 			  <input type="text" placeholder="Isi umpan balik atau komentar disini" ng-model="feedback.comment" ng-enter="sendFb(feedback)">
-			  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
+			  <div class="ui teal icon button" ng-class="{'disabled loading':isSendFeedback}" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
 			</div>
 
 			<!-- <div class="uk-grid-width-1-2 uk-text-center ui two item menu">
@@ -129,11 +135,12 @@
 			  </a>
 			</div> -->
 		</div>
-		<div class="uk-width-1-2">
+		<div class="uk-width-1-2 uk-hidden-small">
 			<div class="ui comments">
 			  <div class="comment" ng-repeat="plus in catalog.feedback_plus">
 				<a class="avatar">
-				  <img class="ui circular image" ng-src="{{ files }}/user/picture/1.jpg">
+				  <img ng-if="plus.userpict!=''" class="ui circular image" ng-src="{{ files }}/user/picture/thumb/{{plus.userpict}}">
+				  <i ng-if="plus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ plus.username }}</a>
@@ -141,19 +148,21 @@
 					{{ plus.comment }}
 				  </div>
 				  <div class="actions">
-					<a ng-click="respondFb($index, plus.id, 1)"><i class="small thumbs up icon"></i></a> 10
-					<a ng-click="respondFb($index, plus.id, 2)"><i class="small thumbs down icon"></i></a> 4
+					<a ng-click="respondFb($index, plus.id, 1)"><i class="small thumbs up icon"></i></a>
+					<a ng-click="respondFb($index, plus.id, 2)"><i class="small thumbs down icon"></i></a>
+			  		<a ng-if="plus.user_id == auth.id" ng-click="rmFb(plus.id, 'P')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
 			</div>
 		</div>
 
-		<div class="uk-width-1-2 uk-text-right uk-margin-large-bottom">
+		<div class="uk-width-1-2 uk-hidden-small uk-text-right uk-margin-large-bottom">
 			<div class="ui comments right">
 			  <div class="comment" ng-repeat="minus in catalog.feedback_minus">
 				<a class="avatar">
-				  <img class="ui circular image" ng-src="{{ files }}user/picture/1.jpg">
+				  <img ng-if="minus.userpict!=''" class="ui circular image" ng-src="{{ files }}user/picture/thumb/{{minus.userpict}}">
+				  <i ng-if="minus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ minus.username }}</a>
@@ -163,6 +172,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, minus.minus.id, 1)"><i class="small thumbs up icon"></i></a>
 					<a ng-click="respondFb($index, minus.minus.id, 2)"><i class="small thumbs up icon"></i></a>
+					<a ng-if="minus.user_id == auth.id" ng-click="rmFb(minus.id, 'M')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -183,13 +193,14 @@
 		<div class="ui fluid action input" ng-if="feedback.type != ''">
 		  <input class="uk-hidden" type="text" ng-model="feedback.type">
 		  <input type="text" placeholder="Isi umpan balik atau komentar disini" ng-model="feedback.comment" ng-enter="sendFb(feedback)">
-		  <div class="ui teal icon button" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
+		  <div class="ui teal icon button" ng-class="{'disabled loading':isSendFeedback}" ng-click="sendFb(feedback)"><i class="send small icon"></i></div>
 		</div>
 		<div class="ui active bottom attached tab segment" data-tab="first">
 		  <div class="ui comments">
 			  <div class="comment" ng-repeat="plus in catalog.feedback_plus">
 				<a class="avatar">
-				  <img class="uk-border-circle" ng-src="{{ files }}picture/1.jpg">
+				  <img ng-if="plus.userpict!=''" class="uk-border-circle" ng-src="{{ files }}user/picture/thumb/{{plus.userpict}}">
+				  <i ng-if="plus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ plus.username }}</a>
@@ -199,6 +210,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
 					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
+					<a ng-if="plus.user_id == auth.id" ng-click="rmFb(plus.id, 'P')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -208,7 +220,8 @@
 		  <div class="ui comments right">
 			  <div class="comment" ng-repeat="minus in catalog.feedback_minus">
 				<a class="avatar">
-				  <img class="uk-border-circle" ng-src="{{ files }}user/picture/1.jpg">
+				  <img ng-if="minus.userpict!=''" class="uk-border-circle" ng-src="{{ files }}user/picture/thumb/{{minus.userpict}}">
+				  <i ng-if="minus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ minus.user_name }}</a>
@@ -218,6 +231,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
 					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
+					<a ng-if="minus.user_id == auth.id" ng-click="rmFb(minus.id, 'M')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
