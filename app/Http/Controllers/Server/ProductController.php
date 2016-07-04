@@ -27,7 +27,7 @@ class ProductController extends Controller {
 
     public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
-         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'catalog']]);
+         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'share', 'catalog']]);
      }
 
 	public function index(Product $product, $categoryId = null) {
