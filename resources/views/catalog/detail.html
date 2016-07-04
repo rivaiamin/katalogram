@@ -30,13 +30,17 @@
 </div>
 <div class="uk-container uk-container-center">
 	<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
-		<div class="uk-width-1-1 uk-visible-small uk-margin-large-top">
+		<div class="uk-width-1-1 uk-visible-small">
 			&nbsp;
 		</div>
 		<div class="uk-width-1-1 uk-margin-top">
-			<h3 class="ui horizontal divider header uk-width-1-1 kg-heading">
+			<h3 class="ui horizontal divider header uk-width-1-1 kg-heading uk-hidden-small">
 			  {{ catalog.name }}
 			  <div class="sub header">{{catalog.quote}}</div>
+			</h3>
+			<h3 class="ui blue header uk-visible-small">
+				{{ catalog.name }}
+				<q class="sub header uk-text-small">{{catalog.quote}}</q>
 			</h3>
 		</div>
 		<div class="uk-width-1-1 uk-margin-bottom kg-color-gray">
@@ -44,18 +48,22 @@
 			<label><a href="/{{catalog.user.name}}" ng-click="closeModal()">@{{ catalog.user.name }}</a></label>
 		</div>
 	</div>
-	<div class="ui labeled icon three item menu kg-font-base uk-visible-small uk-margin-remove">
-		<a class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
-			<div class="kg-heading">{{ catalog.collect_count }}</div>
-			<p><i class="empty heart link icon"></i> Favorit</p>
+	<div class="ui labeled three item menu kg-font-base uk-visible-small uk-margin-remove">
+		<a ng-if="!catalog.is_collect" class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
+			<i class="empty heart link large icon"></i>
+			<span class="ui teal label">{{ catalog.collect_count }}</span>
+		</a>
+		<a ng-if="catalog.is_collect" class="item" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
+			<i class="full red heart link large icon"></i>
+			<span class="ui teal label">{{ catalog.collect_count }}</span>
 		</a>
 		<a class="item" href="#productFeedback" ng-click="feedback.type = 'P'"  data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
-			<div class="kg-heading">{{ catalog.plus_count }}</div>
-			<p><i class="thumbs up outline link icon"></i> Plus</p>
+			<i class="thumbs up outline link large icon"></i>
+			<span class="ui teal label" for="">{{ catalog.plus_count }}</span>
 		</a>
 		<a class="item" href="#productFeedback" ng-click="feedback.type = 'M'"  data-content="Berikan tanggapan tentang kekurangan produk" kg-popup>
-			<div class="kg-heading">{{ catalog.minus_count }}</div>
-			<p><i class="thumbs down outline link icon"></i> Minus</p>
+			<i class="thumbs down outline link large icon"></i>
+			<span class="ui teal label" for="">{{ catalog.minus_count }}</span>
 		</a>
 	</div>
 	<div class="uk-grid uk-grid-small uk-grid-collapse">
