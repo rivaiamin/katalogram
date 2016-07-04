@@ -70,7 +70,7 @@ class ProductController extends Controller {
     public function detail(AuthCtrl $auth, $id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])->find($id);
 
-		if ($user = $auth->getAuthUser(false)) $data['isCollect'] = User::find($user->id)->isCollect($id);
+		if ($user = $auth->getAuthUser(false)) $data['product']['is_collect'] = User::find($user->id)->isCollect($id);
 
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
@@ -156,10 +156,10 @@ class ProductController extends Controller {
 		else return false;
 	}
 
-    public function delete($id) {
-        if ($this->isOwner($id)) {
-			$catalog = Product::where('id', $id)
-					   ->where('user_id', $userId);
+    public function delete($productId) {
+        if ($this->isOwner($productId)) {
+			$catalog = Product::where('id', $productId)
+					   ->where('user_id', Auth::user()->id);
 
 			if ($catalog->delete()) {
 				$data['status'] = "success";

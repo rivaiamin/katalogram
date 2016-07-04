@@ -11,8 +11,11 @@
 	</div> -->
 </div>
 <div class="ui compact five item menu kg-font-base uk-hidden-small uk-margin-remove">
-	<a class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
-		<i class="heart link icon" ng-class="{'full red':isCollect, 'empty':!isCollect}"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+	<a ng-if="!catalog.is_collect" class="item" ng-click="addCollect()" data-content="tambahkan ke koleksi favorit" kg-popup>
+		<i class="empty heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
+	</a>
+	<a ng-if="catalog.is_collect" class="item" ng-click="removeCollect()" data-content="hapus dari koleksi favorit" kg-popup>
+		<i class="full red heart link icon"></i> Favorit <span class="ui teal label">{{ catalog.collect_count }}</span>
 	</a>
 	<a class="item" data-content="Total score seluruh kategori" kg-popup>
 		<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ catalog.rating_avg }}</span>
@@ -136,7 +139,8 @@
 			<div class="ui comments">
 			  <div class="comment" ng-repeat="plus in catalog.feedback_plus">
 				<a class="avatar">
-				  <img class="ui circular image" ng-src="{{ files }}/user/picture/1.jpg">
+				  <img ng-if="plus.userpict!=''" class="ui circular image" ng-src="{{ files }}/user/picture/thumb/{{plus.userpict}}">
+				  <i ng-if="plus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ plus.username }}</a>
@@ -144,8 +148,9 @@
 					{{ plus.comment }}
 				  </div>
 				  <div class="actions">
-					<a ng-click="respondFb($index, plus.id, 1)"><i class="small thumbs up icon"></i></a> 10
-					<a ng-click="respondFb($index, plus.id, 2)"><i class="small thumbs down icon"></i></a> 4
+					<a ng-click="respondFb($index, plus.id, 1)"><i class="small thumbs up icon"></i></a>
+					<a ng-click="respondFb($index, plus.id, 2)"><i class="small thumbs down icon"></i></a>
+			  		<a ng-if="plus.user_id == auth.id" ng-click="rmFb(plus.id, 'P')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -156,7 +161,8 @@
 			<div class="ui comments right">
 			  <div class="comment" ng-repeat="minus in catalog.feedback_minus">
 				<a class="avatar">
-				  <img class="ui circular image" ng-src="{{ files }}user/picture/1.jpg">
+				  <img ng-if="minus.userpict!=''" class="ui circular image" ng-src="{{ files }}user/picture/thumb/{{minus.userpict}}">
+				  <i ng-if="minus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ minus.username }}</a>
@@ -166,6 +172,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, minus.minus.id, 1)"><i class="small thumbs up icon"></i></a>
 					<a ng-click="respondFb($index, minus.minus.id, 2)"><i class="small thumbs up icon"></i></a>
+					<a ng-if="minus.user_id == auth.id" ng-click="rmFb(minus.id, 'M')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -192,7 +199,8 @@
 		  <div class="ui comments">
 			  <div class="comment" ng-repeat="plus in catalog.feedback_plus">
 				<a class="avatar">
-				  <img class="uk-border-circle" ng-src="{{ files }}user/picture/{{plus.userpict}}">
+				  <img ng-if="plus.userpict!=''" class="uk-border-circle" ng-src="{{ files }}user/picture/thumb/{{plus.userpict}}">
+				  <i ng-if="plus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ plus.username }}</a>
@@ -202,6 +210,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
 					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
+					<a ng-if="plus.user_id == auth.id" ng-click="rmFb(plus.id, 'P')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>
@@ -211,7 +220,8 @@
 		  <div class="ui comments right">
 			  <div class="comment" ng-repeat="minus in catalog.feedback_minus">
 				<a class="avatar">
-				  <img class="uk-border-circle" ng-src="{{ files }}user/picture/1.jpg">
+				  <img ng-if="minus.userpict!=''" class="uk-border-circle" ng-src="{{ files }}user/picture/thumb/{{minus.userpict}}">
+				  <i ng-if="minus.userpict==''" class="large circular inverted user icon"></i>
 				</a>
 				<div class="content">
 				  <a class="author">{{ minus.user_name }}</a>
@@ -221,6 +231,7 @@
 				  <div class="actions">
 					<a ng-click="respondFb($index, plus.id, 1)"><i class="thumbs up outline icon"></i></a>
 					<a ng-click="respondFb($index, plus.id, 2)"><i class="thumbs down outline icon"></i></a>
+					<a ng-if="minus.user_id == auth.id" ng-click="rmFb(minus.id, 'M')"><i class="remove icon"></i></a>
 				  </div>
 				</div>
 			  </div>

@@ -135,13 +135,13 @@ Route::group([//['middleware' => 'cors'],
 		Route::post('catalog', 'Server\ProductController@create');
 		Route::get('catalog/{productId}/edit', 'Server\ProductController@edit');
 		Route::put('catalog/{productId}', 'Server\ProductController@update');
-		Route::delete('catalog/{productId}/delete', 'Server\ProductController@delete');
+		Route::delete('catalog/{productId}', 'Server\ProductController@delete');
 		Route::post('catalog/{productId}/logo', 'Server\ProductController@logoUpload');
 		Route::post('catalog/{productId}/picture', 'Server\ProductController@pictureUpload');
 
 		// route collect
-		Route::post('collect', 'Server\UserCollectController@add');
-		Route::delete('collect/{id}', 'Server\UserCollectController@remove');
+		Route::post('collect/{productId}', 'Server\UserCollectController@add');
+		Route::delete('collect/{productId}', 'Server\UserCollectController@remove');
 
 		/*route member
 		=================================================================*/
@@ -171,6 +171,7 @@ Route::group([//['middleware' => 'cors'],
 		/*route feedback
 		=================================================================*/
 		Route::post('catalog/{productId}/feedback', 'Server\ProductFeedbackController@send');
+		Route::delete('catalog/{productId}/feedback/{id}', 'Server\ProductFeedbackController@remove');
 		Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\ProductFeedbackController@respond');
 		Route::put('catalog/{feedbackId}/endorse', 'Server\ProductFeedbackController@setEndorse');
 
@@ -181,8 +182,8 @@ Route::group([//['middleware' => 'cors'],
 
 		/*route connection
 		=================================================================*/
-		Route::post('connect/{memberId}', 'Server\ContactController@addContact');
-		Route::delete('connect/{memberId}', 'Server\ContactController@removeContact');
+		Route::post('contact/{contact_id}', 'Server\ContactController@addContact');
+		Route::delete('contact/{contact_id}', 'Server\ContactController@removeContact');
 	});
 
 	Route::group(['middleware' => 'ability:admin|manager'], function () {

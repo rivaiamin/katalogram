@@ -31,15 +31,15 @@ class UserCollectController extends Controller
 		} else return false;
 	}*/
 
-    public function add(Request $request) {
+    public function add($productId) {
         $input = [
-            'product_id' => $request->input('product_id'),
+            'product_id' => $productId,
             'user_id' => Auth::user()->id
         ];
         $collect = UserCollect::create($input);
 
         if($collect){
-			$product = Product::where('id',$input['product_id']);
+			$product = Product::where('id', $productId);
 			$product->increment('collect_count');
             $data = [
                 'status' => "success",
@@ -55,10 +55,14 @@ class UserCollectController extends Controller
         }
     }
 
-    public function remove($id) {
-        $collect = UserCollect::find($id)->where('user_id', Auth::user()->id);
+    public function remove($productId) {
+       $collect = UserCollect::where('user_id', Auth::user()->id)
+		   ->where('product_id', $productId)->first();
 
-	   if ($collect->delete) {
+	   if ($collect->delete()) {
+		    $product = Product::where('id', $productId);
+			$product->decrement('collect_count');
+
 		   	$data = [
                 'status' => "success",
                 'message' => "produk telah dihapus dari koleksi",

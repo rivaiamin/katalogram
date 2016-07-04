@@ -88,8 +88,7 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
         /*$input['level_id'] = '3';
         $input['name'] = $request->input('name');
         $input['email'] = $request->input('email');
@@ -162,8 +161,7 @@ class AuthenticateController extends Controller
     /**
      * Login with Facebook.
      */
-    public function facebook(Request $request)
-    {
+    public function facebook(Request $request)    {
         $client = new GuzzleHttp\Client();
 
         $params = [
@@ -174,14 +172,14 @@ class AuthenticateController extends Controller
         ];
 
         // Step 1. Exchange authorization code for access token.
-        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/oauth/access_token', [
+        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.3/oauth/access_token', [
             'query' => $params
         ]);
         $accessToken = json_decode($accessTokenResponse->getBody(), true);
 
         // Step 2. Retrieve profile information about the current user.
         $fields = 'id,email,first_name,last_name,link,name';
-        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
+        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.3/me', [
             'query' => [
                 'access_token' => $accessToken['access_token'],
                 'fields' => $fields
@@ -191,12 +189,10 @@ class AuthenticateController extends Controller
 
         $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
         // Step 3a. If user is already signed in then link accounts.
-        if ($request->header('Authorization'))
-        {
+        if ($request->header('Authorization')) {
             $user = User::where('facebook', '=', $profile['id']);
 
-            if ($user->first())
-            {
+            if ($user->first()) {
                 return response()->json(['message' => 'Akun facebook tersebut sudah terdaftar'], 409);
             }
 
@@ -211,14 +207,11 @@ class AuthenticateController extends Controller
 
             $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
-        }
-        // Step 3b. Create a new user account or return an existing one.
-        else
-        {
+        } else {
+			// Step 3b. Create a new user account or return an existing one.
             $user = User::where('facebook', '=', $profile['id']);
 
-            if ($user->first())
-            {
+            if ($user->first()) {
                 return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
             }
 
@@ -230,13 +223,13 @@ class AuthenticateController extends Controller
             //$user->name = $profile['name'];
             $user->save();
 
-            $user->roles()->attach('3');
+            $user->attachRole('3');
 
-            $profile = new UserProfile;
-            $profile->user_id = $user->id;
-            $profile->fullname = $profile['name'];
-            $profile->summary = $profile['link'];
-            $profile->save();
+            $uProfile = new UserProfile;
+            $uProfile->user_id = $user->id;
+            $uProfile->fullname = $profile['name'];
+            //$profile->profile = $profile['bio'];
+            $uProfile->save();
             
             $token = JWTAuth::fromUser($user, $customClaims);
             return response()->json(['token' => $token]);
@@ -246,8 +239,7 @@ class AuthenticateController extends Controller
     /**
      * Login with Google.
      */
-    public function google(Request $request)
-    {
+    public function google(Request $request)   {
         $client = new GuzzleHttp\Client();
 
         $params = [
@@ -272,8 +264,7 @@ class AuthenticateController extends Controller
 
         $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
         // Step 3a. If user is already signed in then link accounts.
-        if ($request->header('Authorization'))
-        {
+        if ($request->header('Authorization'))  {
             $user = User::where('google', '=', $profile['sub']);
 
             if ($user->first())
@@ -290,10 +281,8 @@ class AuthenticateController extends Controller
             $user->save();
 
             return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
-        }
-        // Step 3b. Create a new user account or return an existing one.
-        else
-        {
+        } else {
+		// Step 3b. Create a new user account or return an existing one.
             $user = User::where('google', '=', $profile['sub']);
 
             if ($user->first())
@@ -303,18 +292,19 @@ class AuthenticateController extends Controller
             //return response()->json(['profile' =>$profile]);
             
             $user = new User;
-            $user->level_id = '3';
             $user->google = $profile['sub'];
             $username = explode('@', $profile['email']);
             $user->name = $username[0];
             $user->email= $profile['email'];
             $user->save();
 
-            $profile = new UserProfile;
-            $profile->user_id = $user->id;
-            $profile->fullname = $profile['name'];
-            $profile->summary = $profile['profile'];
-            $profile->save();
+			$user->attachRole('3');
+
+            $uProfile = new UserProfile;
+            $uProfile->user_id = $user->id;
+            $uProfile->fullname = $profile['name'];
+            $uProfile->summary = $profile['profile'];
+            $uProfile->save();
 
             return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
         }

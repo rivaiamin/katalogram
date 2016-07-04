@@ -47,8 +47,8 @@
 						</span></p>
 						<p><a ng-if="auth.name == user.name" href="/{{ user.name }}/edit" class="ui button inverted"><i class="pencil icon"></i> Edit</a>
 						<span ng-if="auth.name != user.name">
-							<a ng-if="user.is_contact == false" class="ui button inverted" ng-click="addConnect(user.user_profile.id)"><i class="add user icon"></i> Tambahkan</a>
-							<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeConnect(user.user_profile.id)"><i class="check circle icon"></i></a>
+							<a ng-if="user.is_contact == false" class="ui button inverted" ng-click="addContact(user.id)"><i class="add user icon"></i> Tambahkan</a>
+							<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeContact(user.id)"><i class="check circle icon"></i> Terhubung</a>
 						</span>
 						</p>
 					</div>

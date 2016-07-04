@@ -8,14 +8,17 @@
 	<meta name="keyword" content="social cataloging, social, cataloging, site, economy, product, creative, katalogisasi sosial, kreatif, ekonomi, industri, produk, produk kreatif, ekonomi kreatif, industri kreatif, insan kreatif, kreator" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 
-	<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">
-	<link href="{{ asset('css/export.min.css') }}" rel="stylesheet" type="text/css">
+	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
+	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		.ui.ribbon.label:after { display: none; }
+	</style>
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative uk-contrast ui image">
 		<a class="ui blue ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
+		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom" style="padding: 40%; top:-100px">
 			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
 		</div>
 	</div>
@@ -37,10 +40,10 @@
 	<div class="uk-container uk-container-center">
 		<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
 			<div class="uk-width-1-1 uk-margin-top">
-				<h3 class="ui horizontal divider header uk-width-1-1 kg-heading">
-				  {{ $product->name }}
-				  <div class="sub header">{{$product->quote}}</div>
-				</h3>
+				<h2 class="uk header uk-margin-small-bottom kg-color-base">
+				{{ $product->name }}
+				</h2>
+				<q>{{$product->quote}}</q>
 			</div>
 			<div class="uk-width-1-1 uk-margin-bottom uk-margin-small-top kg-color-gray">
 				@if ($product->user->picture != null)
@@ -67,20 +70,10 @@
 				</div>
 			</div>
 			<div class="uk-width-3-5">
-				<div class="uk-width-1-1 uk-margin-bottom">
-					<div class="uk-panel uk-panel-hover">
-						<h3 class="uk-panel-title kg-heading"><i class="file text icon"></i> Deskripsi</h3>
-						<p>{{$product->desc}}</p>
-					</div>
-				</div>
-				<div class="uk-width-1-1">
-					<div class="uk-panel uk-panel-hover">
-						<h3 class="uk-panel-title kg-heading"><i class="table icon"></i> Data</h3>
-						<p>
-							{{$product->data}}
-						</p>
-					</div>
-				</div>
+				<h3 class="kg-heading"><i class="file text icon"></i> Deskripsi</h3>
+				{{$product->desc}}
+				<h3 class="kg-heading"><i class="table icon"></i> Data</h3>
+				{{$product->data}}
 			</div>
 		</div>
 		<div class="uk-grid uk-grid-divider">
@@ -117,8 +110,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="uk-container-center uk-modal-footer uk-grid uk-margin-top">
-
+	<div class="uk-container-center kg-bg-base">
+		<img src="/img/kg_white.png" alt="" width="40">
+		<img src="/img/katalogram.png" alt="" width="200">
 	</div>
 
    <script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>

@@ -46,7 +46,8 @@ class Product extends Model {
     public function productFeedback() {
         return $this->hasMany('App\ProductFeedback')
 			->select(DB::raw("product_feedbacks.*, users.name as username, users.picture as userpict"))
-			->join('users','product_feedbacks.user_id','=', 'users.id');
+			->join('users','product_feedbacks.user_id','=', 'users.id')
+			->where('status', 1);
     }
 
     public function feedbackPlus(){

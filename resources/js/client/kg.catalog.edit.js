@@ -1,5 +1,5 @@
-var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$sce','kgConfig', 'Upload',
-  function($stateParams, $scope, $rootScope, $http, $sce,kgConfig,Upload) {
+var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$sce','kgConfig', 'Upload',
+  function($stateParams, $scope, $rootScope, $http, $state, $sce,kgConfig,Upload) {
 	$scope.modal1 = UIkit.modal("#cropmeModal");
 	$scope.modal2 = UIkit.modal("#cropmeModal2");
 	/*$scope.addPreview = false;
@@ -13,14 +13,15 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$sce','kgCo
 		//url: "json/edit_catalog.json"
 		url: kgConfig.api+"catalog/"+$stateParams.productId+'/edit',
 	}).success(function(response) {
+		if (response.product == null) $state.go('profile', { username: $rootScope.auth.name });
 		$scope.product = response.product;
 		$scope.productId = $scope.product.id;
 		/*$scope.catInd = $scope.categories.map(function(el) {
 		  return el.id;
-		}).indexOf($scope.product.category_id);*/
-		//$scope.editCatalog.product = JSON.parse(response).edit_product[0];
-		//$scope.editCatalog.product.product_desc = $sce.trustAsHtml(response.product[0].product_desc);
-		//$scope.product_preview= response.product_preview;
+		}).indexOf($scope.product.category_id);
+		$scope.editCatalog.product = JSON.parse(response).edit_product[0];
+		$scope.editCatalog.product.product_desc = $sce.trustAsHtml(response.product[0].product_desc);
+		$scope.product_preview= response.product_preview;*/
 		var productCriteria = response.product.product_criteria;
 		var productTag = response.product.product_tag;
 		$scope.product.tag = [];
@@ -167,11 +168,20 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$sce','kgCo
 		$http.put(kgConfig.api+"catalog/"+$scope.productId,
 			input
 		).success(function (response) {
-            UIkit.notify(response.message, response.status);
 			$scope.isSaving = false;
 	    });
 		//console.log($("#is_release").prop('checked'));
     };
+
+	$scope.removeProduct = function() {
+		if (confirm('hapus produk?')) {
+			$http.delete(kgConfig.api+'catalog/'+$scope.productId)
+			.success(function(response) {
+            	UIkit.notify(response.message, response.status);
+				$state.go('profile', { username: $rootScope.auth.name });
+			});
+		}
+	}
 
 	/*$scope.$on("cropme:done", function(ev, response, cropmeEl) {
         var blob = response.croppedImage;

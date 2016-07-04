@@ -13,16 +13,14 @@ use Auth;
 use Carbon\Carbon;
 
 class ProductFeedbackController extends Controller {
-    public function __construct()
-    {
+    public function __construct() {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth');
     }
 
-    public function send(Request $request, $productId)
-    {
+    public function send(Request $request, $productId) {
         $input = $request->only('type','comment');
 		$input['time'] = time();
 		$input['product_id'] = $productId;
@@ -45,8 +43,7 @@ class ProductFeedbackController extends Controller {
         return response()->json($data, 200);
     }
 
-    public function respondFeedback($feedbackId, $respondType)
-    {
+    public function respondFeedback($feedbackId, $respondType) {
         $input = [
             'user_id'       => Auth::user()->id,
             'feedback_id'   => $feedbackId,
@@ -74,8 +71,7 @@ class ProductFeedbackController extends Controller {
         return json_encode($params);
     }
 
-    public function setEndorse($feedbackId)
-    {
+    public function setEndorse($feedbackId) {
         $feedback = Feedback::where('id', $feedbackId);
 
         $input = [
@@ -102,4 +98,22 @@ class ProductFeedbackController extends Controller {
 
         return json_encode($params);
     }
+
+	public function remove($productId, $id) {
+		$feedback = ProductFeedback::find($id)->where('user_id', Auth::user()->id)->first();
+
+		$product = Product::where('id',$productId);
+		if ($feedback->type == 'P') $product->decrement('plus_count');
+		elseif ($feedback->type == 'M') $product->decrement('minus_count');
+
+		if ($feedback->delete()) {
+			$data['status'] = "success";
+            $data['message'] = "tanggapan telah dihapus";
+        } else {
+            $data['status'] = "error";
+            $data['message'] = "tanggapan gagal dihapus";
+        }
+
+		return response()->json($data, 200);
+	}
 }

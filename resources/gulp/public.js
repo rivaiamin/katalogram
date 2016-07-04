@@ -196,10 +196,10 @@ var paths = {
         //uikit
 		'resources/css/uikit.css',
 
-        //'public/fonts/Asap-Regular.css',
-       	//'public/fonts/Panefresco500wtRegular.css',
-        //'public/fonts/icons.css',
-        //'resources/css/katalogram-icon.css',
+        'public/fonts/Asap-Regular.css',
+       	'public/fonts/Panefresco500wtRegular.css',
+        'public/fonts/icons.css',
+        'resources/css/katalogram-icon.css',
 
         'resources/css/katalogram.styl'
 	],
@@ -269,7 +269,7 @@ gulp.task('fontmin', function() {
     .use(fontmin.ttf2eot())
     .use(fontmin.ttf2svg())
     .use(fontmin.css({
-        fontPath: '../fonts/'
+        fontPath: '/public/fonts/'
     }))
     .dest('public/fonts')
     .run();

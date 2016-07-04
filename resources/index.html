@@ -20,20 +20,23 @@
     <div id="kg-modal" class="uk-modal" stop-event="touchend" data-uk-observe>
     	<div class="uk-modal-dialog uk-modal-dialog-lightbox">
 		<a class="uk-modal-close uk-close uk-close-alt"></a>
-    		<ng-include src="modalTemplate"></ng-include>
-	</div>
+    		<ng-include src="modalTemplate1"></ng-include>
+		</div>
     </div>
 
     <div id="kg-modal-lightbox" class="uk-modal" stop-event="touchend" data-uk-observe>
     	<div class="uk-modal-dialog-lightbox uk-margin-large-top uk-width-medium-1-5 uk-width-2-3">
-    		<ng-include src="modalTemplate"></ng-include>
-	</div>
+    		<ng-include src="modalTemplate2"></ng-include>
+		</div>
     </div>
     <script src="public/js/lib.min.js"></script>
     <script src="public/js/katalogram.min.js"></script>
 
     <script type="text/ng-template" id="catalog.list.html">
         //=include ../public/views/catalog/list.html
+    </script>
+    <script type="text/ng-template" id="catalog.list.category.html">
+        //=include ../public/views/catalog/list.category.html
     </script>
     <script type="text/ng-template" id="catalog.detail.html">
         //=include ../public/views/catalog/detail.html
