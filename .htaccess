@@ -4,7 +4,11 @@
     </IfModule>
 
     RewriteEngine On
-
+	
+	# allow social media crawlers to work by redirecting them to a server-rendered static version on the page
+	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+	RewriteRule ^catalog/(\d*)/view$ http://api.katalogram.com/catalog/$1/share [P]
+	
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]

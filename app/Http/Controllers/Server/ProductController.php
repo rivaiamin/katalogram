@@ -82,6 +82,12 @@ class ProductController extends Controller {
     	//dd($data);
 	}
 
+	public function share($id) {
+		$data['product'] = Product::with(['user','category'])->find($id);
+        $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('catalog/share', $data);
+	}
+
     public function search(Request $request, $tag){
 
         $input = $request->except('token');
