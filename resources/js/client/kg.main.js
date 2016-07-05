@@ -302,7 +302,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	    }
 	});
     if (! $scope.isLogin()) {
-    	if (! $scope.refreshToken()) $scope.loginPage();
+    	//if (! $scope.refreshToken()) $scope.loginPage();
     } else {
     	$scope.getAuthUser();
     }
