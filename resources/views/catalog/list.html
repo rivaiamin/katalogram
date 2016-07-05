@@ -27,16 +27,16 @@
 					  <div class="ui dimmer">
 						<div class="content">
 						  <div class="center">
-							<img src="{{ files }}/user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
+							<img src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
 						  </div>
 						</div>
 					  </div>
-					  <img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+					  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
 					  <img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
 					</div>
 					<div class="content">
 						<div class="kg-heading">
-							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}user/picture/{{list.user.user_pict}}">
 							{{ list.name }}
 						</div>
 						<!--<div class="meta uk-text-small">

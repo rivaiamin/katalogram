@@ -6,8 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
+        "laravel/framework": "5.1.*",
         "illuminate/html": "^5.0",
+        "laravelcollective/html": "^5.0",
         "tymon/jwt-auth": "0.5.*",
         "barryvdh/laravel-cors": "0.7.x",
         "guzzlehttp/guzzle": "^6.1",
