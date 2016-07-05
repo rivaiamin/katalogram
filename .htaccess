@@ -42,7 +42,7 @@
 	RewriteRule ^category/(\d*)/(\d*)$ http://api.katalogram.com/catalog/category/$2/share [P]
 	
 	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|LinkedInBot|bingbot|Yahoo|MSNBot|YahooSeeker|baiduspider|rogerbot|embedly|quora\ link\ preview|showyoubot|outbrain|Slackbot|Slack-ImgProxy|Slackbot-LinkExpanding|Site\ Analyzer|SiteAnalyzerBot|Viber|WhatsApp|Telegram)
-	RewriteRule ^/(\d*)/$ http://api.katalogram.com/catalog/$1/share [P]
+	RewriteRule ^/(\d*)/$ http://api.katalogram.com/$1/share [P]
 	
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
