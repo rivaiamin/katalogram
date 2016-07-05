@@ -15,8 +15,9 @@ var replace = require('gulp-replace');
 var paths = {
     images: [
         'resources/img/*',
-        'resources/img/**/*'
-    ],
+        'resources/img/**/*',
+        'resources/img/***/**/*'
+    	],
     fonts: [
         'resources/fonts/*',
         'bower_components/semantic/dist/themes/default/assets/fonts/*'
