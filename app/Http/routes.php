@@ -119,8 +119,10 @@ Route::group([//['middleware' => 'cors'],
 						'title' => $user->name,
 						'caption' => "foto profil ".$user->name
 					];
+					$sitemap->add(env('APP_URL').'/'.$user->name, $user->updated_at, '0.7', 'weekly', $images);
+				} else {
+					$sitemap->add(env('APP_URL').'/'.$user->name, $user->updated_at, '0.7', 'weekly');
 				}
-				$sitemap->add(env('APP_URL').'/'.$user->name, $user->updated_at, '0.7', 'weekly', $images);
 			 }
 
 			 // get categories
