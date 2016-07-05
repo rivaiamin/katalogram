@@ -17,7 +17,8 @@
         "h4cc/wkhtmltoimage-amd64": "0.12.3",
         "doctrine/dbal": "^2.5",
         "zizaco/entrust": "^1.7",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "roumen/sitemap": "^2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -162,6 +162,7 @@ return [
         //Barryvdh\Cors\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+		Roumen\Sitemap\SitemapServiceProvider::class,
 
     ],
 

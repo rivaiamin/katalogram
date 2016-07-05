@@ -95,9 +95,56 @@ Route::group([//['middleware' => 'cors'],
     'domain' => 'api.' . env('APP_DOMAIN')
 ], function() {
 
+	Route::get('sitemap', function(){
+
+		// create new sitemap object
+		$sitemap = App::make("sitemap");
+
+		// set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+		// by default cache is disabled
+		$sitemap->setCache('laravel.sitemap', 60);
+
+		// check if there is cached sitemap and build new only if is not
+		if (!$sitemap->isCached())
+		{
+			 // add item to the sitemap (url, date, priority, freq)
+			 $sitemap->add(env('APP_URL'), '2016-07-4T20:10:00+02:00', '1.0', 'daily');
+
+			 // get users
+			 $users = DB::table('users')->orderBy('created_at', 'desc')->get();
+			 foreach ($users as $user) {
+				$images[] = array(
+                    'url' => 'http://files.'.env('APP_DOMAIN').'/user/picture/'.$user->picture,
+                    'title' => $user->name,
+                    'caption' => "foto profil ".$user->name
+                );
+				$sitemap->add(env('APP_URL').'/'.$user->name, $user->updated_at, '0.7', 'weekly', $images);
+			 }
+
+			 // get categories
+			 $categories = DB::table('categories')->orderBy('created_at', 'desc')->get();
+			 foreach ($categories as $category) {
+				$sitemap->add(env('APP_URL').'/category/'.$category->slug.'/'.$category->id, $category->updated_at, '0.8', 'monthly');
+			 }
+
+			 // get product
+			 $products = DB::table('products')->orderBy('created_at', 'desc')->get();
+			 foreach ($products as $product) {
+				$images[] = array(
+                    'url' => 'http://files.'.env('APP_DOMAIN').'/product/logo/'.$product->logo,
+                    'title' => $product->name,
+                    'caption' => $product->quote
+                );
+				$sitemap->add(env('APP_URL').'/catalog/'.$product->id.'/view', $product->updated_at, '0.6', 'monthly', $images);
+			 }
+		}
+
+		// show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+		return $sitemap->render('xml');
+	});
+
     /*route authencticate with jwt-auth
     =================================================================*/
-    
     // user auth front-end
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
     Route::get('auth/user', 'Auth\AuthenticateController@getAuthUser');
