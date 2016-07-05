@@ -27,7 +27,7 @@ class UserController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth', ['except'=>['profile']]);
+         $this->middleware('jwt.auth', ['except'=>['profile','share']]);
      }
 
     public function index() {
@@ -65,6 +65,12 @@ class UserController extends Controller
         // $user['collect'] = User::memberContact()->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
+
+	public function share($username) {
+		$data['user'] = User::with(['userProfile'])->where('name', $username)->first();
+		$data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('user/share', $data);
+	}
 
     public function edit(AuthCtrl $auth, $username) {
         if ($auth->isOwner($username)) {

@@ -167,6 +167,7 @@ Route::group([//['middleware' => 'cors'],
     =================================================================*/
     Route::get('catalog', 'Server\ProductController@get');
     Route::get('catalog/category/{categoryId}', 'Server\ProductController@index');
+    Route::get('catalog/category/{categoryId}/share', 'Server\CategoryController@share');
     Route::get('catalog/{productId}', 'Server\ProductController@detail');
     Route::get('catalog/{productId}/export', 'Server\ProductController@export');
     Route::get('catalog/{productId}/view', 'Server\ProductController@view');
@@ -181,6 +182,7 @@ Route::group([//['middleware' => 'cors'],
 
 	// User Profile
 	Route::get('{username}', 'Server\UserController@profile');
+	Route::get('{username}/share', 'Server\UserController@share');
 
 	Route::group(['middleware' => 'ability:admin|manager|member'], function () {
 
