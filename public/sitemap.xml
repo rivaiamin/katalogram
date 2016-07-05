@@ -574,9 +574,9 @@
 		<lastmod>-0001-11-30T00:00:00+00:00</lastmod>
 		<changefreq>weekly</changefreq>
 		<image:image>
-			<image:loc>http://files.katalogram.dev/user/picture/</image:loc>
-			<image:title>admin</image:title>
-			<image:caption>foto profil admin</image:caption>
+			<image:loc>http://files.katalogram.dev/user/picture/9.jpg</image:loc>
+			<image:title>iLynch</image:title>
+			<image:caption>foto profil iLynch</image:caption>
 		</image:image>
   </url>
   <url>
@@ -585,9 +585,9 @@
 		<lastmod>-0001-11-30T00:00:00+00:00</lastmod>
 		<changefreq>weekly</changefreq>
 		<image:image>
-			<image:loc>http://files.katalogram.dev/user/picture/</image:loc>
-			<image:title>agung</image:title>
-			<image:caption>foto profil agung</image:caption>
+			<image:loc>http://files.katalogram.dev/user/picture/9.jpg</image:loc>
+			<image:title>iLynch</image:title>
+			<image:caption>foto profil iLynch</image:caption>
 		</image:image>
   </url>
   <url>
@@ -690,39 +690,6 @@
 		<priority>0.8</priority>
 		<lastmod>2016-06-15T07:54:32+00:00</lastmod>
 		<changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://katalogram.dev/catalog/54/view</loc>
-		<priority>0.6</priority>
-		<lastmod>2016-07-04T09:04:06+00:00</lastmod>
-		<changefreq>monthly</changefreq>
-		<image:image>
-			<image:loc>http://files.katalogram.dev/product/logo/1467623028.jpg</image:loc>
-			<image:title>Test Produk</image:title>
-			<image:caption></image:caption>
-		</image:image>
-  </url>
-  <url>
-    <loc>http://katalogram.dev/catalog/53/view</loc>
-		<priority>0.6</priority>
-		<lastmod>2016-07-04T10:35:36+00:00</lastmod>
-		<changefreq>monthly</changefreq>
-		<image:image>
-			<image:loc>http://files.katalogram.dev/product/logo/</image:loc>
-			<image:title>Test Produk</image:title>
-			<image:caption></image:caption>
-		</image:image>
-  </url>
-  <url>
-    <loc>http://katalogram.dev/catalog/52/view</loc>
-		<priority>0.6</priority>
-		<lastmod>2016-07-02T09:02:42+00:00</lastmod>
-		<changefreq>monthly</changefreq>
-		<image:image>
-			<image:loc>http://files.katalogram.dev/product/logo/</image:loc>
-			<image:title>Test Produk</image:title>
-			<image:caption></image:caption>
-		</image:image>
   </url>
   <url>
     <loc>http://katalogram.dev/catalog/51/view</loc>

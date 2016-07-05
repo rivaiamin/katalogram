@@ -113,11 +113,13 @@ Route::group([//['middleware' => 'cors'],
 			 // get users
 			 $users = DB::table('users')->orderBy('created_at', 'desc')->get();
 			 foreach ($users as $user) {
-				$images[0] = [
-                    'url' => 'http://files.'.env('APP_DOMAIN').'/user/picture/'.$user->picture,
-                    'title' => $user->name,
-                    'caption' => "foto profil ".$user->name
-                ];
+				if ($user->picture != '') {
+					$images[0] = [
+						'url' => 'http://files.'.env('APP_DOMAIN').'/user/picture/'.$user->picture,
+						'title' => $user->name,
+						'caption' => "foto profil ".$user->name
+					];
+				}
 				$sitemap->add(env('APP_URL').'/'.$user->name, $user->updated_at, '0.7', 'weekly', $images);
 			 }
 
@@ -128,7 +130,7 @@ Route::group([//['middleware' => 'cors'],
 			 }
 
 			 // get product
-			 $products = DB::table('products')->orderBy('created_at', 'desc')->get();
+			 $products = DB::table('products')->where('is_release', 1)->orderBy('created_at', 'desc')->get();
 			 foreach ($products as $product) {
 				 $images[0] = [
                     'url' => 'http://files.'.env('APP_DOMAIN').'/product/logo/'.$product->logo,
