@@ -8,3 +8,4 @@ npm-debug.log
 Homestead.yaml
 Homestead.json
 .env
+/storage/files/product/qrcode/*.png

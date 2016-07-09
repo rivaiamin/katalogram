@@ -10,15 +10,12 @@
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
 	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
-	<style type="text/css">
-		.ui.ribbon.label:after { display: none; }
-	</style>
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative uk-contrast ui image">
 		<a class="ui blue ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom" style="padding: 40%; top:-100px">
+		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
 			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
 		</div>
 	</div>
@@ -68,6 +65,9 @@
 						@endforeach
 					</table>
 				</div>
+				<div class="uk-width-1-1 uk-text-center">
+					<img src="{{ $files.'/product/qrcode/'.$product->id.'.png' }}" width="70%" />
+				</div>
 			</div>
 			<div class="uk-width-3-5">
 				<h3 class="kg-heading"><i class="file text icon"></i> Deskripsi</h3>
@@ -110,9 +110,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="uk-container-center kg-bg-base">
-		<img src="/img/kg_white.png" alt="" width="40">
-		<img src="/img/katalogram.png" alt="" width="200">
+	<div class="uk-grid uk-text-center kg-bg-base">
+		<div class="uk-width-1-1 uk-margin-top uk-margin-bottom">
+			<img src="/img/kg_white.png" alt="" width="40">
+			<img src="/img/katalogram.png" alt="" width="100">
+		</div>
 	</div>
 
    <script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>

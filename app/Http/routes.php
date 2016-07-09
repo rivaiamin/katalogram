@@ -169,6 +169,7 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/category/{categoryId}', 'Server\ProductController@index');
     Route::get('catalog/category/{categoryId}/share', 'Server\CategoryController@share');
     Route::get('catalog/{productId}', 'Server\ProductController@detail');
+    Route::get('catalog/{productId}/qrcode', 'Server\ProductController@qrcode');
     Route::get('catalog/{productId}/export', 'Server\ProductController@export');
     Route::get('catalog/{productId}/view', 'Server\ProductController@view');
 	Route::get('catalog/{productId}/export', 'Server\ProductController@export');

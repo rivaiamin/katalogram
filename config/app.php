@@ -150,11 +150,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-		Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
+		Intervention\Image\ImageServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -163,7 +163,7 @@ return [
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 		Roumen\Sitemap\SitemapServiceProvider::class,
-
+		Anam\PhantomMagick\ConverterServiceProvider::class
     ],
 
     /*
@@ -216,8 +216,9 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Entrust' => Zizaco\Entrust\EntrustServiceProvider::class,
-		'Image' => Intervention\Image\Facades\Image::class,
+        'Entrust' 	=> Zizaco\Entrust\EntrustServiceProvider::class,
+		'Image' 	=> Intervention\Image\Facades\Image::class,
+		'Converter' => Anam\PhantomMagick\Facades\Converter::class,
     ],
 
 ];

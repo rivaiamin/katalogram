@@ -19,15 +19,17 @@ use App\Http\Controllers\Server\UserCollectController;
 //use App\Tag;
 use App\ProductTag;
 use App\ProductCriteria;
-use mikehaertl\wkhtmlto\Image;
+//use mikehaertl\wkhtmlto\Image;
 use Auth;
+use Storage;
+use Endroid\QrCode\QrCode;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class ProductController extends Controller {
 
     public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
-         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'share', 'catalog']]);
+         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'share', 'catalog', 'qrcode']]);
      }
 
 	public function index(Product $product, $categoryId = null) {
@@ -78,6 +80,7 @@ class ProductController extends Controller {
 	public function view($id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		if (! Storage::has('product/qrcode/'.$id.'.png')) $this->qrcode($id, false);
 		return view('catalog/view', $data);
     	//dd($data);
 	}
@@ -110,6 +113,7 @@ class ProductController extends Controller {
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "katalog produk telah ditambahkan";
+			$this->qrcode($create-id, false);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -236,34 +240,43 @@ class ProductController extends Controller {
     }
 
     public function export($productId) {
-        // You can pass a filename, a HTML string or an URL to the constructor
-        $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
+        /*$binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
         $image = new Image(array(
-            // Explicitly tell wkhtmltopdf that we're using an X environment
             //'use-xserver',
             'binary'   => $binary,
             'format'   => 'jpg',
             'quality'   => '100',
             'width'    => '600'
-            //'debug-javascript' => true
-            // Enable built in Xvfb support in the command
-            /*'commandOptions' => array(
-                'enableXvfb' => true,
-
-                // Optional: Set your path to xvfb-run. Default is just 'xvfb-run'.
-                // 'xvfbRunBinary' => '/usr/bin/xvfb-run',
-
-                // Optional: Set options for xfvb-run. The following defaults are used.
-                'xvfbRunOptions' => false
-            )*/
         ));
-        //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view');
-        //$image->saveAs('/path/to/page.png');
+        $image->setPage();
+        if (! $image->send()) return $image->getError();*/
 
-        // ... or send to client for inline display
-        if (! $image->send()) return $image->getError();
-        // ... or send to client as file download
-        //if (! $image->send("catalog_$productId.jpg")) return $image->getError();
+		$page = "http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view';
+		$conv = new \Anam\PhantomMagick\Converter;
+		$conv->source($page)
+			//->setBinary()
+			->width(600)
+			->quality(90)
+			->toJpg()
+			->download($productId.'-'.time().'.jpg');
     }
+
+	public function qrcode($productId, $view = true) {
+		$qrCode = new QrCode();
+		$qrCode->setText(env('APP_URL').'/catalog/'.$productId.'/view')
+			->setSize(256)
+			->setPadding(10)
+			->setErrorCorrection('high')
+			->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
+			->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+			->setImageType(QrCode::IMAGE_TYPE_PNG);
+
+		Storage::put('product/qrcode/'.$productId.'.png', $qrCode->get());
+
+		return response($qrCode->get(), 200, array('Content-Type' => $qrCode->getContentType()));
+		/*if ($view == true) {
+			header('Content-Type: '.$qrCode->getContentType());
+			$qrCode->render();
+		}*/
+	}
 }
