@@ -19,7 +19,7 @@ use App\Http\Controllers\Server\UserCollectController;
 //use App\Tag;
 use App\ProductTag;
 use App\ProductCriteria;
-//use mikehaertl\wkhtmlto\Image;
+use mikehaertl\wkhtmlto\Image;
 use Auth;
 use Storage;
 use Endroid\QrCode\QrCode;
