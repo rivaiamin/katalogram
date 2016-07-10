@@ -239,36 +239,7 @@ class ProductController extends Controller {
 		}
     }
 
-    public function export($productId) {
-        // You can pass a filename, a HTML string or an URL to the constructor
-        $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
-        $image = new Image(array(
-            // Explicitly tell wkhtmltopdf that we're using an X environment
-            //'use-xserver',
-            'binary'   => $binary,
-            'format'   => 'jpg',
-            'quality'   => '100',
-            'width'    => '300',
-            'debug-javascript' => true
-            // Enable built in Xvfb support in the command
-            /*'commandOptions' => array(
-                'enableXvfb' => true,
-
-                // Optional: Set your path to xvfb-run. Default is just 'xvfb-run'.
-                // 'xvfbRunBinary' => '/usr/bin/xvfb-run',
-
-                // Optional: Set options for xfvb-run. The following defaults are used.
-                'xvfbRunOptions' => false
-            )*/
-        ));
-        //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://".getenv('APP_DOMAIN')."/export.html#$productId");
-        //$image->saveAs('/path/to/page.png');
-
-        // ... or send to client for inline display
-        //if (! $image->send()) return $image->getError();
-        // ... or send to client as file download
-        if (! $image->send("catalog_$productId.jpg")) return $image->getError();
+    public function export($id) {
 
 		//using phantomjs
 		/*$page = "http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view';
@@ -279,6 +250,10 @@ class ProductController extends Controller {
 			->quality(90)
 			->toJpg()
 			->download($productId.'-'.time().'.jpg');*/
+
+		$data['product'] = Product::with(['user','category'])->find($id);
+        $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('catalog/image', $data);
     }
 
 	public function qrcode($productId, $view = true) {

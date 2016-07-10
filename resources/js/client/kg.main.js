@@ -132,6 +132,20 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	// catalog function
 	$rootScope.catalogDetail = function(productId) {
         $scope.loader = true;
+
+		/*$http.get('http://api.page2images.com/restfullink', {
+			p2i_url: kgConfig.api+'catalog/'+productId+'/view',
+			p2i_device: '6',
+			p2i_screen: '600x0',
+			p2i_size: '600x0',
+			p2i_fullpage: '1',
+			p2i_imageformat: 'jpg',
+			p2i_wait: '5',
+			p2i_key: '1637af9a87b02321'
+		}).then(function() {
+
+		});*/
+
         $http.get(
 			//url: "json/detail_catalog.json",
 			kgConfig.api+"catalog/"+productId
