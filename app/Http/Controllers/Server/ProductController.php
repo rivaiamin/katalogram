@@ -113,7 +113,7 @@ class ProductController extends Controller {
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "katalog produk telah ditambahkan";
-			$this->qrcode($create-id, false);
+			$this->qrcode($create->id, false);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -268,10 +268,10 @@ class ProductController extends Controller {
 
 		Storage::put('product/qrcode/'.$productId.'.png', $qrCode->get());
 
-		return response($qrCode->get(), 200, array('Content-Type' => $qrCode->getContentType()));
-		/*if ($view == true) {
+		//return response($qrCode->get(), 200, array('Content-Type' => $qrCode->getContentType()));
+		if ($view == true) {
 			header('Content-Type: '.$qrCode->getContentType());
 			$qrCode->render();
-		}*/
+		}
 	}
 }
