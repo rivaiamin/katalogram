@@ -27,7 +27,7 @@
 				<div class="card uk-text-center" ng-repeat="list in catalogs" ui-sref="catalog.view({productId: list.id})" data-ui-sref-opts="{notify: false}">
 
 					<div class="blurring dimmable image" kg-ui-dimmer>
-				  	  <div class="ui teal left corner label">
+				  	  <div class="ui primary left corner label">
 						<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
 					  </div>
 					  <div class="ui dimmer">
@@ -94,9 +94,9 @@
   	  	  	  <h4 class="ui header kg-color-base">Sub-sektor</h4>
 	  	  	  <div class="ui middle aligned selection divided list">
 				  <a class="item" ng-repeat="cats in categories" ui-sref="catalog.category({slug: cats.slug, id: cats.id})" ui-sref-active="active" ui-sref-opts="{reload: true}">
-					  <i class="kg-icon icon-{{cats.slug}} kg-color-base"></i>
+					  <i class="kg-color-base kg-icon icon-{{cats.slug}}"></i>
 					  <span class="uk-text-small">{{cats.name}}</span>
-					  <div class="ui teal right floated label"> {{cats.product_count}} </div>
+					  <div class="ui secondary right floated label"> {{cats.product_count}} </div>
 				  </a>
 	  	  	  </div>
 			</div>

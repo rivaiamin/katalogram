@@ -15,77 +15,20 @@
 ======================================================================*/
 
 Route::group([
-    'domain' => 'admin.' . env('APP_DOMAIN'), 
+    'domain' => 'admin.' . env('APP_DOMAIN')
 ], function() {
-
-   /* Route::get('foo', ['middleware' => 'role', function()
-    {
-        return "hanya untuk manager";
-    }]);*/
-
-    Route::get('/kalana', 'Admin\DashboardController@template');
-    Route::post('/kalana/auth', 'Auth\AuthenticateController@login');
-	Route::get('/', [
-        'as'    => 'dashboard',
-        //'middleware' => ['ability:admin|manager'],
-        'uses'  => 'Admin\DashboardController@template'
-    ]);
-
-    Route::get('/{state}', [
-        'as'    => 'module',
-        'middleware' => ['role:admin|manager'],
-        'uses'  => 'Admin\DashboardController@template'
-    ]);
-
-    /*user auth
-    =================================================================*/
-	/*    // Authentication Routes...
-    Route::get('auth/login', 'Auth\AuthController@getLogin');
-    Route::post('auth/login', 'Auth\AuthController@postLogin');
-    Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-    // Registration Routes...
-    Route::get('auth/register', 'Auth\AuthController@getRegister');
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-*/    /*user
-    =================================================================*/
-	/* Route::get('user', [
-        'as'    => 'user',
-        'uses'  => 'Admin\UserController@index'
-    ]);
-
-    Route::get('user/create', [
-        'as'    => 'user.create',
-        'uses'  => 'Admin\UserController@create'
-    ]);
-
-    Route::get('user/{id}', [
-        'as'    => 'user.id',
-        'uses'  => 'Admin\UserController@show'
-    ]);
-
-    Route::post('user', [
-        'as'    => 'user.store',
-        'uses'  => 'Admin\UserController@store'
-    ]);
-
-    Route::get('user/{id}/edit', [
-        'as'    => 'user.id.edit',
-        'uses'  => 'Admin\UserController@edit'
-    ]);   
-
-    Route::put('user/{id}', 'Admin\UserController@updateProfile');
-
-    Route::delete('user/{id}', [
-        'as'    => 'user.id.delete',
-        'uses'  => 'Admin\UserController@destroy'
-    ]);
-    Route::patch('user/{id}', [
-        'as'    => 'user.id',
-        'uses'  => 'admin\UserController@update'
-    ]); */
+    Route::post('/login/{role}', 'Auth\AuthenticateController@login')->where('role', '(setup)');
+    Route::get('/', function () {
+        return view('admin');
+    });
+    Route::get('{state}', function () {
+        return view('admin');
+    });
+    Route::get('{state}/{sub}', function () {
+        return view('admin');
+    });
 });
+
 
 
 /*route server katalogram
@@ -148,7 +91,9 @@ Route::group([//['middleware' => 'cors'],
 		return $sitemap->render('xml');
 	});
 
-    /*route authencticate with jwt-auth
+	Route::get('user/form', 'Server\UserController@form');
+
+	/*route authencticate with jwt-auth
     =================================================================*/
     // user auth front-end
     Route::resource('authenticate', 'Auth\AuthenticateController', ['only' => ['index']]);
@@ -244,15 +189,23 @@ Route::group([//['middleware' => 'cors'],
 
 	Route::group(['middleware' => 'ability:admin|manager'], function () {
 
-		// backend crud user
-		Route::get('user', 'Server\MemberController@index');
-		Route::delete('user/{memberId}/delete', 'Server\MemberController@deleteMember');
+		//module user
+		Route::get('user', 'Server\UserController@index');
+		Route::get('user/scroll/{after}/{limit}', 'Server\UserController@scroll');
 
 		// category
 		Route::post('category','Server\CategoryController@add');
 		Route::post('category/icon', 'Server\CategoryController@uploadIcon');
 		Route::put('category/{id}', 'Server\CategoryController@update');
 		Route::delete('category/{id}', 'Server\CategoryController@delete');
+	});
+
+    Route::group(['middleware' => 'ability:admin'], function () {
+		//user module
+		Route::post('user', 'Server\UserController@add');
+		Route::get('user/{id}', 'Server\UserController@edit');
+        Route::put('user/{id}', 'Server\UserController@update');
+        Route::delete('user/{id}', 'Server\UserController@delete');
 	});
 
 });

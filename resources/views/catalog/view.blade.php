@@ -13,7 +13,7 @@
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative uk-contrast ui image">
-		<a class="ui blue ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
+		<a class="ui primary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
 		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
 			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
@@ -21,17 +21,17 @@
 	</div>
 	<div class="ui compact five item menu kg-font-base uk-margin-remove">
 		<a class="item" data-content="tambahkan ke koleksi favorit" kg-popup>
-			<i class="red heart link icon"></i> Favorit <span class="ui teal label">{{ $product->collect_count }}</span>
+			<i class="red heart link icon"></i> Favorit <span class="ui secondary label">{{ $product->collect_count }}</span>
 		</a>
 		<a class="item" data-content="Total score seluruh kategori" kg-popup>
-			<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ $product->rating_avg }}</span>
+			<i class="empty star link icon"></i> Rating <span class="ui secondary label">{{ $product->rating_avg }}</span>
 		</a>
 		<a class="item disabled"></a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
-			<i class="thumbs up outline link icon"></i> Plus <span class="ui teal label">{{ $product->plus_count }}</span>
+			<i class="thumbs up outline link icon"></i> Plus <span class="ui secondary label">{{ $product->plus_count }}</span>
 		</a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kekurangan produk" kg-popup>
-			<i class="thumbs down outline link icon"></i> Minus <span class="ui teal label">{{ $product->minus_count }}</span>
+			<i class="thumbs down outline link icon"></i> Minus <span class="ui secondary label">{{ $product->minus_count }}</span>
 		</a>
 	</div>
 	<div class="uk-container uk-container-center">
@@ -91,7 +91,7 @@
 			</div>
 			<div class="uk-width-1-1 uk-text-center uk-margin-bottom uk-margin-top">
 				@foreach ($product->productTag as $tag)
-				<span class="ui tag label teal uk-text-large uk-margin-small-right uk-margin-small-top">
+				<span class="ui tag label secondary uk-text-large uk-margin-small-right uk-margin-small-top">
 					 {{$tag->tag->name}}
 				</span>
 				@endforeach

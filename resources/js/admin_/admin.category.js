@@ -13,16 +13,16 @@ var categoryCtrl = ['$http','$scope', 'Upload', 'Notification', function($http, 
 	$scope.addCategory = function(input) {
         if ($scope.categoryForm.fileimage.$valid && $scope.fileimage) {
 		  $scope.onProgress = true;
-	
+
 	      Upload.upload({
 	            url: $scope.env.api+'category/icon',
 	            method: 'POST',
 			    data: {
 			    	image: $scope.fileimage,
-			    } 
+			    }
 			    /*sendFieldsAs: 'form',
 			    fields: {
-			        filename: $scope.file.name, 
+			        filename: $scope.file.name,
 			        title: input.title
 			    }*/
 	        }).then(function (resp) {
@@ -48,9 +48,9 @@ var categoryCtrl = ['$http','$scope', 'Upload', 'Notification', function($http, 
 	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 	            $scope.progress = progressPercentage;
 	        });
-	    }    
+	    }
 	}
-    
+
 	$scope.saveCategory = function(data, id) {
 		return $http.put($scope.env.api+'category/'+id, data);
 		/*.success(function (response) {
@@ -65,7 +65,7 @@ var categoryCtrl = ['$http','$scope', 'Upload', 'Notification', function($http, 
                 Notification({message: response.message}, response.status);
 				if (response.status == 'success') {
 					//console.log(response.category);
-					$scope.category.splice(index, 1);	
+					$scope.category.splice(index, 1);
 				}
 			})
 		}

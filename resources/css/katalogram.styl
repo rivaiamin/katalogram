@@ -3,15 +3,17 @@ font-base="Asap"
 font-nav="Titillium Web"
 font-heading="Panefresco500wtRegular"
 
+/*
 color-base=#0079ab
 color-base2=#00ABA9
 bg-base=url('../img/paper_web_kg.jpg')
 bg-base2=url('../img/paper_web_kg2.jpg')
+*/
 
-/*color-base=#FF7600
-color-base2=#FBBD08
-bg-base=#FF7600
-bg-base2=#FBBD08*/
+color-base=#ff8e1f
+color-base2=#ffc835
+bg-base=#ff8e1f
+bg-base2=#ffc835
 
 bg-paper=url('../img/paper_web.jpg')
 /*customize Lib Style*/
@@ -47,7 +49,11 @@ body, html { background: bg-paper; height: auto; }
 .item.search { width:650px; }
 .item.search tags-input { width:100%; }
 .ui.menu .item.head>img:not(.ui) { width: 3em; }
-.ui.teal.corner.label, .ui.teal.corner.label:hover { font-size: 1.3em; }
+.ui.corner.label, .ui.corner.label:hover { font-size: 1.3em; }
+.ui.primary.label { background: bg-base; color: #fff; }
+.ui.secondary.label, .ui.menu .item>.secondary.label { background: bg-base2; color: #fff; }
+.ui.secondary.corner.label { border-color: bg-base2; }
+.ui.primary.corner.label { border-color: bg-base; }
 .ui.left.corner.label .icon { left: -0.5em }
 .ui.corner.label .icon { font-size:1.5em; top:0.3em;  }
 /*cropme>div { width: 100% !important; }*/

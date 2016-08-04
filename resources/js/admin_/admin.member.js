@@ -18,7 +18,7 @@ var memberCtrl = ['$http','$scope', 'Upload', 'Notification', function($http, $s
                 Notification({message: response.message}, response.status);
 				if (response.status == 'success') {
 					//console.log(response.category);
-					$scope.category.splice(index, 1);	
+					$scope.category.splice(index, 1);
 				}
 			})
 		}

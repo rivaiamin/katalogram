@@ -59,20 +59,20 @@
 		<div class="ui container">
 			<a class="item">
 				<i class="file image outline link icon"></i>
-				<p>Katalog <span class="ui teal label">{{ user.catalog_count }}</span></p>
+				<p>Katalog <span class="ui secondary label">{{ user.catalog_count }}</span></p>
 			</a>
 			<a class="item">
 				<i class="empty heart link icon"></i>
-				<p> Koleksi <span class="ui teal label">{{ user.collect_count }}</span> </p>
+				<p> Koleksi <span class="ui secondary label">{{ user.collect_count }}</span> </p>
 			</a>
 			<a class="item disabled"></a>
 			<a class="item">
 				<i class="user outline link icon"></i>
-				<p> Kontak <span class="ui teal label">{{ user.contact_count }}</span></p>
+				<p> Kontak <span class="ui secondary label">{{ user.contact_count }}</span></p>
 			</a>
 			<a class="item">
 				<i class="users outline link icon"></i>
-				<p>Terhubung <span class="ui teal label">{{ user.connect_count }}</span></p>
+				<p>Terhubung <span class="ui secondary label">{{ user.connect_count }}</span></p>
 			</a>
 		</div>
 
@@ -155,7 +155,7 @@
 					<div class="content">
 						<div class="ui icon list" ng-repeat="draft in user.user_product_draft">
 							<a class="item" href="/catalog/{{ draft.id }}/edit">
-								<i class="kg-icon teal icon-{{categories[draft.category_id-1].slug}}"></i>
+								<i class="kg-icon secondary icon-{{categories[draft.category_id-1].slug}}"></i>
 								{{ draft.name }}
 							</a>
 						</div>

@@ -100,8 +100,8 @@
 							<img ng-if="! auth.picture" class="ui circular image" src="public/img/placeholder.jpg" />
 						</div>
 						<div class="uk-width-2-3">
-							<strong class="ui header">{{ auth.name }} </strong> <i class="circular teal lock link icon" ng-click="logout()"></i>
-							<a class="ui circular blue tiny button" ui-sref="profile({username: auth.name})"><i class="user icon"></i>profil</a>
+							<strong class="ui header">{{ auth.name }} </strong> <i class="circular secondary lock link icon" ng-click="logout()"></i>
+							<a class="ui circular primary tiny button" ui-sref="profile({username: auth.name})"><i class="user icon"></i>profil</a>
 							<i ui-sref="editProfile({username: auth.name})" class="circular setting link icon"></i>
 						</div>
 					</div>
