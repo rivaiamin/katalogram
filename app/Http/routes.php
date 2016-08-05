@@ -158,12 +158,12 @@ Route::group([//['middleware' => 'cors'],
 		/*route product tag
 		=================================================================*/
 		Route::post('catalog/{productId}/tag', 'Server\ProductTagController@add');
-		Route::delete('catalog/{productId}/tag/{tagId}', 'Server\ProductTagController@remove');
+		Route::delete('catalog/{productId}/tag/{name}', 'Server\ProductTagController@remove');
 
 		/*route product criteria
 		=================================================================*/
 		Route::post('catalog/{productId}/criteria', 'Server\ProductCriteriaController@add');
-		Route::delete('catalog/{productId}/criteria/{criteriaId}', 'Server\ProductCriteriaController@remove');
+		Route::delete('catalog/{productId}/criteria/{name}', 'Server\ProductCriteriaController@remove');
 
 		/*route preview
 		=================================================================*/

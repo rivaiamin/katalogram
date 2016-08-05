@@ -31,6 +31,14 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$scope.popup();
 		//$scope.categories = $rootScope.categories;
 	});
+	$scope.loadTags = function($query) {
+		return $http.get(kgConfig.api+'tags', { cache: true}).then(function(response) {
+		  var tags = response.data;
+		  return tags.filter(function(tag) {
+			return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
+		  });
+		});
+	}
 
 	$scope.refreshToken = function() {
 		$http.get(kgConfig.api+'auth/refresh')

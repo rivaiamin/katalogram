@@ -116,7 +116,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 	$scope.removeCriteria = function(criteria) {
 		if (confirm("hapus kriteria?")) {
 			$http.delete(
-				kgConfig.api+"catalog/"+$scope.productId+'/criteria/'+criteria.id
+				kgConfig.api+"catalog/"+$scope.productId+'/criteria/'+criteria.name
 			).success(function(response){
 				if (response.status == "success") return true;
 				else return false;
@@ -127,18 +127,25 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 	};
 
 	$scope.addTag = function(tag) {
+		//console.log(tag);
 		$http.post(
 			kgConfig.api+"catalog/"+$scope.productId+'/tag',
 			tag
 		).success(function(response){
-			if (response.status == "success") return true;
-			else return false;
+			if (response.status == "success") {
+				return true;
+				/*if (response.tag) {
+					$scope.product.tag.push(response.tag);
+					$scope.product.tag.splice($scope.product.tag.length);
+				}*/
+			} else return false;
+			//TODO: id tag otomatis ditambahkan ke model
 		});
 	};
 	$scope.removeTag = function(tag) {
 		if (confirm("hapus tag?")) {
 			$http.delete(
-				kgConfig.api+"catalog/"+$scope.productId+'/tag/'+tag.id
+				kgConfig.api+"catalog/"+$scope.productId+'/tag/'+tag.name
 			).success(function(response){
 				if (response.status == "success") return true;
 				else return false;

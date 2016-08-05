@@ -17,7 +17,7 @@ class CriteriaController extends Controller
     }
 
 	public function index() {
-		$data = Criteria::select('id','name')->get();
+		$data = Criteria::select('name')->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
 	}
 

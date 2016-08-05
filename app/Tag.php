@@ -10,6 +10,7 @@ class Tag extends Model
 
 	use SoftDeletes;
     protected $table = 'tags';
+	public $timestamps = false;
 
     protected $fillable = [
     	'name'

@@ -179,8 +179,9 @@
 			<div id="criteriaList" class="transition hidden uk-form-row">
 				<h3>Kriteria Penilaian</h3>
 				<tags-input ng-model="product.criteria"
+					template="template.tags.html"
 					display-property="name"
-					key-property="id"
+					key-property="name"
 					placeholder="Tambahkan Kriteria Penilaian"
 					add-on-space="true"
 					on-tag-adding="addCriteria($tag)"
@@ -191,8 +192,9 @@
 			<div class="uk-form-row transition hidden">
 				<h3>Kata Kunci</h3>
 				<tags-input ng-model="product.tag"
+					template="template.tags.html"
 					display-property="name"
-					key-property="id"
+					key-property="name"
 					placeholder="Tambahkan Tag"
 					add-on-space="true"
 					on-tag-adding="addTag($tag)"

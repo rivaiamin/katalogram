@@ -142,7 +142,7 @@ var paths = {
         /*'bower_components/angular-ui-grid/ui-grid.min.css',*/
         /*'bower_components/codemirror/lib/codemirror.css',*/
         'bower_components/ng-tags-input/ng-tags-input.min.css',
-        'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
+        //'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
 
         //'public/fonts/Glametrix.css',
