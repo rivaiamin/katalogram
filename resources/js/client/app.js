@@ -9,6 +9,8 @@
    }
 })(window, document);
 
+window.onload = function () { window.loading_screen.finish(); }
+
 /*var loadDeferredStyles = function() {
 	var addStylesNode = document.getElementById("deferred-styles");
 	var replacement = document.createElement("div");

@@ -328,6 +328,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
     } else {
     	$scope.getAuthUser();
     }
+
 	//console.log($rootScope.user);
 	/*$scope.imgCrop = function(inputFile) {
 

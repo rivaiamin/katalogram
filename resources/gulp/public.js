@@ -306,6 +306,14 @@ gulp.task('less', function () {
     .pipe(gulp.dest('resources/css'));
 });
 
+gulp.task('please-wait', function() {
+  gulp.src(['bower_components/please-wait/build/please-wait.min.js'])
+    .pipe(uglify())
+    .pipe(gulp.dest('public/js'));
+  gulp.src(['bower_components/please-wait/build/please-wait.css'])
+    .pipe(cssmin())
+    .pipe(gulp.dest('public/css'));
+})
 
 gulp.task('cssmin', function () {
     return gulp.src(paths.css)
