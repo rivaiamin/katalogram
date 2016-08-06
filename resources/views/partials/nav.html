@@ -68,11 +68,11 @@
 					</a>
 				</div>
 			</div>-->
-			<div class="ui input item search">
-				<tags-input ng-model="catalog.search"
+			<div class="item search">
+				<tags-input ng-enter="searchCatalog(catalog.search)" ng-model="catalog.search"
 					template="template.tags.html"
+					key-property="id"
 					display-property="name"
-					key-property="name"
 					placeholder="Pencarian..."
 					add-on-space="true" width="100%">
 					<auto-complete source="loadTags($query)" display-property="name" min-length="1"></auto-complete>

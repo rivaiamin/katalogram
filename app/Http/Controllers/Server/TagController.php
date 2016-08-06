@@ -22,7 +22,7 @@ class TagController extends Controller
     }
 
 	public function index() {
-		$data = Tag::select('name')->get();
+		$data = Tag::select('id','name')->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
 	}
 

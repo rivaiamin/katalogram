@@ -201,6 +201,16 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
         });
     };
 
+	$scope.searchCatalog = function(tags) {
+		$rootScope.filter = [];
+		$rootScope.filter.tags = [];
+		for (var i=0; i<tags.length; i++) {
+			$rootScope.filter.tags.push(tags[i].id);
+		}
+		//$state.go('catalog.search');
+		$rootScope.$emit("searchCatalog", {});
+	}
+
     $scope.embedPreview = function(url) {
     	var embed = '<a href="'+url+'" class="embedly-card preview-card">Embedly</a>';
     	$(".embed-preview").html(embed);

@@ -16,10 +16,17 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
 		$scope.catalogs = response.catalogs;
 	});*/
 
+	$rootScope.$on("searchCatalog", function(){
+		$scope.after = 0;
+		$scope.catalogs = [];
+		$scope.filter.tags = $rootScope.filter.tags;
+		$scope.catalogList();
+	});
+
 	$scope.catalogList = function() {
 		$scope.scrollBusy = true;
 		$http.get(kgConfig.api+'catalog/'+$scope.after+'/'+$scope.limit, {
-			params: $scope.filter
+			params: { category: $scope.filter.category, tags: JSON.stringify($scope.filter.tags) }
 		}).success(function (response) {
 			for (var i = 0; i < response.catalogs.length; i++) {
 				$scope.catalogs.push(response.catalogs[i]);
@@ -33,6 +40,7 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
 			//console.log($scope.catalogs);
         })
 	}
+
 	// TODO: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-open-a-dialogmodal-at-a-certain-state
     //if ($stateParams.productId != null) $scope.catalogDetail($stateParams.productId);
 }]

@@ -47,15 +47,20 @@ class ProductController extends Controller {
 
 	public function get(Product $product, Request $request, $after = 0, $limit = 10) {
 		$category = $request->input('category');
-		$tags = $request->input('tags');
+		$tags = json_decode($request->input('tags'));
 
     	$lists = $product->productList()
+			->join('product_tags', 'products.id', '=','product_tags.product_id')
 			->orderBy($product->table.'.id', 'desc')
 			->take($limit);
 
 		if (!empty($category)) {
 			$cat = Category::where('slug', $category)->first();
 			$lists->where('category_id', $cat->id);
+		}
+		if (count($tags) > 0) {
+				$lists->whereIn('product_tags.tag_id', $tags);
+				$lists->havingRaw('count(products.id) = '.count($tags));
 		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
 
