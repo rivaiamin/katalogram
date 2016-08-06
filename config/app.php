@@ -3,7 +3,7 @@
 return [
     
     'token_secret' => 'KarsaKalana',
-    'facebook_secret' => '772269879a0a31489f6d6ee8aac1b6ae',
+    'facebook_secret' => 'c028717ea8890fda1caddaf5c06d1b4c',
     'foursquare_secret' => '',
     'google_secret' => 'LDXrtX3Jiq9dXxw6lTdL4zqJ',
     'github_secret' => '',
