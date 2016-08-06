@@ -10,6 +10,7 @@ class Criteria extends Model
     use SoftDeletes;
 
     protected $table = 'criterias';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'name'

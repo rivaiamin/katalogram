@@ -26,62 +26,17 @@ class TagController extends Controller
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
 	}
 
-    public function add(CatalogCtrl $catalog, Request $request, $productId) {
-        if ($catalog->isOwner($productId)) {
-            $input = $request->only('tag_name');
-            
-            $product = Product::where('id', $productId)->first();
-            $tagCount = Tag::where('tag_name', $input);
+    public function add(Request $request) {
 
-            if($tagCount->count() > 0) {
-                $inputTag['tag_id'] = $tagCount->first()->id;
-                $inputTag['product_id'] = $product->id;
-
-                // dd($inputTag);
-                $tag = ProductTag::create($inputTag);
-                
-            }
-            else {
-                $tag = $product->tag()->create($input);  
-            }
-
-            if ($tag){
-
-                $params = [
-                    'status' => "success",
-                    'message' => "tag telah ditambahkan",
-                ];
-            }
-            else {
-                $params = [
-                    'status' => "error",
-                    'message' => "tag gagal ditambahkan",
-                ];
-            }
-            
-        } else {
-            $params = [
-                'status' => "error",
-                'message' => "akses invalid",
-            ];
-        }
-        return json_encode($params);
     }
 
-    public function delete(CatalogCtrl $catalog, $productId, $tagId) {
-        if ($catalog->isOwner($productId)) {
-            $productTag = ProductTag::where('product_id', $productId)->where('tag_id', $tagId)->delete();
-            $params = [
-                'status' => "success",
-                'message' => "tag telah dihapus",
-            ];
-        } else {
-            $params = [
-                'status' => "error",
-                'message' => "akses invalid",
-            ];
-        }
-        
+    public function delete($id) {
+		$tag = Tag::where('tag', $id)->delete();
+		$params = [
+			'status' => "success",
+			'message' => "tag telah dihapus",
+		];
+
         return json_encode($params);
     }
 }

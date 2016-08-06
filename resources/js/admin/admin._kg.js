@@ -1,8 +1,11 @@
-var kgCtrl = ['$scope','$rootScope','$auth','$state','envService','Notification', 
-              function($scope,$rootScope,$auth,$state,envService,Notification) {
-	
-    $rootScope.env = envService.read('all');
-    
+var kgCtrl = ['$scope','$rootScope','$http','$auth','$state','kgConfig', function($scope,$rootScope,$http,$auth,$state,kgConfig) {
+
+    $rootScope.env = kgConfig;
+
+    /*if ($auth.isAuthenticated()) {
+        $.AdminLTE.tree(".sidebar");
+    }*/
+
 	$scope.isAuthenticated = function() {
 	  return $auth.isAuthenticated();
 	};
@@ -16,5 +19,22 @@ var kgCtrl = ['$scope','$rootScope','$auth','$state','envService','Notification'
 		return array.map(function(el) {
 		  return el.id;
 		}).indexOf(id);
+    }
+
+	$scope.getAuthUser = function() {
+		$http.get($scope.env.api+"auth/user")
+		.success(function(response){
+			$rootScope.auth = response.user;
+			$scope.popup();
+		})
+	};
+
+	$scope.isLogin = function() {
+    	return $auth.isAuthenticated();
+    };
+	if (! $scope.isLogin()) {
+    	//if (! $scope.refreshToken()) $scope.loginPage();
+    } else {
+    	$scope.getAuthUser();
     }
 }];

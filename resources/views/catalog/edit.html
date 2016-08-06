@@ -38,8 +38,8 @@
 
 <div class="uk-container uk-container-center">
 	<div class="ui segment">
-		<a ng-click="removeProduct()" class="right floated ui teal icon button"><i class="trash outline icon"></i></a>
-		<h3 class="kg-heading"><i class="pencil teal icon"></i> Edit Katalog</h3>
+		<a ng-click="removeProduct()" class="right floated ui secondary icon button"><i class="trash outline icon"></i></a>
+		<h3 class="kg-heading"><i class="pencil secondary icon"></i> Edit Katalog</h3>
 		<div class="ui styled fluid accordion" ui-accordion>
 		  <div class="ui title">
 			<i class="dropdown icon"></i>
@@ -65,7 +65,7 @@
 			<div class="uk-container uk-container-center" ng-if="product.category_id != null">
 				<div class="ui segment">
 					<h2 class="ui horizontal divider header">
-					  <i class="kg-icon teal icon-{{categories[product.category_id-1].slug}} icon"></i>
+					  <i class="kg-icon secondary icon-{{categories[product.category_id-1].slug}} icon"></i>
 					  {{ categories[product.category_id-1].name }}
 					</h2>
 					<p>{{ categories[product.category_id-1].desc }}</p>
@@ -89,10 +89,11 @@
 									ngf-resize="{width: 512, height: 512, centerCrop: true}"
 									ngf-resize-if="$width > 1600 || $height > 1200"
 									name="logo" ng-model="filelogo" ngf-pattern="'image/*'"
-									ngf-accept="'image/*'" class="ui blue inverted button" ng-class="{'disabled loading':onProgress1}"><i class="pencil icon"></i> Ganti</a>
+									ngf-accept="'image/*'" class="ui primary inverted button" ng-disabled="onProgress1"><i class="pencil icon"></i> Ganti</a>
 							  </div>
 							</div>
 						  </div>
+						  <div ng-if="onProgress1" class="ui active loader"></div>
 						  <img ng-if="product.logo == null" ng-src="public/img/placeholder.jpg" />
 						  <img ng-if="product.logo != null" ng-src="{{ files }}product/logo/{{product.logo}}" />
 						</div>
@@ -178,8 +179,9 @@
 			<div id="criteriaList" class="transition hidden uk-form-row">
 				<h3>Kriteria Penilaian</h3>
 				<tags-input ng-model="product.criteria"
+					template="template.tags.html"
 					display-property="name"
-					key-property="id"
+					key-property="name"
 					placeholder="Tambahkan Kriteria Penilaian"
 					add-on-space="true"
 					on-tag-adding="addCriteria($tag)"
@@ -190,8 +192,9 @@
 			<div class="uk-form-row transition hidden">
 				<h3>Kata Kunci</h3>
 				<tags-input ng-model="product.tag"
+					template="template.tags.html"
 					display-property="name"
-					key-property="id"
+					key-property="name"
 					placeholder="Tambahkan Tag"
 					add-on-space="true"
 					on-tag-adding="addTag($tag)"

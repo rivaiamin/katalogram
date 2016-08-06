@@ -1,0 +1,68 @@
+<section class="content-header">
+  <h1>
+    User
+    <small>List of registered User</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">User</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div id="userForm" class="col-xs-12" ng-include="'views/admin/user.form.html'">
+
+    </div>
+    <!--<div id="userEditForm" ng-if="onEdit" class="col-xs-12" ng-include="'views/admin/user.form.edit.html'">
+
+    </div>-->
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">User List</h3>
+          <div class="box-tools">
+            <div class="input-group pull-right" style="width: 150px;">
+              <input type="text" name="table_search" ng-model="search" class="form-control input-sm pull-right" placeholder="Search">
+              <div class="input-group-btn">
+                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+            <!--<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="views/admin/pagination.tpl.html">
+            </dir-pagination-controls>-->
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <div class="text-center"><i ng-if="onLoad || scrollBusy" class="fa fa-spinner fa-spin fa-2x"></i></div>
+          <table class="table table-hover" infinite-scroll='nextPage()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy || scrollLast'>
+            <tbody><tr>
+              <th>No</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th width="10%">Picture</th>
+              <th>Role</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="list in users">
+            <!--<tr dir-paginate="list in user | orderBy:'-id' | itemsPerPage:limit | filter:search" current-page="currentPage">-->
+              <td>{{ $index+1 }}</td>
+              <td>{{list.name}}</td>
+              <td>{{list.email}}</td>
+              <td><img ng-if="list.picture != ''" ng-src="{{env.file}}user/picture/{{list.picture}}" alt="" width="100%" /></td>
+              <td>{{list.role}}</td>
+              <td>
+                <div class="btn-group" ng-show="!rowform.$visible">
+                  <a class="btn btn-default" ng-click="editUser(list.id)"><i class="fa fa-edit"></i></a>
+                  <button type="button" class="btn btn-default" ng-click="deleteUser(list.id)"><i class="fa fa-remove"></i></button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody></table>
+          <div class="text-center"><i ng-if="onLoad || scrollBusy" class="fa fa-spinner fa-spin fa-2x"></i></div>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+</section>

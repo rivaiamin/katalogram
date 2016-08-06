@@ -6,22 +6,31 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
+        "laravel/framework": "5.1.*",
         "illuminate/html": "^5.0",
+        "laravelcollective/html": "^5.0",
         "tymon/jwt-auth": "0.5.*",
         "barryvdh/laravel-cors": "0.7.x",
-        "guzzlehttp/guzzle": "^6.1",
+		"guzzle/guzzle": "^3.0",
+		"guzzlehttp/guzzle": "^6.1",
         "guzzlehttp/oauth-subscriber": "^0.3.0",
         "mikehaertl/phpwkhtmltopdf": "^2.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.3",
         "doctrine/dbal": "^2.5",
         "zizaco/entrust": "^1.7",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "roumen/sitemap": "^2.6",
+        "anam/phantomjs-linux-x86-binary": "^2.1",
+        "endroid/qrcode": "^1.7",
+        "league/flysystem": "^1.0",
+        "aws/aws-sdk-php": "^2.7",
+        "league/flysystem-aws-s3-v2": "^1.0",
+		"anam/phantommagick": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~4.4",
         "phpspec/phpspec": "~2.1"
     },
     "autoload": {

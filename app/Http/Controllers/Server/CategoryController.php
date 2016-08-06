@@ -13,12 +13,17 @@ use App\Category;
 class CategoryController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth', ['except' => ['index','detail']]);
+        $this->middleware('jwt.auth', ['except' => ['index','share','detail']]);
     }
 
     public function index() {
     	$data['categories'] = Category::all();
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+	}
+	public function share($id) {
+    	$data['category'] = Category::find($id);
+		$data['img'] = env('APP_URL').'/public/img/category/';
+		return view('catalog/category', $data);
 	}
 
     public function detail($id) {

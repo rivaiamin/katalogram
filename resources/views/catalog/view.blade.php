@@ -10,31 +10,28 @@
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
 	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
-	<style type="text/css">
-		.ui.ribbon.label:after { display: none; }
-	</style>
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative uk-contrast ui image">
-		<a class="ui blue ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
+		<a class="ui primary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom" style="padding: 40%; top:-100px">
+		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
 			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
 		</div>
 	</div>
 	<div class="ui compact five item menu kg-font-base uk-margin-remove">
 		<a class="item" data-content="tambahkan ke koleksi favorit" kg-popup>
-			<i class="red heart link icon"></i> Favorit <span class="ui teal label">{{ $product->collect_count }}</span>
+			<i class="red heart link icon"></i> Favorit <span class="ui secondary label">{{ $product->collect_count }}</span>
 		</a>
 		<a class="item" data-content="Total score seluruh kategori" kg-popup>
-			<i class="empty star link icon"></i> Rating <span class="ui teal label">{{ $product->rating_avg }}</span>
+			<i class="empty star link icon"></i> Rating <span class="ui secondary label">{{ $product->rating_avg }}</span>
 		</a>
 		<a class="item disabled"></a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
-			<i class="thumbs up outline link icon"></i> Plus <span class="ui teal label">{{ $product->plus_count }}</span>
+			<i class="thumbs up outline link icon"></i> Plus <span class="ui secondary label">{{ $product->plus_count }}</span>
 		</a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kekurangan produk" kg-popup>
-			<i class="thumbs down outline link icon"></i> Minus <span class="ui teal label">{{ $product->minus_count }}</span>
+			<i class="thumbs down outline link icon"></i> Minus <span class="ui secondary label">{{ $product->minus_count }}</span>
 		</a>
 	</div>
 	<div class="uk-container uk-container-center">
@@ -68,6 +65,9 @@
 						@endforeach
 					</table>
 				</div>
+				<div class="uk-width-1-1 uk-text-center">
+					<img src="{{ $files.'/product/qrcode/'.$product->id.'.png' }}" width="70%" />
+				</div>
 			</div>
 			<div class="uk-width-3-5">
 				<h3 class="kg-heading"><i class="file text icon"></i> Deskripsi</h3>
@@ -91,7 +91,7 @@
 			</div>
 			<div class="uk-width-1-1 uk-text-center uk-margin-bottom uk-margin-top">
 				@foreach ($product->productTag as $tag)
-				<span class="ui tag label teal uk-text-large uk-margin-small-right uk-margin-small-top">
+				<span class="ui tag label secondary uk-text-large uk-margin-small-right uk-margin-small-top">
 					 {{$tag->tag->name}}
 				</span>
 				@endforeach
@@ -110,9 +110,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="uk-container-center kg-bg-base">
-		<img src="/img/kg_white.png" alt="" width="40">
-		<img src="/img/katalogram.png" alt="" width="200">
+	<div class="uk-grid uk-text-center kg-bg-base">
+		<div class="uk-width-1-1 uk-margin-top uk-margin-bottom">
+			<img src="/img/kg_white.png" alt="" width="40">
+			<img src="/img/katalogram.png" alt="" width="100">
+		</div>
 	</div>
 
    <script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>

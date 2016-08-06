@@ -1,11 +1,11 @@
-var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', 'envServiceProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, envServiceProvider) {
-	
+var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider',
+	function($stateProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider) {
 	var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
       var deferred = $q.defer();
       if ($auth.isAuthenticated()) {
         deferred.resolve();
       } else {
-        $location.path('/kalana');
+        $location.path('/login');
       }
       return deferred.promise;
     }];
@@ -18,7 +18,7 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
         deferred.resolve();
       }
       return deferred.promise;
-    }];
+	}];
 
 	$stateProvider.state('dashboard', {
 		url:'/', 
@@ -27,26 +27,40 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
 		resolve: {
 			loginRequired: loginRequired
 		}
-	}).state('member', {
-		url:'/member', 
-		templateUrl: 'views/admin/member.html',
-		controller: 'memberCtrl',
+	}).state('school', {
+		url:'/school',
+		templateUrl: 'views/admin/school.html',
+		controller: 'schoolCtrl',
 		resolve: {
 			loginRequired: loginRequired
 		}
-	}).state('category', {
-		url:'/category', 
-		templateUrl: 'views/admin/category.html',
-		controller: 'categoryCtrl',
+	}).state('school-type', {
+		url:'/school/type',
+		templateUrl: 'views/admin/school.type.html',
+		controller: 'schoolTypeCtrl',
 		resolve: {
 			loginRequired: loginRequired
 		}
 	}).state('login', {
-		url:'/kalana', 
+		url:'/login',
 		templateUrl: 'views/admin/login.html',
 		controller: 'authCtrl',
 		resolve: {
 			skipIfLoggedIn: skipIfLoggedIn
+		}
+	}).state('label', {
+		url: '/label',
+		templateUrl: 'views/admin/label.html',
+		controller: 'labelCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
+	}).state('user', {
+		url: '/user',
+		templateUrl: 'views/admin/user.html',
+		controller: 'userCtrl',
+		resolve: {
+			loginRequired: loginRequired
 		}
 	});
 	//controller example
@@ -58,36 +72,7 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
 			loginRequired: loginRequired
 		}
 	})*/
-	
-	envServiceProvider.config({
-		domains: {
-			development: ['localhost', 'katalogram.dev', 'admin.katalogram.dev'],
-			production: ['202.150.213.147', 'katalogram.com', 'admin.katalogram.com']
-		},
-		vars: {
-			development: {
-				site: '//katalogram.dev/',
-				api: '//api.katalogram.dev/',
-				admin: '//admin.katalogram.dev/',
-				file: '//files.katalogram.dev/'
-				
-			},
-			production: {
-				site: '//katalogram.com/',
-				api: '//api.katalogram.com/',
-				admin: '//admin.katalogram.com/',
-				file: '//files.katalogram.com/'
-			}
-		}
-	});
-
-	// run the environment check, so the comprobation is made 
-	// before controllers and services are built 
-	envServiceProvider.check();
-
 	$locationProvider.html5Mode(true);
 	$urlRouterProvider.otherwise('/');
-	
-	$authProvider.loginUrl = '/kalana/auth';
-	
+	$authProvider.loginUrl = '/login/setup';
 }]

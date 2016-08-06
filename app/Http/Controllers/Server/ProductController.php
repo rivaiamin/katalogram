@@ -21,13 +21,15 @@ use App\ProductTag;
 use App\ProductCriteria;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
+use Storage;
+use Endroid\QrCode\QrCode;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class ProductController extends Controller {
 
     public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
-         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'catalog']]);
+         $this->middleware('jwt.auth', ['except' => ['get', 'export', 'detail', 'view', 'share', 'catalog', 'qrcode']]);
      }
 
 	public function index(Product $product, $categoryId = null) {
@@ -45,15 +47,20 @@ class ProductController extends Controller {
 
 	public function get(Product $product, Request $request, $after = 0, $limit = 10) {
 		$category = $request->input('category');
-		$tags = $request->input('tags');
+		$tags = json_decode($request->input('tags'));
 
     	$lists = $product->productList()
+			->join('product_tags', 'products.id', '=','product_tags.product_id')
 			->orderBy($product->table.'.id', 'desc')
 			->take($limit);
 
 		if (!empty($category)) {
 			$cat = Category::where('slug', $category)->first();
 			$lists->where('category_id', $cat->id);
+		}
+		if (count($tags) > 0) {
+				$lists->whereIn('product_tags.tag_id', $tags);
+				$lists->havingRaw('count(products.id) = '.count($tags));
 		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
 
@@ -78,8 +85,15 @@ class ProductController extends Controller {
 	public function view($id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		if (! Storage::has('product/qrcode/'.$id.'.png')) $this->qrcode($id, false);
 		return view('catalog/view', $data);
     	//dd($data);
+	}
+
+	public function share($id) {
+		$data['product'] = Product::with(['user','category'])->find($id);
+        $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('catalog/share', $data);
 	}
 
     public function search(Request $request, $tag){
@@ -104,6 +118,7 @@ class ProductController extends Controller {
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "katalog produk telah ditambahkan";
+			$this->qrcode($create->id, false);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -229,35 +244,39 @@ class ProductController extends Controller {
 		}
     }
 
-    public function export($productId) {
-        // You can pass a filename, a HTML string or an URL to the constructor
-        $binary = '../vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64';
-        $image = new Image(array(
-            // Explicitly tell wkhtmltopdf that we're using an X environment
-            //'use-xserver',
-            'binary'   => $binary,
-            'format'   => 'jpg',
-            'quality'   => '100',
-            'width'    => '600'
-            //'debug-javascript' => true
-            // Enable built in Xvfb support in the command
-            /*'commandOptions' => array(
-                'enableXvfb' => true,
+    public function export($id) {
 
-                // Optional: Set your path to xvfb-run. Default is just 'xvfb-run'.
-                // 'xvfbRunBinary' => '/usr/bin/xvfb-run',
+		//using phantomjs
+		/*$page = "http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view';
+		$conv = new \Anam\PhantomMagick\Converter;
+		$conv->source($page)
+			//->setBinary()
+			->width(600)
+			->quality(90)
+			->toJpg()
+			->download($productId.'-'.time().'.jpg');*/
 
-                // Optional: Set options for xfvb-run. The following defaults are used.
-                'xvfbRunOptions' => false
-            )*/
-        ));
-        //$image->setPage("http://katalogram.dev");
-        $image->setPage("http://api.".env('APP_DOMAIN').'/catalog/'.$productId.'/view');
-        //$image->saveAs('/path/to/page.png');
-
-        // ... or send to client for inline display
-        if (! $image->send()) return $image->getError();
-        // ... or send to client as file download
-        //if (! $image->send("catalog_$productId.jpg")) return $image->getError();
+		$data['product'] = Product::with(['user','category'])->find($id);
+        $data['files'] = 'http://files.'.env('APP_DOMAIN');
+		return view('catalog/image', $data);
     }
+
+	public function qrcode($productId, $view = true) {
+		$qrCode = new QrCode();
+		$qrCode->setText(env('APP_URL').'/catalog/'.$productId.'/view')
+			->setSize(256)
+			->setPadding(10)
+			->setErrorCorrection('high')
+			->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
+			->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+			->setImageType(QrCode::IMAGE_TYPE_PNG);
+
+		Storage::put('product/qrcode/'.$productId.'.png', $qrCode->get());
+
+		//return response($qrCode->get(), 200, array('Content-Type' => $qrCode->getContentType()));
+		if ($view == true) {
+			header('Content-Type: '.$qrCode->getContentType());
+			$qrCode->render();
+		}
+	}
 }

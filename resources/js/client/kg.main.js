@@ -9,6 +9,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.modal2 = UIkit.modal("#kg-modal-lightbox");
 	$scope.feedback = {};
 	$scope.isSendFeedback = false;
+	$scope.isCollecting = false;
 	//$scope.bgNav = '';
 
 	$scope.indexSearch = function(array, id) {
@@ -30,6 +31,14 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$scope.popup();
 		//$scope.categories = $rootScope.categories;
 	});
+	$scope.loadTags = function($query) {
+		return $http.get(kgConfig.api+'tags', { cache: true}).then(function(response) {
+		  var tags = response.data;
+		  return tags.filter(function(tag) {
+			return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
+		  });
+		});
+	}
 
 	$scope.refreshToken = function() {
 		$http.get(kgConfig.api+'auth/refresh')
@@ -118,19 +127,33 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	//catalog function
 	$scope.createCatalog = function() {
 		$rootScope.modalTemplate1 = "catalog.create.html";
-		$scope.modal.show();
+		$scope.modal1.show();
 	};
 	$scope.saveCatalog = function(create) {
 		$http.post(kgConfig.api+"catalog", create
 		).success(function(response){
 			UIkit.notify(response.message, response.status);
-			$scope.modal.hide();
+			$scope.modal1.hide();
 			$state.go('catalogEdit', { productId: response.product_id });
 		});
 	};
 	// catalog function
 	$rootScope.catalogDetail = function(productId) {
         $scope.loader = true;
+
+		/*$http.get('http://api.page2images.com/restfullink', {
+			p2i_url: kgConfig.api+'catalog/'+productId+'/view',
+			p2i_device: '6',
+			p2i_screen: '600x0',
+			p2i_size: '600x0',
+			p2i_fullpage: '1',
+			p2i_imageformat: 'jpg',
+			p2i_wait: '5',
+			p2i_key: '1637af9a87b02321'
+		}).then(function() {
+
+		});*/
+
         $http.get(
 			//url: "json/detail_catalog.json",
 			kgConfig.api+"catalog/"+productId
@@ -178,6 +201,16 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
         });
     };
 
+	$scope.searchCatalog = function(tags) {
+		$rootScope.filter = [];
+		$rootScope.filter.tags = [];
+		for (var i=0; i<tags.length; i++) {
+			$rootScope.filter.tags.push(tags[i].id);
+		}
+		//$state.go('catalog.search');
+		$rootScope.$emit("searchCatalog", {});
+	}
+
     $scope.embedPreview = function(url) {
     	var embed = '<a href="'+url+'" class="embedly-card preview-card">Embedly</a>';
     	$(".embed-preview").html(embed);
@@ -187,20 +220,28 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$scope.formCreate.category_id = $scope.categories[ind].category_id;
 	}*/
 	$scope.addCollect = function() {
-		$http.post(kgConfig.api+'collect/'+$scope.productId)
+		if ($scope.isCollecting == false) {
+			$scope.isCollecting = true;
+			$http.post(kgConfig.api+'collect/'+$scope.productId)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
 				if (response.status == 'success') $scope.catalog.collect_count++;
 				$scope.catalog.is_collect = true;
+				$scope.isCollecting = false;
 			})
+		}
 	};
 	$scope.removeCollect = function() {
-		$http.delete(kgConfig.api+'collect/'+$scope.productId)
+		if ($scope.isCollecting == false) {
+			$scope.isCollecting = true;
+			$http.delete(kgConfig.api+'collect/'+$scope.productId)
 			.success(function(response) {
 				UIkit.notify(response.message, response.status);
 				if (response.status == 'success') $scope.catalog.collect_count--;
 				$scope.catalog.is_collect = false;
+				$scope.isCollecting = false;
 			})
+		}
 	};
 	//rating
 	$scope.giveRate = function(rating) {
@@ -293,10 +334,11 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	    }
 	});
     if (! $scope.isLogin()) {
-    	if (! $scope.refreshToken()) $scope.loginPage();
+    	//if (! $scope.refreshToken()) $scope.loginPage();
     } else {
     	$scope.getAuthUser();
     }
+
 	//console.log($rootScope.user);
 	/*$scope.imgCrop = function(inputFile) {
 

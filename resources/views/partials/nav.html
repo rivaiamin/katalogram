@@ -34,9 +34,8 @@
 			</div>
 		</div>
 		<div class="ui secondary three item menu" ng-if="!isLogin()">
-			<a id="sidebarToggle" class="item">
-				<i class="bars large icon"></i>
-				<i class="dropdown icon"></i>
+			<a href="#mainSidebar" class="item" data-uk-offcanvas>
+				<i class="bars icon"></i>
 			</a>
 			<a class="item head active" href="/">
 				<img src="public/img/katalogram_white.png">
@@ -70,9 +69,13 @@
 				</div>
 			</div>-->
 			<div class="item search">
-				<tags-input ng-model="catalog.search"
+				<tags-input ng-enter="searchCatalog(catalog.search)" ng-model="catalog.search"
+					template="template.tags.html"
+					key-property="id"
+					display-property="name"
 					placeholder="Pencarian..."
 					add-on-space="true" width="100%">
+					<auto-complete source="loadTags($query)" display-property="name" min-length="1"></auto-complete>
 				</tags-input>
 				<!--<div class="ui icon input">
 					<input type="text" placeholder="Search...">
@@ -96,18 +99,16 @@
 				</a>
 				<div class="ui popup bottom right transition hidden">
 					<div class="uk-grid uk-grid-small">
-						<div class="uk-width-1-2">
+						<div class="uk-width-1-3" ui-sref="profile({username: auth.name})">
 							<img ng-if="auth.picture" class="ui circular image" ng-src="{{ files + 'user/picture/'+ auth.picture }}">
 							<img ng-if="! auth.picture" class="ui circular image" src="public/img/placeholder.jpg" />
 						</div>
-						<div class="uk-width-1-2">
-							<h4>{{ auth.name }}</h4>
-							<a class="ui kg-bg-base black button" href="/{{ auth.name }}"><i class="user icon"></i> Profil</a>
+						<div class="uk-width-2-3">
+							<strong class="ui header">{{ auth.name }} </strong> <i class="circular secondary lock link icon" ng-click="logout()"></i>
+							<a class="ui circular primary tiny button" ui-sref="profile({username: auth.name})"><i class="user icon"></i>profil</a>
+							<i ui-sref="editProfile({username: auth.name})" class="circular setting link icon"></i>
 						</div>
 					</div>
-					<hr class="uk-grid-divider" />
-					<a class="secondary ui button" ng-click="logout()"><i class="lock icon"></i> Logout</a>
-					<a class="ui right floated icon circular secondary  button" href="/{{ auth.name }}/edit"><i class="icon setting"></i></a>
 				</div>
 			</div>
 			<div class="right menu" ng-if="!isLogin()" >

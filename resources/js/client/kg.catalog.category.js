@@ -5,7 +5,11 @@ var catalogCategoryCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$st
 
 	$scope.catalogList();
 
-	var index = $scope.indexSearch($scope.categories, parseInt($stateParams.id));
-	$scope.category = $scope.categories[index];
-	//console.log(index);
+	$http.get(kgConfig.api+'category').success(function(response) {
+		$scope.categories = response.categories;
+
+		var index = $scope.indexSearch($scope.categories, parseInt($stateParams.id));
+		$scope.category = $scope.categories[index];
+	});
+
 }]

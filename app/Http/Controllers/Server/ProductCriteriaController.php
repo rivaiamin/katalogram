@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Server\ProductController;
 use App\ProductCriteria;
+use App\Criteria;
 
 class ProductCriteriaController extends Controller
 {
@@ -21,18 +22,27 @@ class ProductCriteriaController extends Controller
 
     public function add(Request $request, ProductController $product, $productId) {
         if ($product->isOwner($productId)) {
-            $input['criteria_id'] = $request->input('id');
+            //$input['criteria_id'] = $request->input('id');
             $input['product_id'] = $productId;
+			$input['name'] = $request->input('name');
+			$criteria = Criteria::where('name', $input['name'])->first();
 
-            $criteria = ProductCriteria::create($input);
+			if (!$criteria) {
+				$add = Criteria::create(['name'=>$input['name']]);
+				if ($add) {
+					$input['criteria_id'] = $add->id;
+				}
+			} else $input['criteria_id'] = $criteria->id;
 
-            if($criteria){
+            $productCriteria = ProductCriteria::create($input);
+
+            if($productCriteria){
                 $params = [
                     'status' => "success",
                     'message' => "kriteria telah ditambahkan",
                 ];
-            }
-            else {
+				if (isset($criteria)) $params['criteria'] = $criteria;
+            } else {
                 $params = [
                     'status' => "error",
                     'message' => "kriteria gagal ditambahkan",
@@ -61,21 +71,11 @@ class ProductCriteriaController extends Controller
 		} else return false;
 	}
 
-    public function show($id) {
-        //
-    }
+    public function remove(ProductController $product, $productId, $name) {
+        $criteria = Criteria::where('name', $name)->first();
 
-    public function edit($id) {
-        //
-    }
-
-    public function update(Request $request, $id) {
-        //
-    }
-
-    public function remove(ProductController $product, $productId, $id) {
-        if ($product->isOwner($productId)) {
-            $remove = ProductCriteria::where('product_id', $productId)->where('criteria_id', $id)->delete();
+		if ($product->isOwner($productId)) {
+            $remove = ProductCriteria::where('product_id', $productId)->where('criteria_id', $criteria->id)->delete();
             if ($remove) {
 				$params = [
 					'status' => "success",

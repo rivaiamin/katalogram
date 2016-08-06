@@ -22,7 +22,7 @@ var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProv
 		url:'catalog/:productId',
 		templateUrl: 'catalog.detail.html'
 	}).state('catalogEdit', {
-		url:'catalog/:productId/edit',
+		url:'/catalog/:productId/edit',
 		templateUrl: 'catalog.edit.html',
 		controller: 'catalogEditCtrl'
 	}).state('profile', {

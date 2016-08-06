@@ -3,7 +3,7 @@
 return [
     
     'token_secret' => 'KarsaKalana',
-    'facebook_secret' => '772269879a0a31489f6d6ee8aac1b6ae',
+    'facebook_secret' => 'c028717ea8890fda1caddaf5c06d1b4c',
     'foursquare_secret' => '',
     'google_secret' => 'LDXrtX3Jiq9dXxw6lTdL4zqJ',
     'github_secret' => '',
@@ -150,11 +150,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-		Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
+		Intervention\Image\ImageServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -162,7 +162,8 @@ return [
         //Barryvdh\Cors\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-
+		Roumen\Sitemap\SitemapServiceProvider::class,
+		Anam\PhantomMagick\ConverterServiceProvider::class
     ],
 
     /*
@@ -215,8 +216,9 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Entrust' => Zizaco\Entrust\EntrustServiceProvider::class,
-		'Image' => Intervention\Image\Facades\Image::class,
+        'Entrust' 	=> Zizaco\Entrust\EntrustServiceProvider::class,
+		'Image' 	=> Intervention\Image\Facades\Image::class,
+		'Converter' => Anam\PhantomMagick\Facades\Converter::class,
     ],
 
 ];

@@ -15,8 +15,9 @@ var replace = require('gulp-replace');
 var paths = {
     images: [
         'resources/img/*',
-        'resources/img/**/*'
-    ],
+        'resources/img/**/*',
+        'resources/img/***/**/*'
+    	],
     fonts: [
         'resources/fonts/*',
         'bower_components/semantic/dist/themes/default/assets/fonts/*'
@@ -109,6 +110,7 @@ var paths = {
         'bower_components/semantic/dist/components/icon.min.css',
         'bower_components/semantic/dist/components/input.min.css',
         'bower_components/semantic/dist/components/label.min.css',
+        'bower_components/semantic/dist/components/loader.min.css',
         'bower_components/semantic/dist/components/dimmer.min.css',
         'bower_components/semantic/dist/components/menu.min.css',
         'bower_components/semantic/dist/components/message.min.css',
@@ -140,7 +142,7 @@ var paths = {
         /*'bower_components/angular-ui-grid/ui-grid.min.css',*/
         /*'bower_components/codemirror/lib/codemirror.css',*/
         'bower_components/ng-tags-input/ng-tags-input.min.css',
-        'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
+        //'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
 
         //'public/fonts/Glametrix.css',
@@ -304,6 +306,14 @@ gulp.task('less', function () {
     .pipe(gulp.dest('resources/css'));
 });
 
+gulp.task('please-wait', function() {
+  gulp.src(['bower_components/please-wait/build/please-wait.min.js'])
+    .pipe(uglify())
+    .pipe(gulp.dest('public/js'));
+  gulp.src(['bower_components/please-wait/build/please-wait.css'])
+    .pipe(cssmin())
+    .pipe(gulp.dest('public/css'));
+})
 
 gulp.task('cssmin', function () {
     return gulp.src(paths.css)

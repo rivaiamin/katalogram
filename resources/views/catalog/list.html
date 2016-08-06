@@ -1,12 +1,18 @@
 <div id="kgHero" class="uk-cover uk-margin-bottom" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
-	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle content">
+	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
 	  	<h2 ng-if="category == undefined" class="ui inverted icon header">
 		  <div class="content">
-		  	<img src="public/img/kg_white.png" alt="" width="70">
-		  	<img src="public/img/katalogram.png" alt="" width="300">
+		  	<img src="public/img/kg_white.png" alt="" width="60">
+		  	<img src="public/img/katalogram.png" alt="" width="200">
 			<div class="sub header kg-heading">Induknya Produk Kreatif Indonesia</div>
 		  </div>
 		</h2>
+		<div><a ng-click="loginPage()" class="ui inverted button"><i class="rocket icon"></i> Gabung Sekarang</a></div>
+		<!--<div class="uk-margin-top">
+			<a href="" class="ui inverted circular icon button"><i class="facebook icon"></i></a>
+			<a href="" class="ui inverted circular icon button"><i class="twitter icon"></i></a>
+			<a href="" class="ui inverted circular icon button"><i class="instagram icon"></i></a>
+		</div>-->
 	</div>
 	<img src="public/img/header.jpg" alt="" class="uk-cover-object">
 </div>
@@ -16,28 +22,27 @@
 	<div class="uk-grid uk-grid-small">
 		<div class="uk-width-large-3-4 uk-width-small-1-1" infinite-scroll='catalogList()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy'>
 			<div ui-view></div>
-
 			<div id="catalogList" class="ui four doubling link stackable cards" data-uk-grid>
 				<!-- list start -->
 				<div class="card uk-text-center" ng-repeat="list in catalogs" ui-sref="catalog.view({productId: list.id})" data-ui-sref-opts="{notify: false}">
 
 					<div class="blurring dimmable image" kg-ui-dimmer>
-				  	  <div class="ui teal left corner label">
+				  	  <div class="ui primary left corner label">
 						<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
 					  </div>
 					  <div class="ui dimmer">
 						<div class="content">
 						  <div class="center">
-							<img src="{{ files }}/user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
+							<img src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
 						  </div>
 						</div>
 					  </div>
-					  <img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+					  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
 					  <img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
 					</div>
 					<div class="content">
 						<div class="kg-heading">
-							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+							<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}user/picture/{{list.user.user_pict}}">
 							{{ list.name }}
 						</div>
 						<!--<div class="meta uk-text-small">
@@ -81,6 +86,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="ui centered inline loader" ng-class="{'active':scrollBusy}"></div>
 
 		</div>
 		<div class="uk-width-1-4 uk-hidden-small">
@@ -88,9 +94,9 @@
   	  	  	  <h4 class="ui header kg-color-base">Sub-sektor</h4>
 	  	  	  <div class="ui middle aligned selection divided list">
 				  <a class="item" ng-repeat="cats in categories" ui-sref="catalog.category({slug: cats.slug, id: cats.id})" ui-sref-active="active" ui-sref-opts="{reload: true}">
-					  <i class="kg-icon icon-{{cats.slug}} kg-color-base"></i>
+					  <i class="kg-color-base kg-icon icon-{{cats.slug}}"></i>
 					  <span class="uk-text-small">{{cats.name}}</span>
-					  <div class="ui teal right floated label"> {{cats.product_count}} </div>
+					  <div class="ui secondary right floated label"> {{cats.product_count}} </div>
 				  </a>
 	  	  	  </div>
 			</div>
