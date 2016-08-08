@@ -188,7 +188,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		    	trackWidth: 40,
 		    	barWidth: 30,
 		    	trackColor: '#eee',
-		    	barColor: '#0079ab'
+		    	barColor: '#FF8E1F'
 		    }
 
             $scope.productId = catalog.id;
