@@ -28,7 +28,7 @@
 					</div>
 				  </div>
 				  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
-				  <div class="kg-bg-base2 kg-padding">
+				  <div ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
 				  </div>
 				</div>
