@@ -45,6 +45,7 @@ var paths = {
         'bower_components/uikit/js/core/modal.min.js',
         'bower_components/uikit/js/core/nav.min.js',
         'bower_components/uikit/js/core/offcanvas.min.js',
+        'bower_components/uikit/js/core/scrollspy.min.js',
         'bower_components/uikit/js/components/grid.min.js',
         'bower_components/uikit/js/components/slider.min.js',
         //'bower_components/uikit/js/components/upload.min.js',
