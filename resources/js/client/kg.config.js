@@ -1,16 +1,34 @@
 var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', 'kgConfig',
   function($stateProvider, $sceProvider, $rootScopeProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, kgConfig) {
 
-	$stateProvider.state('catalog', {
+    var skipIfLoggedIn = ['$q', '$location', '$auth', function($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        //deferred.reject();
+		$location.path('/catalog');
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+	}];
+
+	$stateProvider.state('home', {
 		url:'/',
+		templateUrl: 'homepage.html',
+		controller: 'homeCtrl',
+		resolve: {
+			skipIfLoggedIn: skipIfLoggedIn
+		}
+	}).state('catalog', {
+		url:'/catalog',
 		templateUrl: 'catalog.list.html',
 		controller: 'catalogCtrl'
 	}).state('catalog.category', {
-		url:'category/:slug/:id',
+		url:'/category/:slug/:id',
 		templateUrl: 'catalog.list.category.html',
 		controller: 'catalogCategoryCtrl'
 	}).state('catalog.view', {
-		url:'catalog/:productId/view',
+		url:'/:productId/view',
 		onEnter: [ '$stateParams', '$rootScope', function($stateParams, $rootScope) {
 			$rootScope.catalogDetail($stateParams.productId);
 		}],
@@ -19,7 +37,7 @@ var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProv
 			//console.log($stateParams.productId);
 		}]
 	}).state('catalog.detail', {
-		url:'catalog/:productId',
+		url:'/:productId',
 		templateUrl: 'catalog.detail.html'
 	}).state('catalogEdit', {
 		url:'/catalog/:productId/edit',
@@ -35,7 +53,7 @@ var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProv
 		controller: 'userEditCtrl'
 	});
 
-	$urlRouterProvider.otherwise('/catalog');
+	$urlRouterProvider.otherwise('/');
 
 	$locationProvider.html5Mode(true);
 	$httpProvider.defaults.useXDomain = true;

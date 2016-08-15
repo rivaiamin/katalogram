@@ -49,6 +49,7 @@ kgApp
 
 //main controller
 .controller('kgCtrl', kgCtrl)
+.controller('homeCtrl', homeCtrl)
 .controller('catalogCtrl', catalogCtrl)
 .controller('catalogCategoryCtrl', catalogCategoryCtrl)
 //.controller('catalogDetailCtrl', catalogDetailCtrl)

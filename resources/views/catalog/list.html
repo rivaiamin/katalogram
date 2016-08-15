@@ -1,18 +1,14 @@
 <div id="kgHero" class="uk-cover uk-margin-bottom" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
 	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
-	  	<h2 ng-if="category == undefined" class="ui inverted icon header">
+	  	<h2 ng-if="category == undefined" class="ui inverted icon header uk-margin-top">
 		  <div class="content">
 		  	<img src="public/img/kg_white.png" alt="" width="60">
 		  	<img src="public/img/katalogram.png" alt="" width="200">
-			<div class="sub header kg-heading">Induknya Produk Kreatif Indonesia</div>
+			<div class="sub header kg-heading"><q>Mari Secara Kolektif Memajukan Ekonomi Kreatif</q></div>
 		  </div>
 		</h2>
 		<div><a ng-click="loginPage()" class="ui inverted button"><i class="rocket icon"></i> Gabung Sekarang</a></div>
-		<!--<div class="uk-margin-top">
-			<a href="" class="ui inverted circular icon button"><i class="facebook icon"></i></a>
-			<a href="" class="ui inverted circular icon button"><i class="twitter icon"></i></a>
-			<a href="" class="ui inverted circular icon button"><i class="instagram icon"></i></a>
-		</div>-->
+		<!---->
 	</div>
 	<img src="public/img/header.jpg" alt="" class="uk-cover-object">
 </div>
@@ -38,7 +34,9 @@
 						</div>
 					  </div>
 					  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
-					  <img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+					  <div  ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
+					  	<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
+					  </div>
 					</div>
 					<div class="content">
 						<div class="kg-heading">
