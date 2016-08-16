@@ -1,5 +1,5 @@
 <div id="kgHero" class="uk-cover" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
-	<div class="uk-position-cover uk-flex uk-flex-left uk-flex-middle content">
+	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-left uk-flex-middle content">
 		<img src="public/img/pics/illustration2.png" alt="">
 	</div>
 	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
@@ -15,7 +15,6 @@
 		<div id="catalogList" class="ui five doubling link stackable cards">
 			<!-- list start -->
 			<div class="card uk-text-center" ng-repeat="list in catalogs">
-
 				<div class="blurring dimmable image" kg-ui-dimmer>
 				  <div class="ui primary left corner label">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
@@ -65,7 +64,7 @@
 		<div class="uk-text-center uk-margin-top"><a ui-sref="catalog" class="ui primary huge button"><i class="grid layout icon"></i> Telusuri Semua</a></div>
 	</div>
 </div>
-<div class="kg-section uk-contrast kg-bg-base">
+<div class="kg-section uk-contrast uk-text-center kg-bg-base">
 	<!--<div class="ui text container" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 		<div><img src="public/img/kg_white.png" alt="" width="100"></div>
 		<div><img src="public/img/katalogram.png" alt="" width="200"></div>
@@ -75,10 +74,10 @@
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut in assumenda ad ducimus consequatur consequuntur, quidem, asperiores temporibus ut vero. Voluptate sequi consequatur suscipit asperiores a, odit alias nam atque.</p>
 	</div>-->
 	<div class="ui container uk-grid">
-		<div class="uk-width-3-5">
-			<img src="public/img/pics/illustration1.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<img src="public/img/pics/illustration1.png" width="100%" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 		</div>
-		<div class="uk-width-2-5  uk-text-right">
+		<div class="uk-width-medium-2-5 uk-width-small-1-1 uk-text-right">
 			<h1 class="kg-heading uk-margin-top"  data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 			  <q>Katalogram, Apa itu?</q>
 			</h1>
@@ -140,57 +139,65 @@
 </div>
 <div class="kg-section uk-contrast kg-bg-base">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
-			<img src="public/img/pics/detail.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}" style="position:absolute">
-			&nbsp;
-		</div>
-		<div class="uk-width-3-5  uk-text-right">
+		<div class="uk-width-3-5 uk-text-right">
 			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 			  <q>Mengindeks Produk Kreatif Seluruh Indonesia</q>
 			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+
+			</p>
+		</div>
+		<div class="uk-width-2-5">
+			<img src="public/img/pics/detail.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}" style="position:absolute">
+			&nbsp;
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right uk-contrast kg-bg-base2">
 	<div class="ui container uk-grid">
+		<div class="uk-width-3-5">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Membantu Pengembangan Produk Kreatif</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+
+			</p>
+		</div>
 		<div class="uk-width-2-5">
 			&nbsp;
 			<!--<img src="public/img/pics/illustration2.png" alt="" width="350" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Mengindeks Produk Kreatif Seluruh Indonesia</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right uk-contrast kg-bg-base">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Menyehatkan Iklim Investasi Dalam Negeri</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+
+			</p>
+		</div>
+		<div class="uk-width-medium-2-5 uk-hidden-small">
 			&nbsp;
 			<!--<img class="section-image" src="public/img/pics/section3.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Rating, Review dan Rekomendasi</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Mengajak Masyarakat Mencintai Produk Lokal</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+
+			</p>
+		</div>
+		<div class="uk-width-2-5 uk-hidden-small">
 			&nbsp;
 			<!--<img class="section-image" src="public/img/pics/section3.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Rating, Review dan Rekomendasi</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
@@ -217,7 +224,7 @@
 		  <i class="file video icon"></i>
 		  Video Lebih Jelasnya
 		</h1>
-		<div data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+		<div class="uk-cover" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 			<iframe width="720" height="400" src="https://www.youtube.com/embed/77XXH_H4FxE" frameborder="0" allowfullscreen></iframe>
 		</div>
 	</div>
