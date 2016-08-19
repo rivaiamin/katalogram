@@ -162,11 +162,13 @@
 				  </div>
 				  <div class="field">
 					<label>Deskripsi Detil</label>
-					<textarea ng-model="product.desc" rows="3" placeholder="Penjelasan mengenai produk"></textarea>
+					<div text-angular name="desc" ng-model="product.desc" class="ui form segments" ta-text-editor-class="field" ta-html-editor-class="field" ta-focussed-class="focussed"></div>
+					<!--<textarea ng-model="product.desc" rows="3" placeholder="Penjelasan mengenai produk"></textarea>-->
 				  </div>
 				  <div class="field">
 					<label>Data Tambahan</label>
-					<textarea ng-model="product.data" rows="3" placeholder="data mengenai spesifikasi produk"></textarea>
+					<div text-angular name="data" ng-model="product.data" class="ui form segments" ta-text-editor-class="field" ta-html-editor-class="field" ta-focussed-class="focussed"></div>
+					<!--<textarea ng-model="product.data" rows="3" placeholder="data mengenai spesifikasi produk"></textarea>-->
 				  </div>
 				</div>
 			</div>

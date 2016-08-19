@@ -64,7 +64,7 @@ var paths = {
         //angular
         'bower_components/angular/angular.min.js',
         'bower_components/angular-route/angular-route.min.js',
-        'bower_components/angular-sanitize/angular-sanitize.min.js',
+        /*'bower_components/angular-sanitize/angular-sanitize.min.js',*/
         'bower_components/angular-superswipe/superswipe.js',
         'bower_components/angular-touch/angular-touch.min.js',
         'bower_components/angular-resource/angular-resource.min.js',
@@ -81,7 +81,11 @@ var paths = {
         //'bower_components/angular-knob/resources/angular-knob.js',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.js',
         'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
-		'bower_components/angular-environment/dist/angular-environment.min.js',
+        'bower_components/textAngular/dist/textAngular-rangy.min.js',
+        'bower_components/textAngular/dist/textAngular-sanitize.min.js',
+        'bower_components/textAngular/dist/textAngular.min.js',
+
+		/*'bower_components/angular-environment/dist/angular-environment.min.js',*/
 
         //'bower_components/holderjs/holder.min.js'
     ],
@@ -127,7 +131,7 @@ var paths = {
         //uikit
 		'resources/css/uikit.css',
 		'bower_components/uikit/css/components/sticky.min.css',
-        'bower_components/uikit/css/components/notify.almost-flat.min.css',
+        /*'bower_components/uikit/css/components/notify.almost-flat.min.css',*/
         /*'bower_components/uikit/css/uikit.almost-flat.min.css',
         'bower_components/uikit/css/components/slider.min.css',
         'bower_components/uikit/css/components/slidenav.min.css',
@@ -139,10 +143,11 @@ var paths = {
 
         //angular
         'bower_components/angular-input-stars-directive/angular-input-stars.css',
-        'bower_components/cropme/cropme.css',
+        /*'bower_components/cropme/cropme.css',*/
         /*'bower_components/angular-ui-grid/ui-grid.min.css',*/
         /*'bower_components/codemirror/lib/codemirror.css',*/
         'bower_components/ng-tags-input/ng-tags-input.min.css',
+		'bower_components/textAngular/dist/textAngular.css',
         //'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css',
         //'bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
 
@@ -268,7 +273,7 @@ gulp.task('imagemin', function() {
 gulp.task('fontmin', function() {
   fontmin().src(paths.fonts)
     .use(fontmin.otf2ttf())
-    .use(fontmin.ttf2woff())
+    .use(fontmin.ttf2woff({deflate: true}))
     .use(fontmin.ttf2eot())
     .use(fontmin.ttf2svg())
     .use(fontmin.css({

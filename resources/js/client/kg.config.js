@@ -1,5 +1,5 @@
-var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', 'kgConfig',
-  function($stateProvider, $sceProvider, $rootScopeProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, kgConfig) {
+var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', '$provide', 'kgConfig',
+  function($stateProvider, $sceProvider, $rootScopeProvider, $httpProvider, $urlRouterProvider, $authProvider, $locationProvider, $provide, kgConfig) {
 
     var skipIfLoggedIn = ['$q', '$location', '$auth', function($q, $location, $auth) {
       var deferred = $q.defer();
@@ -73,6 +73,53 @@ var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProv
       clientId: kgConfig.google,
       url: kgConfig.api+'auth/google'
     });
+
+	// this demonstrates how to register a new tool and add it to the default toolbar
+	$provide.decorator('taOptions', ['$delegate', function(taOptions){
+		// $delegate is the taOptions we are decorating
+		// here we override the default toolbars and classes specified in taOptions.
+		taOptions.forceTextAngularSanitize = true; // set false to allow the textAngular-sanitize provider to be replaced
+		taOptions.keyMappings = []; // allow customizable keyMappings for specialized key boards or languages
+		taOptions.toolbar = [
+			['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+			['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
+			['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
+			['html', 'insertImage', 'insertLink', 'wordcount', 'charcount']
+		];
+		taOptions.classes = {
+			focussed: 'focussed',
+			toolbar: 'ui segment',
+			toolbarGroup: 'ui basic buttons',
+			toolbarButton: 'ui button',
+			toolbarButtonActive: 'active',
+			disabled: 'disabled',
+			textEditor: 'ui segment',
+			htmlEditor: 'ui segment'
+		};
+		return taOptions; // whatever you return will be the taOptions
+	}]);
+	// this demonstrates changing the classes of the icons for the tools for font-awesome v3.x
+	$provide.decorator('taTools', ['$delegate', function(taTools){
+		taTools.bold.iconclass = 'bold icon';
+		taTools.italics.iconclass = 'italic icon';
+		taTools.underline.iconclass = 'underline icon';
+		taTools.ul.iconclass = 'unordered list icon';
+		taTools.ol.iconclass = 'ordered list icon';
+		taTools.undo.iconclass = 'undo icon';
+		taTools.redo.iconclass = 'repeat icon';
+		taTools.justifyLeft.iconclass = 'align left icon';
+		taTools.justifyRight.iconclass = 'align right icon';
+		taTools.justifyCenter.iconclass = 'align center icon';
+		taTools.justifyFull.iconclass = 'align justify icon';
+		taTools.clear.iconclass = 'remove circle icon';
+		taTools.html.iconclass = 'code icon';
+		taTools.insertLink.iconclass = 'linkify icon';
+		taTools.insertImage.iconclass = 'file image outline icon';
+		// there is no quote icon in old font-awesome so we change to text as follows
+		delete taTools.quote.iconclass;
+		taTools.quote.buttontext = 'quote';
+		return taTools;
+	}]);
 
 	/*envServiceProvider.config({
 		domains: {
