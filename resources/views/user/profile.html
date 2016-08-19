@@ -234,19 +234,35 @@
 				<div class="ui four doubling link stackable cards" data-uk-grid>
 					<!-- list start -->
 					<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
-						<div class="image">
-							<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
-							<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+						<div class="blurring dimmable image" kg-ui-dimmer>
+						  <div class="ui primary left corner label">
+							<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
+						  </div>
+						  <div class="ui dimmer">
+							<div class="content">
+							  <div class="center">
+								<img src="{{ files }}user/picture/thumb/{{ auth.picture }}" alt="" class="ui avatar image"> {{ auth.name }}
+							  </div>
+							</div>
+						  </div>
+						  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
+						  <div  ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
+							<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
+						  </div>
 						</div>
 						<div class="content">
-							<h5 class="ui header">
-								<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+							<div class="kg-heading">
+								<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}user/picture/{{list.user.user_pict}}">
 								{{ list.name }}
-							</h5>
+							</div>
+							<!--<div class="meta uk-text-small">
+								<i class="kg-icon icon-{{ categories[list.category_id-1].slug }}"></i> {{ categories[list.category_id-1].slug }}
+							</div>-->
 							<!--<div class="meta">
 								<span class="date">Joined in 2013</span>
 							</div>-->
 							<input-stars icon-full="star icon" icon-empty="empty star icon" max="5" ng-model="list.rating_avg" readonly></input-stars>
+							<!--<div class="ui star rating" data-rating="{{list.rating_avg}}"></div>-->
 							<div><q class="description">
 								{{ list.quote }}
 							</q></div>
@@ -268,6 +284,15 @@
 								  {{ list.minus_count }}
 								</span>
 							</a>
+							<!--<a class="item kg-font-base">
+								<i class="heart icon"></i> {{ list.collect_count }}
+							</a>
+							<a class="item">
+								<i class="thumbs up icon"></i> {{ list.plus_count }}
+							</a>
+							<a class="item">
+								<i class="thumbs down icon"></i> {{ list.minus_count }}
+							</a>-->
 						</div>
 					</div>
 				</div>
