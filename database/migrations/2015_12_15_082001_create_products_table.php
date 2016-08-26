@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->text('data')->nullable();
             $table->string('website', 64);
             $table->string('embed', 128)->nullable();
-			$table->boolean('is_release')->default(0);
+			$table->boolean('is_release')->default(1);
 
 			$table->integer('view_count')->default(0);
             $table->decimal('rating_avg',5,2)->default(0);

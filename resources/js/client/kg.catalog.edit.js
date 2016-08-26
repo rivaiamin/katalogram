@@ -1,7 +1,7 @@
 var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$sce','kgConfig', 'Upload',
   function($stateParams, $scope, $rootScope, $http, $state, $sce,kgConfig,Upload) {
-	$scope.modal1 = UIkit.modal("#cropmeModal");
-	$scope.modal2 = UIkit.modal("#cropmeModal2");
+	//$scope.modal1 = UIkit.modal("#cropmeModal");
+	//$scope.modal2 = UIkit.modal("#cropmeModal2");
 	/*$scope.addPreview = false;
 	$scope.preview = {};*/
 	$scope.product = {};
@@ -160,7 +160,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		else if ($scope.product.is_release == 1) $scope.product.is_release = 0;
 		console.log($scope.product.is_release);
 	}
-	$scope.updateProduct = function(product) {
+	$scope.updateProduct = function(product, view) {
 		$scope.isSaving = true;
 		var publish = $('#is_release').prop('checked')?1:0;
 		var input = {
@@ -176,6 +176,9 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 			input
 		).success(function (response) {
 			$scope.isSaving = false;
+			if (view == true) {
+				$scope.catalogDetail($scope.productId);
+			}
 	    });
 		//console.log($("#is_release").prop('checked'));
     };

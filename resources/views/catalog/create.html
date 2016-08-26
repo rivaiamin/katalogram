@@ -83,7 +83,7 @@
 	  </div>
 	</div>-->
 	<div class="uk-modal-footer uk-text-right">
-		<a ng-click="saveCatalog(formCreate)" class="ui primary button" ng-class="{'disabled loading':isCreating}"><i class="file icon"></i>Ciptakan</a>
+		<button ng-disabled="!createCatalog.$valid" ng-click="saveCatalog(formCreate)" class="ui primary button" ng-class="{'disabled loading':isCreating}"><i class="send icon"></i>Ciptakan</button>
 	</div>
 
 </div>

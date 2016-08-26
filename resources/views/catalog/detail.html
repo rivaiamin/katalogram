@@ -316,7 +316,7 @@
 			<i class="file image outline icon"></i>
 			Export
 		</a>
-		<a ng-if="catalog.user.name == auth.name" class="ui labeled icon secondary button" href="/catalog/{{ catalog.id }}/edit" target="_blank">
+		<a ng-if="catalog.user.name == auth.name" class="ui labeled icon secondary button" ng-click="modal1.hide()" href="/catalog/{{ catalog.id }}/edit">
 			<i class="pencil icon"></i>
 			Edit
 		</a>

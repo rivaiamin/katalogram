@@ -145,7 +145,6 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 			$state.go('catalogEdit', { productId: response.product_id });
 		});
 	};
-	// catalog function
 	$rootScope.catalogDetail = function(productId) {
         $scope.loader = true;
 
