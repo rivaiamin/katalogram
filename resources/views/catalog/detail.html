@@ -61,7 +61,7 @@
 			</h3>
 		</div>
 		<div class="uk-width-1-1 uk-margin-bottom kg-color-gray">
-			<img class="ui avatar image" ng-if="catalog.user.picture != null" src="{{ files }}/user/picture/{{ catalog.user.picture }}" width="24">
+			<img class="ui avatar image" ng-if="catalog.user.picture != ''" src="{{ files }}/user/picture/{{ catalog.user.picture }}" width="24">
 			<label><a href="/{{catalog.user.name}}" ng-click="closeModal()">@{{ catalog.user.name }}</a></label>
 		</div>
 	</div>

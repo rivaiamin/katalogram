@@ -30,7 +30,7 @@ class ProductFeedbackController extends Controller {
         if ($create) {
             $data['status'] = "success";
             $data['message'] = "terima kasih telah memberikan feedback";
-
+        	$data['data'] = $create;
 			$product = Product::where('id',$productId);
 			if ($input['type'] == 'P') $product->increment('plus_count');
 			elseif ($input['type'] == 'M') $product->increment('minus_count');
@@ -38,7 +38,6 @@ class ProductFeedbackController extends Controller {
             $data['status'] = "error";
             $data['message'] = "maaf feedback gagal dikirim";
         }
-        $data['data'] = $input;
 
         return response()->json($data, 200);
     }

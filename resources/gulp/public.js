@@ -32,7 +32,7 @@ var paths = {
         //semantic
         'bower_components/semantic/dist/components/accordion.min.js',
         'bower_components/semantic/dist/components/checkbox.min.js',
-        'bower_components/semantic/dist/components/dimmer.min.js',
+        //'bower_components/semantic/dist/components/dimmer.min.js',
         'bower_components/semantic/dist/components/dropdown.min.js',
         'bower_components/semantic/dist/components/popup.min.js',
         'bower_components/semantic/dist/components/tab.min.js',
@@ -47,7 +47,7 @@ var paths = {
         'bower_components/uikit/js/core/offcanvas.min.js',
         'bower_components/uikit/js/core/scrollspy.min.js',
         'bower_components/uikit/js/components/grid.min.js',
-        'bower_components/uikit/js/components/slider.min.js',
+        //'bower_components/uikit/js/components/slider.min.js',
         //'bower_components/uikit/js/components/upload.min.js',
         'bower_components/uikit/js/components/notify.min.js',
         'bower_components/uikit/js/components/sticky.min.js',
@@ -116,7 +116,7 @@ var paths = {
         'bower_components/semantic/dist/components/input.min.css',
         'bower_components/semantic/dist/components/label.min.css',
         'bower_components/semantic/dist/components/loader.min.css',
-        'bower_components/semantic/dist/components/dimmer.min.css',
+        /*'bower_components/semantic/dist/components/dimmer.min.css',*/
         'bower_components/semantic/dist/components/menu.min.css',
         'bower_components/semantic/dist/components/message.min.css',
         'bower_components/semantic/dist/components/popup.min.css',
@@ -138,8 +138,8 @@ var paths = {
         'bower_components/uikit/css/components/form-file.min.css',
         'bower_components/uikit/css/components/upload.min.css',
         'bower_components/uikit/css/components/progress.min.css',
-        'bower_components/uikit/css/components/htmleditor.min.css',
-        'bower_components/uikit/css/components/notify.almost-flat.min.css',*/
+        'bower_components/uikit/css/components/htmleditor.min.css',*/
+        'bower_components/uikit/css/components/notify.almost-flat.min.css',
 
         //angular
         'bower_components/angular-input-stars-directive/angular-input-stars.css',

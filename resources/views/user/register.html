@@ -45,7 +45,7 @@
 		<label for="">Membuat akun berarti Anda setuju dengan <a>Ketentuan Layanan</a>, dan <a>Kebijakan Layanan</a> Katalogram</label>
 	</div>
 	<div class="field">
-		<button ng-disabled="!kgForm.$valid " type="submit" ng-click="registerMember(register)" class="primary fluid ui button"><i class="user icon"></i> Register</submit>
+		<button ng-disabled="!kgForm.$valid" type="submit" ng-click="registerMember(register)" ng-class="{'disabled loading':isRegister}" class="primary fluid ui button"><i class="user icon"></i> Register</submit>
 	</div>
 	<div class="field">
 		<label>Sudah Punya akun? <a ng-click="loginPage()">Login disini</a></label>

@@ -44,22 +44,15 @@
 		<h1 class="kg-heading uk-text-center">
 		  <q>Telusuri Produk Kreatif</q>
 		</h1>
-		<div id="catalogList" class="ui five doubling link stackable cards">
+		<div id="catalogList" class="ui five doubling link cards">
 			<!-- list start -->
 			<div class="card uk-text-center" ng-repeat="list in catalogs">
-				<div class="blurring dimmable image" kg-ui-dimmer>
+				<div class="image" kg-ui-dimmer>
 				  <div class="ui primary left corner label">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
 				  </div>
-				  <div class="ui dimmer">
-					<div class="content">
-					  <div class="center">
-						<img src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
-					  </div>
-					</div>
-				  </div>
 				  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
-				  <div ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
+				  <div  ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
 				  </div>
 				</div>

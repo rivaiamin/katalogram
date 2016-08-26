@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="field">
-		<button ng-disabled="!kgForm.$valid" type="submit" class="primary fluid ui button">
+		<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
 		<i class="lock icon"></i> Log In</button>
 	</div>
 	<div class="field">

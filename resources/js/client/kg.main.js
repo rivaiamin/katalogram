@@ -83,15 +83,18 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
     	$scope.modal2.show();
     };
     $scope.loginMember = function(user) {
+		$scope.isLogging = true;
     	$auth.login(user)
 		  .then(function(response) {
 		    // Redirect user here after a successful log in.
 		    //console.log(response.token)
 		  	$scope.modal2.hide();
 		  	$scope.getAuthUser();
+			$scope.isLogging = false;
 		  })
 		  .catch(function(response) {
-		    UIkit.notify(response.data.message, response.status);
+		    UIkit.notify('username atau password salah', 'error');
+			$scope.isLogging = false;
 		  });
     };
     $scope.registerPage = function() {
@@ -99,17 +102,20 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
     	//$scope.modal.show();
     };
     $scope.registerMember = function(user) {
+		$scope.isRegister = true;
 		$auth.signup(user)
 		  .then(function(response) {
 		    // Redirect user here to login page or perhaps some other intermediate page
 		    // that requires email address verification before any other part of the site
 		    // can be accessed.
 	  		$auth.setToken(response);
+			$scope.isRegister = false;
 	  		$scope.getAuthUser();
 	  		$scope.modal2.hide();
 		  })
 		  .catch(function(response) {
 		    // Handle errors here.
+			$scope.isRegister = false;
 		    UIkit.notify(response.data.message, response.status);
 		  });
     };
@@ -130,10 +136,12 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		$scope.modal1.show();
 	};
 	$scope.saveCatalog = function(create) {
+		$scope.isCreating = true;
 		$http.post(kgConfig.api+"catalog", create
 		).success(function(response){
 			UIkit.notify(response.message, response.status);
 			$scope.modal1.hide();
+			$scope.isCreating = false;
 			$state.go('catalogEdit', { productId: response.product_id });
 		});
 	};

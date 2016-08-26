@@ -17,7 +17,7 @@ class CriteriasTableSeeder extends Seeder
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('criterias')->insert([
-                'name' => $faker->word
+                'name' => $faker->unique()->word
             ]);
         }
     }
