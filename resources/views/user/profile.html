@@ -13,12 +13,6 @@
 			<a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
 		</div>-->
 		<div ng-if="user.user_profile.cover == ''" class="uk-cover uk-cover-background kg-bg-base"></div>
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-			<div class="uk-overlay uk-overlay-hover kg-logo-big ui circular image">
-				<img ng-if="user.picture != ''" class="" ng-src="{{ files }}user/picture/{{ user.picture }}">
-				<img ng-if="user.picture == ''" class="" src="/public/img/placeholder.jpg">
-			</div>
-		</div>
 		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle kg-bg-trans">
 			<div class="uk-position-relative uk-text-center uk-margin-top uk-width-large-1-2 uk-width-small-1-1">
 				<!--<h2 class="kg-heading uk-margin-bottom-remove"><span>{{ user.user_profile.name }}</span>
@@ -65,7 +59,12 @@
 				<i class="empty heart link icon"></i>
 				<p> Koleksi <span class="ui secondary label">{{ user.collect_count }}</span> </p>
 			</a>
-			<a class="item disabled"></a>
+			<a class="item disabled">
+				<div class="ui circular image kg-logo-big">
+					<img ng-if="user.picture != ''" class="" ng-src="{{ files }}user/picture/{{ user.picture }}">
+					<img ng-if="user.picture == ''" class="" src="/public/img/placeholder.jpg">
+				</div>
+			</a>
 			<a class="item">
 				<i class="user outline link icon"></i>
 				<p> Kontak <span class="ui secondary label">{{ user.contact_count }}</span></p>
