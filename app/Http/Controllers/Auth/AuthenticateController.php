@@ -135,7 +135,7 @@ class AuthenticateController extends Controller
 					if ($field == 'email') $user->email = $input['email'];
 					$user->save();
 					return response()->json(['success' => 'Akun berhasil diperbarui, harap login ulang'], 200);
-				} catch (Exception e) {
+				} catch (Exception $e) {
                     return response()->json(['error' => 'Akun gagal diperbarui'], 500);
 				}
 
