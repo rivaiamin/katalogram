@@ -109,7 +109,7 @@ class ProductController extends Controller {
         return json_encode($data);
     }
 
-    public function create(ProductRequest $request) {
+    public function create(ProductRequest $request, Category $category) {
         $input = $request->only('category_id','name');
         $input['user_id'] = Auth::user()->id;
 
@@ -119,6 +119,7 @@ class ProductController extends Controller {
             $data['status'] = "success";
             $data['message'] = "katalog produk telah ditambahkan";
 			$this->qrcode($create->id, false);
+			$category->productInc($input['category_id']);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -144,7 +145,7 @@ class ProductController extends Controller {
 
             $input = $request->all();
 
-            $catalog->update($input);
+            $update = $catalog->update($input);
 
             if ($catalog) {
                 $data['status'] = "success";
@@ -171,10 +172,11 @@ class ProductController extends Controller {
 		else return false;
 	}
 
-    public function delete($productId) {
+    public function delete(Category $category, $productId) {
         if ($this->isOwner($productId)) {
-			$catalog = Product::where('id', $productId)
-					   ->where('user_id', Auth::user()->id);
+			$catalog = Product::find($productId);
+
+			$category->productDec($catalog->category_id);
 
 			if ($catalog->delete()) {
 				$data['status'] = "success";

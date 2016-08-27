@@ -128,8 +128,10 @@ var userEditCtrl =  ['$stateParams','$scope', '$rootScope', '$state', '$http', '
 		else if (field == 'email') data = { email: input };
 		else if (field == 'password') data = input;
 
-		$http.put(kgConfig.api+$rootScope.auth.name+'/'+field, data).success(function(response) {
-			UIkit.notify(response.data.success, response.status);
+		$http.put(kgConfig.api+$rootScope.auth.name+'/'+field, data).then(function(response) {
+			if (field == 'name') $rootScope.auth.name = input;
+			if (field == 'email') $rootScope.auth.email = input;
+			UIkit.notify(response.data.success, error.status);
 		}).catch(function (error){
 			UIkit.notify(error.data.error, error.status);
 		})

@@ -13,12 +13,6 @@
 			<a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
 		</div>-->
 		<div ng-if="user.user_profile.cover == ''" class="uk-cover uk-cover-background kg-bg-base"></div>
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-			<div class="uk-overlay uk-overlay-hover kg-logo-big ui circular image">
-				<img ng-if="user.picture != ''" class="" ng-src="{{ files }}user/picture/{{ user.picture }}">
-				<img ng-if="user.picture == ''" class="" src="/public/img/placeholder.jpg">
-			</div>
-		</div>
 		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle kg-bg-trans">
 			<div class="uk-position-relative uk-text-center uk-margin-top uk-width-large-1-2 uk-width-small-1-1">
 				<!--<h2 class="kg-heading uk-margin-bottom-remove"><span>{{ user.user_profile.name }}</span>
@@ -65,7 +59,12 @@
 				<i class="empty heart link icon"></i>
 				<p> Koleksi <span class="ui secondary label">{{ user.collect_count }}</span> </p>
 			</a>
-			<a class="item disabled"></a>
+			<a class="item disabled">
+				<div class="ui circular image kg-logo-big">
+					<img ng-if="user.picture != ''" class="" ng-src="{{ files }}user/picture/{{ user.picture }}">
+					<img ng-if="user.picture == ''" class="" src="/public/img/placeholder.jpg">
+				</div>
+			</a>
 			<a class="item">
 				<i class="user outline link icon"></i>
 				<p> Kontak <span class="ui secondary label">{{ user.contact_count }}</span></p>
@@ -231,26 +230,38 @@
 				</div>
 			</div>
 			<div class="uk-width-large-3-4 uk-width-small-1-1">
-				<div class="ui four doubling link stackable cards" data-uk-grid>
+				<div class="ui four doubling link cards" data-uk-grid>
 					<!-- list start -->
 					<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
 						<div class="image">
-							<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
-							<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+						  <div class="ui primary left corner label">
+							<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
+						  </div>
+						  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
+						  <div  ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
+							<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
+						  </div>
 						</div>
 						<div class="content">
-							<h5 class="ui header">
-								<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+							<div class="kg-heading">
+								<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}user/picture/{{list.user.user_pict}}">
 								{{ list.name }}
-							</h5>
+							</div>
+							<!--<div class="meta uk-text-small">
+								<i class="kg-icon icon-{{ categories[list.category_id-1].slug }}"></i> {{ categories[list.category_id-1].slug }}
+							</div>-->
 							<!--<div class="meta">
 								<span class="date">Joined in 2013</span>
 							</div>-->
 							<input-stars icon-full="star icon" icon-empty="empty star icon" max="5" ng-model="list.rating_avg" readonly></input-stars>
+							<!--<div class="ui star rating" data-rating="{{list.rating_avg}}"></div>-->
 							<div><q class="description">
 								{{ list.quote }}
 							</q></div>
 						</div>
+						<!--<div class="right floated content">
+							  <img ng-if="user.picture != ''" src="{{ files }}user/picture/thumb/{{ user.picture }}" alt="" class="ui avatar image"> {{ user.name }}
+						</div>-->
 						<div class="extra content">
 							<span class="left floated like">
 							  <i class="like icon"></i>
@@ -268,6 +279,15 @@
 								  {{ list.minus_count }}
 								</span>
 							</a>
+							<!--<a class="item kg-font-base">
+								<i class="heart icon"></i> {{ list.collect_count }}
+							</a>
+							<a class="item">
+								<i class="thumbs up icon"></i> {{ list.plus_count }}
+							</a>
+							<a class="item">
+								<i class="thumbs down icon"></i> {{ list.minus_count }}
+							</a>-->
 						</div>
 					</div>
 				</div>

@@ -23,8 +23,8 @@
 			</ul></div>
 		</li>-->
 
-		<li class="uk-nav-header">Pengguna</li>
-		<li class="uk-contrast uk-grid uk-grid-small uk-margin-left">
+		<li ng-if="isLogin()" class="uk-nav-header">Pengguna</li>
+		<li ng-if="isLogin()" class="uk-contrast uk-grid uk-grid-small uk-margin-left">
 			<div class="uk-width-1-3" ui-sref="profile({username: auth.name})">
 				<img ng-if="auth.picture" class="ui circular image" ng-src="{{ files + 'user/picture/'+ auth.picture }}">
 				<img ng-if="! auth.picture" class="ui circular image" src="public/img/placeholder.jpg" />

@@ -3,6 +3,7 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
 
 	$scope.catalogs = [];
 	$scope.scrollBusy = false;
+	$scope.scrollLast = false;
 	$scope.limit = 8;
 	$scope.after = 0;
 	$scope.onSearch = false;
@@ -34,8 +35,10 @@ var catalogCtrl = ['$scope', '$rootScope', '$stateParams', '$http', '$state', '$
             //$scope.catalogs.push(response.catalogs[0]);
 			if (response.catalogs.length > 0) {
 				$scope.after = response.catalogs[response.catalogs.length - 1].id;
-				$scope.scrollBusy = false;
+			} else {
+				$scope.scrollLast = true;
 			}
+			$scope.scrollBusy = false;
 			//$('.ui.sticky').sticky('refresh');
 			//console.log($scope.catalogs);
         })

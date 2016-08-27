@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('users')->insert([
-                'name' => $faker->userName,
+                'name' => $faker->unique()->userName,
                 'email' => $faker->email,
 				'picture' => $faker->numberBetween(1,10).".jpg",
 				'password' => Hash::make('123'),

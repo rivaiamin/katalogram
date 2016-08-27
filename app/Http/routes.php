@@ -117,7 +117,6 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/{productId}/qrcode', 'Server\ProductController@qrcode');
     Route::get('catalog/{productId}/export', 'Server\ProductController@export');
     Route::get('catalog/{productId}/view', 'Server\ProductController@view');
-	Route::get('catalog/{productId}/export', 'Server\ProductController@export');
 	Route::get('catalog/{productId}/share', 'Server\ProductController@share');
     Route::get('catalog/{tag}/search', 'Server\ProductController@search');
     Route::get('catalog/{after}/{limit}', 'Server\ProductController@get')
@@ -174,7 +173,7 @@ Route::group([//['middleware' => 'cors'],
 		Route::post('catalog/{productId}/feedback', 'Server\ProductFeedbackController@send');
 		Route::delete('catalog/{productId}/feedback/{id}', 'Server\ProductFeedbackController@remove');
 		Route::post('feedback/{feedbackId}/respond/{respondType}', 'Server\ProductFeedbackController@respond');
-		Route::put('catalog/{feedbackId}/endorse', 'Server\ProductFeedbackController@setEndorse');
+		Route::put('feedback/{feedbackId}/endorse', 'Server\ProductFeedbackController@setEndorse');
 
 
 		/*route Rate

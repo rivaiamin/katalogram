@@ -1,34 +1,58 @@
-<div id="kgHero" class="uk-cover" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
-	<div class="uk-position-cover uk-flex uk-flex-left uk-flex-middle content">
+<div id="kgHero" class="uk-cover kg-bg-base" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
+	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-left uk-flex-middle content">
 		<img src="public/img/pics/illustration2.png" alt="">
 	</div>
-	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
+	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
 	  	<h1 class="ui inverted header uk-margin-top uk-text-center">
 		  <q>Mari Secara Kolektif Memajukan Ekonomi Kreatif</q>
 		</h1>
-		<div><a ng-click="loginPage()" class="ui inverted big button"><i class="rocket icon"></i> Gabung Sekarang</a></div>
+		<div>
+			<a ng-click="loginPage()" class="ui inverted big button"><i class="rocket icon"></i> Gabung Sekarang</a>
+			<a class="ui inverted icon big button" href="https://facebook.com/katalogram">
+			  <i class="facebook icon"></i>
+			</a>
+			<a class="ui inverted icon big button" href="https://twitter.com/katalogram">
+			  <i class="twitter icon"></i>
+			</a>
+			<a class="ui inverted icon big button" href="https://instagram.com/katalogram">
+			  <i class="instagram plus icon"></i>
+			</a>
+		</div>
 	</div>
-	<img src="public/img/header.jpg" alt="" class="uk-cover-object">
+  	<div class="uk-visible-small uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
+	  	<h3 class="ui inverted header uk-margin-top uk-text-center">
+		  <q>Mari Secara Kolektif Memajukan Ekonomi Kreatif</q>
+		</h3>
+		<div>
+			<a ng-click="loginPage()" class="ui inverted big button"><i class="rocket icon"></i> Gabung Sekarang</a>
+		</div>
+		<div class="uk-margin-small-top">
+			<a class="ui inverted icon button" href="https://facebook.com/katalogram">
+			  <i class="facebook icon"></i>
+			</a>
+			<a class="ui inverted icon button" href="https://twitter.com/katalogram">
+			  <i class="twitter icon"></i>
+			</a>
+			<a class="ui inverted icon button" href="https://instagram.com/katalogram">
+			  <i class="instagram plus icon"></i>
+			</a>
+		</div>
+	</div>
 </div>
 <div class="kg-section">
 	<div class="ui container">
-		<div id="catalogList" class="ui five doubling link stackable cards">
+		<h1 class="kg-heading uk-text-center">
+		  <q>Telusuri Produk Kreatif</q>
+		</h1>
+		<div id="catalogList" class="ui five doubling stackable link cards">
 			<!-- list start -->
 			<div class="card uk-text-center" ng-repeat="list in catalogs">
-
-				<div class="blurring dimmable image" kg-ui-dimmer>
+				<div class="image" kg-ui-dimmer>
 				  <div class="ui primary left corner label">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
 				  </div>
-				  <div class="ui dimmer">
-					<div class="content">
-					  <div class="center">
-						<img src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
-					  </div>
-					</div>
-				  </div>
 				  <img ng-if="list.logo != null" ng-src="{{ files }}product/logo/{{ list.logo }}">
-				  <div ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
+				  <div  ng-if="list.logo == null" class="kg-bg-base2 kg-padding">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} inverted massive icon"></i>
 				  </div>
 				</div>
@@ -65,7 +89,7 @@
 		<div class="uk-text-center uk-margin-top"><a ui-sref="catalog" class="ui primary huge button"><i class="grid layout icon"></i> Telusuri Semua</a></div>
 	</div>
 </div>
-<div class="kg-section uk-contrast kg-bg-base">
+<div class="kg-section uk-contrast uk-text-center kg-bg-base">
 	<!--<div class="ui text container" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 		<div><img src="public/img/kg_white.png" alt="" width="100"></div>
 		<div><img src="public/img/katalogram.png" alt="" width="200"></div>
@@ -75,14 +99,18 @@
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut in assumenda ad ducimus consequatur consequuntur, quidem, asperiores temporibus ut vero. Voluptate sequi consequatur suscipit asperiores a, odit alias nam atque.</p>
 	</div>-->
 	<div class="ui container uk-grid">
-		<div class="uk-width-3-5">
-			<img src="public/img/pics/illustration1.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<img src="public/img/pics/illustration1.png" width="100%" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 		</div>
-		<div class="uk-width-2-5  uk-text-right">
+		<div class="uk-width-medium-2-5 uk-width-small-1-1 uk-text-right">
 			<h1 class="kg-heading uk-margin-top"  data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Katalogram, Apa itu?</q>
+			 <img src="public/img/kg_white.png" width="40" alt=""> <q> Katalogram, Apa itu?</q>
 			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+				Katalogram merupakan platform untuk membuat katalog produk kreatif kamu sendiri,
+				sehingga dapat ditemukan dengan mudah oleh para pencinta dan kolektor produk kreatif Indonesia.
+				Produk kamu dapat lebih mudah dikenali dan lebih mudah untuk dikembangkan.
+			</p>
 		</div>
 	</div>
 </div>
@@ -140,64 +168,101 @@
 </div>
 <div class="kg-section uk-contrast kg-bg-base">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
-			<img src="public/img/pics/detail.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}" style="position:absolute">
-			&nbsp;
-		</div>
-		<div class="uk-width-3-5  uk-text-right">
+		<div class="uk-width-3-5 uk-text-right">
 			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 			  <q>Mengindeks Produk Kreatif Seluruh Indonesia</q>
 			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+				Dengan mengunjungi katalogram, kita dapat tahu apa saja kekayaan Produk Kreatif Indonesia dari semua 15 sub-sektor Ekonomi Kreatif.
+				Penelusuran dan pencarian Produk Kreatif menjadi lebih mudah.
+			</p>
+		</div>
+		<div class="uk-width-2-5">
+			<img src="public/img/pics/detail.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}" style="position:absolute">
+			&nbsp;
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right uk-contrast kg-bg-base2">
 	<div class="ui container uk-grid">
+		<div class="uk-width-3-5">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Membantu Pengembangan Produk Kreatif</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+				Katalogram membantu kreator dalam meningkatkan kualitas produknya, dengan cara:
+			</p>
+			<div class="ui list">
+			  <div class="item">
+				<i class="star half empty icon"></i>
+				<div class="content">
+				  Rating pada kriteria tertentu membuat pengguna tahu dari sisi apa produk tersebut unggul
+				</div>
+			  </div>
+			  <div class="item">
+				<i class="heart icon"></i>
+				<div class="content">
+				  Dengan jumlah favorit, pengguna dapat mengetahui seberapa disukai kah produk tersebut.
+				</div>
+			  </div>
+			  <div class="item">
+				<i class="thumbs up icon"></i>
+				<div class="content">
+				  Keunggulan produk dapat langsung diketahui pada kolom tanggapan positif
+				</div>
+			  </div>
+			  <div class="item">
+				<i class="thumbs down icon"></i>
+				<div class="content">
+				  Dan kekurangan produk dapat langsung dibandingkan pada kolom tanggapan negatif
+				</div>
+			  </div>
+			</div>
+		</div>
 		<div class="uk-width-2-5">
 			&nbsp;
 			<!--<img src="public/img/pics/illustration2.png" alt="" width="350" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Mengindeks Produk Kreatif Seluruh Indonesia</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right uk-contrast kg-bg-base">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Menyehatkan Iklim Investasi Dalam Negeri</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+				Sebagian besar produk kreatif berasal dari UKM maupun Startup yang perlu pendanaan lebih untuk meluaskan pasarnya,
+				Investor juga membutuhkan produk yang berkualitas baik. Katalogram dapat menjembatani antara investor dengan kreator.
+			</p>
+		</div>
+		<div class="uk-width-medium-2-5 uk-hidden-small">
 			&nbsp;
 			<!--<img class="section-image" src="public/img/pics/section3.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Rating, Review dan Rekomendasi</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-right">
 	<div class="ui container uk-grid">
-		<div class="uk-width-2-5">
+		<div class="uk-width-medium-3-5 uk-width-small-1-1">
+			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			  <q>Mengajak Masyarakat Mencintai Produk Lokal</q>
+			</h1>
+			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+				Saat ini Produk Kreatif Indonesia perlu lebih dikenal masyarakat,
+				dan dengan adanya rating dan ulasan positif dapat mampu menjadikan Produk Kreatif Indonesia dicintai masyarakat
+			</p>
+		</div>
+		<div class="uk-width-2-5 uk-hidden-small">
 			&nbsp;
 			<!--<img class="section-image" src="public/img/pics/section3.png" alt="" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">-->
-		</div>
-		<div class="uk-width-3-5">
-			<h1 class="kg-heading uk-margin-top" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-			  <q>Rating, Review dan Rekomendasi</q>
-			</h1>
-			<p data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est eligendi, explicabo eaque illum nobis reprehenderit animi? Eius, ullam iure quidem minus tempora nulla pariatur, totam aut facere possimus, temporibus iusto.</p>
 		</div>
 	</div>
 </div>
 <div class="kg-section uk-text-center uk-contrast kg-bg-base">
 	<div class="ui center aligned container">
 		<h1 class="ui inverted header" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
-		  <i class="industry icon"></i>
+		  <i class="tags icon"></i>
 		  15 Sub-sektor Ekonomi Kreatif
 		</h1>
       <div class="uk-grid uk-grid-width-large-1-5 uk-grid-width-medium-1-3 uk-grid-width-small-1-1"  data-uk-scrollspy="{cls:'uk-animation-slide-bottom',target:'div'}">
@@ -209,7 +274,57 @@
 	</div>
 </div>
 <div class="kg-section">
-
+	<div class="ui text container">
+		<h1 class="kg-heading uk-text-center"  data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+			<i class="help circle icon"></i>
+			Pertanyaan Umum
+		</h1>
+		<div class="ui list"  data-uk-scrollspy="{cls:'uk-animation-slide-bottom',target:'item'}">
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Apa yang membedakan katalogram dengan platform portfolio lain?</a>
+			  <div class="description">Katalogram fokus pada produk, sesuatu yang diunggah bukanlah berupa project ataupun karya bebas,
+			  melainkan sebuah produk yang diperlakukan sebagaimana anak kreator, yang akan dikembangkan dan terus berkelanjutan</div>
+			</div>
+		  </div>
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Apa yang dimaksud dengan produk disini? dan apa itu produk kreatif?</a>
+			  <div class="description">Menurut Parekraf (2014) <q>Industri kreatif didefinisikan sebagai output industri yang menghasilkan kreativitas, keahlian, dan bakat individu untuk menciptakan nilai tambah, lapangan kerja, dan peningkatan kualitas hidup</q>, output itulah yang dimaksudkan dengan produk kreatif.</div>
+			</div>
+		  </div>
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Saya masih bingung katalogram ini platform apa, bisa dicontohkan platform sejenis?</a>
+			  <div class="description">Katalogram merupakan platform seperti imdb.com, goodreads.com, dan platform Social Cataloging lainnya</div>
+			</div>
+		  </div>
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Apa itu Katalogisasi Sosial (Social Cataloging)?</a>
+			  <div class="description"><q>social cataloguing allow(s) members to not only share publicly their cataloged inventories, but to post reviews and commentaries on the items posted, create and participate in discussion groups, and tag or classify the items cataloged. In other words, these sites serve as a user-designed, interactive, and shared catalog</q> (Spiteri, 2009) </div>
+			</div>
+		  </div>
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Apakah akan tersedia dalam bentuk aplikasi mobile?</a>
+			  <div class="description">Pengembangan katalogram memang disiapkan untuk aplikasi mobile, jadi tentu akan dikembangkan</div>
+			</div>
+		  </div>
+		  <div class="item">
+			<i class="help icon"></i>
+			<div class="content">
+			  <a class="header">Kenapa masih ada fitur yang belum berfungsi sebagaimana mestinya?</a>
+			  <div class="description">Saat ini katalogram baru mencakup fungsi-fungsi utama, fungsi lain akan dikembangkan sejalan dengan pembenahan bug</div>
+			</div>
+		  </div>
+		</div>
+	</div>
 </div>
 <div class="kg-section kg-bg-base">
 	<div class="ui center aligned container">
@@ -217,7 +332,7 @@
 		  <i class="file video icon"></i>
 		  Video Lebih Jelasnya
 		</h1>
-		<div data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
+		<div class="uk-cover" data-uk-scrollspy="{cls:'uk-animation-slide-bottom'}">
 			<iframe width="720" height="400" src="https://www.youtube.com/embed/77XXH_H4FxE" frameborder="0" allowfullscreen></iframe>
 		</div>
 	</div>

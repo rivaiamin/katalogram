@@ -22,17 +22,15 @@ use Hash;
 class AuthenticateController extends Controller
 {
 
-    public function __construct()
-     {
+    public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
 
          $this->middleware('jwt.auth', ['except' => ['login', 'register','facebook', 'google']]);
-     }
+    }
 
-    public function index()
-    {
+    public function index() {
         // Retrieve all the users in the database and return them
         $users = User::all();
         return $users;
@@ -69,8 +67,7 @@ class AuthenticateController extends Controller
 		// the token is valid and we have found the user via the sub claim
 	}
 
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         // grab credentials from the request
         $credentials = $request->only('name', 'password');
 
@@ -132,10 +129,17 @@ class AuthenticateController extends Controller
                 return response()->json(['error' => 'sudah ada akun dengan username atau email tersebut'], 409);
                 //return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
             } else {
-                $user = User::where('name', '=', $username)->first();
-                if ($user->update($input)) {
-                    return response()->json(['success' => 'Akun berhasil diperbarui, harap login ulang'], 200);
-                }
+                try {
+					$user = User::where('name', '=', $username)->first();
+					if ($field == 'name') $user->name = $input['name'];
+					if ($field == 'email') $user->email = $input['email'];
+					$user->save();
+					return response()->json(['success' => 'Akun berhasil diperbarui, harap login ulang'], 200);
+				} catch (Exception $e) {
+                    return response()->json(['error' => 'Akun gagal diperbarui'], 500);
+				}
+
+
             }
         } elseif ($field == 'password') {
             $input = $request->only('old','new','confirm');

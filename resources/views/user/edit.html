@@ -23,22 +23,6 @@
 				<img class="uk-invincible" ng-src="{{files}}user/cover/{{ edit.cover }}" alt="">
 			</div>
 			<div ng-if="edit.cover == ''" class="uk-cover uk-cover-background kg-bg-base"></div>
-			<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-				<div class="uk-overlay uk-overlay-hover kg-logo-big ui circular image">
-
-					<img ng-if="edit.picture != ''" class="" ng-src="{{ files }}user/picture/{{ edit.picture }}">
-					<img ng-if="edit.picture == ''" class="" src="/public/img/placeholder.jpg">
-					<div ng-if="auth.name == edit.name" class="uk-overlay-panel uk-overlay-fade uk-overlay-background uk-text-center uk-text-small">
-						<a class="ui tiny button primary"><i class="pencil icon"></i> ganti</a>
-					</div>
-					<a ngf-select="uploadPicture(pictureForm.picture.$valid && edit.filepicture, $file)"
-                  				ngf-resize="{width: 512, height: 512, centerCrop: true}"
-                  				ngf-resize-if="$width > 1600 || $height > 1200" ng-disabled="onProgress1"
-                   				name="picture" ng-model="edit.filepicture" ngf-pattern="'image/*'"
-                    			ngf-accept="'image/*'" class="uk-position-cover"></a>
-                    	<div ng-if="onProgress1" class="ui active centered inline loader"></div>
-				</div>
-			</div>
 			<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle kg-bg-trans">
 				<div class="uk-position-relative uk-text-center uk-margin-top uk-width-1-2">
 					<h2 class="ui center aligned inverted header">
@@ -49,16 +33,31 @@
 						</q>
 						<div ng-if="onProgress2" class="ui active centered inline loader"></div>
 						<a ngf-select="uploadCover(pictureForm.cover.$valid && edit.filecover, $file)"
-                 				ngf-dimensions="$width >= 1366 && $height > 300"
-                  				ngf-resize="{width: 2000, height: 800, centerCrop: true}"
+                 				ngf-resize="{width: 2000, height: 800, centerCrop: true}"
                   				ngf-resize-if="$width > 3000 || $height > 2000"
                    				name="cover" ng-model="edit.filecover" ngf-pattern="'image/*'"
                     			ngf-accept="'image/*'" class="ui primary button" ng-disabled="onProgress2"><i class="file image icon"></i> ganti cover</a>
+
 					  </div>
 					</h2>
 				</div>
 			</div>
 
+		</div>
+		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
+			<div class="uk-overlay uk-overlay-hover kg-logo-big ui circular image">
+				<img ng-if="edit.picture != ''" class="" ng-src="{{ files }}user/picture/{{ edit.picture }}">
+				<img ng-if="edit.picture == ''" class="" src="/public/img/placeholder.jpg">
+				<div ng-if="auth.name == edit.name" class="uk-overlay-panel uk-overlay-fade uk-overlay-background uk-text-center uk-text-small">
+					<a class="ui tiny button primary"><i class="pencil icon"></i> ganti</a>
+				</div>
+				<a ngf-select="uploadPicture(pictureForm.picture.$valid && edit.filepicture, $file)"
+							ngf-resize="{width: 512, height: 512, centerCrop: true}"
+							ngf-resize-if="$width > 1600 || $height > 1200" ng-disabled="onProgress1"
+							name="picture" ng-model="edit.filepicture" ngf-pattern="'image/*'"
+							ngf-accept="'image/*'" class="uk-position-cover"></a>
+					<div ng-if="onProgress1" class="ui active centered inline loader"></div>
+			</div>
 		</div>
 	</div>
 </form>
@@ -208,7 +207,7 @@
 			</div>
 
 			<div class="uk-width-large-1-4 uk-width-1-1">
-				<div class="ui styled accordion" kg-ui-accordion data-uk-sticky="{ top:70 }">
+				<div class="ui styled accordion">
 					<div class="active title"><h3 class="kg-heading"><i class="user icon"></i> Profil</h3></div>
 					<div class="active content">
 						{{ edit.profile.profile }}

@@ -46,6 +46,7 @@ body, html { background: bg-paper; height: auto; }
 .ui.card.uk-container-center { margin: 0.5em auto; }
 .a-inverted * { color:#333 !important; }
 .ui.four.cards>.card { width: calc(25% - 1em); margin-left:0.5em; margin-right:0.5em; }
+.ui.link.cards .card:hover { z-index: 1 }
 .item.search { width:650px; }
 .item.search tags-input { width:100%; }
 .ui.menu .item.head>img:not(.ui) { width: 3em; }
@@ -90,8 +91,8 @@ body, html { background: bg-paper; height: auto; }
 .kg-navbar .uk-navbar-nav>li>a { min-height: 60px; padding: 10px 20px 10px 20px !important; line-height: 5px !important; }
 */
 
-.kg-logo-big, .kg-logo-small { position: relative; z-index: 1; }
-.kg-logo-big { width: 128px; bottom: -64px; }
+.kg-logo-big, .kg-logo-small { position: absolute !important; z-index: 100; }
+.kg-logo-big { width: 10em; }
 .kg-logo-small { position: relative; bottom: -25px; }
 .kg-quote { font-family: "CaviarDreams"; font-size: large; font-style: normal; }
 .uk-panel .kg-logo-small { width: 50px; height:50px; padding: 25px; font-size: 20px; margin-top: -85px; }
@@ -138,8 +139,8 @@ body, html { background: bg-paper; height: auto; }
 
 .flip-clock-divider .flip-clock-label { color: #fff; }
 .tagsinput > div > input { border:none !important; width: 100%; }
-tags-input .tags .tag-item { background: bg-base2; color: #fff; border-color:bg-base; }
-tags-input .tags .tag-item.selected { background: bg-base; color: #fff; }
+tags-input .tags .tag-item { background: bg-base; color: #fff; border-color:bg-base; }
+tags-input .tags .tag-item.selected { background: bg-base2; color: #fff; }
 tags-input .tags { border-radius: 3px; border: none; }
 tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em { background: bg-base2; }
 #kgHero { z-index:2; height:300px; }

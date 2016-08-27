@@ -25,8 +25,7 @@ class Category extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function subCategory()
-    {
+    public function subCategory() {
         return $this->hasMany('App\Category', 'parent');
     }
 
@@ -34,8 +33,7 @@ class Category extends Model
      *
      * @return \Illuminate\Database\Query\Builder
      */
-    public function parent()
-    {
+    public function parent() {
         return $this->belongsTo('App\Category', 'parent');
     }
 
@@ -46,4 +44,12 @@ class Category extends Model
     public function product() {
         return $this->hasMany('App\Product');
     }
+
+	public function productInc($id) {
+		$this->where('id', $id)->increment('product_count', 1);
+	}
+
+	public function productDec($id) {
+		$this->where('id', $id)->decrement('product_count', 1);
+	}
 }

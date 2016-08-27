@@ -16,8 +16,8 @@
 		</div>
 	</div>
 	<div class="field">
-		<button ng-disabled="!kgForm.$valid" type="submit" class="primary fluid ui button">
-		<i class="lock icon"></i> Log In</button>
+		<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
+		<i class="sign in icon"></i> Log In</button>
 	</div>
 	<div class="field">
 		<label>Belum Punya akun? <a ng-click="registerPage()">Daftar Sekarang</a></label>
