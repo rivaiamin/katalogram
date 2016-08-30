@@ -37,7 +37,10 @@
 	# allow social media crawlers to work by redirecting them to a server-rendered static version on the page
 	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|LinkedInBot|bingbot|Yahoo|MSNBot|YahooSeeker|baiduspider|rogerbot|embedly|quora\ link\ preview|showyoubot|outbrain|Slackbot|Slack-ImgProxy|Slackbot-LinkExpanding|Site\ Analyzer|SiteAnalyzerBot|Viber|WhatsApp|Telegram)
 	#RewriteCond %{REQUEST_URI} ^catalog
-	RewriteRule ^catalog/(\d*)/view$ http://api.katalogram.com/catalog/$1/share [P]
+	RewriteRule ^catalog/(\d*)/view$ http://api.katalogram.com/catalog/$1/share [L]
+	
+	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|LinkedInBot|bingbot|Yahoo|MSNBot|YahooSeeker|baiduspider|rogerbot|embedly|quora\ link\ preview|showyoubot|outbrain|Slackbot|Slack-ImgProxy|Slackbot-LinkExpanding|Site\ Analyzer|SiteAnalyzerBot|Viber|WhatsApp|Telegram)
+	RewriteRule ^user/(.*)$ http://api.katalogram.com/$1/share [L]
 	
 	#RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|LinkedInBot|bingbot|Yahoo|MSNBot|YahooSeeker|baiduspider|rogerbot|embedly|quora\ link\ preview|showyoubot|outbrain|Slackbot|Slack-ImgProxy|Slackbot-LinkExpanding|Site\ Analyzer|SiteAnalyzerBot|Viber|WhatsApp|Telegram)
 	#RewriteCond %{REQUEST_URI} ^category

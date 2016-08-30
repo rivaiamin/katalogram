@@ -11,7 +11,8 @@
 		<!-- etc. -->
 	</head>
 	<body>
-		<p>{{ $product->desc }}</p>
+		<h3>{{ $product->name }}</h3>
 		<img src="{{ $files }}/product/logo/{{ $product->logo }}">
+		<p>{{ $product->quote }}</p>
 	</body>
 </html>

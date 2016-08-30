@@ -69,7 +69,7 @@
 					</div>
 					<div class="content">
 						<div class="right floated author">
-							<a><img ng-if="list.userpict != ''" src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}</a>
+							<img ng-if="list.userpict != ''" src="{{ files }}user/picture/thumb/{{ list.userpict }}" alt="" class="ui avatar image"> {{ list.username }}
 						</div>
 					</div>
 					<div class="extra content">
@@ -107,7 +107,7 @@
 				  <a class="item" ng-repeat="cats in categories" ui-sref="catalog.category({slug: cats.slug, id: cats.id})" ui-sref-active="active" ui-sref-opts="{reload: true}">
 					  <i class="kg-color-base kg-icon icon-{{cats.slug}}"></i>
 					  <span class="uk-text-small">{{cats.name}}</span>
-					  <div class="ui secondary right floated label"> {{cats.product_count}} </div>
+					  <div class="ui right floated basic label"> {{cats.product_count}} </div>
 				  </a>
 	  	  	  </div>
 			</div>

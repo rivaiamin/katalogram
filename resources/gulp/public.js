@@ -69,9 +69,12 @@ var paths = {
         'bower_components/angular-touch/angular-touch.min.js',
         'bower_components/angular-resource/angular-resource.min.js',
         'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+        'bower_components/angulartics/dist/angulartics.min.js',
+        'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
+
+
         'bower_components/angular-input-stars-directive/angular-input-stars.js',
         'bower_components/ng-file-upload/ng-file-upload.min.js',
-
 		//'bower_components/cropme/cropme.js',
         /*'bower_components/angular-ui-grid/ui-grid.min.js',*/
         'bower_components/satellizer/satellizer.min.js',

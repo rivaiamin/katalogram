@@ -52,7 +52,7 @@ body, html { background: bg-paper; height: auto; }
 .ui.menu .item.head>img:not(.ui) { width: 3em; }
 .ui.corner.label, .ui.corner.label:hover { font-size: 1.3em; }
 .ui.primary.label { background: color-base; color: #fff; }
-.ui.secondary.label, .ui.menu .item>.secondary.label { background: color-base2; color: #fff; }
+.ui.secondary.label, .ui.menu .item>.secondary.label { background: color-base2; }
 .ui.secondary.corner.label { border-color: color-base2; }
 .ui.primary.corner.label { border-color: color-base; }
 .ui.left.corner.label .icon { left: -0.5em }
@@ -143,10 +143,16 @@ tags-input .tags .tag-item { background: bg-base; color: #fff; border-color:bg-b
 tags-input .tags .tag-item.selected { background: bg-base2; color: #fff; }
 tags-input .tags { border-radius: 3px; border: none; }
 tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em { background: bg-base2; }
+
 #kgHero { z-index:2; height:300px; }
-#kgHero .content { z-index:2; }
+#kgHero .content, #kgHero2 .content { z-index:2; }
 #kgHero:not(.sticky) { margin-top: -80px!important; position: relative; }
 #kgHero.sticky { margin-top:-240px; }
+
+#kgHero2 { z-index:2; height:500px; }
+#kgHero2:not(.sticky) { margin-top: -80px!important; position: relative; }
+#kgHero2.sticky { margin-top:-440px; }
+
 
 @media (max-width: 1100px) {
     .modal { width: 100%; left: 0; }

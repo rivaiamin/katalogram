@@ -47,6 +47,10 @@ var config = ['$stateProvider', '$sceProvider', '$rootScopeProvider', '$httpProv
 		url:'/{username:[a-zA-Z1-9.-]*}',
 		templateUrl: 'user.profile.html',
 		controller: 'userCtrl'
+	}).state('userProfile', {
+		url:'/user/{username:[a-zA-Z1-9.-]*}',
+		templateUrl: 'user.profile.html',
+		controller: 'userCtrl'
 	}).state('editProfile', {
 		url:'/:username/edit',
 		templateUrl: 'user.edit.html',

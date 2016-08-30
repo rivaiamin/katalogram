@@ -34,7 +34,8 @@ if (host == 'katalogram.dev') {
 	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
 }
 
-var kgApp = angular.module('kgApp', ['ui.router', 'ngSanitize', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll','textAngular' ]);
+var kgApp = angular.module('kgApp', ['ui.router', 'ngSanitize', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars',
+	'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll','textAngular', 'angulartics', 'angulartics.google.analytics' ]);
 kgApp
 // route angular
 .constant('kgConfig', {
