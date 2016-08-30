@@ -12,8 +12,8 @@
 	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-   <div class="uk-cover-background uk-position-relative uk-contrast ui image">
-		<a class="ui primary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
+   <div class="uk-cover-background uk-position-relative ui image">
+		<a class="ui secondary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}}"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
 	</div>
 	<div class="ui compact five item menu kg-font-base uk-margin-remove">
