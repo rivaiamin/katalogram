@@ -85,6 +85,7 @@ class ProductController extends Controller {
 	public function view($id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
+
 		if (! Storage::has('product/qrcode/'.$id.'.png')) $this->qrcode($id, false);
 		return view('catalog/share', $data);
     	//dd($data);

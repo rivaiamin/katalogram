@@ -14,7 +14,7 @@
 	<meta property="fb:app_id" content="1496399374007633">
 	<meta name="google-signin-client_id" content="13356134084-ij596q95of0e79k0qa592btnpo8uvang.apps.googleusercontent.com">
 	<base href="/index.html">
-	<link rel="shortcut icon" href="{{ $files }}/product/picture/{{ $product->picture }}" />
+	<link rel="shortcut icon" href="{{ $files }}/product/logo/{{ $product->logo }}" />
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
 	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
