@@ -15,9 +15,6 @@
    <div class="uk-cover-background uk-position-relative uk-contrast ui image">
 		<a class="ui primary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
-		</div>
 	</div>
 	<div class="ui compact five item menu kg-font-base uk-margin-remove">
 		<a class="item" data-content="tambahkan ke koleksi favorit" kg-popup>
@@ -26,7 +23,9 @@
 		<a class="item" data-content="Total score seluruh kategori" kg-popup>
 			<i class="empty star link icon"></i> Rating <span class="ui secondary label">{{ $product->rating_avg }}</span>
 		</a>
-		<a class="item disabled"></a>
+		<a class="item disabled">
+			<img class="ui circular image kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
+		</a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
 			<i class="thumbs up outline link icon"></i> Plus <span class="ui secondary label">{{ $product->plus_count }}</span>
 		</a>
