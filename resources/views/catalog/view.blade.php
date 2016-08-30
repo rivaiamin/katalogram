@@ -70,9 +70,9 @@
 			</div>
 			<div class="uk-width-3-5">
 				<h3 class="kg-heading"><i class="file text icon"></i> Deskripsi</h3>
-				{{$product->desc}}
+				{!! $product->desc !!}
 				<h3 class="kg-heading"><i class="table icon"></i> Data</h3>
-				{{$product->data}}
+				{!! $product->data !!}
 			</div>
 		</div>
 		<div class="uk-grid uk-grid-divider">
