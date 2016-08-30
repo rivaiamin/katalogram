@@ -117,7 +117,7 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/{productId}/qrcode', 'Server\ProductController@qrcode');
     Route::get('catalog/{productId}/export', 'Server\ProductController@export');
     Route::get('catalog/{productId}/view', 'Server\ProductController@view');
-	Route::get('catalog/{productId}/share', 'Server\ProductController@share');
+	Route::get('catalog/{productId}/share', 'Server\ProductController@view');
     Route::get('catalog/{tag}/search', 'Server\ProductController@search');
     Route::get('catalog/{after}/{limit}', 'Server\ProductController@get')
 		->where(['after'=>'[0-9]+','limit'=>'[0-9]+']);

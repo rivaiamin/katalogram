@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>.:: katalogram.com (Alpha Version) - Situs Katalogisasi Sosial untuk Ekonomi Kreatif Indonesia ::.</title>
+	<title>.:: katalogram.com (Beta) - Platform Katalog Produk Kreatif Indonesia ::.</title>
 	<meta name="author" content="KarsaKalana" />
 	<meta name="description" content="Situs Katalogisasi Sosial (Social Cataloging) untuk Ekonomi Kreatif" />
 	<meta name="keyword" content="social cataloging, social, cataloging, site, economy, product, creative, katalogisasi sosial, kreatif, ekonomi, industri, produk, produk kreatif, ekonomi kreatif, industri kreatif, insan kreatif, kreator" />

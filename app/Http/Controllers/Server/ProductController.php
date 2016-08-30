@@ -86,15 +86,15 @@ class ProductController extends Controller {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
 		if (! Storage::has('product/qrcode/'.$id.'.png')) $this->qrcode($id, false);
-		return view('catalog/viewSmall', $data);
+		return view('catalog/share', $data);
     	//dd($data);
 	}
 
-	public function share($id) {
+	/*public function share($id) {
 		$data['product'] = Product::with(['user','category'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
 		return view('catalog/share', $data);
-	}
+	}*/
 
     public function search(Request $request, $tag){
 
