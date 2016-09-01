@@ -65,7 +65,7 @@ class ProductController extends Controller {
 				$lists->havingRaw('count(products.id) = '.count($tags));
 		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
-		if (! Entrust::hasRole(['admin','manager'])) $list->where('products.is_release', '1');
+		if (! Entrust::hasRole(['admin','manager'])) $lists->where('products.is_release', '1');
 
 
         $data['catalogs'] = $lists->get();
