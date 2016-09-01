@@ -176,6 +176,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 			input
 		).success(function (response) {
 			$scope.isSaving = false;
+			UIkit.notify(response.message, response.status);
 			if (view == true) {
 				$scope.catalogDetail($scope.productId);
 			}

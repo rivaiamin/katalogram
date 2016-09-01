@@ -43,6 +43,7 @@
 					<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeContact(user.id)"><i class="check circle icon"></i> Terhubung</a>
 				</span>
 				</p>
+
 			</div>
 		</div>
 
@@ -230,7 +231,7 @@
 				</div>
 			</div>
 			<div class="uk-width-large-3-4 uk-width-small-1-1">
-				<div class="ui four doubling link cards" data-uk-grid>
+				<div class="ui four doubling stackable link cards" data-uk-grid>
 					<!-- list start -->
 					<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
 						<div class="image">

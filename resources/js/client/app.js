@@ -26,6 +26,8 @@ window.onload = function () { window.loading_screen.finish(); }
 
 //angular app
 var host = window.location.hostname;
+if (host == 'www.katalogram.com') host = 'katalogram.com';
+
 if (host == 'katalogram.dev') {
 	fbid = '1506049499709287';
 	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
