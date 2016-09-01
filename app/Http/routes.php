@@ -145,17 +145,6 @@ Route::group([//['middleware' => 'cors'],
 		Route::post('collect/{productId}', 'Server\UserCollectController@add');
 		Route::delete('collect/{productId}', 'Server\UserCollectController@remove');
 
-		/*route member
-		=================================================================*/
-		Route::get('{username}/edit', 'Server\UserController@edit');
-		Route::put('{username}/profile', 'Server\UserController@updateProfile');
-		Route::post('{username}/picture', 'Server\UserController@uploadPicture');
-		Route::post('{username}/cover', 'Server\UserController@uploadCover');
-		Route::post('{username}/link', 'Server\UserController@addLink');
-		Route::delete('{username}/link/{id}', 'Server\UserController@removeLink');
-		//Route::put('{username}/pict', 'Server\UserController@changePict');
-		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
-
 		/*route product tag
 		=================================================================*/
 		Route::post('catalog/{productId}/tag', 'Server\ProductTagController@add');
@@ -214,7 +203,23 @@ Route::group([//['middleware' => 'cors'],
 
 	});
 
-    Route::group(['middleware' => 'ability:admin'], function () {
+
+    Route::group(['middleware' => 'ability:member'], function () {
+
+		/*route member
+		=================================================================*/
+		Route::get('{username}/edit', 'Server\UserController@edit');
+		Route::put('{username}/profile', 'Server\UserController@updateProfile');
+		Route::post('{username}/picture', 'Server\UserController@uploadPicture');
+		Route::post('{username}/cover', 'Server\UserController@uploadCover');
+		Route::post('{username}/link', 'Server\UserController@addLink');
+		Route::delete('{username}/link/{id}', 'Server\UserController@removeLink');
+		//Route::put('{username}/pict', 'Server\UserController@changePict');
+		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
+
+	});
+
+	Route::group(['middleware' => 'ability:admin'], function () {
 		//user module
 		Route::post('user', 'Server\UserController@add');
 		Route::get('user/{id}', 'Server\UserController@edit');

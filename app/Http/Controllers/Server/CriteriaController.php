@@ -32,19 +32,14 @@ class CriteriaController extends Controller
         $data['criterias'] = $lists->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
-	public function add(Request $request) {
+
+	 public function add(Request $request) {
 		$input = $request->only(['name']);
 
-		$save = Tag::create($input);
+		$save = Criteria::create($input);
 
-    	if ($save) {
-    		$data['status'] = 'success';
-    		$data['message'] = 'criteria added';
-    		$data['criteria'] = $save;
-    	} else {
-    		$data['status'] = 'error';
-    		$data['message'] = 'criteria failed to add';
-    	}
+    	if ($save) return response()->json(['success' => 'kriteria ditambahkan', 'criteria' => $save], 200);
+    	else return response()->json(['error' => 'kriteria gagal ditambahkan'], 500);
 
     	return response()->json($data);
     }
@@ -53,18 +48,17 @@ class CriteriaController extends Controller
     	$input = $request->only(['name']);
 
     	$criteria = Criteria::where('id', $id)->first();
-    	if ($criteria->update($input)) return response()->json(['success' => 'data_dapat_diperbarui'], 200);
-    	else return response()->json(['error' => 'cant_update_data'], 500);
+    	if ($criteria->update($input)) return response()->json(['success' => 'kriteria diperbarui'], 200);
+    	else return response()->json(['error' => 'kriteria gagal diperbarui'], 500);
+
     }
 
     public function delete($id) {
-		$tag = Criteria::where('tag', $id)->delete();
-		$params = [
-			'status' => "success",
-			'message' => "criteria telah dihapus",
-		];
+		$delete = Criteria::find($id)->delete();
 
-        return json_encode($params);
+		if ($delete) return response()->json(['success' => 'criteria dihapus'], 200);
+		else return response()->json(['error' => 'kriteria gagal dihapus'], 500);
+
     }
 
 }

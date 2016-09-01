@@ -43,14 +43,8 @@ class TagController extends Controller
 
 		$save = Tag::create($input);
 
-    	if ($save) {
-    		$data['status'] = 'success';
-    		$data['message'] = 'Tag added';
-    		$data['tag'] = $save;
-    	} else {
-    		$data['status'] = 'error';
-    		$data['message'] = 'Tag failed to add';
-    	}
+    	if ($save) return response()->json(['success' => 'tag ditambahkan', 'tag' => $save], 200);
+    	else return response()->json(['error' => 'tag gagal ditambahkan'], 500);
 
     	return response()->json($data);
     }
@@ -59,18 +53,16 @@ class TagController extends Controller
     	$input = $request->only(['name']);
 
     	$tag = Tag::where('id', $id)->first();
-    	if ($tag->save($input)) return response()->json(['success' => 'data_dapat_diperbarui'], 200);
-    	else return response()->json(['error' => 'cant_update_data'], 500);
+    	if ($tag->update($input)) return response()->json(['success' => 'tag diperbarui'], 200);
+    	else return response()->json(['error' => 'tag gagal diperbarui'], 500);
 
     }
 
     public function delete($id) {
-		$tag = Tag::where('tag', $id)->delete();
-		$params = [
-			'status' => "success",
-			'message' => "tag telah dihapus",
-		];
+		$delete = Tag::find($id)->delete();
 
-        return json_encode($params);
+		if ($delete) return response()->json(['success' => 'tag dihapus'], 200);
+		else return response()->json(['error' => 'tag gagal dihapus'], 500);
+
     }
 }

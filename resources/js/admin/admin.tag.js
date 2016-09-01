@@ -9,6 +9,7 @@ var tagCtrl = ['$http','$scope', 'Notification', function($http, $scope, Notific
 	$scope.after = 0;
 	$scope.scrollBusy = false;
 	$scope.scrollLast = false;
+	$scope.onLoad = false;
 
 	$scope.searchTag = function(filter) {
 		$scope.after = 0;
@@ -41,37 +42,31 @@ var tagCtrl = ['$http','$scope', 'Notification', function($http, $scope, Notific
 		$scope.onAdd = true;
 		$http.post($scope.env.api+'tag', input)
 		.success(function (response) {
-            Notification({message: response.message}, response.status);
-			if (response.status == 'success') {
-				//console.log(response.type);
-				$scope.tags.push(response.tag);
-				$scope.input = {};
-				$('#name').focus();
-			}
+            Notification({message: response.success}, 'success');
+			$scope.tags.push(response.tag);
+			$scope.input = {};
+			$('#name').focus();
 			$scope.onAdd = false;
 		})
 	}
 
 	$scope.saveTag = function(data, id) {
 		return $http.put($scope.env.api+'tag/'+id, data)
-		.success(function (response) {
-            Notification({message: response.data.message}, response.status);
-		})
+		.success(function (response){
+			Notification({message: response.success}, 'success');
+		});
 	}
 
 	$scope.deleteTag = function(id) {
-		var index = $scope.indexSearch($scope.type, id);
+		var index = $scope.indexSearch($scope.tags, id);
 		if (confirm('delete tag?')) {
 			$scope.onLoad = true;
 			$http.delete($scope.env.api+'tag/'+id)
 			.success(function (response) {
-				Notification({message: response.message}, response.status);
-				if (response.status == 'success') {
-					//console.log(response.type);
-					$scope.tags.splice(index, 1);
-				}
+				Notification({message: response.success}, 'success');
+				$scope.tags.splice(index, 1);
 				$scope.onLoad = false;
-			})
+			});
 		}
 	}
 

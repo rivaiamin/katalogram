@@ -36,42 +36,35 @@ var criteriaCtrl = ['$http','$scope', 'Notification', function($http, $scope, No
         })
 	}
 
-
 	$scope.addCriteria = function(input) {
 		$scope.onAdd = true;
 		$http.post($scope.env.api+'criteria', input)
 		.success(function (response) {
-            Notification({message: response.message}, response.status);
-			if (response.status == 'success') {
-				//console.log(response.type);
-				$scope.criterias.push(response.criteria);
-				$scope.input = {};
-				$('#name').focus();
-			}
+            Notification({message: response.success}, 'success');
+			$scope.criterias.push(response.criteria);
+			$scope.input = {};
+			$('#name').focus();
 			$scope.onAdd = false;
 		})
 	}
 
 	$scope.saveCriteria = function(data, id) {
 		return $http.put($scope.env.api+'criteria/'+id, data)
-		.success(function (response) {
-            Notification({message: response.data.message}, response.status);
-		})
+		.success(function (response){
+			Notification({message: response.success}, 'success');
+		});
 	}
 
 	$scope.deleteCriteria = function(id) {
-		var index = $scope.indexSearch($scope.type, id);
+		var index = $scope.indexSearch($scope.criterias, id);
 		if (confirm('delete criteria?')) {
 			$scope.onLoad = true;
 			$http.delete($scope.env.api+'criteria/'+id)
 			.success(function (response) {
-				Notification({message: response.message}, response.status);
-				if (response.status == 'success') {
-					//console.log(response.type);
-					$scope.criterias.splice(index, 1);
-				}
+				Notification({message: response.success}, 'success');
+				$scope.criterias.splice(index, 1);
 				$scope.onLoad = false;
-			})
+			});
 		}
 	}
 

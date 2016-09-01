@@ -25,7 +25,7 @@ var kgCtrl = ['$scope','$rootScope','$http','$auth','$state','kgConfig', functio
 		$http.get($scope.env.api+"auth/user")
 		.success(function(response){
 			$rootScope.auth = response.user;
-			$scope.popup();
+			//$scope.popup();
 		})
 	};
 
