@@ -1,0 +1,88 @@
+<section class="content-header">
+  <h1>
+    Catalog
+    <small>List of Product</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Catalog</a></li>
+    <li class="active">Product</li>
+  </ol>
+</section>
+<section class="content">
+  <!--<div class="row">
+    <div id="productForm" class="col-xs-12" ng-include="'views/admin/product.form.html'">
+
+    </div>
+
+  </div>-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Product List</h3>
+          <!--<div class="box-body">
+            <form class="form-horizontal" ng-submit="searchProduct(filter)" ng-reset>
+				<div class="form-group">
+			  	  <label class="col-sm-1 control-label">Find</label>
+				  <div class="col-sm-2">
+					<select class="form-control" name="product_type_id" ng-model="filter.product_type_id" ng-options="type.id as type.name for type in productTypes">
+					  <option value="">--Choose Type--</option>
+					</select>
+				  </div>
+				  <div class="col-sm-2">
+					<select class="form-control" name="province_id" ng-model="filter.province_id" ng-options="prov.id as prov.name for prov in provinces">
+					  <option value="">--Pick Province--</option>
+					</select>
+				  </div>
+				  <div class="col-sm-2">
+					<select ng-if="filter.province_id" class="form-control" name="city_id" ng-model="filter.city_id" ng-options="cty.id as cty.name for cty in cities | filter:{ province_id : filter.province_id }">
+					  <option value="">--Pick City--</option>
+					</select>
+				  </div>
+				  <div class="col-sm-4">
+					<input id="name" type="text" class="form-control" name="name" ng-model="filter.name" placeholder="Product Name">
+				  </div>
+				  <div class="col-sm-1">
+					  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+				  </div>
+				  <div class="col-sm-12 text-center"><i ng-if="onLoad || scrollBusy" class="fa fa-spinner fa-spin fa-2x"></i></div>
+				</div>
+			</form>
+          </div>-->
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover" infinite-scroll='nextPage()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy || scrollLast'>
+            <tbody>
+            <tr>
+              <th>No</th>
+              <th>Product Name</th>
+              <th>Creator</th>
+              <th>Quote</th>
+              <th>Logo</th>
+              <th>Status</th>
+            </tr>
+            <tr ng-repeat="list in products">
+            <!--<tr dir-paginate="list in products | orderBy:'-id' | itemsPerPage:limit | filter:search" total-items="totalProducts" current-page="pagination.current">-->
+              <!--<td>{{ ((pagination.current-1)*limit)+$index+1 }}</td>-->
+              <td>{{ $index+1 }}</td>
+              <td>{{ list.name }}</td>
+              <td>{{ list.username }}</td>
+              <!--<td>{{productTypes[indexSearch(productTypes, list.product_type_id)].name}}</td>-->
+              <td>{{ list.quote }}</td>
+              <td><img ng-if="list.logo != ''" ng-src="{{env.files}}product/logo/{{list.logo}}" alt="" width="20%" /></td>
+              <td> {{ list.is_release }} </td>
+              <td>
+                <div class="btn-group" ng-show="!rowform.$visible">
+                  <!--<a class="btn btn-default" ng-click="editProduct(list.id)"><i class="fa fa-edit"></i></a>-->
+                  <button type="button" class="btn btn-default" ng-click="deleteProduct(list.id)"><i class="fa fa-remove"></i></button>
+                </div>
+              </td>
+            </tr>
+            <div class="text-center"><i ng-if="scrollBusy" class="fa fa-spinner fa-spin fa-2x"></i></div>
+          </tbody></table>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+</section>

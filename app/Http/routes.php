@@ -15,7 +15,7 @@
 ======================================================================*/
 
 Route::group([
-    'domain' => 'admin.' . env('APP_DOMAIN')
+    'domain' => 'setup.' . env('APP_DOMAIN')
 ], function() {
     Route::post('/login/{role}', 'Auth\AuthenticateController@login')->where('role', '(setup)');
     Route::get('/', function () {
@@ -122,8 +122,10 @@ Route::group([//['middleware' => 'cors'],
     Route::get('catalog/{after}/{limit}', 'Server\ProductController@get')
 		->where(['after'=>'[0-9]+','limit'=>'[0-9]+']);
 
-	Route::get('tags', 'Server\TagController@index');
-	Route::get('criterias', 'Server\CriteriaController@index');
+	Route::get('tag', 'Server\TagController@index');
+	Route::get('tag/{after}/{limit}', 'Server\TagController@get');
+	Route::get('criteria', 'Server\CriteriaController@index');
+	Route::get('criteria/{after}/{limit}', 'Server\CriteriaController@get');
 
 	// User Profile
 	Route::get('{username}', 'Server\UserController@profile');
@@ -192,11 +194,24 @@ Route::group([//['middleware' => 'cors'],
 		Route::get('user', 'Server\UserController@index');
 		Route::get('user/scroll/{after}/{limit}', 'Server\UserController@scroll');
 
+		Route::get('product/scroll/{after}/{limit}', 'Server\ProductController@get');
+
 		// category
 		Route::post('category','Server\CategoryController@add');
 		Route::post('category/icon', 'Server\CategoryController@uploadIcon');
 		Route::put('category/{id}', 'Server\CategoryController@update');
 		Route::delete('category/{id}', 'Server\CategoryController@delete');
+
+		// tag
+		Route::post('tag','Server\TagController@add');
+		Route::put('tag/{id}', 'Server\TagController@update');
+		Route::delete('tag/{id}', 'Server\TagController@delete');
+
+		// criteria
+		Route::post('criteria','Server\CriteriaController@add');
+		Route::put('criteria/{id}', 'Server\CriteriaController@update');
+		Route::delete('criteria/{id}', 'Server\CriteriaController@delete');
+
 	});
 
     Route::group(['middleware' => 'ability:admin'], function () {

@@ -27,17 +27,45 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
 		resolve: {
 			loginRequired: loginRequired
 		}
-	}).state('school', {
-		url:'/school',
-		templateUrl: 'views/admin/school.html',
-		controller: 'schoolCtrl',
+	}).state('product', {
+		url:'/product',
+		templateUrl: 'views/admin/product.html',
+		controller: 'productCtrl',
 		resolve: {
 			loginRequired: loginRequired
 		}
-	}).state('school-type', {
-		url:'/school/type',
-		templateUrl: 'views/admin/school.type.html',
-		controller: 'schoolTypeCtrl',
+	}).state('category', {
+		url:'/category',
+		templateUrl: 'views/admin/category.html',
+		controller: 'categoryCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
+	}).state('feedback', {
+		url:'/feedback',
+		templateUrl: 'views/admin/feedback.html',
+		controller: 'feedbackCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
+	}).state('tag', {
+		url: '/tag',
+		templateUrl: 'views/admin/tag.html',
+		controller: 'tagCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
+	}).state('criteria', {
+		url: '/criteria',
+		templateUrl: 'views/admin/criteria.html',
+		controller: 'criteriaCtrl',
+		resolve: {
+			loginRequired: loginRequired
+		}
+	}).state('page', {
+		url: '/page',
+		templateUrl: 'views/admin/page.html',
+		controller: 'pageCtrl',
 		resolve: {
 			loginRequired: loginRequired
 		}
@@ -47,13 +75,6 @@ var config = [ '$stateProvider', '$httpProvider', '$urlRouterProvider', '$authPr
 		controller: 'authCtrl',
 		resolve: {
 			skipIfLoggedIn: skipIfLoggedIn
-		}
-	}).state('label', {
-		url: '/label',
-		templateUrl: 'views/admin/label.html',
-		controller: 'labelCtrl',
-		resolve: {
-			loginRequired: loginRequired
 		}
 	}).state('user', {
 		url: '/user',

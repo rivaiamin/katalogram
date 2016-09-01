@@ -21,8 +21,10 @@ use App\ProductTag;
 use App\ProductCriteria;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
+use Entrust;
 use Storage;
 use Endroid\QrCode\QrCode;
+use Browshot;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class ProductController extends Controller {
@@ -63,6 +65,8 @@ class ProductController extends Controller {
 				$lists->havingRaw('count(products.id) = '.count($tags));
 		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
+		if (! Entrust::hasRole(['admin','manager'])) $list->where('products.is_release', '1');
+
 
         $data['catalogs'] = $lists->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
@@ -259,10 +263,26 @@ class ProductController extends Controller {
 			->toJpg()
 			->download($productId.'-'.time().'.jpg');*/
 
-		$data['product'] = Product::with(['user','category'])->find($id);
+
+		// using page2images
+		/*$data['product'] = Product::with(['user','category'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
-		return view('catalog/image', $data);
-    }
+		return view('catalog/image', $data);*/
+
+		// use browshot
+		$browshot = new Browshot('6EZNlkVJBXmbTxtCDqzNOfQQYmQ34gIZ');
+		$image = $browshot->simple(['url' => 'http://api.'.env('APP_DOMAIN').'/catalog/'.$id.'/view', 'instance_id' => 12, 'screen_width'=>600, 'screen_height'=>600 ]);
+
+		if ($image['code'] == '200') {
+			$data['product'] = Product::with(['user','category'])->find($id);
+        	$data['files'] = 'http://files.'.env('APP_DOMAIN');
+
+			$data['filename'] = $id.'-'.time().'.png';
+			$save = Storage::put('product/export/'.$data['filename'], $image['image']);
+			if ($save) return view('catalog/image', $data);
+			else return response()->json(['error'=>'storage_fail'], 500, [], JSON_NUMERIC_CHECK);
+		} else return response()->json(['error'=>'screenshot_fail'], 500, [], JSON_NUMERIC_CHECK);
+	}
 
 	public function qrcode($productId, $view = true) {
 		$qrCode = new QrCode();

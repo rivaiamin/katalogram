@@ -1,29 +1,29 @@
-var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
+var productCtrl = ['$http','$scope', '$location', 'Notification','Upload',
     function($http, $scope, $location, Notification, Upload) {
 	$.AdminLTE.layout.fix();
 
     $scope.onEdit = false;
     $scope.input = {};
-    $scope.schoolAddForm = {};
-    $scope.schools = [];
-    $scope.totalSchools = 0;
+    $scope.productAddForm = {};
+    $scope.products = [];
+    $scope.totalProducts = 0;
     $scope.limit = 20;
 	$scope.after = 0;
 	$scope.scrollBusy = false;
 	$scope.scrollLast = false;
 
-    /*$scope.listSchool = function() {
-        $http.get($scope.env.api+'school')
+    /*$scope.listProduct = function() {
+        $http.get($scope.env.api+'product')
         .success(function (response) {
-            $scope.schools = response.school;
+            $scope.products = response.product;
         });
     };*/
 
     /*$scope.getResultsPage = function(page) {
-        $http.get($scope.env.api+'school/paging/'+page+'/'+$scope.limit)
+        $http.get($scope.env.api+'product/paging/'+page+'/'+$scope.limit)
         .success(function (response) {
-            $scope.schools = response.schools;
-            $scope.totalSchools = response.count;
+            $scope.products = response.products;
+            $scope.totalProducts = response.count;
         });
     };
 
@@ -31,37 +31,37 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         $scope.getResultsPage(page);
     };*/
 
-	$scope.searchSchool = function(filter) {
+	$scope.searchProduct = function(filter) {
 		$scope.after = 0;
-		$scope.schools = [];
+		$scope.products = [];
 		$scope.nextPage();
 		$scope.filter = filter;
 	}
 
 	$scope.nextPage = function() {
 		$scope.scrollBusy = true;
-		$http.get($scope.env.api+'school/scroll/'+$scope.after+'/'+$scope.limit, {
+		$http.get($scope.env.api+'product/scroll/'+$scope.after+'/'+$scope.limit, {
 			params: $scope.filter
 		}).success(function (response) {
-			for (var i = 0; i < response.schools.length; i++) {
-				$scope.schools.push(response.schools[i]);
+			$scope.scrollBusy = false;
+			for (var i = 0; i < response.catalogs.length; i++) {
+				$scope.products.push(response.catalogs[i]);
 			}
-            //$scope.schools.push(response.schools[0]);
-			if (response.schools.length > 0) {
-				$scope.after = response.schools[response.schools.length - 1].id;
+            //$scope.products.push(response.products[0]);
+			if (response.catalogs.length > 0) {
+				$scope.after = response.catalogs[response.catalogs.length - 1].id;
 			} else {
 				$scope.scrollLast = true;
 			}
-			$scope.scrollBusy = false;
 			//$('.ui.sticky').sticky('refresh');
-			//console.log($scope.schools);
+			//console.log($scope.products);
         })
 	}
 
-    $scope.formSchool = function() {
-        $http.get($scope.env.api+'school/form')
+    /*$scope.formProduct = function() {
+        $http.get($scope.env.api+'product/form')
         .success(function (response) {
-            $scope.schoolTypes = response.schoolTypes;
+            $scope.productTypes = response.productTypes;
             $scope.cities = response.cities;
             $scope.provinces = response.provinces;
         });
@@ -71,7 +71,7 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         if (isValid) {
             $scope.onProgress1 = true;
             Upload.upload({
-                url: $scope.env.api+'school/logo',
+                url: $scope.env.api+'product/logo',
                 method: 'POST',
                 data: {
                     image: file,
@@ -93,7 +93,7 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
             $scope.onProgress2 = true;
 
             Upload.upload({
-                url: $scope.env.api+'school/image',
+                url: $scope.env.api+'product/image',
                 method: 'POST',
                 data: {
                     image: file,
@@ -110,20 +110,20 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
 	    }
     };
 
-    $scope.resetSchool = function() {
+    $scope.resetProduct = function() {
         $scope.input = {};
         $("[data-widget='collapse']").click();
     };
 
-	$scope.saveSchool = function(input) {
+	$scope.saveProduct = function(input) {
         $scope.onSave = true;
         if (input.id === undefined) {
-            $http.post($scope.env.api+'school', input)
+            $http.post($scope.env.api+'product', input)
             .success(function (response) {
                 Notification({message: response.message}, response.status);
                 if (response.status == 'success') {
-                    $scope.schools.push(response.school[0]);
-                    $scope.input.id = response.school[0].id;
+                    $scope.products.push(response.product[0]);
+                    $scope.input.id = response.product[0].id;
                     //$scope.input = {};
                     //$scope.fileicon = {};
                     //$('#name').focus();
@@ -132,13 +132,13 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
             });
         } else {
             //input.city_id = $scope.input.city.id;
-            //input.school_type_id = $scope.input.school_type.id;
+            //input.product_type_id = $scope.input.product_type.id;
 
-            //var index = $scope.indexSearch($scope.schools, input.id);
+            //var index = $scope.indexSearch($scope.products, input.id);
 
-            $http.put($scope.env.api+'school/'+input.id, input)
+            $http.put($scope.env.api+'product/'+input.id, input)
             .success(function (response) {
-                //$scope.schools[index] = response.data.school[0];
+                //$scope.products[index] = response.data.product[0];
                 Notification({message: response.message}, response.status);
                 //$scope.onEdit = false;
 				$scope.onSave = false;
@@ -146,34 +146,30 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         }
 	};
 
-    $scope.editSchool = function(id) {
+    $scope.editProduct = function(id) {
         $scope.onEdit = false;
-        $http.get($scope.env.api+'school/'+id)
+        $http.get($scope.env.api+'product/'+id)
         .success(function (response) {
             $scope.input = response.detail[0];
-            $scope.input.school_type_id = parseInt($scope.input.school_type_id);
+            $scope.input.product_type_id = parseInt($scope.input.product_type_id);
             $scope.input.province_id = parseInt($scope.input.city.province_id);
             $scope.input.city_id = parseInt($scope.input.city_id);
 
             $("[data-widget='collapse']").click();
-            $location.hash('schoolForm');
+            $location.hash('productForm');
         });
     };
 
-	/*$scope.saveSchool = function(edit, id) {
-
-	}*/
-
-	$scope.deleteSchool = function(id) {
-		var index = $scope.indexSearch($scope.schools, id);
-		if (confirm('delete school?')) {
+	$scope.deleteProduct = function(id) {
+		var index = $scope.indexSearch($scope.products, id);
+		if (confirm('delete product?')) {
 			$scope.onLoad = true;
-			$http.delete($scope.env.api+'school/'+id)
+			$http.delete($scope.env.api+'product/'+id)
 			.success(function (response) {
 				Notification({message: response.message}, response.status);
 				if (response.status == 'success') {
 					//console.log(response.type);
-					$scope.schools.splice(index, 1);
+					$scope.products.splice(index, 1);
 				}
 				$scope.onLoad = false;
 			});
@@ -186,8 +182,8 @@ var schoolCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         str = str.replace(/\s/g,'-');
         return npsn+'-'+str;
     }
-
-    //$scope.listSchool();
+*/
+    //$scope.listProduct();
     //$scope.getResultsPage(1);
-    $scope.formSchool();
+    //$scope.formProduct();
 }];

@@ -66,11 +66,10 @@ class Product extends Model {
 
     public function productList() {
 		return $this->select(
-				DB::raw("products.id, products.name, products.logo, products.quote, products.category_id, users.name as username, users.picture as userpict,
+				DB::raw("products.id, products.name, products.logo, products.quote, products.category_id, products.is_release, users.name as username, users.picture as userpict,
 				products.rating_avg, products.plus_count, products.minus_count, products.collect_count"
             ))
             ->join('users','products.user_id','=','users.id')
-            ->where('products.is_release', '1')
             ->groupBy('products.id')
             ->orderBy('products.id', 'desc');
         /*return $this->select(DB::raw("products.id, products.name, products.logo, products.quote, products.category_id,
