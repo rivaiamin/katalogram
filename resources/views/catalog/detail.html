@@ -10,9 +10,9 @@
 	<span class="ui secondary ribbon label uk-text-large"> <i class="kg-icon icon-{{catalog.category.slug}}"></i> {{ catalog.category.name }}</span>
 	<img ng-if="catalog.picture != null" class="uk-invincible" src="{{ files }}product/picture/{{ catalog.picture }}" height="300" />
 	<!--<div ng-if="catalog.picture == null" class="uk-cover uk-cover-background "></div>-->
-	<!--<div ng-if="catalog.logo != null" class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-		<img class="uk-thumbnail uk-border-circle kg-logo-big" ng-src="{{ files }}product/logo/{{ catalog.logo }}" width="100">
-	</div>-->
+	<div ng-if="catalog.logo != null" class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
+		<img class="ui circular image" ng-src="{{ files }}product/logo/{{ catalog.logo }}" width="100" style="margin-bottom:-50px">
+	</div>
 	<!-- <div class="uk-position-cover uk-flex uk-flex-right uk-flex-top uk-margin">
 		<a class="ui secondary button" href="{{ api }}catalog/{{ catalog.id }}/export" target="_blank">
 			<i class="uk-icon-image"></i> Export
@@ -267,50 +267,18 @@
 	</div>
 </div>
 <div class="uk-container-center uk-modal-footer uk-grid uk-margin-top">
-	<!-- <div class="ui labeled button" tabindex="0">
-	  <div class="ui red button">
-		<i class="uk-icon-heart"></i> Favorit
-	  </div>
-	  <a class="ui basic red left pointing label">
-		{{ catalog.num_collect }}
-	  </a>
-	</div>
-	<div class="ui labeled button" tabindex="0">
-	  <div class="ui yellow button">
-		<i class="uk-icon-star-o"></i> Rating
-	  </div>
-	  <a class="ui basic yellow left pointing label">
-		{{ catalog.avg_score }}
-	  </a>
-	</div>
-	<div class="ui labeled button" tabindex="0">
-	  <div class="ui basic primary button">
-		<i class="uk-icon-thumbs-o-up"></i> Pros
-	  </div>
-	  <a class="ui basic left pointing primary label">
-		{{ catalog.num_plus }}
-	  </a>
-	</div>
-	<div class="ui labeled button" tabindex="0">
-	  <div class="ui basic primary button">
-		<i class="uk-icon-thumbs-o-down"></i> Cons
-	  </div>
-	  <a class="ui basic left pointing primary label">
-		{{ catalog.num_minus }}
-	  </a>
-	</div> -->
 	<div class="uk-width-medium-1-2 uk-width-small-1-1 uk-text-left uk-margin-bottom">
-		<a class="ui circular facebook icon button">
+		<a class="ui circular facebook icon button" ng-click="shareTo(catalog.id, 'facebook')">
 		  <i class="facebook icon"></i>
 		</a>
-		<a class="ui circular twitter icon button">
+		<a class="ui circular twitter icon button" ng-click="shareTo(catalog.id, 'twitter')">
 		  <i class="twitter icon"></i>
 		</a>
-		<a class="ui circular linkedin icon button">
-		  <i class="linkedin icon"></i>
-		</a>
-		<a class="ui circular google plus icon button">
+		<a class="ui circular google plus icon button" ng-click="shareTo(catalog.id, 'google')">
 		  <i class="google plus icon"></i>
+		</a>
+		<a class="ui circular pinterest icon button" ng-click="shareTo(catalog.id, 'pinterest', files+'product/picture/'+catalog.picture, catalog.name)">
+		  <i class="pinterest icon"></i>
 		</a>
 	</div>
 	<div class="uk-width-medium-1-2 uk-width-small-1-1 uk-text-right uk-margin-bottom">

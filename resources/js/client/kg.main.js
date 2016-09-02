@@ -25,6 +25,17 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 				hide: 800
 			} });
 	}
+	$scope.shareTo = function(id, media, image, desc) {
+		var url = kgConfig.site+'/catalog/'+id+'/view';
+		if (media == 'facebook') var share_url = 'https://www.facebook.com/sharer.php?u='+url;
+		else if (media == 'twitter') var share_url = 'https://twitter.com/home?status='+url;
+		else if (media == 'pinterest') var share_url = 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+desc;
+		else if (media == 'google') var share_url = 'https://plus.google.com/share?url='+url;
+
+		window.open(share_url, 'shareCatalog', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');
+		return false;
+	}
+
 
 	$http.get(kgConfig.api+'category').success(function(response) {
 		$scope.categories = response.categories;
@@ -168,6 +179,8 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
             catalog = response.product;
             catalog.desc = $sce.trustAsHtml(catalog.desc);
             catalog.data = $sce.trustAsHtml(catalog.data);
+
+			//catalog.share_url = kgConfig.site + '/catalog/'+productId+'/view';
 
 			$rootScope.modalTemplate1 = "catalog.detail.html";
 			$rootScope.modal1.show();
