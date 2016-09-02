@@ -10,7 +10,7 @@
 	<span class="ui secondary ribbon label uk-text-large"> <i class="kg-icon icon-{{catalog.category.slug}}"></i> {{ catalog.category.name }}</span>
 	<img ng-if="catalog.picture != null" class="uk-invincible" src="{{ files }}product/picture/{{ catalog.picture }}" height="300" />
 	<!--<div ng-if="catalog.picture == null" class="uk-cover uk-cover-background "></div>-->
-	<div ng-if="catalog.logo != null" class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
+	<div ng-if="catalog.logo != null" class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom uk-visible-small">
 		<img class="ui circular image" ng-src="{{ files }}product/logo/{{ catalog.logo }}" width="100" style="margin-bottom:-50px">
 	</div>
 	<!-- <div class="uk-position-cover uk-flex uk-flex-right uk-flex-top uk-margin">

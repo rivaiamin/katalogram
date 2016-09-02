@@ -26,7 +26,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 			} });
 	}
 	$scope.shareTo = function(id, media, image, desc) {
-		var url = kgConfig.site+'/catalog/'+id+'/view';
+		var url = 'http:'+kgConfig.site+'catalog/'+id+'/view';
 		if (media == 'facebook') var share_url = 'https://www.facebook.com/sharer.php?u='+url;
 		else if (media == 'twitter') var share_url = 'https://twitter.com/home?status='+url;
 		else if (media == 'pinterest') var share_url = 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+desc;
