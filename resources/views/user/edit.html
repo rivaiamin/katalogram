@@ -27,18 +27,22 @@
 				<div class="uk-position-relative uk-text-center uk-margin-top uk-width-1-2">
 					<div ng-if="onProgress2" class="ui active centered inline loader"></div>
 					<div ng-if="onProgress1" class="ui active centered inline loader"></div>
-					<img class="ui circular image" ng-if="edit.picture != ''" class="" ng-src="{{ files }}user/picture/{{ edit.picture }}" width="100">
-					<img class="ui circular image" ng-if="edit.picture == ''" class="" src="/public/img/placeholder.jpg" width="100">
-					<a ngf-select="uploadCover(pictureForm.cover.$valid && edit.filecover, $file)"
+					<img class="ui circular image uk-container-center" ng-if="edit.picture != ''" class="" ng-src="{{ files }}user/picture/{{ edit.picture }}" width="100">
+					<img class="ui circular image uk-container-center" ng-if="edit.picture == ''" class="" src="/public/img/placeholder.jpg" width="100">
+					<div class="uk-margin-top">
+						<a ngf-select="uploadPicture(pictureForm.picture.$valid && edit.filepicture, $file)"
+								ngf-resize="{width: 512, height: 512, centerCrop: true}"
+								ngf-resize-if="$width > 1600 || $height > 1200" ng-disabled="onProgress1"
+								name="picture" ng-model="edit.filepicture" ngf-pattern="'image/*'"
+								ngf-accept="'image/*'" class="ui primary button"><i class="photo icon"></i> Gambar Profil </a>
+						<a ngf-select="uploadCover(pictureForm.cover.$valid && edit.filecover, $file)"
 							ngf-resize="{width: 2000, height: 800, centerCrop: true}"
 							ngf-resize-if="$width > 3000 || $height > 2000"
 							name="cover" ng-model="edit.filecover" ngf-pattern="'image/*'"
 							ngf-accept="'image/*'" class="ui primary button" ng-disabled="onProgress2"><i class="file image outline icon"></i> Gambar Cover</a>
-					<a ngf-select="uploadPicture(pictureForm.picture.$valid && edit.filepicture, $file)"
-							ngf-resize="{width: 512, height: 512, centerCrop: true}"
-							ngf-resize-if="$width > 1600 || $height > 1200" ng-disabled="onProgress1"
-							name="picture" ng-model="edit.filepicture" ngf-pattern="'image/*'"
-							ngf-accept="'image/*'" class="ui primary button"><i class="photo icon"></i> Gambar Profil </a>
+
+					</div>
+
 				</div>
 			</div>
 
@@ -48,7 +52,7 @@
 <div class="uk-margin-bottom uk-margin-top">
 	<div class="ui container">
 		<div class="uk-grid uk-grid-small">
-			<div class="uk-width-large-3-4 uk-width-small-1-1">
+			<div class="uk-width-large-3-4 uk-width-small-1-1  uk-margin-bottom">
 				<div class="ui segment">
 					<div class="ui header kg-heading">Pengaturan Pengguna</div>
 					<div class="ui styled fluid accordion">
@@ -178,7 +182,7 @@
 									<i class="asterisk icon"></i>
 								  </div>
 							  </div>
-							  <a class="ui teal button submit" ng-click="changeUser('password', inputPass)">Ganti Password</a>
+							  <a class="ui primary button submit" ng-click="changeUser('password', inputPass)">Ganti Password</a>
 							</form>
 							  <div class="ui bottom attached message">
 								<div class="kg-heading">Sebelum mengganti password</div>
@@ -190,11 +194,11 @@
 				</div>
 			</div>
 
-			<div class="uk-width-large-1-4 uk-width-1-1">
-				<div class="ui styled accordion">
+			<div class="uk-width-large-1-4 uk-width-small-1-1">
+				<div class="ui fluid styled accordion">
 					<div class="active title"><h3 class="kg-heading"><i class="user icon"></i> Profil</h3></div>
 					<div class="active content">
-						<h2 class="ui center aligned inverted header">
+						<h2 class="ui center aligned header">
 						  <div class="content">
 							{{edit.profile.fullname}}
 							<q class="sub header">

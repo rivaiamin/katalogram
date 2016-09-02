@@ -16,6 +16,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		if (response.product == null) $state.go('profile', { username: $rootScope.auth.name });
 		$scope.product = response.product;
 		$scope.productId = $scope.product.id;
+		$scope.product.is_release = 1;
 		/*$scope.catInd = $scope.categories.map(function(el) {
 		  return el.id;
 		}).indexOf($scope.product.category_id);

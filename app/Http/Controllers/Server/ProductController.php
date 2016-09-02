@@ -114,7 +114,7 @@ class ProductController extends Controller {
         return json_encode($data);
     }
 
-    public function create(ProductRequest $request, Category $category) {
+    public function create(ProductRequest $request) {
         $input = $request->only('category_id','name');
         $input['user_id'] = Auth::user()->id;
 
@@ -122,9 +122,8 @@ class ProductController extends Controller {
 
         if ($create) {
             $data['status'] = "success";
-            $data['message'] = "katalog produk telah ditambahkan";
+            $data['message'] = "Katalog telah tersimpan sebagai draft, harap lengkapi data sebelum publikasikan";
 			$this->qrcode($create->id, false);
-			$category->productInc($input['category_id']);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -144,11 +143,19 @@ class ProductController extends Controller {
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Category $category, $id) {
         if ($this->isOwner($id)) {
             $catalog = Product::findOrFail($id);
 
             $input = $request->all();
+
+			if ($catalog->is_release == '0' && $input['is_release'] == '1') {
+				$category->productInc($input['category_id']);
+				Auth::user()->increment('product_count');
+			} else if ($catalog->is_release == '1' && $input['is_release'] == '0') {
+				$category->productDec($input['category_id']);
+				Auth::user()->decrement('product_count');
+			}
 
             $update = $catalog->update($input);
 

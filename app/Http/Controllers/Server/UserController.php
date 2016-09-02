@@ -273,6 +273,8 @@ class UserController extends Controller
 			$save = UserLink::create($input);
 
 			if ($save) {
+				Auth::user()->increment('contact_count');
+				User::find($input['link_id'])->increment('connect_count');
 				$data['status'] = 'success';
 				$data['message'] = 'link ditambahkan';
 				$data['link'] = $save;
@@ -294,6 +296,8 @@ class UserController extends Controller
 			$delete = UserLink::where('id', $id)->delete();
 
 			if ($delete) {
+				Auth::user()->decrement('contact_count');
+				User::find($input['link_id'])->decrement('connect_count');
 				$data['status'] = 'success';
 				$data['message'] = 'link terhapus';
 			} else {
