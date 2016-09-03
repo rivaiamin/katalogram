@@ -130,6 +130,7 @@ Route::group([//['middleware' => 'cors'],
 	// User Profile
 	Route::get('{username}', 'Server\UserController@profile');
 	Route::get('{username}/share', 'Server\UserController@share');
+	Route::get('{username}/catalog/view', 'Server\UserController@catalogView');
 
 	Route::group(['middleware' => 'ability:admin|manager|member'], function () {
 

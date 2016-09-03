@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
-	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
+	<link href="{{ env('APP_URL').'/public/css/kg.catalog.card.min.css' }}" rel="stylesheet" type="text/css">
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative ui image">
@@ -116,7 +116,7 @@
 		</div>
 	</div>
 
-   <script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>
+   <!--<script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>-->
    <script>
 	  /*(function(w, d){
 	   var id='embedly-platform', n = 'script';

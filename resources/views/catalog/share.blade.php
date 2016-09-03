@@ -17,7 +17,7 @@
 	<link rel="shortcut icon" href="{{ $files }}/product/logo/{{ $product->logo }}" />
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
-	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
+	<link href="{{ env('APP_URL').'/public/css/kg.catalog.card.min.css' }}" rel="stylesheet" type="text/css">
 </head>
 <body>
    <div class="uk-cover-background uk-position-relative ui image">

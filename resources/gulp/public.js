@@ -334,6 +334,13 @@ gulp.task('cssmin', function () {
         .pipe(gulp.dest('public/css'));
 });
 
+gulp.task('uncssmin', function () {
+    return gulp.src(['resources/css/kg.embed.css'])
+        .pipe(cssmin({processImport: false}))
+        .pipe(concat('kg.embed.min.css'))
+        .pipe(gulp.dest('public/css'));
+});
+
 gulp.task('htmlmin', function(cb) {
     return gulp.src(paths.html)
         .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
