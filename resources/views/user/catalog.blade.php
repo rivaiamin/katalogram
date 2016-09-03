@@ -14,7 +14,7 @@
 	<link href="{{ env('APP_URL').'/public/css/kg.user.catalog.min.css' }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div class="ui container uk-margin">
+	<div style="margin:10px">
 		<div id="catalogList" class="ui five doubling stackable link cards" data-uk-grid>
 			<!-- list start -->
 			@foreach ($catalogs as $catalog)
@@ -37,7 +37,7 @@
 					<div class="kg-heading">
 						{{ $catalog->name }}
 					</div>
-					<div class="ui star large rating" data-rating="3" data-max-rating="5"></div>
+					<div class="ui star large rating" data-rating="{{ $catalog->rating_avg }}" data-max-rating="5"></div>
 					<div><q class="description">
 						{{ $catalog->quote }}
 					</q></div>
