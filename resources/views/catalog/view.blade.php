@@ -37,7 +37,9 @@
 		<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
 			<div class="uk-width-1-1 uk-margin-top">
 				<h2 class="uk header uk-margin-small-bottom kg-color-base">
-				{{ $product->name }}
+					<a href="{{ env('APP_URL').'/catalog/'.$product->id.'/view' }}" target="_blank">
+						{{ $product->name }}
+					</a>
 				</h2>
 				<q>{{$product->quote}}</q>
 			</div>

@@ -31,7 +31,7 @@
 				<h2 class="ui header">
 				  <img src="{{ $files }}/product/logo/{{ $product->logo }}">
 				  <div class="content">
-					{{ $product->name }}
+					  <a href="{{ env('APP_URL').'/catalog/'.$product->id.'/view' }}" target="_blank">{{ $product->name }}</a>
 					<div class="sub header">{{ $product->quote }}</div>
 					<!--<div class="sub header"> </div>-->
 				  </div>
