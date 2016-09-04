@@ -25,12 +25,22 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 				hide: 800
 			} });
 	}
-	$scope.shareTo = function(id, media, image, desc) {
+	$scope.shareTo = function(id, media) {
 		var url = 'http:'+kgConfig.site+'catalog/'+id+'/view';
 		if (media == 'facebook') var share_url = 'https://www.facebook.com/sharer.php?u='+url;
 		else if (media == 'twitter') var share_url = 'https://twitter.com/home?status='+url;
-		else if (media == 'pinterest') var share_url = 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+desc;
-		else if (media == 'google') var share_url = 'https://plus.google.com/share?url='+url;
+		else if (media == 'pinterest') {
+			var picture = 'http:'+kgConfig.files+'/product/picture/'+$scope.catalog.picture;
+			var desc = $scope.catalog.name + ' - ' + $scope.catalog.quote;
+			var share_url = 'https://pinterest.com/pin/create/button/?url='+url+'&media='+picture+'&description='+desc;
+		} else if (media == 'tumblr') {
+			var tags = '';
+			for (i=0;i<$scope.catalog.product_tag.length;i++) {
+				tags += $scope.catalog.product_tag[i].tag.name;
+				if (i+1 < $scope.catalog.product_tag.length) tags+=',';
+			}
+			var share_url = 'https://www.tumblr.com/widgets/share/tool?posttype=link&title='+$scope.catalog.name+'&content='+url+'&caption='+$scope.catalog.desc+'&tags='+tags;
+		} else if (media == 'google') var share_url = 'https://plus.google.com/share?url='+url;
 
 		window.open(share_url, 'shareCatalog', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');
 		return false;
