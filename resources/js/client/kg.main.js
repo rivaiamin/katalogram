@@ -39,7 +39,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 				tags += $scope.catalog.product_tag[i].tag.name;
 				if (i+1 < $scope.catalog.product_tag.length) tags+=',';
 			}
-			var share_url = 'https://www.tumblr.com/widgets/share/tool?posttype=link&title='+$scope.catalog.name+'&content='+url+'&caption='+$scope.catalog.desc+'&tags='+tags;
+			var share_url = 'http://www.tumblr.com/share/link?&name='+$scope.catalog.name+'&url='+url+'&description='+$scope.catalog.desc+'&tags='+tags;
 		} else if (media == 'google') var share_url = 'https://plus.google.com/share?url='+url;
 
 		window.open(share_url, 'shareCatalog', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');
