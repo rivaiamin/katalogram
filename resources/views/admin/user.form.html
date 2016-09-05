@@ -6,7 +6,7 @@
         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
       </div>
     </div><!-- /.box-header -->
-    <form name="userAddForm" class="form-horizontal" ng-submit="saveUser(input)" novalidate>
+    <form name="userForm" class="form-horizontal" ng-submit="saveUser(input)" novalidate>
         <div class="box-body">
             <div class="form-group">
                 <label class="col-sm-2 control-label"> Name</label>
@@ -44,14 +44,14 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"> Password</label>
               <div class="col-sm-10">
-                <input id="password" type="password" class="form-control" name="password" ng-model="input.password" placeholder="Password" required>
+                <input id="password" type="password" class="form-control" name="password" ng-model="input.password" placeholder="Password">
               </div>
             </div>
 
         </div><!-- /.box-body -->
         <div class="box-footer">
             <button type="reset" class="btn btn-default" ng-click="resetUser()">Cancel</button>
-            <button ng-disabled="onSave || !userAddForm.$valid" type="submit" class="btn btn-primary pull-right">Save</button>
+            <button ng-disabled="onSave || !userForm.$valid" type="submit" class="btn btn-primary pull-right">Save</button>
         </div><!-- /.box-footer -->
     </form>
 </div><!-- /.box -->

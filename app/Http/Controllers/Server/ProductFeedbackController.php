@@ -20,6 +20,21 @@ class ProductFeedbackController extends Controller {
         $this->middleware('jwt.auth');
     }
 
+	public function get(ProductFeedback $feedback, $after, $limit) {
+		$lists = $feedback->orderBy('id', 'desc')
+				 ->take($limit);
+
+		if ($after != 0) $lists->where('id','<', $after);
+        $data['feedbacks'] = $lists->get();
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+	}
+
+	public function isOwner($id) {
+		$feedback = ProductFeedback::where('id',$id)->first();
+        if ($feedback->user_id == Auth::user()->id) return true;
+        else return false;
+	}
+
     public function send(Request $request, $productId) {
         $input = $request->only('type','comment');
 		$input['time'] = time();
@@ -99,20 +114,26 @@ class ProductFeedbackController extends Controller {
     }
 
 	public function remove($productId, $id) {
-		$feedback = ProductFeedback::find($id)->where('user_id', Auth::user()->id)->first();
+		if ($this->isOwner($id) || Auth::user()->hasRole(['manager', 'admin'])) {
+			$feedback = ProductFeedback::find($id);
 
-		$product = Product::where('id',$productId);
-		if ($feedback->type == 'P') $product->decrement('plus_count');
-		elseif ($feedback->type == 'M') $product->decrement('minus_count');
+			$product = Product::where('id',$feedback->product_id);
+			if ($feedback->type == 'P') $product->decrement('plus_count');
+			elseif ($feedback->type == 'M') $product->decrement('minus_count');
 
-		if ($feedback->delete()) {
-			$data['status'] = "success";
-            $data['message'] = "tanggapan telah dihapus";
-        } else {
-            $data['status'] = "error";
-            $data['message'] = "tanggapan gagal dihapus";
-        }
+			if ($feedback->delete()) {
+				$data['status'] = "success";
+				$data['message'] = "tanggapan telah dihapus";
+			} else {
+				$data['status'] = "error";
+				$data['message'] = "tanggapan gagal dihapus";
+			}
+		} else {
+			$data['status'] = "error";
+			$data['message'] = "akses invalid";
+		}
 
 		return response()->json($data, 200);
 	}
+
 }

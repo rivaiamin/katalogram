@@ -76,12 +76,18 @@ class UserController extends Controller {
     	return response()->json($data);
     }
 
+	public function edit($id) {
+		$data['user'] = User::with('roles')->find($id);
+
+        return response()->json($data);
+	}
+
 	public function update(Request $request, $id) {
     	$input = $request->only('name','email','picture');
 		if ($request->input('password') != '') $input['password'] = Hash::make($request->input('password'));
 
     	$user = User::find($id);
-    	if ($user->update($input) == null) return response()->json(['succsess' => 'data_dapat_diperbarui'], 200);
+    	if ($user->update($input)) return response()->json(['succsess' => 'data_dapat_diperbarui'], 200);
     	else return response()->json(['error' => 'cant_update_data'], 500);
     }
 
@@ -145,7 +151,7 @@ class UserController extends Controller {
 		return view('user/share', $data);
 	}
 
-    public function edit(AuthCtrl $auth, $username) {
+    public function editProfile(AuthCtrl $auth, $username) {
         if ($auth->isOwner($username)) {
             $data['user'] = User::with('userProfile','userLink')->where('name', $username)->first();
 			$data['links'] = Link::all();

@@ -17,7 +17,7 @@
   <![endif]-->
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini login-page" ng-controller="kgCtrl">
+<body class="hold-transition skin-yellow sidebar-mini login-page" ng-controller="kgCtrl">
   <div class="wrapper" ng-if="isAuthenticated()">
 
     <!-- main header -->

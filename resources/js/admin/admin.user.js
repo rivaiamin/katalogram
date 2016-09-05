@@ -118,7 +118,7 @@ var userCtrl = ['$http','$scope', '$location', 'Notification','Upload',
 				if (response.status == 200) {
                 	Notification({message: "user data updated"}, "success");
 					$scope.input = {};
-					$("[data-widget='collapse']").click();
+					//$("[data-widget='collapse']").click();
 				} else if (response.status == 500) {
                 	Notification({message: "failed to update"}, "error");
 				}
@@ -138,7 +138,9 @@ var userCtrl = ['$http','$scope', '$location', 'Notification','Upload',
 			$scope.input.name = response.user.name;
 			$scope.input.email = response.user.email;
 
-            $("[data-widget='collapse']").click();
+            if ($(".box.box-default").hasClass('collapsed-box')) {
+				$("[data-widget='collapse']").click();
+			}
             $location.hash('userForm');
         });
     };

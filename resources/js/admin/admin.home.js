@@ -1,25 +1,29 @@
-var homeCtrl = function() {
+var homeCtrl = ['$scope', '$http', 'kgConfig', function($scope, $http, kgConfig) {
 
   $.AdminLTE.layout.fix();
   //$.AdminLTE.tree(".sidebar");
 
+  $http.get(kgConfig.api+'dashboard').success(function(response){
+	  $scope.count = response;
+  })
+
   //Make the dashboard widgets sortable Using jquery UI
-  $(".connectedSortable").sortable({
+  /*$(".connectedSortable").sortable({
     placeholder: "sort-highlight",
     connectWith: ".connectedSortable",
     handle: ".box-header, .nav-tabs",
     forcePlaceholderSize: true,
     zIndex: 999999
   });
-  $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
+  $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");*/
 
   //jQuery UI sortable for the todo list
-  $(".todo-list").sortable({
+  /*$(".todo-list").sortable({
     placeholder: "sort-highlight",
     handle: ".handle",
     forcePlaceholderSize: true,
     zIndex: 999999
-  });
+  });*/
 
   //bootstrap WYSIHTML5 - text editor
   //$(".textarea").wysihtml5();
@@ -43,7 +47,7 @@ var homeCtrl = function() {
   $(".knob").knob();
 
   //jvectormap data
-  var visitorsData = {
+  /*var visitorsData = {
     "US": 398, //USA
     "SA": 400, //Saudi Arabia
     "CA": 1000, //Canada
@@ -57,7 +61,7 @@ var homeCtrl = function() {
     "RU": 3000 //Russia
   };
   //World map by jvectormap
-  $('#world-map').vectorMap({
+  //$('#world-map').vectorMap({
     map: 'world_mill_en',
     backgroundColor: "transparent",
     regionStyle: {
@@ -80,10 +84,10 @@ var homeCtrl = function() {
       if (typeof visitorsData[code] != "undefined")
         el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
     }
-  });
+  });*/
 
   //Sparkline charts
-  var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
+  /*var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
   $('#sparkline-1').sparkline(myvalues, {
     type: 'line',
     lineColor: '#92c1dc',
@@ -106,7 +110,7 @@ var homeCtrl = function() {
     fillColor: "#ebf4f9",
     height: '50',
     width: '80'
-  });
+  });*/
 
   //The Calender
   $("#calendar").datepicker();
@@ -118,7 +122,7 @@ var homeCtrl = function() {
 
   /* Morris.js Charts */
   // Sales chart
-  var area = new Morris.Area({
+  /*var area = new Morris.Area({
     element: 'revenue-chart',
     resize: true,
     data: [
@@ -167,10 +171,10 @@ var homeCtrl = function() {
     gridLineColor: "#efefef",
     gridTextFamily: "Open Sans",
     gridTextSize: 10
-  });
+  });*/
 
   //Donut Chart
-  var donut = new Morris.Donut({
+  /*var donut = new Morris.Donut({
     element: 'sales-chart',
     resize: true,
     colors: ["#3c8dbc", "#f56954", "#00a65a"],
@@ -180,17 +184,17 @@ var homeCtrl = function() {
       {label: "Mail-Order Sales", value: 20}
     ],
     hideHover: 'auto'
-  });
+  });*/
 
   //Fix for charts under tabs
-  $('.box ul.nav a').on('shown.bs.tab', function () {
+  /*$('.box ul.nav a').on('shown.bs.tab', function () {
     area.redraw();
     donut.redraw();
     line.redraw();
-  });
+  });*/
 
   /* The todo list plugin */
-  $(".todo-list").todolist({
+  /*$(".todo-list").todolist({
     onCheck: function (ele) {
       window.console.log("The element has been checked");
       return ele;
@@ -199,5 +203,5 @@ var homeCtrl = function() {
       window.console.log("The element has been unchecked");
       return ele;
     }
-  });
-}
+  });*/
+}]

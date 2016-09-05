@@ -127,11 +127,6 @@ Route::group([//['middleware' => 'cors'],
 	Route::get('criteria', 'Server\CriteriaController@index');
 	Route::get('criteria/{after}/{limit}', 'Server\CriteriaController@get');
 
-	// User Profile
-	Route::get('{username}', 'Server\UserController@profile');
-	Route::get('{username}/share', 'Server\UserController@share');
-	Route::get('{username}/catalog/view', 'Server\UserController@catalogView');
-
 	Route::group(['middleware' => 'ability:admin|manager|member'], function () {
 
 		// product
@@ -180,11 +175,18 @@ Route::group([//['middleware' => 'cors'],
 
 	Route::group(['middleware' => 'ability:admin|manager'], function () {
 
+		//module dashboard
+		Route::get('dashboard', 'Server\DashboardController@index');
+
 		//module user
 		Route::get('user', 'Server\UserController@index');
 		Route::get('user/scroll/{after}/{limit}', 'Server\UserController@scroll');
 
+		Route::get('feedback/scroll/{after}/{limit}', 'Server\ProductFeedbackController@get');
+		Route::delete('product/{productId}/feedback/{id}', 'Server\ProductFeedbackController@remove');
+
 		Route::get('product/scroll/{after}/{limit}', 'Server\ProductController@get');
+		Route::delete('product/{id}', 'Server\ProductController@delete');
 
 		// category
 		Route::post('category','Server\CategoryController@add');
@@ -204,12 +206,26 @@ Route::group([//['middleware' => 'cors'],
 
 	});
 
+	Route::group(['middleware' => 'ability:admin'], function () {
+		//user module
+		Route::post('user', 'Server\UserController@add');
+		Route::get('user/{id}', 'Server\UserController@edit');
+        Route::put('user/{id}', 'Server\UserController@update');
+        Route::delete('user/{id}', 'Server\UserController@delete');
+	});
+
+	Route::group(['domain' => 'api.' . env('APP_DOMAIN')], function() {
+		// User Profile
+		Route::get('{username}', 'Server\UserController@profile');
+		Route::get('{username}/share', 'Server\UserController@share');
+		Route::get('{username}/catalog/view', 'Server\UserController@catalogView');
+	});
 
     Route::group(['middleware' => 'ability:member'], function () {
 
 		/*route member
 		=================================================================*/
-		Route::get('{username}/edit', 'Server\UserController@edit');
+		Route::get('{username}/edit', 'Server\UserController@editProfile');
 		Route::put('{username}/profile', 'Server\UserController@updateProfile');
 		Route::post('{username}/picture', 'Server\UserController@uploadPicture');
 		Route::post('{username}/cover', 'Server\UserController@uploadCover');
@@ -218,14 +234,6 @@ Route::group([//['middleware' => 'cors'],
 		//Route::put('{username}/pict', 'Server\UserController@changePict');
 		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
 
-	});
-
-	Route::group(['middleware' => 'ability:admin'], function () {
-		//user module
-		Route::post('user', 'Server\UserController@add');
-		Route::get('user/{id}', 'Server\UserController@edit');
-        Route::put('user/{id}', 'Server\UserController@update');
-        Route::delete('user/{id}', 'Server\UserController@delete');
 	});
 
 });

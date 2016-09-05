@@ -58,6 +58,22 @@ var productCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         })
 	}
 
+	$scope.deleteProduct = function(id) {
+		var index = $scope.indexSearch($scope.products, id);
+		if (confirm('delete product?')) {
+			$scope.onLoad = true;
+			$http.delete($scope.env.api+'product/'+id)
+			.success(function (response) {
+				Notification({message: response.message}, response.status);
+				if (response.status == 'success') {
+					//console.log(response.type);
+					$scope.products.splice(index, 1);
+				}
+				$scope.onLoad = false;
+			});
+		}
+	};
+
     /*$scope.formProduct = function() {
         $http.get($scope.env.api+'product/form')
         .success(function (response) {
@@ -160,21 +176,7 @@ var productCtrl = ['$http','$scope', '$location', 'Notification','Upload',
         });
     };
 
-	$scope.deleteProduct = function(id) {
-		var index = $scope.indexSearch($scope.products, id);
-		if (confirm('delete product?')) {
-			$scope.onLoad = true;
-			$http.delete($scope.env.api+'product/'+id)
-			.success(function (response) {
-				Notification({message: response.message}, response.status);
-				if (response.status == 'success') {
-					//console.log(response.type);
-					$scope.products.splice(index, 1);
-				}
-				$scope.onLoad = false;
-			});
-		}
-	};
+
 
 	$scope.slug = function(npsn, str) {
         str = str.replace(/[^a-zA-Z0-9\s]/g,"");
