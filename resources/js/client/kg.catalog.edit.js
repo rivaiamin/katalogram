@@ -88,7 +88,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
     };
 
 	$scope.loadTags = function($query) {
-		return $http.get(kgConfig.api+'tags', { cache: true}).then(function(response) {
+		return $http.get(kgConfig.api+'tag', { cache: true}).then(function(response) {
 		  var tags = response.data;
 		  return tags.filter(function(tag) {
 			return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
@@ -96,7 +96,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		});
 	}
 	$scope.loadCriterias = function($query) {
-		return $http.get(kgConfig.api+'criterias', { cache: true}).then(function(response) {
+		return $http.get(kgConfig.api+'criteria', { cache: true}).then(function(response) {
 		  var criterias = response.data;
 		  return criterias.filter(function(criteria) {
 			return criteria.name.toLowerCase().indexOf($query.toLowerCase()) != -1;

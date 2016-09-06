@@ -214,13 +214,6 @@ Route::group([//['middleware' => 'cors'],
         Route::delete('user/{id}', 'Server\UserController@delete');
 	});
 
-	Route::group(['domain' => 'api.' . env('APP_DOMAIN')], function() {
-		// User Profile
-		Route::get('{username}', 'Server\UserController@profile');
-		Route::get('{username}/share', 'Server\UserController@share');
-		Route::get('{username}/catalog/view', 'Server\UserController@catalogView');
-	});
-
     Route::group(['middleware' => 'ability:member'], function () {
 
 		/*route member
@@ -235,6 +228,12 @@ Route::group([//['middleware' => 'cors'],
 		Route::put('{username}/{field}', 'Auth\AuthenticateController@change');
 
 	});
+
+	// User Profile
+	Route::get('{username}', 'Server\UserController@profile');
+	Route::get('{username}/share', 'Server\UserController@share');
+	Route::get('{username}/catalog/view', 'Server\UserController@catalogView');
+
 
 });
 

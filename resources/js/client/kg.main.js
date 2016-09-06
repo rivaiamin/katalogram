@@ -53,7 +53,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		//$scope.categories = $rootScope.categories;
 	});
 	$scope.loadTags = function($query) {
-		return $http.get(kgConfig.api+'tags', { cache: true}).then(function(response) {
+		return $http.get(kgConfig.api+'tag', { cache: true}).then(function(response) {
 		  var tags = response.data;
 		  return tags.filter(function(tag) {
 			return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
