@@ -82,8 +82,9 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 	$scope.authenticate = function(provider) {
 		$auth.authenticate(provider)
 		  .then(function(response) {
-		  	$scope.getAuthUser();
+		  	//$scope.getAuthUser();
 		    $scope.modal2.hide();
+			$state.go('catalog');
 		  })
 		  .catch(function(error) {
 		  	//UIkit.notify(response.message);
@@ -109,8 +110,10 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		  .then(function(response) {
 		    // Redirect user here after a successful log in.
 		    //console.log(response.token)
+			$rootScope.auth = response.data.user;
 		  	$scope.modal2.hide();
-		  	$scope.getAuthUser();
+			$state.go('catalog');
+		  	//$scope.getAuthUser();
 			$scope.isLogging = false;
 		  })
 		  .catch(function(response) {

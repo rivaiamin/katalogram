@@ -17,6 +17,7 @@ use App\Role;
 use App\User;
 use App\UserProfile;
 use Redirect;
+use Auth;
 use Hash;
 
 class AuthenticateController extends Controller
@@ -80,9 +81,9 @@ class AuthenticateController extends Controller
             // something went wrong whilst attempting to encode the token
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
+		$user = Auth::user();
         // all good so return the token
-        return response()->json(compact('token'));
+        return response()->json(compact('token','user'));
     }
 
     public function register(Request $request) {
@@ -211,7 +212,8 @@ class AuthenticateController extends Controller
             $user->save();
 
             $token = JWTAuth::fromUser($user, $customClaims);
-            return response()->json(['token' => $token]);
+			$user = Auth::user();
+            return response()->json(['token' => $token, 'user' => $user]);
         } else {
 			// Step 3b. Create a new user account or return an existing one.
             $user = User::where('facebook', '=', $profile['id']);
@@ -238,7 +240,8 @@ class AuthenticateController extends Controller
             $uProfile->save();
             
             $token = JWTAuth::fromUser($user, $customClaims);
-            return response()->json(['token' => $token]);
+			$user = Auth::user();
+            return response()->json(['token' => $token, 'user' => $user]);
         }
     }
 
@@ -283,7 +286,9 @@ class AuthenticateController extends Controller
             $user->name = $user->name ?: $profile['name'];
             $user->save();
 
-            return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
+			JWTAuth::fromUser($user, $customClaims);
+			$user = Auth::user();
+            return response()->json(['token' => $token, 'user' => $user]);
         } else {
 		// Step 3b. Create a new user account or return an existing one.
             $user = User::where('google', '=', $profile['sub']);
@@ -309,7 +314,9 @@ class AuthenticateController extends Controller
             $uProfile->summary = $profile['profile'];
             $uProfile->save();
 
-            return response()->json(['token' => JWTAuth::fromUser($user, $customClaims)]);
+			$token = JWTAuth::fromUser($user, $customClaims);
+			$user = Auth::user();
+            return response()->json(['token' => $token, 'user' => $user]);
         }
     }
     
