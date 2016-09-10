@@ -112,6 +112,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		    //console.log(response.token)
 			$rootScope.auth = response.data.user;
 		  	$scope.modal2.hide();
+			$scope.popup();
 			$state.go('catalog');
 		  	//$scope.getAuthUser();
 			$scope.isLogging = false;
