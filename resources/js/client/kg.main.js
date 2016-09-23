@@ -84,6 +84,7 @@ var kgCtrl = ['$scope', '$rootScope', '$http', '$state', '$auth', '$sce', '$loca
 		  .then(function(response) {
 		  	//$scope.getAuthUser();
 		    $scope.modal2.hide();
+			$scope.popup();
 			$state.go('catalog');
 		  })
 		  .catch(function(error) {
