@@ -211,7 +211,7 @@ class AuthenticateController extends Controller {
             $user->save();
 
             $token = JWTAuth::fromUser($user, $customClaims);
-			$user = Auth::user();
+			//$user = Auth::user();
             return response()->json(['token' => $token, 'user' => $user]);
         } else {
 			// Step 3b. Create a new user account or return an existing one.
@@ -239,7 +239,7 @@ class AuthenticateController extends Controller {
             $uProfile->save();
             
             $token = JWTAuth::fromUser($user, $customClaims);
-			$user = Auth::user();
+			//$user = Auth::user();
             return response()->json(['token' => $token, 'user' => $user]);
         }
     }
@@ -286,7 +286,7 @@ class AuthenticateController extends Controller {
             $user->save();
 
 			JWTAuth::fromUser($user, $customClaims);
-			$user = Auth::user();
+			//$user = Auth::user();
             return response()->json(['token' => $token, 'user' => $user]);
         } else {
 		// Step 3b. Create a new user account or return an existing one.
@@ -314,7 +314,7 @@ class AuthenticateController extends Controller {
             $uProfile->save();
 
 			$token = JWTAuth::fromUser($user, $customClaims);
-			$user = Auth::user();
+			//$user = Auth::user();
             return response()->json(['token' => $token, 'user' => $user]);
         }
     }
