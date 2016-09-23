@@ -20,8 +20,7 @@ use Redirect;
 use Auth;
 use Hash;
 
-class AuthenticateController extends Controller
-{
+class AuthenticateController extends Controller {
 
     public function __construct() {
          // Apply the jwt.auth middleware to all methods in this controller
