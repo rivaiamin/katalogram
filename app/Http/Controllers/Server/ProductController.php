@@ -243,7 +243,7 @@ class ProductController extends Controller {
 				$manager = new ImageManager(array('driver' => 'imagick'));
 				$image = $manager->make($file);
 
-				if(!$image->fit(600,250)->encode('jpg',80)->save($destinationPath.$filename)) {
+				if(!$image->fit(600,400)->encode('jpg',80)->save($destinationPath.$filename)) {
 					return response()->json(['status' => 'error', 'message' => 'gambar gagal diubah'], 400);
 				} else {
 					//update record in database
