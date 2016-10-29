@@ -37,7 +37,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		//$scope.categories = $rootScope.categories;
 		//UIkit.slider('#previewPict');
 		$('.ui.checkbox').checkbox();
-		$('.ui.accordion').accordion('refresh');
+		//$('.ui.accordion').accordion('refresh');
 		$('.special.cards .image').dimmer({
 		  on: 'hover'
 		});
