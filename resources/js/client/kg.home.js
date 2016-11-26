@@ -1,4 +1,4 @@
-homeCtrl = ['$scope', '$stateParams', '$rootScope', '$http', '$state', '$auth', '$sce', '$location', 'kgConfig',
+var homeCtrl = ['$scope', '$stateParams', '$rootScope', '$http', '$state', '$auth', '$sce', '$location', 'kgConfig',
   function($scope, $stateParams, $rootScope, $http, $state, $auth, $sce, $location, kgConfig) {
 
 	$scope.catalogs = [];
@@ -12,4 +12,4 @@ homeCtrl = ['$scope', '$stateParams', '$rootScope', '$http', '$state', '$auth', 
 				$scope.catalogs.push(response.catalogs[i]);
 			}
         })
-}]
+}];

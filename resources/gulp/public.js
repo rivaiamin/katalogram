@@ -69,9 +69,12 @@ var paths = {
         'bower_components/angular-touch/angular-touch.min.js',
         'bower_components/angular-resource/angular-resource.min.js',
         'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+        'bower_components/angulartics/dist/angulartics.min.js',
+        'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
+
+
         'bower_components/angular-input-stars-directive/angular-input-stars.js',
         'bower_components/ng-file-upload/ng-file-upload.min.js',
-
 		//'bower_components/cropme/cropme.js',
         /*'bower_components/angular-ui-grid/ui-grid.min.js',*/
         'bower_components/satellizer/satellizer.min.js',
@@ -124,6 +127,7 @@ var paths = {
         'bower_components/semantic/dist/components/rating.min.css',
         'bower_components/semantic/dist/components/segment.min.css',
         'bower_components/semantic/dist/components/site.min.css',
+        //'bower_components/semantic/dist/components/statistic.min.css',
         'bower_components/semantic/dist/components/tab.min.css',
         'bower_components/semantic/dist/components/table.min.css',
         'bower_components/semantic/dist/components/transition.min.css',
@@ -186,7 +190,7 @@ var paths = {
         'bower_components/semantic/dist/components/header.min.css',
         'bower_components/semantic/dist/components/image.min.css',
         'bower_components/semantic/dist/components/list.min.css',
-        //'bower_components/semantic/dist/components/icon.min.css',
+        'bower_components/semantic/dist/components/icon.min.css',
         //'bower_components/semantic/dist/components/input.min.css',
         'bower_components/semantic/dist/components/label.min.css',
         //'bower_components/semantic/dist/components/dimmer.min.css',
@@ -197,6 +201,7 @@ var paths = {
         'bower_components/semantic/dist/components/rating.min.css',
         'bower_components/semantic/dist/components/segment.min.css',
         'bower_components/semantic/dist/components/site.min.css',
+        'bower_components/semantic/dist/components/statistic.min.css',
         //'bower_components/semantic/dist/components/tab.min.css',
         'bower_components/semantic/dist/components/table.min.css',
         //'bower_components/semantic/dist/components/transition.min.css',
@@ -326,6 +331,13 @@ gulp.task('cssmin', function () {
         .pipe(stylus())
         .pipe(cssmin({processImport: false}))
         .pipe(concat('katalogram.min.css'))
+        .pipe(gulp.dest('public/css'));
+});
+
+gulp.task('uncssmin', function () {
+    return gulp.src(['resources/css/kg.embed.css'])
+        .pipe(cssmin({processImport: false}))
+        .pipe(concat('kg.embed.min.css'))
         .pipe(gulp.dest('public/css'));
 });
 

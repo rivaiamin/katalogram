@@ -17,7 +17,7 @@
         "mikehaertl/phpwkhtmltopdf": "^2.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.3",
         "doctrine/dbal": "^2.5",
-        "zizaco/entrust": "^1.7",
+        "zizaco/entrust": "5.2.x-dev",
         "intervention/image": "^2.3",
         "roumen/sitemap": "^2.6",
         "anam/phantomjs-linux-x86-binary": "^2.1",
@@ -25,7 +25,8 @@
         "league/flysystem": "^1.0",
         "aws/aws-sdk-php": "^2.7",
         "league/flysystem-aws-s3-v2": "^1.0",
-		"anam/phantommagick": "^1.0"
+		"anam/phantommagick": "^1.0",
+        "browshot-php/browshot": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -2,22 +2,19 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>.:: katalogram.com (Alpha Version) - Situs Katalogisasi Sosial untuk Ekonomi Kreatif Indonesia ::.</title>
+	<title>.:: katalogram.com (Beta) - Platform Katalog Produk Kreatif Indonesia ::.</title>
 	<meta name="author" content="KarsaKalana" />
 	<meta name="description" content="Situs Katalogisasi Sosial (Social Cataloging) untuk Ekonomi Kreatif" />
 	<meta name="keyword" content="social cataloging, social, cataloging, site, economy, product, creative, katalogisasi sosial, kreatif, ekonomi, industri, produk, produk kreatif, ekonomi kreatif, industri kreatif, insan kreatif, kreator" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 
 	<!--<link rel="stylesheet" type="text/css" href="http://katalogram.dev/css/katalogram.min.css">-->
-	<link href="{{ env('APP_URL').'/public/css/export.min.css' }}" rel="stylesheet" type="text/css">
+	<link href="{{ env('APP_URL').'/public/css/kg.catalog.card.min.css' }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-   <div class="uk-cover-background uk-position-relative uk-contrast ui image">
-		<a class="ui primary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}} inverted"></i> {{ $product->category->name }}</a>
+   <div class="uk-cover-background uk-position-relative ui image">
+		<a class="ui secondary ribbon label uk-text-large"> <i class="kg-icon icon-{{$product->category->slug}}"></i> {{ $product->category->name }}</a>
 		<img class="uk-invincible" src="{{ $files }}/product/picture/{{ $product->picture }}" height="300" />
-		<div class="uk-position-cover uk-flex uk-flex-center uk-flex-bottom">
-			<img class="uk-thumbnail uk-border-circle kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
-		</div>
 	</div>
 	<div class="ui compact five item menu kg-font-base uk-margin-remove">
 		<a class="item" data-content="tambahkan ke koleksi favorit" kg-popup>
@@ -26,7 +23,9 @@
 		<a class="item" data-content="Total score seluruh kategori" kg-popup>
 			<i class="empty star link icon"></i> Rating <span class="ui secondary label">{{ $product->rating_avg }}</span>
 		</a>
-		<a class="item disabled"></a>
+		<a class="item disabled">
+			<img class="ui circular image kg-logo-big" src="{{ $files }}/product/logo/{{ $product->logo }}" width="100">
+		</a>
 		<a class="item" href="#productFeedback" data-content="Berikan tanggapan tentang kelebihan produk" kg-popup>
 			<i class="thumbs up outline link icon"></i> Plus <span class="ui secondary label">{{ $product->plus_count }}</span>
 		</a>
@@ -38,7 +37,9 @@
 		<div class="uk-grid uk-grid-small uk-margin-top uk-text-center">
 			<div class="uk-width-1-1 uk-margin-top">
 				<h2 class="uk header uk-margin-small-bottom kg-color-base">
-				{{ $product->name }}
+					<a href="{{ env('APP_URL').'/catalog/'.$product->id.'/view' }}" target="_blank">
+						{{ $product->name }}
+					</a>
 				</h2>
 				<q>{{$product->quote}}</q>
 			</div>
@@ -71,9 +72,9 @@
 			</div>
 			<div class="uk-width-3-5">
 				<h3 class="kg-heading"><i class="file text icon"></i> Deskripsi</h3>
-				{{$product->desc}}
+				{!! $product->desc !!}
 				<h3 class="kg-heading"><i class="table icon"></i> Data</h3>
-				{{$product->data}}
+				{!! $product->data !!}
 			</div>
 		</div>
 		<div class="uk-grid uk-grid-divider">
@@ -117,7 +118,7 @@
 		</div>
 	</div>
 
-   <script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>
+   <!--<script src="{{ asset('js/export.min.js') }}" type="text/javascript"></script>-->
    <script>
 	  /*(function(w, d){
 	   var id='embedly-platform', n = 'script';

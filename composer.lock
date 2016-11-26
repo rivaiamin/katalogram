@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0728a3179215d40e84a2ab9f8dd39257",
-    "content-hash": "89eba759907e09666cd1db07e22879d0",
+    "hash": "bd783efb39f5001ba12b004e754cf312",
+    "content-hash": "50e0c0fcee2b8b7fd9137553cc9b4e3f",
     "packages": [
         {
             "name": "anam/phantomjs-linux-x86-binary",
@@ -264,6 +264,45 @@
                 "laravel"
             ],
             "time": "2015-12-20 20:32:17"
+        },
+        {
+            "name": "browshot-php/browshot",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/juliensobrier/browshot-php.git",
+                "reference": "f31ec203dcea962a6155f23e277d386cbde213e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/juliensobrier/browshot-php/zipball/f31ec203dcea962a6155f23e277d386cbde213e6",
+                "reference": "f31ec203dcea962a6155f23e277d386cbde213e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Browshot": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Sobrier",
+                    "email": "julien@sobrier.net",
+                    "homepage": "https://browshot.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP library for Browshot API: take screenshots of any web page",
+            "homepage": "https://github.com/juliensobrier/browshot-php",
+            "time": "2016-07-28 03:46:05"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -3696,16 +3735,16 @@
         },
         {
             "name": "zizaco/entrust",
-            "version": "1.7.0",
+            "version": "5.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "1fa77fadfbc8840ee1e9a6ce483b39ba985f81d2"
+                "reference": "b749bff868026336dec1ba1a16c150728697353d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/1fa77fadfbc8840ee1e9a6ce483b39ba985f81d2",
-                "reference": "1fa77fadfbc8840ee1e9a6ce483b39ba985f81d2",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/b749bff868026336dec1ba1a16c150728697353d",
+                "reference": "b749bff868026336dec1ba1a16c150728697353d",
                 "shasum": ""
             },
             "require": {
@@ -3760,7 +3799,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2016-03-09 17:05:35"
+            "time": "2016-03-24 15:24:42"
         }
     ],
     "packages-dev": [
@@ -5141,7 +5180,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zizaco/entrust": 20,
+        "browshot-php/browshot": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

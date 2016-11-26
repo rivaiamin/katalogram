@@ -1,13 +1,18 @@
-<div id="kgHero" class="uk-cover kg-bg-base" data-uk-sticky="{ top:'-240', clsactive:'sticky' }">
-	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-left uk-flex-middle content">
+<div id="kgHero2" class="uk-cover kg-bg-base" data-uk-sticky="{ top:'-440', clsactive:'sticky' }">
+	<div class="uk-cover">
+		<img class="uk-invincible" ng-src="public/img/header2.jpg" alt="">
+	</div>
+	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-center uk-flex-middle content">
 		<img src="public/img/pics/illustration2.png" alt="">
 	</div>
-	<div class="uk-hidden-small uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
+	<div class="uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content kg-bg-trans">
 	  	<h1 class="ui inverted header uk-margin-top uk-text-center">
 		  <q>Mari Secara Kolektif Memajukan Ekonomi Kreatif</q>
 		</h1>
 		<div>
-			<a ng-click="loginPage()" class="ui inverted big button"><i class="rocket icon"></i> Gabung Sekarang</a>
+			<a ng-click="loginPage()" class="ui primary big button"><i class="rocket icon"></i> Gabung Sekarang</a>
+		</div>
+		<div class="uk-margin-top">
 			<a class="ui inverted icon big button" href="https://facebook.com/katalogram">
 			  <i class="facebook icon"></i>
 			</a>
@@ -19,7 +24,7 @@
 			</a>
 		</div>
 	</div>
-  	<div class="uk-visible-small uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
+  	<!--<div class="uk-visible-small uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-flex-column content">
 	  	<h3 class="ui inverted header uk-margin-top uk-text-center">
 		  <q>Mari Secara Kolektif Memajukan Ekonomi Kreatif</q>
 		</h3>
@@ -37,7 +42,7 @@
 			  <i class="instagram plus icon"></i>
 			</a>
 		</div>
-	</div>
+	</div>-->
 </div>
 <div class="kg-section">
 	<div class="ui container">
@@ -46,8 +51,8 @@
 		</h1>
 		<div id="catalogList" class="ui five doubling stackable link cards">
 			<!-- list start -->
-			<div class="card uk-text-center" ng-repeat="list in catalogs">
-				<div class="image" kg-ui-dimmer>
+			<div class="card uk-text-center" ng-repeat="list in catalogs" ui-sref="catalog.view({productId: list.id})">
+				<div class="image">
 				  <div class="ui primary left corner label">
 					<i class="kg-icon icon-{{ categories[list.category_id-1].slug }} large icon"></i>
 				  </div>

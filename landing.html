@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>katalogram.com (Beta) - Platform Crowdfunding untuk Industri Penerbitan Indonesia</title>
+	<meta name="author" content="KarsaKalana">
+	<meta name="description" content="Platform Crowdorder untuk Industri Penerbitan Indonesia">
+	<meta name="keyword" content="industri kreatif, penerbitan, buku, penulis, author, pembaca, crowdfunding, ">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<meta property="og:image" content="http://katalogram.com/public/img/kg_square.png">
+	<meta property="og:url" content="http://katalogram.com/">
+	<meta property="og:title" content="Platform Crowdorder untuk Industri Penerbitan Indonesia">
+	<meta property="og:description" content="Temukan Buku yang Ingin Kamu Terbitkan, Berikan Dukungan dengan order atau bagikan, dan terbitkan buku saat order sudah terkumpul">
+	<meta property="fb:app_id" content="1496399374007633">
+	<meta name="google-signin-client_id" content="13356134084-ij596q95of0e79k0qa592btnpo8uvang.apps.googleusercontent.com">
+	<!--<base href="/index.html">-->
+
+	<link rel="shortcut icon" href="public/img/kg_square.png">
+	<link href="public/css/please-wait.css" rel="stylesheet">
+	<link rel="stylesheet" href="public/css/kg.landing.min.css">
+	<style type="text/css">
+
+		.hidden.menu {
+		  display: none;
+		}
+
+		.ui.vertical.segment { background: url('public/img/paper_web.jpg') }
+
+		.ui.inverted.segment { background-image: url("public/img/self-publishing.jpg"); background-attachment: fixed; background-size: cover}
+		.ui.secondary.pointing.menu { border: none; }
+		.ui.icon.header { max-width: 100%; }
+		.ui.icon.header .icon { max-width: 100%; }
+		.ui.secondary.inverted.pointing.menu .active.item { border-color: #ff8e1f; }
+		.masthead.segment {
+		  min-height: 700px;
+		  padding: 1em 0em;
+		}
+		.masthead .logo.item img {
+		  margin-right: 1em;
+		}
+		.masthead .ui.menu .ui.button {
+		  margin-left: 0.5em;
+		}
+		.ui.secondary.inverted.pointing.menu { border: none; }
+		.masthead h1.ui.header {
+		  margin-top: 3em;
+		  margin-bottom: 0em;
+		  font-size: 3em;
+		  font-weight: normal;
+		}
+		.masthead h2 {
+		  font-size: 1.7em;
+		  font-weight: normal;
+		}
+
+		.ui.vertical.stripe {
+		  padding: 8em 0em;
+		}
+		.ui.vertical.stripe h3 {
+		  font-size: 2em;
+		}
+		.ui.vertical.stripe .button + h3,
+		.ui.vertical.stripe p + h3 {
+		  margin-top: 3em;
+		}
+		.ui.vertical.stripe .floated.image {
+		  clear: both;
+		}
+		.ui.vertical.stripe p {
+		  font-size: 1.33em;
+		}
+		.ui.vertical.stripe .horizontal.divider {
+		  margin: 3em 0em;
+		}
+
+		.quote.stripe.segment {
+		  padding: 0em;
+		}
+		.quote.stripe.segment .grid .column {
+		  padding-top: 5em;
+		  padding-bottom: 5em;
+		}
+
+		.footer.segment {
+		  padding: 5em 0em;
+		}
+
+		.secondary.pointing.menu .toc.item {
+		  display: none;
+		}
+
+		@media only screen and (max-width: 700px) {
+		  .ui.fixed.menu {
+			display: none !important;
+		  }
+		  .secondary.pointing.menu .item,
+		  .secondary.pointing.menu .menu {
+			display: none;
+		  }
+		  .secondary.pointing.menu .toc.item {
+			display: block;
+		  }
+		  .masthead.segment {
+			min-height: 350px;
+		  }
+		  .masthead h1.ui.header {
+			font-size: 2em;
+			margin-top: 1.5em;
+		  }
+		  .masthead h2 {
+			margin-top: 0.5em;
+			font-size: 1.5em;
+		  }
+		}
+	  </style>
+	  <script src="public/js/kg.landing.min.js"></script>
+	<script>
+	  $(document).ready(function() {
+
+		  // fix menu when passed
+		  /*$('.masthead')
+			.visibility({
+			  once: false,
+			  onBottomPassed: function() {
+				$('.fixed.menu').transition('fade in');
+			  },
+			  onBottomPassedReverse: function() {
+				$('.fixed.menu').transition('fade out');
+			  }
+			})
+		  ;*/
+
+		  // create sidebar and attach to menu open
+		  $('.ui.sidebar').sidebar('attach events', '.toc.item');
+		  $('.menu .item').tab();
+		  $('#callAct').modal('attach events', '#callActBtn', 'show');
+		});
+
+		/* smartsupp */
+		var _smartsupp = _smartsupp || {};
+		_smartsupp.key = 'cc1fd97b1ddc57f93720906a8da2de07d915ce03';
+		window.smartsupp||(function(d) {
+			var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+			s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+			c.type='text/javascript';c.charset='utf-8';c.async=true;
+			c.src='//www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+		})(document);
+
+	  </script>
+</head>
+<body>
+
+	<!-- Following Menu -->
+	<!--<div class="ui large top secondary pointing fixed hidden menu">
+	  <div class="ui container">
+		<a href="" class="item">
+			<img src="public/img/kg_circle.png" alt="">
+			<img class="ui image" src="public/img/katalogram_bk.png" width="100" alt="">
+		</a>
+		<div class="right item">
+			<a class="toc item">
+				<i class="sidebar icon"></i>
+			</a>
+			<a class="active item">Home</a>
+			<a class="item">Work</a>
+			<a class="item">Company</a>
+			<a class="item">Careers</a>
+		</div>
+	  </div>
+	</div>-->
+
+	<!-- modal -->
+	<div id="callAct" class="ui basic small modal">
+	  <div class="center aligned header">Berikan Dukungan dan Akan Kami Kabari Anda</div>
+	  <div class="content">
+		<form name="kgForm" class="ui inverted form uk-text-center" ng-submit="loginMember(login)" novalidate>
+			<div class="inline fields">
+				<div class="twelve wide field">
+					<div class="ui left icon input">
+						<i class="mail icon"></i>
+						<input type="email" name="email" placeholder="email" required>
+					</div>
+				</div>
+				<div class="four wide field">
+					<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
+					<i class="send icon"></i> Kirim</button>
+				</div>
+			</div>
+			  <div class="field">
+				<div class="ui inverted horizontal divider">
+					atau
+				</div>
+			  </div>
+
+			 <div class="field">
+				<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Dukung dengan Facebook</a>
+			</div>
+			 <div class="field">
+				<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Dukung dengan Google</a>
+			</div>
+		</form>
+	  </div>
+	</div>
+
+	<!-- Sidebar Menu -->
+	<div class="ui vertical inverted sidebar menu">
+	  <a class="active item">Beranda</a>
+	  <a class="item">Work</a>
+	  <a class="item">Company</a>
+	  <a class="item">Careers</a>
+	  <a class="item">Login</a>
+	  <a class="item">Signup</a>
+	</div>
+
+
+	<!-- Page Contents -->
+	<div class="pusher">
+	  <div class="ui inverted vertical masthead center aligned segment">
+
+		<div class="ui container">
+		  <div class="ui large secondary inverted pointing menu">
+			<a href="" class="item">
+				<img src="public/img/kg_white.png" alt="">
+				<img class="ui image" src="public/img/katalogram.png" width="100" alt="">
+			</a>
+			<div class="right item">
+				<a class="toc item">
+					<i class="sidebar icon"></i>
+				</a>
+				<a class="active item">Beranda</a>
+				<a class="item">Tentang</a>
+				<a class="item">FAQ</a>
+				<a class="item">Tim</a>
+			</div>
+		  </div>
+		</div>
+
+		<div class="ui middle aligned stackable container">
+	  	  <div class="row">
+	  	  	<h1 class="ui icon inverted header">
+	  	  		<img class="icon" src="public/img/pics/illustration.png" alt="">
+	  	  		Temukan <span class="kg-color-base">&#9679;</span> Dukung <span class="kg-color-base">&#9679;</span> Terbitkan
+	  	  	</h1>
+	  	  	<h2>Platform Crowdorder untuk Industri Penerbitan Indonesia</h2>
+	  	  	<div class="ui form">
+				<div class="field">
+					<div id="callActBtn" class="ui huge primary button">Dukung Sekarang <i class="right arrow icon"></i></div>
+				</div>
+				  <div class="field">
+					<a class="ui inverted icon big button" href="https://facebook.com/katalogram"><i class="facebook icon"></i> </a>
+					<a class="ui inverted icon big button" href="https://twitter.com/katalogram"><i class="twitter icon"></i> </a>
+					<a class="ui inverted icon big button" href="https://instagram.com/katalogram"><i class="instagram plus icon"></i></a>
+				  </div>
+	  	  	</div>
+	  	  </div>
+		</div>
+
+	  </div>
+
+
+	  <div class="ui vertical stripe segment">
+  		<div class="ui center aligned text container">
+	  		<div class="row">
+	  			<h1 class="ui header">
+	  				Apa itu Crowdorder?
+	  			</h1>
+	  			<p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ullam quis ea laudantium quam ducimus, numquam optio quidem?</p>
+	  		</div>
+  			<h4 class="ui horizontal divider header">dengan</h4>
+  		</div>
+	  	<div class="ui three column center aligned relaxed stackable grid container">
+			<div class="row">
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/temu.png">
+				  Temukan
+				</h2>
+				<p>Temukan Karya Tulis atau lainnya yang Kamu suka </p>
+				<a class="ui primary large button" href="/usage/theming.html">Selengkapnya</a>
+			  </div>
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/dukung.png">
+				  Dukung
+				</h2>
+				<p>Berikan dukungan dengan mengorder dan mengajak orang lain untuk order</p>
+				<div class="ui primary large button">Selengkapnya</div>
+			  </div>
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/publik.png">
+				  Terbitkan
+				</h2>
+				<p>Karya akan langsung diterbitkan ketika memenuhi target order</p>
+				<a href="https://github.com/Semantic-Org/Semantic-UI/issues" class="ui primary large button">Selengkapnya</a>
+			  </div>
+			</div>
+	  	</div>
+	  </div>
+
+	  <div class="ui vertical stripe segment">
+		<div class="ui text container">
+			<h1 class="ui center aligned header">Apa yang bisa didapatkan?</h1>
+			<div class="ui fluid two item pointing menu">
+			  <a class="active item" data-tab="author">Penulis</a>
+			  <a class="item" data-tab="reader">Pembaca</a>
+			</div>
+			<div class="ui bottom attached active tab segment" data-tab="author">
+			  <div class="ui relaxed divided list">
+				  <div class="item">
+					<i class="large github middle aligned icon"></i>
+					<div class="content">
+					  <a class="header">Mudah Menerbitkan Buku</a>
+					  <div class="description">
+						Buku dapat diterbitkan dengan mudah tanpa perlu repot dan khawatir akan biaya
+					  </div>
+					</div>
+				  </div>
+				  <div class="item">
+					<i class="large github middle aligned icon"></i>
+					<div class="content">
+					  <a class="header">Langsung Terjual</a>
+					  <div class="description">Buku yang dicetak langsung terjual, tanpa perlu takut tidak laku</div>
+					</div>
+				  </div>
+				  <div class="item">
+					<i class="large github middle aligned icon"></i>
+					<div class="content">
+					  <a class="header">Branding Lebih Mudah</a>
+					  <div class="description">Updated 34 mins ago</div>
+					</div>
+				  </div>
+			  </div>
+			</div>
+			<div class="ui bottom attached tab" data-tab="reader">
+			  Second
+			</div>
+		</div>
+	  </div>
+
+	  <div class="ui inverted vertical stripe segment">
+	  	<div class="ui inverted three statistics text container">
+		  <div class="statistic">
+			<div class="value">
+			  <i class="shop basket icon"></i>
+			  200
+			</div>
+			<div class="label">
+			  Order
+			</div>
+		  </div>
+		  <div class="statistic">
+			<div class="value">
+			   <i class="book icon"></i>
+			   10
+			</div>
+			<div class="label">
+			  Buku
+			</div>
+		  </div>
+		  <div class="statistic">
+			<div class="value">
+			  <i class="user icon"></i>
+			  22
+			</div>
+			<div class="label">
+			  Anggota
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+
+
+	  <div class="ui vertical stripe segment">
+		<div class="ui text container">
+	  	  <h2 class="ui center aligned header">Lebih Jelasnya</h2>
+		  <iframe width="720" height="400" src="https://www.youtube.com/embed/77XXH_H4FxE" frameborder="0" allowfullscreen=""></iframe>
+		</div>
+	  </div>
+
+	  <div class="ui inverted vertical footer segment">
+		<div class="ui container">
+		  <div class="ui stackable inverted divided equal height stackable grid">
+			<div class="three wide column">
+			  <h4 class="ui inverted header">About</h4>
+			  <div class="ui inverted link list">
+				<a href="#" class="item">Sitemap</a>
+				<a href="#" class="item">Contact Us</a>
+				<a href="#" class="item">Religious Ceremonies</a>
+				<a href="#" class="item">Gazebo Plans</a>
+			  </div>
+			</div>
+			<div class="three wide column">
+			  <h4 class="ui inverted header">Services</h4>
+			  <div class="ui inverted link list">
+				<a href="#" class="item">Banana Pre-Order</a>
+				<a href="#" class="item">DNA FAQ</a>
+				<a href="#" class="item">How To Access</a>
+				<a href="#" class="item">Favorite X-Men</a>
+			  </div>
+			</div>
+			<div class="seven wide column">
+			  <h4 class="ui inverted header">Footer Header</h4>
+			  <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+</body>
+</html>

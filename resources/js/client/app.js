@@ -26,6 +26,8 @@ window.onload = function () { window.loading_screen.finish(); }
 
 //angular app
 var host = window.location.hostname;
+if (host == 'www.katalogram.com') host = 'katalogram.com';
+
 if (host == 'katalogram.dev') {
 	fbid = '1506049499709287';
 	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
@@ -34,7 +36,8 @@ if (host == 'katalogram.dev') {
 	googleid = '13356134084-uo1b2bi0sn6vhvdslphhem7desofd5rt.apps.googleusercontent.com';
 }
 
-var kgApp = angular.module('kgApp', ['ui.router', 'ngSanitize', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars', 'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll','textAngular' ]);
+var kgApp = angular.module('kgApp', ['ui.router', 'ngSanitize', 'ngTagsInput', 'satellizer', 'ngFileUpload', 'angular-input-stars',
+	'ui.knob', 'ngTouch','superswipe','validation.match','infinite-scroll','textAngular', 'angulartics', 'angulartics.google.analytics' ]);
 kgApp
 // route angular
 .constant('kgConfig', {

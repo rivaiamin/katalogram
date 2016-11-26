@@ -14,15 +14,17 @@ use Intervention\Image\ImageManager;
 use App\Product;
 use App\User;
 use App\Category;
-use App\Http\Controllers\Server\UserCollectController;
-//use App\Criteria;
-//use App\Tag;
 use App\ProductTag;
 use App\ProductCriteria;
+//use App\Http\Controllers\Server\UserCollectController;
+//use App\Criteria;
+//use App\Tag;
 use mikehaertl\wkhtmlto\Image;
 use Auth;
+use Entrust;
 use Storage;
 use Endroid\QrCode\QrCode;
+use Browshot;
 use App\Http\Controllers\Auth\AuthenticateController as AuthCtrl;
 
 class ProductController extends Controller {
@@ -63,6 +65,8 @@ class ProductController extends Controller {
 				$lists->havingRaw('count(products.id) = '.count($tags));
 		}
 		if ($after != 0) $lists->where($product->table.'.id','<', $after);
+		if (! Entrust::hasRole(['admin','manager'])) $lists->where('products.is_release', '1');
+
 
         $data['catalogs'] = $lists->get();
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
@@ -77,6 +81,8 @@ class ProductController extends Controller {
     public function detail(AuthCtrl $auth, $id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria','feedbackPlus','feedbackMinus'])->find($id);
 
+		$data['product']->increment('view_count');
+
 		if ($user = $auth->getAuthUser(false)) $data['product']['is_collect'] = User::find($user->id)->isCollect($id);
 
 		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
@@ -85,16 +91,17 @@ class ProductController extends Controller {
 	public function view($id) {
         $data['product'] = Product::with(['user','category','productTag.tag','productCriteria.criteria'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
+
 		if (! Storage::has('product/qrcode/'.$id.'.png')) $this->qrcode($id, false);
-		return view('catalog/view', $data);
+		return view('catalog/share', $data);
     	//dd($data);
 	}
 
-	public function share($id) {
+	/*public function share($id) {
 		$data['product'] = Product::with(['user','category'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
 		return view('catalog/share', $data);
-	}
+	}*/
 
     public function search(Request $request, $tag){
 
@@ -109,7 +116,7 @@ class ProductController extends Controller {
         return json_encode($data);
     }
 
-    public function create(ProductRequest $request, Category $category) {
+    public function create(ProductRequest $request) {
         $input = $request->only('category_id','name');
         $input['user_id'] = Auth::user()->id;
 
@@ -117,9 +124,8 @@ class ProductController extends Controller {
 
         if ($create) {
             $data['status'] = "success";
-            $data['message'] = "katalog produk telah ditambahkan";
+            $data['message'] = "Katalog telah tersimpan sebagai draft, harap lengkapi data sebelum publikasikan";
 			$this->qrcode($create->id, false);
-			$category->productInc($input['category_id']);
             $data['product_id'] = $create->id;
         } else {
             $data['status'] = "error";
@@ -139,11 +145,19 @@ class ProductController extends Controller {
         return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Category $category, $id) {
         if ($this->isOwner($id)) {
             $catalog = Product::findOrFail($id);
 
             $input = $request->all();
+
+			if ($catalog->is_release == '0' && $input['is_release'] == '1') {
+				$category->productInc($input['category_id']);
+				Auth::user()->increment('product_count');
+			} else if ($catalog->is_release == '1' && $input['is_release'] == '0') {
+				$category->productDec($input['category_id']);
+				Auth::user()->decrement('product_count');
+			}
 
             $update = $catalog->update($input);
 
@@ -173,7 +187,7 @@ class ProductController extends Controller {
 	}
 
     public function delete(Category $category, $productId) {
-        if ($this->isOwner($productId)) {
+        if ($this->isOwner($productId) || Auth::user()->hasRole(['manager', 'admin'])) {
 			$catalog = Product::find($productId);
 
 			$category->productDec($catalog->category_id);
@@ -229,7 +243,7 @@ class ProductController extends Controller {
 				$manager = new ImageManager(array('driver' => 'imagick'));
 				$image = $manager->make($file);
 
-				if(!$image->fit(600,250)->encode('jpg',80)->save($destinationPath.$filename)) {
+				if(!$image->fit(600,400)->encode('jpg',80)->save($destinationPath.$filename)) {
 					return response()->json(['status' => 'error', 'message' => 'gambar gagal diubah'], 400);
 				} else {
 					//update record in database
@@ -258,10 +272,26 @@ class ProductController extends Controller {
 			->toJpg()
 			->download($productId.'-'.time().'.jpg');*/
 
-		$data['product'] = Product::with(['user','category'])->find($id);
+
+		// using page2images
+		/*$data['product'] = Product::with(['user','category'])->find($id);
         $data['files'] = 'http://files.'.env('APP_DOMAIN');
-		return view('catalog/image', $data);
-    }
+		return view('catalog/image', $data);*/
+
+		// use browshot
+		$browshot = new Browshot('6EZNlkVJBXmbTxtCDqzNOfQQYmQ34gIZ');
+		$image = $browshot->simple(['url' => 'http://api.'.env('APP_DOMAIN').'/catalog/'.$id.'/view', 'instance_id' => 12, 'screen_width'=>600, 'screen_height'=>600 ]);
+
+		if ($image['code'] == '200') {
+			$data['product'] = Product::with(['user','category'])->find($id);
+        	$data['files'] = 'http://files.'.env('APP_DOMAIN');
+
+			$data['filename'] = $id.'-'.time().'.png';
+			$save = Storage::put('product/export/'.$data['filename'], $image['image']);
+			if ($save) return view('catalog/image', $data);
+			else return response()->json(['error'=>'storage_fail'], 500, [], JSON_NUMERIC_CHECK);
+		} else return response()->json(['error'=>'screenshot_fail'], 500, [], JSON_NUMERIC_CHECK);
+	}
 
 	public function qrcode($productId, $view = true) {
 		$qrCode = new QrCode();

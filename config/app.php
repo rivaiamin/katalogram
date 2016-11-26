@@ -216,7 +216,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Entrust' 	=> Zizaco\Entrust\EntrustServiceProvider::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 		'Image' 	=> Intervention\Image\Facades\Image::class,
 		'Converter' => Anam\PhantomMagick\Facades\Converter::class,
     ],

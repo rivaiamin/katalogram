@@ -41,6 +41,7 @@ class UserCollectController extends Controller
         if($collect){
 			$product = Product::where('id', $productId);
 			$product->increment('collect_count');
+			Auth::user()->increment('collect_count');
             $data = [
                 'status' => "success",
                 'message' => "produk telah ditambahkan ke koleksi",
@@ -62,6 +63,7 @@ class UserCollectController extends Controller
 	   if ($collect->delete()) {
 		    $product = Product::where('id', $productId);
 			$product->decrement('collect_count');
+		    Auth::user()->decrement('collect_count');
 
 		   	$data = [
                 'status' => "success",

@@ -2,7 +2,7 @@ $(".dial").knob({
 	readOnly: true,
 	max: 5,
 	skin: 'tron',
-	fgColor: '#0079ab',
+	fgColor: '#FF8E1F',
 	angeOffset:-125,
 	animate: {
 		enabled:false

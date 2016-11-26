@@ -20,8 +20,7 @@ class RateController extends Controller
          $this->middleware('jwt.auth');
     }
 
-    public function giveRate(Request $request, $productId)
-    {
+    public function giveRate(Request $request, $productId) {
         $input = [
             'user_id'       => Auth::user()->id,
             'criteria_id'   => $request->input('criteria_id'),

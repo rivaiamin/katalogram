@@ -84,7 +84,7 @@ var backpaths = {
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/Ionicons/css/ionicons.min.css',
         'bower_components/AdminLTE/dist/css/AdminLTE.min.css',
-        'bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
+        'bower_components/AdminLTE/dist/css/skins/skin-yellow.min.css',
         'bower_components/AdminLTE/plugins/iCheck/flat/blue.css',
         'bower_components/AdminLTE/plugins/morris/morris.min.css',
         /*'bower_components/AdminLTE/plugins/sparkline/jquery.sparkline.min.css',*/

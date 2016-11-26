@@ -3,7 +3,7 @@
 	<head>
 		<meta property="fb:app_id" content="1496399374007633">
 		<meta property="og:title" content="{{ $user->userProfile->fullname }}" />
-		<meta property="og:description" content="{{ $user->userProfile->profile }}" />
+		<meta property="og:description" content="{{ $user->userProfile->summary }}" />
 		<meta property="og:image" content="{{ $files }}/user/picture/{{ $user->picture }}" />
 		<meta property="og:image:width" content="256" />
 		<meta property="og:image:height" content="256" />
@@ -11,7 +11,8 @@
 		<!-- etc. -->
 	</head>
 	<body>
-		<p>{{ $user->userProfile->fullname }}</p>
+		<h3>{{ $user->userProfile->fullname }}</h3>
 		<img src="{{ $files }}/user/picture/{{ $user->picture }}">
+		<p>{{ $user->userProfile->profile }}</p>
 	</body>
 </html>

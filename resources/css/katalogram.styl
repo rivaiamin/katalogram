@@ -1,7 +1,7 @@
 //font-kg="DHF Broffont Script"
-font-heading="Asap"
+font-heading="Panefresco500wtRegular"
 font-nav="Titillium Web"
-font-base="Panefresco500wtRegular"
+font-base="Asap"
 
 /*
 color-base=#0079ab
@@ -52,11 +52,12 @@ body, html { background: bg-paper; height: auto; }
 .ui.menu .item.head>img:not(.ui) { width: 3em; }
 .ui.corner.label, .ui.corner.label:hover { font-size: 1.3em; }
 .ui.primary.label { background: color-base; color: #fff; }
-.ui.secondary.label, .ui.menu .item>.secondary.label { background: color-base2; color: #fff; }
+.ui.secondary.label, .ui.menu .item>.secondary.label { background: color-base2; }
 .ui.secondary.corner.label { border-color: color-base2; }
 .ui.primary.corner.label { border-color: color-base; }
 .ui.left.corner.label .icon { left: -0.5em }
 .ui.corner.label .icon { font-size:1.5em; top:0.3em;  }
+.ui.list>.item>img.image+.fluid.content { display:inline-table; }
 /*cropme>div { width: 100% !important; }*/
 
 .kg-style, .kg-style a { font-family: font-base; font-size: 14px; /*text-shadow: 1px 1px 0px rgba(0,0,0,0.2);*/ }
@@ -93,7 +94,7 @@ body, html { background: bg-paper; height: auto; }
 
 .kg-logo-big, .kg-logo-small { position: absolute !important; z-index: 100; }
 .kg-logo-big { width: 10em; }
-.kg-logo-small { position: relative; bottom: -25px; }
+.kg-logo-small { width: 7em; }
 .kg-quote { font-family: "CaviarDreams"; font-size: large; font-style: normal; }
 .uk-panel .kg-logo-small { width: 50px; height:50px; padding: 25px; font-size: 20px; margin-top: -85px; }
 
@@ -138,15 +139,22 @@ body, html { background: bg-paper; height: auto; }
 }
 
 .flip-clock-divider .flip-clock-label { color: #fff; }
-.tagsinput > div > input { border:none !important; width: 100%; }
+.tagsinput > div > input { border:solid thin #DEDEDE !important; width: 100%; }
+.ui.form tags-input input[type="text"] { border:none }
 tags-input .tags .tag-item { background: bg-base; color: #fff; border-color:bg-base; }
 tags-input .tags .tag-item.selected { background: bg-base2; color: #fff; }
-tags-input .tags { border-radius: 3px; border: none; }
+tags-input .tags { border-radius: 3px; border: solid thin #DEDEDE; }
 tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em { background: bg-base2; }
+
 #kgHero { z-index:2; height:300px; }
-#kgHero .content { z-index:2; }
+#kgHero .content, #kgHero2 .content { z-index:2; }
 #kgHero:not(.sticky) { margin-top: -80px!important; position: relative; }
 #kgHero.sticky { margin-top:-240px; }
+
+#kgHero2 { z-index:2; height:500px; }
+#kgHero2:not(.sticky) { margin-top: -80px!important; position: relative; }
+#kgHero2.sticky { margin-top:-440px; }
+
 
 @media (max-width: 1100px) {
     .modal { width: 100%; left: 0; }

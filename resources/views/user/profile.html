@@ -26,7 +26,10 @@
 				</span>
 				</p>-->
 				<h2 class="ui center aligned inverted header">
-				  <div class="content">
+				  <div class="center aligned content">
+				  	<div class="uk-margin-top uk-visible-small">
+				  		<img class="ui avatar image" ng-if="user.picture != ''" ng-src="{{ files }}user/picture/{{ user.picture }}" width="50">
+				  	</div>
 					{{user.user_profile.fullname}}
 					<q class="sub header">
 						{{ user.user_profile.summary }}
@@ -34,7 +37,7 @@
 				  </div>
 				</h2>
 				<p><span ng-repeat="link in user.user_link">
-					<a href="http://{{link.url}}" class="ui circular {{link.link.name}} icon button">
+					<a href="http://{{link.url}}" class="ui circular {{link.link.name}} icon button" target="_blank">
 					<i class="{{link.link.name}} icon"></i></a>
 				</span></p>
 				<p><a ng-if="auth.name == user.name" href="/{{ user.name }}/edit" class="ui button inverted"><i class="pencil icon"></i> Edit</a>
@@ -43,13 +46,14 @@
 					<a ng-if="user.is_contact == true" class="ui icon green button circular inverted" ng-click="removeContact(user.id)"><i class="check circle icon"></i> Terhubung</a>
 				</span>
 				</p>
+
 			</div>
 		</div>
 
 	</div>
 </div>
 <div class="uk-margin-bottom">
-	<div class="ui borderless five item menu kg-font-base uk-visible-large">
+	<div class="ui borderless five item menu kg-font-base uk-hidden-small">
 		<div class="ui container">
 			<a class="item">
 				<i class="file image outline link icon"></i>
@@ -74,27 +78,6 @@
 				<p>Terhubung <span class="ui secondary label">{{ user.connect_count }}</span></p>
 			</a>
 		</div>
-
-	</div>
-	<div class="ui pointing five item menu kg-font-base uk-visible-medium uk-margin-top-remove">
-		<a class="item">
-			<i class="file image outline link icon"></i>
-			<p><b>{{ user.catalog_count }}</b> Katalog</p>
-		</a>
-		<a class="item">
-			<i class="empty heart link icon"></i>
-			<p><b>{{ user.collect_count }}</b> Koleksi</p>
-		</a>
-		<a class="item">
-		</a>
-		<a class="item">
-			<i class="user outline link icon"></i>
-			<p><b>{{ user.connect_count }}</b> Menghubungkan</p>
-		</a>
-		<a class="item">
-			<i class="users outline link icon"></i>
-			<p><b>{{ user.contact_count }}</b> Terhubung</p>
-		</a>
 	</div>
 	<div class="ui large fluid vertical pointing menu kg-font-base uk-visible-small uk-margin-top-remove uk-overflow-hidden">
 		<a class="item uk-margin-large-top">
@@ -122,7 +105,7 @@
 	<div class="ui container">
 		<div class="uk-grid uk-grid-small">
 			<div class="uk-width-large-1-4 uk-width-1-1 uk-margin-bottom">
-				<div class="ui styled accordion" kg-ui-accordion>
+				<div class="ui styled fluid accordion" kg-ui-accordion>
 					<div class="active title"><h3 class="kg-heading"><i class="user icon"></i> Profil</h3></div>
 					<div class="active content">
 						<div class="ui list">
@@ -141,7 +124,7 @@
 							<div class="item" ng-repeat="link in user.user_link">
 								<i class="{{link.link.name}} icon"></i>
 								<div class="content">
-									{{ link.url }}
+									<a href="{{ link.url }}" target="_blank">{{ link.url | limitTo:30 }}{{ link.url.length > 30 ? '...' : ''}}</a>
 								</div>
 							</div>
 						</div>
@@ -169,7 +152,7 @@
 						<div class="ui list">
 						  <div class="item" ng-repeat="collect in user.user_collect" href="" ng-click="catalogDetail(collect.product.id)">
 							<img class="ui avatar image" src="{{files}}product/logo/{{collect.product.logo}}">
-							<div class="content">
+							<div class="fluid content">
 							  <a class="header">{{collect.product.name}}...</a>
 							  <span class="uk-text-small">
 								  <i class="empty heart icon"></i> {{collect.product.collect_count}}
@@ -192,7 +175,7 @@
 						<div class="ui relaxed list">
 						  <div class="item" ng-repeat="contact in user.user_contact">
 							<img class="ui avatar image" src="{{files}}user/picture/{{contact.contact.picture}}">
-							<div class="content">
+							<div class="fluid content">
 							  <a class="header" href="/{{contact.contact.name}}">{{contact.contact.name}}</a>
 							  <span class="uk-text-small kg-color-gray">
 							  	<i class="file picture small icon"></i> {{contact.contact.product_count}}
@@ -216,13 +199,13 @@
 						<div class="ui relaxed list">
 						  <div class="item" ng-repeat="connect in user.user_connect">
 							<img class="ui avatar image" src="{{files}}user/picture/{{connect.user.picture}}">
-							<div class="content">
-							  <a class="header" href="/{{connect.user.name}}">{{connect.user.name}}</a>
-							  <span class="uk-text-small kg-color-gray">
+							<div class="fluid content">
+							  <div class="header"><a href="/{{connect.user.name}}">{{connect.user.name}}</a></div>
+							  <div class="uk-text-small kg-color-gray">
 							  	<i class="file picture small icon"></i> {{connect.user.product_count}}
 							  	<i class="user small icon"></i> {{connect.user.contact_count}}
 							  	<i class="users small icon"></i> {{connect.user.connect_count}}
-							  </span>
+							  </div>
 							</div>
 						  </div>
 						</div>
@@ -230,7 +213,7 @@
 				</div>
 			</div>
 			<div class="uk-width-large-3-4 uk-width-small-1-1">
-				<div class="ui four doubling link cards" data-uk-grid>
+				<div class="ui four doubling stackable link cards" data-uk-grid>
 					<!-- list start -->
 					<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
 						<div class="image">

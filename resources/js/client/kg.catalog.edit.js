@@ -16,6 +16,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		if (response.product == null) $state.go('profile', { username: $rootScope.auth.name });
 		$scope.product = response.product;
 		$scope.productId = $scope.product.id;
+		$scope.product.is_release = 1;
 		/*$scope.catInd = $scope.categories.map(function(el) {
 		  return el.id;
 		}).indexOf($scope.product.category_id);
@@ -36,7 +37,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		//$scope.categories = $rootScope.categories;
 		//UIkit.slider('#previewPict');
 		$('.ui.checkbox').checkbox();
-		$('.ui.accordion').accordion('refresh');
+		//$('.ui.accordion').accordion('refresh');
 		$('.special.cards .image').dimmer({
 		  on: 'hover'
 		});
@@ -87,7 +88,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
     };
 
 	$scope.loadTags = function($query) {
-		return $http.get(kgConfig.api+'tags', { cache: true}).then(function(response) {
+		return $http.get(kgConfig.api+'tag', { cache: true}).then(function(response) {
 		  var tags = response.data;
 		  return tags.filter(function(tag) {
 			return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
@@ -95,7 +96,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 		});
 	}
 	$scope.loadCriterias = function($query) {
-		return $http.get(kgConfig.api+'criterias', { cache: true}).then(function(response) {
+		return $http.get(kgConfig.api+'criteria', { cache: true}).then(function(response) {
 		  var criterias = response.data;
 		  return criterias.filter(function(criteria) {
 			return criteria.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
@@ -176,6 +177,7 @@ var catalogEditCtrl = ['$stateParams','$scope','$rootScope','$http','$state','$s
 			input
 		).success(function (response) {
 			$scope.isSaving = false;
+			UIkit.notify(response.message, response.status);
 			if (view == true) {
 				$scope.catalogDetail($scope.productId);
 			}
