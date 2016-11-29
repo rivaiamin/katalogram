@@ -90,6 +90,14 @@
 		  display: none;
 		}
 
+        /*
+        *Style diar
+        */
+        .ui.icon.header .ui.icon.image{
+            width: 128px;
+            height: 128px;
+        }
+
 		@media only screen and (max-width: 700px) {
 		  .ui.fixed.menu {
 			display: none !important;
@@ -240,7 +248,7 @@
 	  	  <div class="row">
 	  	  	<h1 class="ui icon inverted header">
 	  	  		<img class="icon" src="public/img/pics/illustration.png" alt="">
-	  	  		Temukan <span class="kg-color-base">&#9679;</span> Dukung <span class="kg-color-base">&#9679;</span> Terbitkan
+	  	  		Temukan &nbsp;<span class="kg-color-base" style="font-size:0.7em">&#9679;</span>&nbsp; Dukung &nbsp;<span class="kg-color-base" style="font-size:0.7em">&#9679;</span>&nbsp; Terbitkan
 	  	  	</h1>
 	  	  	<h2>Platform Crowdorder untuk Industri Penerbitan Indonesia</h2>
 	  	  	<div class="ui form">
@@ -265,7 +273,7 @@
 	  			<h1 class="ui header">
 	  				Apa itu Crowdorder?
 	  			</h1>
-	  			<p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ullam quis ea laudantium quam ducimus, numquam optio quidem?</p>
+	  			<p class="">Menghimpun dana dengan cara melakukan order secara kolektif.</p>
 	  		</div>
   			<h4 class="ui horizontal divider header">dengan</h4>
   		</div>
@@ -273,27 +281,24 @@
 			<div class="row">
 			  <div class="column">
 				<h2 class="ui icon header">
-				  <img class="ui icon image" src="public/img/icon/temu.png">
+				  <img class="ui icon image" src="public/img/icon/icon-01.png">
 				  Temukan
 				</h2>
-				<p>Temukan Karya Tulis atau lainnya yang Kamu suka </p>
-				<a class="ui primary large button" href="/usage/theming.html">Selengkapnya</a>
+				<p> Telusuri berbagai macam koleksi buku karya lokal. </p>
 			  </div>
 			  <div class="column">
 				<h2 class="ui icon header">
-				  <img class="ui icon image" src="public/img/icon/dukung.png">
+				  <img class="ui icon image" src="public/img/icon/icon-02.png">
 				  Dukung
 				</h2>
-				<p>Berikan dukungan dengan mengorder dan mengajak orang lain untuk order</p>
-				<div class="ui primary large button">Selengkapnya</div>
+				<p> Mari berkontribusi dan berbagi demi mendukung karya lokal. </p>
 			  </div>
 			  <div class="column">
 				<h2 class="ui icon header">
-				  <img class="ui icon image" src="public/img/icon/publik.png">
+				  <img class="ui icon image" src="public/img/icon/icon-03.png">
 				  Terbitkan
 				</h2>
-				<p>Karya akan langsung diterbitkan ketika memenuhi target order</p>
-				<a href="https://github.com/Semantic-Org/Semantic-UI/issues" class="ui primary large button">Selengkapnya</a>
+				<p> Bantu kreaktor dengan cara menerbitkan buku kesukaan-mu. </p>
 			  </div>
 			</div>
 	  	</div>
@@ -301,41 +306,75 @@
 
 	  <div class="ui vertical stripe segment">
 		<div class="ui text container">
-			<h1 class="ui center aligned header">Apa yang bisa didapatkan?</h1>
+			<h1 class="ui center aligned header">Apa yang Anda dapatkan?</h1>
 			<div class="ui fluid two item pointing menu">
-			  <a class="active item" data-tab="author">Penulis</a>
-			  <a class="item" data-tab="reader">Pembaca</a>
+			  <a class="active item" data-tab="reader">Pembaca</a>
+			  <a class="item" data-tab="author">Penulis</a>
 			</div>
-			<div class="ui bottom attached active tab segment" data-tab="author">
-			  <div class="ui relaxed divided list">
-				  <div class="item">
-					<i class="large github middle aligned icon"></i>
-					<div class="content">
-					  <a class="header">Mudah Menerbitkan Buku</a>
-					  <div class="description">
-						Buku dapat diterbitkan dengan mudah tanpa perlu repot dan khawatir akan biaya
-					  </div>
-					</div>
-				  </div>
-				  <div class="item">
-					<i class="large github middle aligned icon"></i>
-					<div class="content">
-					  <a class="header">Langsung Terjual</a>
-					  <div class="description">Buku yang dicetak langsung terjual, tanpa perlu takut tidak laku</div>
-					</div>
-				  </div>
-				  <div class="item">
-					<i class="large github middle aligned icon"></i>
-					<div class="content">
-					  <a class="header">Branding Lebih Mudah</a>
-					  <div class="description">Updated 34 mins ago</div>
-					</div>
-				  </div>
-			  </div>
+			<div class="ui bottom attached active tab segment" data-tab="reader">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Karya Tulis Terbaru</a>
+                            <div class="description">Temukan karya tulis terbaru dari kreator kesukaan-mu.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Karya Tulis Favorit</a>
+                            <div class="description">Dapatkan karya favorit dari berbagai karya tulis dikoleksi Kami.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Reward</a>
+                            <div class="description">Penulis secara khusus memberikan reward, sebagai bentuk rasa apresiasi.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Feedback</a>
+                            <div class="description">Kamu dapat memberikan tanggapan pada karya sebelum diterbitkan.</div>
+                        </div>
+                    </div>
+                </div>
 			</div>
-			<div class="ui bottom attached tab" data-tab="reader">
-			  Second
-			</div>
+            <div class="ui bottom attached tab segment" data-tab="author">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Promosi Karya</a>
+                            <div class="description">Karya tulis kamu dipromosikan diberbagai sosial media secara gratis.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Penerbitan Lebih Mudah</a>
+                            <div class="description">Proses penerbitan buku akan ditangani oleh Kami, sehingga kamu tak perlu repot dan khawatir akan biaya</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Langsung Laku</a>
+                            <div class="description">Buku yang diterbitkan langsung terjual habis.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large github middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Royalti Lebih</a>
+                            <div class="description">Dapatkan keuntungan lebih atas karya tulis kamu.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 	  </div>
 
@@ -347,7 +386,7 @@
 			  200
 			</div>
 			<div class="label">
-			  Order
+			  Pemesanan
 			</div>
 		  </div>
 		  <div class="statistic">
