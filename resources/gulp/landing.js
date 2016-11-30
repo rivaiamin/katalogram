@@ -22,7 +22,7 @@ var landPaths = {
 		'bower_components/semantic/dist/components/transition.js',
 
         //angular
-        /*'bower_components/angular/angular.min.js',
+        'bower_components/angular/angular.min.js',
         'bower_components/angular-route/angular-route.min.js',
         'bower_components/angular-sanitize/angular-sanitize.min.js',
         'bower_components/angular-superswipe/superswipe.js',
@@ -33,9 +33,8 @@ var landPaths = {
         'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
 
         'bower_components/satellizer/satellizer.min.js',
-        'bower_components/ng-knob/dist/ng-knob.min.js'*/
-    	/*'resources/js/client/kg.*.js',
-		'resources/js/client/app.js',*/
+
+		'resources/js/kg.landing.js',
 	],
     less: [
 		'resources/assets/uikit.less',
@@ -77,7 +76,8 @@ var landPaths = {
         'public/fonts/icons.css',
         'resources/css/katalogram-icon.css',
 
-        'resources/css/katalogram.styl'
+        'resources/css/katalogram.styl',
+        'resources/css/kg.landing.css'
     ]
 };
 

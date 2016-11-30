@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="kgApp">
 <head>
 	<meta charset="UTF-8">
 	<title>katalogram.com (Beta) - Platform Crowdfunding untuk Industri Penerbitan Indonesia</title>
@@ -20,144 +20,11 @@
 	<link href="public/css/please-wait.css" rel="stylesheet">
 	<link rel="stylesheet" href="public/css/kg.landing.min.css">
 	<style type="text/css">
-
-		.hidden.menu {
-		  display: none;
-		}
-
-		.ui.vertical.segment { background: url('public/img/paper_web.jpg') }
-
-		.ui.inverted.segment { background-image: url("public/img/self-publishing.jpg"); background-attachment: fixed; background-size: cover}
-		.ui.secondary.pointing.menu { border: none; }
-		.ui.icon.header { max-width: 100%; }
-		.ui.icon.header .icon { max-width: 100%; }
-		.ui.secondary.inverted.pointing.menu .active.item { border-color: #ff8e1f; }
-		.masthead.segment {
-		  min-height: 700px;
-		  padding: 1em 0em;
-		}
-		.masthead .logo.item img {
-		  margin-right: 1em;
-		}
-		.masthead .ui.menu .ui.button {
-		  margin-left: 0.5em;
-		}
-		.ui.secondary.inverted.pointing.menu { border: none; }
-		.masthead h1.ui.header {
-		  margin-top: 3em;
-		  margin-bottom: 0em;
-		  font-size: 3em;
-		  font-weight: normal;
-		}
-		.masthead h2 {
-		  font-size: 1.7em;
-		  font-weight: normal;
-		}
-
-		.ui.vertical.stripe {
-		  padding: 8em 0em;
-		}
-		.ui.vertical.stripe h3 {
-		  font-size: 2em;
-		}
-		.ui.vertical.stripe .button + h3,
-		.ui.vertical.stripe p + h3 {
-		  margin-top: 3em;
-		}
-		.ui.vertical.stripe .floated.image {
-		  clear: both;
-		}
-		.ui.vertical.stripe p {
-		  font-size: 1.33em;
-		}
-		.ui.vertical.stripe .horizontal.divider {
-		  margin: 3em 0em;
-		}
-
-		.quote.stripe.segment {
-		  padding: 0em;
-		}
-		.quote.stripe.segment .grid .column {
-		  padding-top: 5em;
-		  padding-bottom: 5em;
-		}
-
-		.footer.segment {
-		  padding: 5em 0em;
-		}
-
-		.secondary.pointing.menu .toc.item {
-		  display: none;
-		}
-
-        /*
-        *Style diar
-        */
-        .ui.icon.header .ui.icon.image{
-            width: 128px;
-            height: 128px;
-        }
-
-		@media only screen and (max-width: 700px) {
-		  .ui.fixed.menu {
-			display: none !important;
-		  }
-		  .secondary.pointing.menu .item,
-		  .secondary.pointing.menu .menu {
-			display: none;
-		  }
-		  .secondary.pointing.menu .toc.item {
-			display: block;
-		  }
-		  .masthead.segment {
-			min-height: 350px;
-		  }
-		  .masthead h1.ui.header {
-			font-size: 2em;
-			margin-top: 1.5em;
-		  }
-		  .masthead h2 {
-			margin-top: 0.5em;
-			font-size: 1.5em;
-		  }
-		}
-	  </style>
-	  <script src="public/js/kg.landing.min.js"></script>
-	<script>
-	  $(document).ready(function() {
-
-		  // fix menu when passed
-		  /*$('.masthead')
-			.visibility({
-			  once: false,
-			  onBottomPassed: function() {
-				$('.fixed.menu').transition('fade in');
-			  },
-			  onBottomPassedReverse: function() {
-				$('.fixed.menu').transition('fade out');
-			  }
-			})
-		  ;*/
-
-		  // create sidebar and attach to menu open
-		  $('.ui.sidebar').sidebar('attach events', '.toc.item');
-		  $('.menu .item').tab();
-		  $('#callAct').modal('attach events', '#callActBtn', 'show');
-		});
-
-		/* smartsupp */
-		var _smartsupp = _smartsupp || {};
-		_smartsupp.key = 'cc1fd97b1ddc57f93720906a8da2de07d915ce03';
-		window.smartsupp||(function(d) {
-			var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-			s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-			c.type='text/javascript';c.charset='utf-8';c.async=true;
-			c.src='//www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-		})(document);
-
-	  </script>
+	</style>
+	<script src="public/js/kg.landing.min.js"></script>
 </head>
 <body>
+	<div id="fb-root"></div>
 
 	<!-- Following Menu -->
 	<!--<div class="ui large top secondary pointing fixed hidden menu">
@@ -248,7 +115,7 @@
 	  	  <div class="row">
 	  	  	<h1 class="ui icon inverted header">
 	  	  		<img class="icon" src="public/img/pics/illustration.png" alt="">
-	  	  		Temukan &nbsp;<span class="kg-color-base" style="font-size:0.7em">&#9679;</span>&nbsp; Dukung &nbsp;<span class="kg-color-base" style="font-size:0.7em">&#9679;</span>&nbsp; Terbitkan
+	  	  		Temukan &nbsp;<span class="kg-color-base">&#8226;</span>&nbsp; Dukung &nbsp;<span class="kg-color-base">&#8226;</span>&nbsp; Terbitkan
 	  	  	</h1>
 	  	  	<h2>Platform Crowdorder untuk Industri Penerbitan Indonesia</h2>
 	  	  	<div class="ui form">
@@ -256,9 +123,12 @@
 					<div id="callActBtn" class="ui huge primary button">Dukung Sekarang <i class="right arrow icon"></i></div>
 				</div>
 				  <div class="field">
-					<a class="ui inverted icon big button" href="https://facebook.com/katalogram"><i class="facebook icon"></i> </a>
-					<a class="ui inverted icon big button" href="https://twitter.com/katalogram"><i class="twitter icon"></i> </a>
-					<a class="ui inverted icon big button" href="https://instagram.com/katalogram"><i class="instagram plus icon"></i></a>
+			  		<div class="fb-like" data-href="https://www.facebook.com/katalogram" data-layout="button_count" data-action="recommend" data-size="small" data-show-faces="true" data-share="true"></div>
+				  </div>
+				  <div class="field">
+					<a class="ui icon facebook button" href="https://facebook.com/katalogram"><i class="facebook icon"></i> </a>
+					<a class="ui icon twitter button" href="https://twitter.com/katalogram"><i class="twitter icon"></i> </a>
+					<a class="ui icon instagram button" href="https://instagram.com/katalogram"><i class="instagram plus icon"></i></a>
 				  </div>
 	  	  	</div>
 	  	  </div>
@@ -273,7 +143,7 @@
 	  			<h1 class="ui header">
 	  				Apa itu Crowdorder?
 	  			</h1>
-	  			<p class="">Menghimpun dana dengan cara melakukan order secara kolektif.</p>
+	  			<p class="">Menghimpun permintaan dengan cara melakukan order secara kolektif untuk penerbitan karya.</p>
 	  		</div>
   			<h4 class="ui horizontal divider header">dengan</h4>
   		</div>
@@ -298,7 +168,7 @@
 				  <img class="ui icon image" src="public/img/icon/icon-03.png">
 				  Terbitkan
 				</h2>
-				<p> Bantu kreaktor dengan cara menerbitkan buku kesukaan-mu. </p>
+				<p> Bantu kreator dengan cara menerbitkan buku kesukaan-mu. </p>
 			  </div>
 			</div>
 	  	</div>
@@ -356,14 +226,14 @@
                         <i class="large github middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Penerbitan Lebih Mudah</a>
-                            <div class="description">Proses penerbitan buku akan ditangani oleh Kami, sehingga kamu tak perlu repot dan khawatir akan biaya</div>
+                            <div class="description">Proses penerbitan buku akan ditangani oleh Kami, sehingga kamu tak perlu repot dan khawatir akan biaya.</div>
                         </div>
                     </div>
                     <div class="item">
                         <i class="large github middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Langsung Laku</a>
-                            <div class="description">Buku yang diterbitkan langsung terjual habis.</div>
+                            <div class="description">Buku yang diterbitkan hanya berdasarkan jumlah permintaan pembaca.</div>
                         </div>
                     </div>
                     <div class="item">
@@ -378,7 +248,7 @@
 		</div>
 	  </div>
 
-	  <div class="ui inverted vertical stripe segment">
+	  <!--<div class="ui inverted vertical stripe segment">
 	  	<div class="ui inverted three statistics text container">
 		  <div class="statistic">
 			<div class="value">
@@ -408,41 +278,87 @@
 			</div>
 		  </div>
 		</div>
+	  </div>-->
+
+	  <div class="ui inverted vertical stripe segment">
+		<div class="ui text container">
+	  	  <h2 class="ui inverted header">Berikan Dukungan dan Akan Kami Kabari Anda</h2>
+		  <form name="kgForm" class="ui inverted form uk-text-center" ng-submit="loginMember(login)" novalidate>
+		  	<div class="inline fields">
+		  		<div class="twelve wide field">
+		  			<div class="ui left icon input">
+		  				<i class="mail icon"></i>
+		  				<input type="email" name="email" placeholder="email" required>
+		  			</div>
+		  		</div>
+		  		<div class="four wide field">
+		  			<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
+		  			<i class="send icon"></i> Kirim</button>
+		  		</div>
+		  	</div>
+		  	  <div class="field">
+		  		<div class="ui inverted horizontal divider">
+		  			atau
+		  		</div>
+		  	  </div>
+
+		  	 <div class="field">
+		  		<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Dukung dengan Facebook</a>
+		  	</div>
+		  	 <div class="field">
+		  		<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Dukung dengan Google</a>
+		  	</div>
+		  </form>
+		</div>
 	  </div>
 
-
-
 	  <div class="ui vertical stripe segment">
-		<div class="ui text container">
-	  	  <h2 class="ui center aligned header">Lebih Jelasnya</h2>
-		  <iframe width="720" height="400" src="https://www.youtube.com/embed/77XXH_H4FxE" frameborder="0" allowfullscreen=""></iframe>
-		</div>
+	  	<div class="ui center aligned text container">
+	  		<h2 class="ui header">Testimoni</h2>
+	  		<div class="fb-comments" data-href="http://katalogram.com" data-width="100%" data-numposts="5"></div>
+	  	</div>
 	  </div>
 
 	  <div class="ui inverted vertical footer segment">
 		<div class="ui container">
 		  <div class="ui stackable inverted divided equal height stackable grid">
 			<div class="three wide column">
-			  <h4 class="ui inverted header">About</h4>
+			  <h4 class="ui inverted header">Katalogram</h4>
 			  <div class="ui inverted link list">
-				<a href="#" class="item">Sitemap</a>
-				<a href="#" class="item">Contact Us</a>
-				<a href="#" class="item">Religious Ceremonies</a>
-				<a href="#" class="item">Gazebo Plans</a>
+				<a href="#" class="item">Tentang</a>
+				<a href="#" class="item">Latar Belakang</a>
+				<a href="#" class="item">Tahapan</a>
+				<a href="#" class="item">FAQ</a>
 			  </div>
 			</div>
 			<div class="three wide column">
-			  <h4 class="ui inverted header">Services</h4>
+			  <h4 class="ui inverted header">Tentang Kami</h4>
 			  <div class="ui inverted link list">
-				<a href="#" class="item">Banana Pre-Order</a>
-				<a href="#" class="item">DNA FAQ</a>
-				<a href="#" class="item">How To Access</a>
-				<a href="#" class="item">Favorite X-Men</a>
+				<a href="#" class="item">Team</a>
+				<a href="#" class="item">Kontak</a>
+				<a href="#" class="item">Ketentuan</a>
 			  </div>
 			</div>
-			<div class="seven wide column">
-			  <h4 class="ui inverted header">Footer Header</h4>
-			  <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+			<div class="four wide column">
+			  <h4 class="ui inverted header">Ikuti Terus Kami</h4>
+			  <div class="ui inverted link list">
+				<a href="#" class="item"> <i class="inverted facebook icon"></i> <div class="content">https://facebook.com/katalogram</div></a>
+				<a href="#" class="item"> <i class="inverted tumblr icon"></i> <div class="content">https://katalogram.tumblr.com</div></a>
+				<a href="#" class="item"> <i class="inverted instagram icon"></i> <div class="content">https://instagram.com/katalogram</div></a>
+				<a href="#" class="item"> <i class="inverted twitter icon"></i> <div class="content">https://twitter.com/katalogram</div></a>
+			  </div>
+
+			  <!--<div class="fb-page" data-href="https://www.facebook.com/katalogram/" data-tabs="timeline" data-width="500" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/katalogram/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/katalogram/">katalogram.com</a></blockquote></div>-->
+			</div>
+			<div class="six wide column">
+		  	  <div class="ui inverted link list">
+				<a href="#" class="item">
+					<img src="public/img/kg_white.png" width="40" alt="">
+	 				<img class="ui image" src="public/img/katalogram.png" width="200" alt="">
+				</a>
+				<a href="#" class="item">&copy; Karsakalana 2016</a>
+			  </div>
+
 			</div>
 		  </div>
 		</div>
