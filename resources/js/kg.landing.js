@@ -1,7 +1,5 @@
 
-
 window.onload = function () { window.loading_screen.finish(); }
-
 
 $(document).ready(function() {
   // fix menu when passed
