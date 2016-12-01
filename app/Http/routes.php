@@ -103,6 +103,7 @@ Route::group([//['middleware' => 'cors'],
     Route::post('auth/register', 'Auth\AuthenticateController@register');
     Route::post('auth/facebook', 'Auth\AuthenticateController@facebook');
     Route::post('auth/google', 'Auth\AuthenticateController@google');
+    Route::post('auth/subscribe', 'Auth\AuthenticateController@subscribe');
 
      // categories
     Route::get('category', 'Server\CategoryController@index');

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="kgApp">
 <head>
 	<meta charset="UTF-8">
-	<title>katalogram.com (Beta) - Platform Crowdfunding untuk Industri Penerbitan Indonesia</title>
+	<title>katalogram.com (Beta) - Platform Crowdorder untuk Industri Penerbitan Indonesia</title>
 	<meta name="author" content="KarsaKalana">
 	<meta name="description" content="Platform Crowdorder untuk Industri Penerbitan Indonesia">
 	<meta name="keyword" content="industri kreatif, penerbitan, buku, penulis, author, pembaca, crowdfunding, ">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<meta property="og:image" content="http://katalogram.com/public/img/kg_square.png">
-	<meta property="og:url" content="http://katalogram.com/">
+	<meta property="og:url" content="http://katalogram.com">
 	<meta property="og:title" content="Platform Crowdorder untuk Industri Penerbitan Indonesia">
 	<meta property="og:description" content="Temukan Buku yang Ingin Kamu Terbitkan, Berikan Dukungan dengan order atau bagikan, dan terbitkan buku saat order sudah terkumpul">
 	<meta property="fb:app_id" content="1496399374007633">
@@ -19,11 +19,9 @@
 	<link rel="shortcut icon" href="public/img/kg_square.png">
 	<link href="public/css/please-wait.css" rel="stylesheet">
 	<link rel="stylesheet" href="public/css/kg.landing.min.css">
-	<style type="text/css">
-	</style>
 	<script src="public/js/kg.landing.min.js"></script>
 </head>
-<body>
+<body ng-controller="kgLandingCtrl">
 	<div id="fb-root"></div>
 
 	<!-- Following Menu -->
@@ -49,16 +47,16 @@
 	<div id="callAct" class="ui basic small modal">
 	  <div class="center aligned header">Berikan Dukungan dan Akan Kami Kabari Anda</div>
 	  <div class="content">
-		<form name="kgForm" class="ui inverted form uk-text-center" ng-submit="loginMember(login)" novalidate>
+		<form name="subscribeForm" class="ui inverted form uk-text-center" ng-submit="subscribe(email)" novalidate>
 			<div class="inline fields">
 				<div class="twelve wide field">
 					<div class="ui left icon input">
 						<i class="mail icon"></i>
-						<input type="email" name="email" placeholder="email" required>
+						<input type="email" name="email" ng-model="email" placeholder="email" required>
 					</div>
 				</div>
 				<div class="four wide field">
-					<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
+					<button ng-disabled="!subscribeForm.$valid" ng-class="{'disabled loading':isAction}" type="submit" class="primary fluid ui button">
 					<i class="send icon"></i> Kirim</button>
 				</div>
 			</div>
@@ -283,32 +281,32 @@
 	  <div class="ui inverted vertical stripe segment">
 		<div class="ui text container">
 	  	  <h2 class="ui inverted center aligned header">Berikan Dukungan dan Akan Kami Kabari Anda</h2>
-		  <form name="kgForm" class="ui inverted form uk-text-center" ng-submit="loginMember(login)" novalidate>
-		  	<div class="inline fields">
-		  		<div class="twelve wide field">
-		  			<div class="ui left icon input">
-		  				<i class="mail icon"></i>
-		  				<input type="email" name="email" placeholder="email" required>
-		  			</div>
-		  		</div>
-		  		<div class="four wide field">
-		  			<button ng-disabled="!kgForm.$valid" ng-class="{'disabled loading':isLogging}" type="submit" class="primary fluid ui button">
-		  			<i class="send icon"></i> Kirim</button>
-		  		</div>
-		  	</div>
-		  	  <div class="field">
-		  		<div class="ui inverted horizontal divider">
-		  			atau
-		  		</div>
-		  	  </div>
+		  <form name="subscribeForm" class="ui inverted form uk-text-center" ng-submit="subscribe(email)" novalidate>
+			<div class="inline fields">
+				<div class="twelve wide field">
+					<div class="ui left icon input">
+						<i class="mail icon"></i>
+						<input type="email" name="email" ng-model="email" placeholder="email" required>
+					</div>
+				</div>
+				<div class="four wide field">
+					<button ng-disabled="!subscribeForm.$valid" ng-class="{'disabled loading':isAction}" type="submit" class="primary fluid ui button">
+					<i class="send icon"></i> Kirim</button>
+				</div>
+			</div>
+			  <div class="field">
+				<div class="ui inverted horizontal divider">
+					atau
+				</div>
+			  </div>
 
-		  	 <div class="field">
-		  		<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Dukung dengan Facebook</a>
-		  	</div>
-		  	 <div class="field">
-		  		<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Dukung dengan Google</a>
-		  	</div>
-		  </form>
+			 <div class="field">
+				<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Dukung dengan Facebook</a>
+			</div>
+			 <div class="field">
+				<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Dukung dengan Google</a>
+			</div>
+		</form>
 		</div>
 	  </div>
 

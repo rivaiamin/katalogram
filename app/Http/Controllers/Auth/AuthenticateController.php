@@ -27,7 +27,7 @@ class AuthenticateController extends Controller {
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
 
-         $this->middleware('jwt.auth', ['except' => ['login', 'register','facebook', 'google']]);
+         $this->middleware('jwt.auth', ['except' => ['login', 'subscribe', 'register','facebook', 'google']]);
     }
 
     public function index() {
@@ -84,6 +84,39 @@ class AuthenticateController extends Controller {
         // all good so return the token
         return response()->json(compact('token','user'));
     }
+
+	public function subscribe(Request $request) {
+		$user = new User;
+        $user->email = $request->input('email');
+        $user->name = explode('@', $user->email)[0];
+        $user->password = Hash::make($request->input('email'));
+
+		$exist = User::where('email', $user->email)->orWhere('name',$user->name)->count();
+
+		if ($exist > 0) {
+			$return['status'] = 'error';
+			$return['message'] = 'Alamat email sudah ada, tolong masukkan alamat lain';
+		} else {
+			if ($user->save()) {
+				$return['status'] = 'success';
+				$return['message'] = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
+			} else {
+				$return['status'] = 'error';
+				$return['message'] = 'Mohon masukkan alamat email yang sesuai';
+			}
+
+			$inputProfile['user_id'] = $user->id;
+			$inputProfile['fullname'] = $user->name;
+
+			if($inputProfile != NULL) {
+				UserProfile::create($inputProfile);
+				$user->roles()->attach(3);
+			}
+		}
+
+		return response()->json($return, 200, [], JSON_NUMERIC_CHECK);
+
+	}
 
     public function register(Request $request) {
         /*$input['level_id'] = '3';
@@ -221,26 +254,34 @@ class AuthenticateController extends Controller {
 			//jika akun facebook ditemukan langsung login, jika tidak akan dicek apakah akun dengan nama tersebut sudah ada atau belum
             if ($user->first()) {
                 return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
-			} else if ($user = User::where('name', $username)) return response()->json(['message' => 'Akun dengan username serupa sudah terdaftar, silahkan daftar akun baru'], 409);
+			} else if (User::where('name', $username)->orWhere('email', $profile['email'])->count() > 0) return response()->json(['message' => 'Akun dengan username serupa sudah terdaftar, silahkan daftar akun baru'], 409);
 
 			$user = new User;
             $user->facebook = $profile['id'];
             $user->email = $profile['email'];
             $user->name = $username[0];
             //$user->name = $profile['name'];
-            $user->save();
 
-            $user->attachRole('3');
+			if ($user->save()) {
 
-            $uProfile = new UserProfile;
-            $uProfile->user_id = $user->id;
-            $uProfile->fullname = $profile['name'];
-            //$profile->profile = $profile['bio'];
-            $uProfile->save();
-            
-            $token = JWTAuth::fromUser($user, $customClaims);
+				$user->attachRole('3');
+
+				$uProfile = new UserProfile;
+				$uProfile->user_id = $user->id;
+				$uProfile->fullname = $profile['name'];
+				//$profile->profile = $profile['bio'];
+				$uProfile->save();
+
+				$token = JWTAuth::fromUser($user, $customClaims);
+
+				$status = 'success';
+				$message = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
+			}
+
+
 			//$user = Auth::user();
-            return response()->json(['token' => $token, 'user' => $user]);
+            //return response()->json(['token' => $token, 'user' => $user, 'message'=> $message, 'status' => $status]);
+            return response()->json(['user' => $user, 'message'=> $message, 'status' => $status]);
         }
     }
 
@@ -293,9 +334,9 @@ class AuthenticateController extends Controller {
             $user = User::where('google', '=', $profile['sub']);
             $username = explode('@', $profile['email']);
 
-            if ($user->first())  {
+			if ($user->first())  {
                 return response()->json(['token' => JWTAuth::fromUser($user->first(), $customClaims)]);
-            } else if ($user = User::where('name', $username)) return response()->json(['message' => 'Akun dengan username serupa sudah terdaftar, silahkan daftar akun baru'], 409);
+            } else if (User::where('name', $username)->orWhere('email', $profile['email'])->count() > 0) return response()->json(['message' => 'Akun dengan username serupa sudah terdaftar, silahkan daftar akun baru'], 409);
 
             //return response()->json(['profile' =>$profile]);
             
@@ -303,19 +344,25 @@ class AuthenticateController extends Controller {
             $user->google = $profile['sub'];
             $user->name = $username[0];
             $user->email= $profile['email'];
-            $user->save();
 
-			$user->attachRole('3');
+			if ($user->save()) {
 
-            $uProfile = new UserProfile;
-            $uProfile->user_id = $user->id;
-            $uProfile->fullname = $profile['name'];
-            $uProfile->summary = $profile['profile'];
-            $uProfile->save();
+				$user->attachRole('3');
 
-			$token = JWTAuth::fromUser($user, $customClaims);
+				$uProfile = new UserProfile;
+				$uProfile->user_id = $user->id;
+				$uProfile->fullname = $profile['name'];
+				$uProfile->summary = $profile['profile'];
+				$uProfile->save();
+
+				$token = JWTAuth::fromUser($user, $customClaims);
+
+				$status = 'success';
+				$message = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
+			}
 			//$user = Auth::user();
-            return response()->json(['token' => $token, 'user' => $user]);
+            //return response()->json(['token' => $token, 'user' => $user, 'message'=> $message, 'status' => $status]);
+            return response()->json(['user' => $user, 'message'=> $message, 'status' => $status]);
         }
     }
     

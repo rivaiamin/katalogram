@@ -33,6 +33,7 @@ var landPaths = {
         'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
 
         'bower_components/satellizer/satellizer.min.js',
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.js',
 
 		'resources/js/kg.landing.js',
 	],
@@ -66,6 +67,7 @@ var landPaths = {
 		'bower_components/semantic/dist/components/tab.css',
 		'bower_components/semantic/dist/components/transition.css',
 
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.css',
         //uikit
 		/*'resources/css/uikit.css',
 		'bower_components/uikit/css/components/sticky.min.css',
