@@ -89,7 +89,7 @@ class AuthenticateController extends Controller {
 		$user = new User;
         $user->email = $request->input('email');
         $user->name = explode('@', $user->email)[0];
-        $user->password = Hash::make($request->input('email'));
+        $user->password = Hash::make($user->email);
 
 		$exist = User::where('email', $user->email)->orWhere('name',$user->name);
 
