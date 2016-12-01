@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<meta property="og:image" content="http://katalogram.com/public/img/kg_square.png">
-	<meta property="og:url" content="http://katalogram.com/index.html">
+	<meta property="og:url" content="http://katalogram.com/landing.html">
 	<meta property="og:title" content="Platform Crowdorder untuk Industri Penerbitan Indonesia">
 	<meta property="og:description" content="Temukan Buku yang Ingin Kamu Terbitkan, Berikan Dukungan dengan order atau bagikan, dan terbitkan buku saat order sudah terkumpul">
 	<meta property="fb:app_id" content="1496399374007633">
@@ -76,6 +76,30 @@
 	  </div>
 	</div>
 
+	<div id="shareAct" class="ui basic small modal">
+	  <h1 class="ui icon center aligned header"><i class="thumbs up icon"></i> Terima Kasih atas Dukungannya</h1>
+	  <div class="ui center aligned inverted content text container">
+	  	<p>Yuk sebarkan juga ke kerabat kamu! </br>supaya mereka juga tahu kabar keren ini dan ikut mendukung!</p>
+	  	<h5 class="ui inverted horizontal divider header">dengan</h5>
+	  </div>
+	  	<div class="ui center aligned action container">
+			<a class="ui large ok facebook icon button" ng-click="shareTo('facebook')">
+			  <i class="facebook icon"></i>
+			</a>
+			<a class="ui large ok twitter icon button" ng-click="shareTo('twitter')">
+			  <i class="twitter icon"></i>
+			</a>
+			<a class="ui large ok google plus icon button" ng-click="shareTo('google')">
+			  <i class="google plus icon"></i>
+			</a>
+			<a class="ui large ok green icon button" href="whatsapp://send" data-text="Take a look at this awesome website:" data-href="katalogram.com/landing.html">
+				<i class="whatsapp icon"></i>
+			</a>
+			<a class="ui large ok icon button" href="http://line.me/R/msg/text/?http://katalogram.com/landing.html"><img class="ui huge icon" src="public/img/icon/line_logo.png" alt=""></a>
+	  	</div>
+	</div>
+
+
 	<!-- Sidebar Menu -->
 	<div class="ui vertical inverted sidebar menu">
 	  <a class="active item">Beranda</a>
@@ -112,7 +136,7 @@
 		<div class="ui middle aligned stackable container">
 	  	  <div class="row">
 	  	  	<h1 class="ui icon inverted header">
-	  	  		<img class="icon" src="public/img/pics/illustration.png" alt="">
+	  	  		<img class="icon" src="public/img/pics/hero.png" alt="">
 	  	  		Temukan &nbsp;<span class="kg-color-base">&#8226;</span>&nbsp; Dukung &nbsp;<span class="kg-color-base">&#8226;</span>&nbsp; Terbitkan
 	  	  	</h1>
 	  	  	<h2>Platform Crowdorder untuk Industri Penerbitan Indonesia</h2>
@@ -124,9 +148,19 @@
 			  		<div class="fb-like" data-href="https://www.facebook.com/katalogram" data-layout="button_count" data-action="recommend" data-size="small" data-show-faces="true" data-share="true"></div>
 				  </div>
 				  <div class="field">
-					<a class="ui icon facebook button" href="https://facebook.com/katalogram"><i class="facebook icon"></i> </a>
-					<a class="ui icon twitter button" href="https://twitter.com/katalogram"><i class="twitter icon"></i> </a>
-					<a class="ui icon instagram button" href="https://instagram.com/katalogram"><i class="instagram plus icon"></i></a>
+					<a class="ui facebook icon button" ng-click="shareTo('facebook')">
+					  <i class="facebook icon"></i>
+					</a>
+					<a class="ui twitter icon button" ng-click="shareTo('twitter')">
+					  <i class="twitter icon"></i>
+					</a>
+					<a class="ui google plus icon button" ng-click="shareTo('google')">
+					  <i class="google plus icon"></i>
+					</a>
+					<a class="ui green icon button" href="whatsapp://send" data-text="Take a look at this awesome website:" data-href="katalogram.com/landing.html">
+						<i class="whatsapp icon"></i>
+					</a>
+					<a class="ui icon button" href="http://line.me/R/msg/text/?http://katalogram.com/landing.html"><img class="ui huge icon" src="public/img/icon/line_logo.png" alt=""></a>
 				  </div>
 	  	  	</div>
 	  	  </div>
@@ -182,28 +216,28 @@
 			<div class="ui bottom attached active tab segment" data-tab="reader">
                 <div class="ui relaxed divided list">
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Karya Tulis Terbaru</a>
                             <div class="description">Temukan karya tulis terbaru dari kreator kesukaan-mu.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Karya Tulis Favorit</a>
                             <div class="description">Dapatkan karya favorit dari berbagai karya tulis dikoleksi Kami.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Reward</a>
                             <div class="description">Penulis secara khusus memberikan reward, sebagai bentuk rasa apresiasi.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Feedback</a>
                             <div class="description">Kamu dapat memberikan tanggapan pada karya sebelum diterbitkan.</div>
@@ -214,28 +248,28 @@
             <div class="ui bottom attached tab segment" data-tab="author">
                 <div class="ui relaxed divided list">
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Promosi Karya</a>
                             <div class="description">Karya tulis kamu dipromosikan diberbagai sosial media secara gratis.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Penerbitan Lebih Mudah</a>
                             <div class="description">Proses penerbitan buku akan ditangani oleh Kami, sehingga kamu tak perlu repot dan khawatir akan biaya.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Langsung Laku</a>
                             <div class="description">Buku yang diterbitkan hanya berdasarkan jumlah permintaan pembaca.</div>
                         </div>
                     </div>
                     <div class="item">
-                        <i class="large github middle aligned icon"></i>
+                        <i class="large checkmark box middle aligned icon"></i>
                         <div class="content">
                             <a class="header">Royalti Lebih</a>
                             <div class="description">Dapatkan keuntungan lebih atas karya tulis kamu.</div>
@@ -306,13 +340,14 @@
 			 <div class="field">
 				<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Dukung dengan Google</a>
 			</div>
+
 		</form>
 		</div>
 	  </div>
 
 	  <div class="ui vertical stripe segment">
 	  	<div class="ui center aligned text container">
-	  		<h2 class="ui header">Testimoni</h2>
+	  		<h2 class="ui header">Tanggapan</h2>
 	  		<div class="fb-comments" data-href="http://katalogram.com" data-width="100%" data-numposts="5"></div>
 	  	</div>
 	  </div>
@@ -340,10 +375,10 @@
 			<div class="four wide column">
 			  <h4 class="ui inverted header">Ikuti Terus Kami</h4>
 			  <div class="ui inverted link list">
-				<a href="#" class="item"> <i class="inverted facebook icon"></i> <div class="content">https://facebook.com/katalogram</div></a>
-				<a href="#" class="item"> <i class="inverted tumblr icon"></i> <div class="content">https://katalogram.tumblr.com</div></a>
-				<a href="#" class="item"> <i class="inverted instagram icon"></i> <div class="content">https://instagram.com/katalogram</div></a>
-				<a href="#" class="item"> <i class="inverted twitter icon"></i> <div class="content">https://twitter.com/katalogram</div></a>
+				<a href="https://facebook.com/katalogram" class="item"> <i class="inverted facebook icon"></i> <div class="content">https://facebook.com/katalogram</div></a>
+				<a href="https://katalogram.tumblr.com" class="item"> <i class="inverted tumblr icon"></i> <div class="content">https://katalogram.tumblr.com</div></a>
+				<a href="https://instagram.com/katalogram" class="item"> <i class="inverted instagram icon"></i> <div class="content">https://instagram.com/katalogram</div></a>
+				<a href="https://twitter.com/katalogram" class="item"> <i class="inverted twitter icon"></i> <div class="content">https://twitter.com/katalogram</div></a>
 			  </div>
 
 			  <!--<div class="fb-page" data-href="https://www.facebook.com/katalogram/" data-tabs="timeline" data-width="500" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/katalogram/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/katalogram/">katalogram.com</a></blockquote></div>-->
@@ -362,6 +397,6 @@
 		</div>
 	  </div>
 	</div>
-
+	<!--<script src="//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js" async="async" defer="defer" ></script>-->
 </body>
 </html>

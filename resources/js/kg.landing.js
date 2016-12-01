@@ -58,7 +58,10 @@ function($scope, $rootScope, $http, $state, $auth, $sce, $location, $interval, N
 		$auth.authenticate(provider)
 		  .then(function(response) {
 		  	//$scope.getAuthUser();
-			if (response.status == 'success') $('#callAct').modal('hide');
+			if (response.status == 'success')  {
+				$('#callAct').modal('hide');
+				$('#shareAct').modal('show');
+			}
 			Notification({message: response.data.message}, response.data.status)
 		  })
 		  .catch(function(error) {
@@ -71,11 +74,24 @@ function($scope, $rootScope, $http, $state, $auth, $sce, $location, $interval, N
 		$scope.isAction = true;
 		$http.post(kgConfig.api+"auth/subscribe", {email: email}
 		).success(function(response){
-			if (response.status == 'success') $('#callAct').modal('hide');
+			if (response.status == 'success') {
+				$('#callAct').modal('hide');
+				$('#shareAct').modal('show');
+			}
 			$scope.isAction = false;
 			Notification({message: response.message}, response.status);
 		});
     };
+
+	$scope.shareTo = function(media) {
+		var url = window.location.href;
+		if (media == 'facebook') var share_url = 'https://www.facebook.com/sharer.php?u='+url;
+		else if (media == 'twitter') var share_url = 'https://twitter.com/home?status='+url;
+		else if (media == 'google') var share_url = 'https://plus.google.com/share?url='+url;
+
+		window.open(share_url, 'shareCatalog', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');
+		return false;
+	}
 }]);
 
 $(document).ready(function() {
@@ -96,6 +112,7 @@ $(document).ready(function() {
   $('.ui.sidebar').sidebar('attach events', '.toc.item');
   $('.menu .item').tab();
   $('#callAct').modal('attach events', '#callActBtn', 'show');
+  //$('#shareAct').modal();
 });
 
 /* smartsupp */
