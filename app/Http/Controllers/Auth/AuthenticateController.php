@@ -91,12 +91,9 @@ class AuthenticateController extends Controller {
         $user->name = explode('@', $user->email)[0];
         $user->password = Hash::make($request->input('email'));
 
-		$exist = User::where('email', $user->email)->orWhere('name',$user->name)->count();
+		$exist = User::where('email', $user->email)->orWhere('name',$user->name);
 
-		if ($exist > 0) {
-			$return['status'] = 'error';
-			$return['message'] = 'Alamat email sudah ada, tolong masukkan alamat lain';
-		} else {
+		if (!$exist->first()) {
 			if ($user->save()) {
 				$return['status'] = 'success';
 				$return['message'] = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
@@ -112,6 +109,9 @@ class AuthenticateController extends Controller {
 				UserProfile::create($inputProfile);
 				$user->roles()->attach(3);
 			}
+		} else {
+			$return['status'] = 'error';
+			$return['message'] = 'Alamat email sudah ada, tolong masukkan alamat lain';
 		}
 
 		return response()->json($return, 200, [], JSON_NUMERIC_CHECK);
