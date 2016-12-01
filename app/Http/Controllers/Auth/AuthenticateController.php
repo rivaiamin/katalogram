@@ -93,7 +93,7 @@ class AuthenticateController extends Controller {
 
 		//$exist = User::where('email', $user->email)->orWhere('name',$user->name);
 
-		if ($user->save()) {
+		/*if ($user->save()) {
 			$return['status'] = 'success';
 			$return['message'] = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
 		} else {
@@ -107,7 +107,7 @@ class AuthenticateController extends Controller {
 		if($inputProfile != NULL) {
 			UserProfile::create($inputProfile);
 			$user->roles()->attach(3);
-		}
+		}*/
 
 		/*if (!$exist->first()) {
 		} else {
@@ -115,7 +115,7 @@ class AuthenticateController extends Controller {
 			$return['message'] = 'Alamat email sudah ada, tolong masukkan alamat lain';
 		}*/
 
-		return response()->json($return, 200, [], JSON_NUMERIC_CHECK);
+		//return response()->json($return, 200, [], JSON_NUMERIC_CHECK);
 
 	}
 
