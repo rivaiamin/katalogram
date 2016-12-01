@@ -91,28 +91,29 @@ class AuthenticateController extends Controller {
         $user->name = explode('@', $user->email)[0];
         $user->password = Hash::make($request->input('email'));
 
-		$exist = User::where('email', $user->email)->orWhere('name',$user->name);
+		//$exist = User::where('email', $user->email)->orWhere('name',$user->name);
 
-		if (!$exist->first()) {
-			if ($user->save()) {
-				$return['status'] = 'success';
-				$return['message'] = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
-			} else {
-				$return['status'] = 'error';
-				$return['message'] = 'Mohon masukkan alamat email yang sesuai';
-			}
+		if ($user->save()) {
+			$return['status'] = 'success';
+			$return['message'] = 'Terima kasih atas dukungannya, mohon tunggu kabar selanjutnya melalui email';
+		} else {
+			$return['status'] = 'error';
+			$return['message'] = 'Mohon masukkan alamat email yang sesuai';
+		}
 
-			$inputProfile['user_id'] = $user->id;
-			$inputProfile['fullname'] = $user->name;
+		$inputProfile['user_id'] = $user->id;
+		$inputProfile['fullname'] = $user->name;
 
-			if($inputProfile != NULL) {
-				UserProfile::create($inputProfile);
-				$user->roles()->attach(3);
-			}
+		if($inputProfile != NULL) {
+			UserProfile::create($inputProfile);
+			$user->roles()->attach(3);
+		}
+
+		/*if (!$exist->first()) {
 		} else {
 			$return['status'] = 'error';
 			$return['message'] = 'Alamat email sudah ada, tolong masukkan alamat lain';
-		}
+		}*/
 
 		return response()->json($return, 200, [], JSON_NUMERIC_CHECK);
 
