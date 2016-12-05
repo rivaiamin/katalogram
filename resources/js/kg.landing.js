@@ -115,12 +115,12 @@ $(document).ready(function() {
   //$('#shareAct').modal();
 
 	$("#morphext1").Morphext({
-		animation: "fadeInDown",
+		animation: "flipInY",
 		separator: ",",
 		speed: 8000
 	});
 	$("#morphext2").Morphext({
-		animation: "fadeInDown",
+		animation: "flipInY",
 		separator: ",",
 		speed: 2000
 	});
