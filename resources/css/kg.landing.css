@@ -75,6 +75,9 @@
 	height: 128px;
 }
 
+#morphext1 { width: 240px; display: inline-block; }
+#morphext2 { width: 150px; display: inline-block; }
+
 @media only screen and (max-width: 700px) {
   .ui.fixed.menu {
 	display: none !important;
@@ -97,4 +100,7 @@
 	margin-top: 0.5em;
 	font-size: 1.5em;
   }
+
+	#morphext1 { width: 160px; }
+	#morphext2 { width: 90px; }
 }

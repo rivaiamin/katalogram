@@ -115,7 +115,7 @@ $(document).ready(function() {
   //$('#shareAct').modal();
 
 	$("#morphext1").Morphext({
-		animation: "bounceIn",
+		animation: "fadeInDown",
 		separator: ",",
 		speed: 8000
 	});
