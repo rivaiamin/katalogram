@@ -1,5 +1,5 @@
 
-window.onload = function () { window.loading_screen.finish(); }
+//window.onload = function () { window.loading_screen.finish(); }
 
 //angular app
 var host = window.location.hostname;
@@ -109,11 +109,24 @@ $(document).ready(function() {
   ;*/
 
   // create sidebar and attach to menu open
-  $('.ui.sidebar').sidebar('attach events', '.toc.item');
+  /*$('.ui.sidebar').sidebar('attach events', '.toc.item');*/
   $('.menu .item').tab();
   $('#callAct').modal('attach events', '#callActBtn', 'show');
   //$('#shareAct').modal();
+
+	$("#morphext1").Morphext({
+		animation: "bounceIn",
+		separator: ",",
+		speed: 8000
+	});
+	$("#morphext2").Morphext({
+		animation: "fadeInDown",
+		separator: ",",
+		speed: 2000
+	});
 });
+
+
 
 /* smartsupp */
 var _smartsupp = _smartsupp || {};

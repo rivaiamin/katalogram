@@ -21,6 +21,9 @@ var landPaths = {
 		'bower_components/semantic/dist/components/tab.js',
 		'bower_components/semantic/dist/components/transition.js',
 
+		//other
+		'bower_components/Morphext/dist/morphext.min.js',
+
         //angular
         'bower_components/angular/angular.min.js',
         'bower_components/angular-route/angular-route.min.js',
@@ -68,6 +71,10 @@ var landPaths = {
 		'bower_components/semantic/dist/components/transition.css',
 
         'bower_components/angular-ui-notification/dist/angular-ui-notification.min.css',
+		'bower_components/animate.css/animate.min.css',
+		'bower_components/Morphext/dist/morphext.css',
+		'bower_components/hint.css/hint.min.css',
+
         //uikit
 		/*'resources/css/uikit.css',
 		'bower_components/uikit/css/components/sticky.min.css',

@@ -62,7 +62,10 @@
     "angular-ui-notification": "^0.2.0",
     "textAngular": "^1.5.1",
     "ngInfiniteScroll": "^1.2.2",
-    "please-wait": "^0.0.5"
+    "please-wait": "^0.0.5",
+    "Morphext": "^2.4.4",
+    "animate.css": "^3.5.2",
+    "hint.css": "^2.4.1"
   },
   "resolutions": {
     "angular": "1.5.0"
