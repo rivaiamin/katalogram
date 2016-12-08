@@ -108,6 +108,12 @@ $(document).ready(function() {
 	})
   ;*/
 
+
+  $(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+       $('#callAct').modal('show');
+   }
+  });
   // create sidebar and attach to menu open
   /*$('.ui.sidebar').sidebar('attach events', '.toc.item');*/
   $('.menu .item').tab();
@@ -125,8 +131,6 @@ $(document).ready(function() {
 		speed: 2000
 	});
 });
-
-
 
 /* smartsupp */
 var _smartsupp = _smartsupp || {};
