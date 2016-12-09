@@ -75,6 +75,8 @@
 	height: 128px;
 }
 
+a.hint--bottom { text-decoration: underline; font-weight: 700; }
+
 #morphext1 { width: 240px; display: inline-block; }
 #morphext2 { width: 150px; display: inline-block; }
 
@@ -86,6 +88,9 @@
   -webkit-animation-delay: 2s;
   -webkit-animation-iteration-count: infinite;
 }
+
+#comingSoon { position: fixed; text-align: right; padding: 3px; }
+#comingSoon:after { border-right: 5em solid transparent; border-bottom: 5em solid transparent; border-right-color:inherit; }
 
 @media only screen and (max-width: 700px) {
   .ui.fixed.menu {

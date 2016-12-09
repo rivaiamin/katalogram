@@ -63,6 +63,7 @@ var landPaths = {
 		'bower_components/semantic/dist/components/dropdown.css',
 		'bower_components/semantic/dist/components/segment.css',
 		'bower_components/semantic/dist/components/button.css',
+		'bower_components/semantic/dist/components/label.css',
 		'bower_components/semantic/dist/components/list.css',
 		'bower_components/semantic/dist/components/icon.css',
 		'bower_components/semantic/dist/components/sidebar.css',
