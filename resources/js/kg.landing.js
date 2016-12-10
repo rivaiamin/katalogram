@@ -110,7 +110,7 @@ $(document).ready(function() {
 
 
   $(window).scroll(function() {
-   if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 10) {
        $('#callAct').modal('show');
    }
   });
