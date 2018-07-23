@@ -13,13 +13,20 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+	
+	# Fix authentication headers
+	RewriteCond %{HTTP:Authorization} ^(.*)
+	RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 </IfModule>
 
-# Fix authentication headers
-RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
-
 # Cors
-Header always set Access-Control-Allow-Origin "http://katalogram.dev"
-Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin, Authorization"
-Header always set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+<IfModule mod_headers.c>
+    SetEnvIf Origin ^(https?://.+\.katalogram\.dev(?::\d{1,5})?)$ CORS_ALLOW_ORIGIN=$1
+	SetEnvIf Origin ^(https?://.+\.katalogram\.com(?::\d{1,5})?)$ CORS_ALLOW_ORIGIN=$1
+	SetEnvIf Origin ^(https?://katalogram\.com(?::\d{1,5})?)$ CORS_ALLOW_ORIGIN=$1
+	SetEnvIf Origin ^(https?://katalogram\.dev(?::\d{1,5})?)$ CORS_ALLOW_ORIGIN=$1
+	Header append Access-Control-Allow-Origin  %{CORS_ALLOW_ORIGIN}e env=CORS_ALLOW_ORIGIN
+	Header merge  Vary "Origin"
+	Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin, Authorization"
+	Header always set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+</IfModule>

@@ -1,0 +1,136 @@
+{
+  "member":[
+    {
+      "user_id":"1",
+      "member_name":"Riva'i Amin",
+      "member_born":"712083600",
+      "member_address":"Jln. Gempol Raya",
+      "member_gender":"L",
+      "member_city":"Kota Tangerang",
+      "member_summary":"Trying to be Human",
+      "member_profile":"Auto Programmer | Moody Writer | Artist Wannabe",
+      "member_website":"raysaber.wordpress.com",
+      "member_type":"P",
+      "member_category":null,
+      "name":"raysaber",
+      "email":"raysaber37@gmail.com",
+      "user_pict":"613b645a99d5.jpg",
+      "user_join":"1425436938",
+      "is_contact":true
+    }
+  ],
+  "catalog":[
+    {
+      "product_id":"34",
+      "product_name":"Test Baru",
+      "product_logo":"277f9d0c72609.jpg",
+      "product_quote":"Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      "user_name":"raysaber",
+      "user_pict":"613b645a99d5.jpg",
+      "category_name":"Seni Rupa",
+      "category_icon":"senirupa.png",
+      "category_color":"emerald",
+      "avg_rate":4,
+      "num_plus":2,
+      "num_minus":0,
+      "num_collect":1
+    },
+    {
+      "product_id":"34",
+      "product_name":"Test Baru",
+      "product_logo":"277f9d0c72609.jpg",
+      "product_quote":"Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      "user_name":"raysaber",
+      "user_pict":"613b645a99d5.jpg",
+      "category_name":"Seni Rupa",
+      "category_icon":"senirupa.png",
+      "category_color":"emerald",
+      "avg_rate":3.1,
+      "num_plus":2,
+      "num_minus":1,
+      "num_collect":0
+    },
+    {
+      "product_id":"34",
+      "product_name":"Test Baru",
+      "product_logo":"277f9d0c72609.jpg",
+      "product_quote":"Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      "user_name":"raysaber",
+      "user_pict":"613b645a99d5.jpg",
+      "category_name":"Seni Rupa",
+      "category_icon":"senirupa.png",
+      "category_color":"emerald",
+      "avg_rate":3.1,
+      "num_plus":2,
+      "num_minus":1,
+      "num_collect":0
+    }
+
+  ],
+  "collect":[
+    {
+      "product_id":"9",
+      "product_name":"Black dan Yellow",
+      "product_logo":"2ac88c89fe333.jpg",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg",
+      "category_name":"Penerbitan",
+      "category_icon":"percetakan.png",
+      "category_color":"darkBlue",
+      "avg_rate":4.1,
+      "num_plus":5,
+      "num_minus":3,
+      "num_collect":1
+    },
+    {
+      "product_id":"9",
+      "product_name":"Black dan Yellow",
+      "product_logo":"2ac88c89fe333.jpg",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg",
+      "category_name":"Penerbitan",
+      "category_icon":"percetakan.png",
+      "category_color":"darkBlue",
+      "avg_rate":4.1,
+      "num_plus":5,
+      "num_minus":3,
+      "num_collect":1
+    }
+
+  ],
+  "contact":[
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    },
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    },
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    }
+  ],
+  "connect":[
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    },
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    },
+    {
+      "user_id":"3",
+      "user_name":"popimitaya",
+      "user_pict":"16958b338798.jpg"
+    }
+  ],
+  "is_owner":false
+}

@@ -1,0 +1,89 @@
+<section class="content-header">
+  <h1>
+    Criteria
+    <small>List of criteria</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Catalog</a></li>
+    <li class="active">Criteria</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add Criteria</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <form id="criteriaForm" class="box-body" ng-submit="addCriteria(input)">
+          <div class="row">
+            <label for="criteria" class="col-md-4">Criteria Name</label>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input class="form-control" name="name" ng-model="input.name" type="text" placeholder="Criteria Name" required>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" ng-disabled="onAdd" class="btn btn-block btn-primary">Save</button>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </form><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Criteria List</h3>
+          <div class="box-tools">
+            <div class="input-group pull-right" style="width: 150px;">
+              <input type="text" name="table_search" ng-model="search" class="form-control input-sm pull-right" placeholder="Search">
+              <div class="input-group-btn">
+                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+            <!--<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="views/admin/pagination.tpl.html">
+            </dir-pagination-controls>-->
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover" infinite-scroll='nextPage()' infinite-scroll-distance='1' infinite-scroll-disabled='scrollBusy'>
+            <tbody><tr>
+              <th>No</th>
+              <th>Criteria Name</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="list in criterias | orderBy:'-id' | filter:search">
+            <!--<tr dir-paginate="list in criteria | orderBy:'-id' | itemsPerPage:limit | filter:search" current-page="currentPage">-->
+              <td>{{ $index+1 }}</td>
+              <td><span editable-text="list.name" e-name="name" e-form="rowform" e-required>{{list.name}}</span></td>
+              <td>
+                <form class="btn-group" editable-form name="rowform" onbeforesave="saveCriteria($data, list.id)" ng-show="rowform.$visible" shown="inserted == list">
+                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default">
+                    <i class="fa fa-save"></i>
+                  </button>
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                    <i class="fa fa-close"></i>
+                  </button>
+                </form>
+                <div class="btn-group" ng-show="!rowform.$visible">
+                  <button type="button" ng-disabled="onSave" class="btn btn-default" ng-click="rowform.$show()"><i class="fa fa-edit"></i></button>
+                  <button type="button" ng-disabled="onDelete" class="btn btn-default" ng-click="deleteCriteria(list.id)"><i class="fa fa-remove"></i></button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody></table>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+</section>

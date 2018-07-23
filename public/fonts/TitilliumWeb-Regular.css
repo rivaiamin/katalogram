@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "TitilliumWeb-Regular";
+    src: url("/public/fonts/TitilliumWeb-Regular.eot"); /* IE9 */
+    src: url("/public/fonts/TitilliumWeb-Regular.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("/public/fonts/TitilliumWeb-Regular.woff") format("woff"), /* chrome, firefox */
+    url("/public/fonts/TitilliumWeb-Regular.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("/public/fonts/TitilliumWeb-Regular.svg#TitilliumWeb-Regular") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+

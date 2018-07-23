@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="kgApp">
+<head>
+	<meta charset="UTF-8">
+	<title>katalogram.com - New Innovation in The Publishing Industry</title>
+	<meta name="author" content="KarsaKalana">
+	<meta name="description" content="New Innovation in The Publishing Industry">
+	<meta name="keyword" content="industri kreatif, penerbitan, percetakan, jual, beli, buku, komik, novel, novelis, penulis, author, pembaca, crowdorder, ">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<meta property="og:image" content="http://katalogram.com/public/img/pics/share.jpg">
+	<meta property="og:url" content="http://katalogram.com">
+	<meta property="og:title" content="New Innovation in The Publishing Industry">
+	<meta property="og:type" content="website">
+	<meta property="og:description" content="Platform Crowdorder yang berfungsi membantu author dalam menerbitkan karyanya dengan kekuatan kolektif para pembaca">
+	<meta property="fb:app_id" content="1496399374007633">
+	<meta name="google-signin-client_id" content="13356134084-ij596q95of0e79k0qa592btnpo8uvang.apps.googleusercontent.com">
+	<!--<base href="/index.html">-->
+
+	<link rel="shortcut icon" href="public/img/kg_square.png">
+	<link href="public/css/please-wait.css" rel="stylesheet">
+	<link rel="stylesheet" href="public/css/kg.landing.min.css">
+	<script src="public/js/kg.landing.min.js"></script>
+</head>
+<body ng-controller="kgLandingCtrl">
+	<div id="fb-root"></div>
+	<div class="ui fluid image">
+	  <a id="comingSoon" class="ui orange right corner label">
+		Coming Soon
+	  </a>
+	</div>
+	<!-- Following Menu -->
+	<!--<div class="ui large top secondary pointing fixed hidden menu">
+	  <div class="ui container">
+		<a href="" class="item">
+			<img src="public/img/kg_circle.png" alt="">
+			<img class="ui image" src="public/img/katalogram_bk.png" width="100" alt="">
+		</a>
+		<div class="right item">
+			<a class="toc item">
+				<i class="sidebar icon"></i>
+			</a>
+			<a class="active item">Home</a>
+			<a class="item">Work</a>
+			<a class="item">Company</a>
+			<a class="item">Careers</a>
+		</div>
+	  </div>
+	</div>-->
+
+	<!-- modal -->
+	<div id="callAct" class="ui basic small modal">
+	  <div class="center aligned header">Subscribe Untuk Informasi Lebih Lanjut</div>
+	  <div class="content">
+		<form name="subscribeForm" class="ui inverted form uk-text-center" ng-submit="subscribe(email)" novalidate>
+			<div class="inline fields">
+				<div class="twelve wide field">
+					<div class="ui left icon input">
+						<i class="mail icon"></i>
+						<input type="email" name="email" ng-model="email" placeholder="Masukkan Email" required>
+					</div>
+				</div>
+				<div class="four wide field">
+					<button ng-disabled="!subscribeForm.$valid" ng-class="{'disabled loading':isAction}" type="submit" class="primary fluid ui button">
+					<i class="send icon"></i> Kirim</button>
+				</div>
+			</div>
+			  <div class="field">
+				<div class="ui inverted horizontal divider">
+					atau
+				</div>
+			  </div>
+
+			 <div class="field">
+				<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Subscribe</a>
+			</div>
+			 <div class="field">
+				<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Subscribe</a>
+			</div>
+		</form>
+	  </div>
+	</div>
+
+	<div id="shareAct" class="ui basic small modal">
+	  <h1 class="ui icon center aligned header"><i class="thumbs up icon"></i> Terima Kasih atas Dukungannya</h1>
+	  <div class="ui center aligned inverted content text container">
+	  	<p>Yuk sebarkan juga ke kerabat kamu! </br>supaya mereka juga tahu kabar keren ini dan ikut mendukung!</p>
+	  	<h5 class="ui inverted horizontal divider header">dengan</h5>
+	  </div>
+	  	<div class="ui center aligned action container">
+			<a class="ui large ok facebook icon button" ng-click="shareTo('facebook')">
+			  <i class="facebook icon"></i>
+			</a>
+			<a class="ui large ok twitter icon button" ng-click="shareTo('twitter')">
+			  <i class="twitter icon"></i>
+			</a>
+			<a class="ui large ok google plus icon button" ng-click="shareTo('google')">
+			  <i class="google plus icon"></i>
+			</a>
+			<a class="ui large ok green icon button" href="whatsapp://send?text=http://katalogram.com/landing.html">
+				<i class="whatsapp icon"></i>
+			</a>
+			<a class="ui large ok icon button" href="http://line.me/R/msg/text/?http://katalogram.com/landing.html"><img class="ui huge icon" src="public/img/icon/line_logo.png" alt=""></a>
+	  	</div>
+	</div>
+
+
+	<!-- Sidebar Menu -->
+	<!--<div class="ui vertical inverted sidebar menu">
+	  <div href="" class="item">
+	  		<a href="" class="ui logo icon image">
+				<img src="public/img/kg_white.png" width="50" alt="">
+	  		</a>
+	  		<a href="" class="ui logo icon image">
+				<img src="public/img/katalogram.png" width="150" alt="">
+	  		</a>
+		</div>
+		<a class="active item">Beranda</a>
+		<a class="item">Tentang</a>
+		<a class="item">FAQ</a>
+		<a class="item">Tim</a>
+	</div>-->
+
+
+	<!-- Page Contents -->
+	<div class="pusher">
+	  <div class="ui inverted vertical masthead center aligned segment">
+	    <div class="ui container">
+		  <div class="ui large secondary inverted pointing menu">
+			<a href="" class="item">
+				<img src="public/img/kg_white.png" alt="">
+				<img class="ui image" src="public/img/katalogram.png" width="100" alt="">
+			</a>
+			<a href="" class="toc item"><img src="public/img/kg_white.png" alt=""></a>
+			<div class="right item">
+				<!--<a class="toc item">
+					<i class="sidebar icon"></i>
+				</a>-->
+				<!--<a class="active item">Beranda</a>
+				<div class="item">Tentang</div>
+				<div class="item">FAQ</div>
+				<div class="item">Tim</div>-->
+			</div>
+		  </div>
+		</div>
+
+
+		<div class="ui middle aligned stackable container">
+	  	  <div class="row">
+	  	  	<h1 class="ui icon inverted header">
+	  	  		<img class="icon" src="public/img/pics/heroimage.png" alt="">
+	  	  		<div class="sub header"></div>
+	  	  		<div class="content">
+					Sulit <span id="morphext1" class="kg-color-base">Menerbitkan, Mencetak, Menjual, Mewujudkan</span>
+ 	  				<span id="morphext2" class="kg-color-base">Buku, Komik, Novel, Karya</span> milikmu?
+	  	  		</div>
+	  	  	</h1>
+	  	  	<h2 class="ui inverted header">
+	  	  		<div class="content">
+	  	  			New Innovation in The Publishing Industry
+	  	  		</div>
+				<div class="sub header">
+					Jual dan terbitkan karyamu dengan kekuatan <span class="kg-color-base">kolektif</span> secara <span class="kg-color-base">gratis</span>
+				</div>
+	  	  	</h2>
+	  	  	<div class="ui form">
+				<div class="field">
+					<div id="callActAnimate" class="shake infinite animated">
+						<div id="callActBtn" class="ui huge primary button"><i class="send icon"></i> Yuk Gabung! </div>
+					</div>
+				</div>
+				  <div class="field">
+			  		<div class="fb-like" data-href="https://www.facebook.com/katalogram" data-layout="button_count" data-action="recommend" data-size="small" data-show-faces="true" data-share="true"></div>
+				  </div>
+				  <!--<div class="field">
+					<a class="ui facebook icon button" ng-click="shareTo('facebook')">
+					  <i class="facebook icon"></i>
+					</a>
+					<a class="ui twitter icon button" ng-click="shareTo('twitter')">
+					  <i class="twitter icon"></i>
+					</a>
+					<a class="ui google plus icon button" ng-click="shareTo('google')">
+					  <i class="google plus icon"></i>
+					</a>
+					<a class="ui green icon button" href="whatsapp://send?text=http://katalogram.com/landing.html">
+						<i class="whatsapp icon"></i>
+					</a>
+					<a class="ui icon button" href="http://line.me/R/msg/text/?http://katalogram.com/landing.html"><img class="ui huge icon" src="public/img/icon/line_logo.png" alt=""></a>
+				  </div>-->
+	  	  	</div>
+	  	  </div>
+		</div>
+	  </div>
+
+	  <div class="ui vertical stripe segment">
+  		<div class="ui two column center aligned stackable internally celled grid container">
+	  		<div class="row">
+	  			<div class="column">
+					<h1 class="ui header">
+						Apa itu Katalogram?
+					</h1>
+	  				<p>Platform Crowdorder yang berfungsi membantu <a class="hint--bottom hint--medium kg-color-base" aria-label="Penulis, Komikus, Novelis, dll" href="">author</a> dalam menerbitkan karyanya dengan kekuatan kolektif para pembaca</p>
+	  			</div>
+	  			<div class="column">
+					<h1 class="ui header">
+						Apa itu Crowdorder?
+					</h1>
+					<p>Pergabungan antara <a class="hint--bottom hint--medium kg-color-base" aria-label="Praktik penggalangan dana dari sejumlah besar orang untuk memodali suatu proyek atau usaha yang umumnya dilakukan melalui internet" href="">Crowdfunding</a>
+					dan <a class="hint--bottom hint--medium kg-color-base" aria-label="Sistem jual beli yang dimulai dengan pemesanan oleh buyer, diakhiri dengan pengiriman barang oleh seller" href="">Pre-order</a> dimana kita dapat membeli sekaligus membantu penerbitan buku</p>
+	  			</div>
+
+	  		</div>
+  		</div>
+  		<h4 class="ui horizontal divider header">dengan langkah</h4>
+	  	<div class="ui three column center aligned relaxed stackable grid container">
+			<div class="row">
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/icon-01.png">
+				  Kirim
+				</h2>
+				<p> Kirimkan karya terbaikmu yang ingin diterbitkan.</p>
+			  </div>
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/icon-02.png">
+				  Dukung
+				</h2>
+				<p> Mari ajak fansmu untuk mendukung, membagikan dan meng-order karyamu supaya dapat diterbitkan. </p>
+			  </div>
+			  <div class="column">
+				<h2 class="ui icon header">
+				  <img class="ui icon image" src="public/img/icon/icon-03.png">
+				  Terbit
+				</h2>
+				<p>Kami akan menerbitkan karyamu dan mendistribusikannya langsung sesuai target yang dicapai.</p>
+			  </div>
+			</div>
+	  	</div>
+	  </div>
+
+	  <div class="ui vertical stripe segment">
+		<div class="ui text container">
+			<h1 class="ui center aligned header">Apa yang Kamu dapatkan?</h1>
+			<div class="ui fluid two item pointing menu">
+			  <a class="active item" data-tab="author">Author</a>
+			  <a class="item" data-tab="reader">Pembaca</a>
+			</div>
+			<div class="ui bottom attached active tab segment" data-tab="author">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Promosi Karya</a>
+                            <div class="description">Karya tulis kamu dipromosikan dengan mudah di berbagai sosial media secara gratis.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Penerbitan Lebih Mudah</a>
+                            <div class="description">Proses penerbitan buku akan ditangani oleh Kami, sehingga kamu tak perlu repot dan khawatir akan biaya.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Langsung Terjual</a>
+                            <div class="description">Buku yang dicetak hanya berdasarkan jumlah permintaan pembaca.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Royalti Lebih</a>
+                            <div class="description">Dapatkan keuntungan lebih atas karya kamu.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="ui bottom attached tab segment" data-tab="reader">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Karya Tulis Terbaru</a>
+                            <div class="description">Temukan karya tulis terbaru dari kreator kesukaan-mu.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Karya Tulis Favorit</a>
+                            <div class="description">Dapatkan karya favorit dari berbagai karya tulis dikoleksi Kami.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Reward</a>
+                            <div class="description">Penulis secara khusus memberikan reward, sebagai bentuk rasa apresiasi.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="large checkmark box middle aligned icon"></i>
+                        <div class="content">
+                            <a class="header">Feedback</a>
+                            <div class="description">Kamu dapat memberikan tanggapan pada karya sebelum diterbitkan.</div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+
+		</div>
+	  </div>
+
+	  <!--<div class="ui inverted vertical stripe segment">
+	  	<div class="ui inverted three statistics text container">
+		  <div class="statistic">
+			<div class="value">
+			  <i class="shop basket icon"></i>
+			  200
+			</div>
+			<div class="label">
+			  Pemesanan
+			</div>
+		  </div>
+		  <div class="statistic">
+			<div class="value">
+			   <i class="book icon"></i>
+			   10
+			</div>
+			<div class="label">
+			  Buku
+			</div>
+		  </div>
+		  <div class="statistic">
+			<div class="value">
+			  <i class="user icon"></i>
+			  22
+			</div>
+			<div class="label">
+			  Anggota
+			</div>
+		  </div>
+		</div>
+	  </div>-->
+
+
+
+	  <div class="ui inverted vertical stripe segment">
+		<div class="ui text center aligned container">
+	  	  <h2 class="ui inverted center aligned header">Subscribe Untuk Informasi Lebih Lanjut</h2>
+		  <form name="subscribeForm" class="ui inverted form uk-text-center" ng-submit="subscribe(email)" novalidate>
+			<div class="inline fields">
+				<div class="twelve wide field">
+					<div class="ui left icon input">
+						<i class="mail icon"></i>
+						<input type="email" name="email" ng-model="email" placeholder="Masukkan Email" required>
+					</div>
+				</div>
+				<div class="four wide field">
+					<button ng-disabled="!subscribeForm.$valid" ng-class="{'disabled loading':isAction}" type="submit" class="primary fluid ui button">
+					<i class="send icon"></i> Kirim</button>
+				</div>
+			</div>
+			  <div class="field">
+				<div class="ui inverted horizontal divider">
+					atau
+				</div>
+			  </div>
+
+			 <div class="field">
+				<a class="ui fluid facebook button" ng-click="authenticate('facebook')"><i class="facebook icon"></i> Subscribe</a>
+			</div>
+			 <div class="field">
+				<a class="ui fluid google plus button" ng-click="authenticate('google')"><i class="google icon"></i> Subscribe</a>
+			</div>
+			<div class="field">
+				<div class="ui inverted horizontal divider">
+					Atau Ikuti
+				</div>
+			</div>
+			<div class="field">
+				<a href="https://facebook.com/katalogram" class="ui circular facebook icon button">
+				  <i class="facebook icon"></i>
+				</a>
+				<a href="https://katalogram.tumblr.com" class="ui circular tumblr icon button">
+				  <i class="tumblr icon"></i>
+				</a>
+				<a href="https://instagram.com/katalogram" class="ui circular instagram icon button">
+				  <i class="instagram icon"></i>
+				</a>
+				<a href="https://twitter.com/katalogram" class="ui circular twitter icon button">
+				  <i class="twitter icon"></i>
+				</a>
+			</div>
+
+		</form>
+		</div>
+	  </div>
+
+	  <!--<div class="ui vertical stripe segment">
+		<div class="ui center aligned text container">
+			<h2 class="ui header">
+				<div class="content">Untuk Informasi Lebih Lanjut</div>
+				<div class="sub header">Tertarik? Chat kami sekarang</div>
+			</h2>
+			<div class="ui form">
+
+				<div class="field">
+				<a id="moreAbout" href="" class="ui huge primary button">Chat Sekarang !</a>
+
+				</div>
+				<h4 class="ui horizontal divider header">atau kunjungi</h4>
+
+			</div>
+		</div>
+	  </div>-->
+
+	  <div class="ui vertical stripe segment">
+	  	<div class="ui center aligned text container">
+	  		<h2 class="ui header">Tanggapan</h2>
+	  		<div class="fb-comments" data-href="http://katalogram.com" data-width="100%" data-numposts="5"></div>
+	  	</div>
+	  </div>
+
+	  <div class="ui inverted vertical footer segment">
+		<div class="ui container">
+		  <div class="ui stackable center aligned inverted stackable container">
+			<!--<div class="three wide column">
+			  <h4 class="ui inverted header">Katalogram</h4>
+			  <div class="ui inverted link list">
+				<a href="#" class="item">Tentang</a>
+				<a href="#" class="item">Latar Belakang</a>
+				<a href="#" class="item">Tahapan</a>
+				<a href="#" class="item">FAQ</a>
+			  </div>
+			</div>
+			<div class="three wide column">
+			  <h4 class="ui inverted header">Tentang Kami</h4>
+			  <div class="ui inverted link list">
+				<a href="#" class="item">Team</a>
+				<a href="#" class="item">Kontak</a>
+				<a href="#" class="item">Ketentuan</a>
+			  </div>
+			</div>
+			<div class="four wide column">
+			  <h4 class="ui inverted header">Ikuti Terus Kami</h4>
+			  <div class="ui inverted link list">
+				<a href="https://facebook.com/katalogram" class="item"> <i class="inverted facebook icon"></i> <div class="content">https://facebook.com/katalogram</div></a>
+				<a href="https://katalogram.tumblr.com" class="item"> <i class="inverted tumblr icon"></i> <div class="content">https://katalogram.tumblr.com</div></a>
+				<a href="https://instagram.com/katalogram" class="item"> <i class="inverted instagram icon"></i> <div class="content">https://instagram.com/katalogram</div></a>
+				<a href="https://twitter.com/katalogram" class="item"> <i class="inverted twitter icon"></i> <div class="content">https://twitter.com/katalogram</div></a>
+			  </div>
+			</div>
+			<div class="six wide column">
+		  	  <div class="ui inverted link list">
+				<a href="#" class="item">
+					<img src="public/img/kg_white.png" width="40" alt="">
+	 				<img class="ui image" src="public/img/katalogram.png" width="200" alt="">
+				</a>
+			  </div>
+
+			</div>-->
+			<div class="ui inverted link list">
+				<a href="#" class="item">
+					<img src="public/img/kg_white.png" width="40" alt="">
+	 				<img class="ui image" src="public/img/katalogram.png" width="200" alt="">
+				</a>
+				<div class="item">
+					&copy; Karsakalana 2016
+				</div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<script>
+		$("#moreAbout").click(function() {
+			smartsupp('chat:open');
+		})
+	</script>
+	<!--<script src="//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js" async="async" defer="defer" ></script>-->
+</body>
+</html>

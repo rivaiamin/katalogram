@@ -3,16 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
 {
-    protected $table = 'tag';
+
+	use SoftDeletes;
+    protected $table = 'tags';
+	public $timestamps = false;
 
     protected $fillable = [
-    	'tag_name'
+    	'name'
     ];
 
-    public function product() {
-    	return $this->belongsToMany('App\Product');
+	protected $hidden = ['deleted_at'];
+
+    public function product_tag() {
+    	return $this->hasMany('App\ProductTag');
     }
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 var elixir = require('laravel-elixir');
 
 /*
@@ -13,32 +15,10 @@ var elixir = require('laravel-elixir');
 
 // web less
 
-elixir(function(mix) {
+var gulp = require('gulp');
+var requireDir = require('require-dir');
 
-    // admin less
-    mix.less('admin.less', 'public/css/admin/');
+requireDir("./resources/gulp");
 
-    mix.styles([
-        'admin/bootstrap.min.css',
-        'admin/app.css',
-        'admin/jquery-jvectormap-1.2.2.css'
-    ], 'public/css/admin-css.css', 'public/css');
-
-    mix.scripts([
-        'admin/jQuery/jQuery-2.1.4.min.js',
-        'admin/bootstrap.min.js'/*,
-        'admin/iCheck/icheck.min.js',
-        'admin/fastclick/fastclick.min.js',
-        'admin/app.min.js',
-        'admin/sparkline/jquery.sparkline.min.js',
-        'admin/jvectormap/jquery-jvectormap-1.2.2.min.js',
-        'admin/jvectormap/jquery-jvectormap-world-mill-en.js',
-        'admin/slimScroll/jquery.slimscroll.min.js',
-        'admin/chartjs/Chart.min.js',
-        'admin/pages/dashboard2.js',
-        'admin/demo.js'*/
-    ], 'public/js/admin-js.js', 'public/js');
-
-    mix.version(["public/css/admin-css.css", "public/js/admin-js.js"]);
-
-});
+//gulp.task('htmlpub', ['htmlmin', 'include']);
+//gulp.task('default', ['back-watch', 'back-imagemin', 'back-fontmin', 'back-libjsmin', 'back-jsmin', 'back-cssmin', 'back-htmlmin', 'back-jsonmin']);

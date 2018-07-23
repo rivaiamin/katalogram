@@ -9,6 +9,7 @@ use App\Product;
 use App\ProductTag;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Server\CatalogController as CatalogCtrl;
 
 class TagController extends Controller
 {
@@ -17,53 +18,51 @@ class TagController extends Controller
          // Apply the jwt.auth middleware to all methods in this controller
          // except for the authenticate method. We don't want to prevent
          // the user from retrieving their token if they don't already have it
-         $this->middleware('jwt.auth');
+         $this->middleware('jwt.auth', ['except'=>['index', 'get']] );
     }
 
-    public function addTag(Request $request, $productId)
-    {
-        $input = $request->only('tag_name');
-        
-        $product = Product::where('id', $productId)->first();
-        $tagCount = Tag::where('tag_name', $input);
+	public function index() {
+		$data = Tag::select('id','name')->get();
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+	}
 
-        if($tagCount->count() > 0) {
-            $inputTag['tag_id'] = $tagCount->first()->id;
-            $inputTag['product_id'] = $product->id;
+	public function get($after, $limit, Tag $tag, Request $request) {
+		$name = $request->input('name');
 
-            // dd($inputTag);
-            $tag = ProductTag::create($inputTag);
-            
-        }
-        else {
-            $tag = $product->tags()->create($input);  
-        }
+    	$lists = $tag->orderBy('id', 'desc')
+				 ->take($limit);
+		if (!empty($name)) $lists->where($school->table.'.name', 'like', "%$name%");
+		if ($after != 0) $lists->where('id','<', $after);
 
-        if ($tag){
-
-            $params = [
-                'status' => "success",
-                'message' => "tag telah ditambahkan",
-            ];
-        }
-        else {
-            $params = [
-                'status' => "error",
-                'message' => "tag gagal ditambahkan",
-            ];
-        }
-        
-        return json_encode($params);
+        $data['tags'] = $lists->get();
+		return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
     }
 
-    public function deleteTag($productId, $tagId)
-    {
-        $productTag = ProductTag::where('product_id', $productId)->where('tag_id', $tagId)->delete();
-        $params = [
-            'status' => "success",
-            'message' => "tag telah dihapus",
-        ];
-        
-        return json_encode($params);
+    public function add(Request $request) {
+		$input = $request->only(['name']);
+
+		$save = Tag::create($input);
+
+    	if ($save) return response()->json(['success' => 'tag ditambahkan', 'tag' => $save], 200);
+    	else return response()->json(['error' => 'tag gagal ditambahkan'], 500);
+
+    	return response()->json($data);
+    }
+
+	public function update(Request $request, $id) {
+    	$input = $request->only(['name']);
+
+    	$tag = Tag::where('id', $id)->first();
+    	if ($tag->update($input)) return response()->json(['success' => 'tag diperbarui'], 200);
+    	else return response()->json(['error' => 'tag gagal diperbarui'], 500);
+
+    }
+
+    public function delete($id) {
+		$delete = Tag::find($id)->delete();
+
+		if ($delete) return response()->json(['success' => 'tag dihapus'], 200);
+		else return response()->json(['error' => 'tag gagal dihapus'], 500);
+
     }
 }

@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'katalogram-icon';
+    src:    url('../fonts/katalogram-icon.eot?e5ka29');
+    src:    url('../fonts/katalogram-icon.eot?e5ka29#iefix') format('embedded-opentype'),
+        url('../fonts/katalogram-icon.ttf?e5ka29') format('truetype'),
+        url('../fonts/katalogram-icon.woff?e5ka29') format('woff'),
+        url('../fonts/katalogram-icon.svg?e5ka29#katalogram-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.kg-icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'katalogram-icon' !important;
+	font-size: 2em;
+	vertical-align: middle;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arsitektur:before {
+    content: "\61";
+}
+.icon-desain:before {
+    content: "\62";
+}
+.icon-kerajinan:before {
+    content: "\63";
+}
+.icon-pertunjukan:before {
+    content: "\64";
+}
+.icon-penerbitan:before {
+    content: "\65";
+}
+.icon-senirupa:before {
+    content: "\66";
+}
+.icon-filmvideo:before {
+    content: "\67";
+}
+.icon-iklan:before {
+    content: "\68";
+}
+.icon-kuliner:before {
+    content: "\69";
+}
+.icon-mode:before {
+    content: "\6a";
+}
+.icon-musik:before {
+    content: "\6b";
+}
+.icon-permainan:before {
+    content: "\6c";
+}
+.icon-riset:before {
+    content: "\6d";
+}
+.icon-teknologi:before {
+    content: "\6e";
+}
+.icon-tvradio:before {
+    content: "\6f";
+}
+

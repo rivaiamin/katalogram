@@ -1,0 +1,125 @@
+<!--<div class="ui segment uk-text-left">
+	<h3 class="kg-heading uk-text-center">
+		<i class="kg-color-base file image outline icon"></i>
+		Katalog
+	</h3>
+	<div class="uk-grid uk-grid-small uk-grid-width-medium-1-3 uk-grid-width-small-1-1 uk-text-center">
+		<div ng-repeat="catalog in user.user_product">
+			<div class="ui card uk-container-center uk-margin">
+				<div class="image">
+					<a href="#kg-modal" data-uk-modal ng-click="catalogDetail(catalog.id)">
+						<img ng-src="{{ files }}product/logo/{{ catalog.logo }}">
+					</a>
+				</div>
+				<div class="content">
+					<h5 class="kg-heading">
+						<img ng-if="catalog.user.profilepict != null" class="ui avatar image" ng-src="{{ files }}/user/picture/{{catalog.user.profilepict}}">
+						{{ catalog.name }}
+					</h5>
+					<div class="meta">
+						<span class="date">Joined in 2013</span>
+					</div>
+					<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="catalog.avg_rate"></div>
+					<div><q class="description">
+						{{ catalog.quote }}
+					</q></div>
+				</div>
+				<div class="extra content ui secondary three item menu">
+					<a class="item kg-font-base">
+						<i class="heart icon"></i> {{ catalog.num_collect }}
+					</a>
+					<a class="item">
+						<i class="thumbs up icon"></i> {{ catalog.num_plus }}
+					</a>
+					<a class="item">
+						<i class="thumbs down icon"></i> {{ catalog.num_minus }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>-->
+<div class="ui four doubling link stackable cards" data-uk-grid>
+	<!-- list start -->
+	<div class="card" ng-repeat="list in user.user_product" ng-click="catalogDetail(list.id)">
+		<div class="image">
+			<img ng-if="list.logo != null" ng-src="{{ files }}/product/logo/{{ list.logo }}">
+			<img class="kg-bg-base2 kg-padding" ng-if="list.logo == null" ng-src="public/img/category/{{ list.category.category_icon }}" width="100%">
+		</div>
+		<div class="content">
+			<h5 class="ui header">
+				<img ng-if="list.owner.user_pict != null" class="ui avatar image" ng-src="{{ files }}/user_pict/{{list.user.user_pict}}">
+				{{ list.name }}
+			</h5>
+			<!--<div class="meta">
+				<span class="date">Joined in 2013</span>
+			</div>-->
+			<input-stars icon-full="star icon" icon-empty="empty star icon" max="5" ng-model="list.rating_avg" readonly></input-stars>
+			<div><q class="description">
+				{{ list.quote }}
+			</q></div>
+		</div>
+		<div class="extra content">
+			<span class="left floated like">
+			  <i class="like icon"></i>
+			  {{ list.collect_count }}
+			</span>
+			<a href="">
+				<span class="right floated">
+				  <i class="thumbs up link icon"></i>
+				  {{ list.plus_count }}
+				</span>
+			</a>
+			<a href="">
+				<span class="right floated uk-margin-right">
+				  <i class="thumbs down link icon"></i>
+				  {{ list.minus_count }}
+				</span>
+			</a>
+		</div>
+	</div>
+</div>
+<!--<div class="ui segment uk-text-left uk-margin-bottom">
+	<h3 class="kg-heading uk-text-center">
+		<i class="large icons">
+			<i class="kg-color-base file image outline icon"></i>
+			<i class="red corner heart icon"></i>
+		</i>
+		Koleksi
+	</h3>
+	<div class="uk-grid uk-grid-small uk-grid-width-medium-1-3 uk-grid-width-small-1-1">
+		<div ng-repeat="list in user.user_collect">
+			<div class="ui card uk-container-center">
+				<div class="image">
+					<a href="#kg-modal" data-uk-modal ng-click="catalogDetail(list.id)">
+						<img ng-src="{{ files }}product/logo/{{ list.logo }}">
+					</a>
+				</div>
+				<div class="content">
+					<h5 class="kg-heading">
+						<img class="ui avatar image" ng-src="{{ files }}/user/picture/{{list.userpict}}">
+						{{ list.name }}
+					</h5>
+					<div class="meta">
+						<span class="date">Joined in 2013</span>
+					</div>
+					<div class="uk-margin-remove" input-stars icon-full="uk-icon-star" icon-empty="uk-icon-star-o" max="5" ng-model="list.rating_avg"></div>
+					<div><q class="description">
+						{{ list.quote }}
+					</q></div>
+				</div>
+				<div class="extra content ui secondary three item menu">
+					<a class="item kg-font-base">
+						<i class="heart icon"></i> {{ list.collect_count }}
+					</a>
+					<a class="item">
+						<i class="thumbs up icon"></i> {{ list.plus_count }}
+					</a>
+					<a class="item">
+						<i class="thumbs down icon"></i> {{ list.minus_count }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>-->

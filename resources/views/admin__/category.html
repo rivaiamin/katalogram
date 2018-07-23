@@ -1,0 +1,111 @@
+<section class="content-header">
+  <h1>
+    Product Category
+    <small>Categories of Product</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Product Catalog</a></li>
+    <li class="active">Catalog Categories</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-default collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add Product Categories</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <form name="categoryForm" id="categoryForm" class="box-body" ng-submit="addCategory(input)">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <input class="form-control" name="name" ng-model="input.name" type="text" placeholder="Category Name" required>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea class="form-control" name="desc" ng-model="input.desc" id="" cols="30" rows="3" placeholder="Description"></textarea>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <a type="button" class="btn btn-block" ngf-select name="fileimage" ng-model="fileimage" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'"><i class="fa fa-file-image-o"></i> <span ng-if="fileimage.name == null">Upload Icon</span> {{fileimage.name}}</a>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-save"></i> Save</button>
+              </div><!-- /.form-group -->
+            </div><!-- /.col -->
+            <div class="col-dm-12" ng-show="onProgress">
+                <div class="form-group">
+                    <div class="progress progress-sm active">
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">{{ progress }} Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div><!-- /.row -->
+        </form><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Product Category Lists</h3>
+          <div class="box-tools">
+            <div class="input-group pull-right" style="width: 150px;">
+              <input type="text" name="table_search" ng-model="search" class="form-control input-sm pull-right" placeholder="Search">
+              <div class="input-group-btn">
+                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="views/admin/partial/pagination.tpl.html">
+            </dir-pagination-controls>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tbody><tr>
+              <th width="5%">No</th>
+              <th width="20%">Category Name</th>
+              <th width="50%">Category Description</th>
+              <th width="15%">Icon</th>
+              <th width="10%"></th>
+            </tr>
+            <tr dir-paginate="list in category | orderBy:'-id' | itemsPerPage:limit | filter:search" current-page="currentPage">
+              <td>{{ ((currentPage-1)*limit)+$index+1 }}</td>
+              <td><span editable-text="list.category_name" e-name="category_name" e-form="rowform" e-required>{{list.category_name}}</span></td>
+              <td><span editable-textarea="list.category_desc" e-rows="5" e-cols="100%" e-name="category_desc" e-form="rowform" e-required>{{list.category_desc}}</span></td>
+              <td class="bg-navy"><img ng-src="{{env.file}}category/{{list.category_icon}}" width="100%" alt=""></td>
+              <td>
+                <form class="btn-group" editable-form name="rowform" onbeforesave="saveCategory($data, list.id)" ng-show="rowform.$visible" shown="inserted == list">
+                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default">
+                    <i class="fa fa-save"></i>
+                  </button>
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                    <i class="fa fa-close"></i>
+                  </button>
+                </form>
+                <div class="btn-group" ng-show="!rowform.$visible">
+                  <button type="button" class="btn btn-default" ng-click="rowform.$show()"><i class="fa fa-edit"></i></button>
+                  <button type="button" class="btn btn-default" ng-click="deleteCategory(list.id)"><i class="fa fa-remove"></i></button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody></table>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
+</section>
