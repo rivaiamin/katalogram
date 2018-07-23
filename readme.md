@@ -1,19 +1,20 @@
-#Katalogram - Client-side
+# Katalogram
+Social Cataloging Web Application
+Built using Laravel 5 and AngularJS1
 
-##Developer Getting Strated
+## Developer Getting Strated
+- Download or clone the repository
 - Install Node.js https://nodejs.org/en/
-- Download or clone the repository `git clone https://rivaiamin@bitbucket.org/katalogram/katalogram-client.git`
 - Install NPM `npm install`
 - Install Bower `bower install`
 - Running gulp script `gulp`
 
-##Running Application Locally
-- Add virtual host for `katalogram-client/dist http://katalogram.dev`
-- Add virtual host for katalogram-client/files http://files.katalogram.dev
+## Running Application Locally
+- Add virtual host for `public/` -> `http://api.katalogram.dev`
+- Add virtual host for `storage/files` -> `http://files.katalogram.dev`
 
-##Developer Notes
-- Edit source code in folder `src`
-- for now, temporary using static json
+## Developer Notes
+- Edit source code in folder `resources`
 - Add dependencies using `npm install dependency-name --save`
 - Build source code using gulp command
 -- `gulp imagemin` for optimize image
